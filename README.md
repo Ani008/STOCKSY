@@ -20,7 +20,7 @@ STOCKSY/
 ## 1. Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/stocksy.git
+git clone https://github.com/Ani008E/stocksy.git
 cd stocksy
 ```
 
