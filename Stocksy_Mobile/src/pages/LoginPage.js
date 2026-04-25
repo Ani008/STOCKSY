@@ -35,7 +35,7 @@ const LoginPage = ({ navigation }) => {
     setLoading(true);
     try {
       await authService.login(email, password);
-      navigation.replace("Dashboard");
+      navigation.replace('MainTabs')
     } catch (err) {
       Alert.alert("Login Failed", err.message);
     } finally {

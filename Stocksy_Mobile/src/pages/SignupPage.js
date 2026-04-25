@@ -37,7 +37,7 @@ const SignupPage = ({ navigation }) => {
     setLoading(true);
     try {
       await authService.signup(name, email, password);
-      navigation.replace("Dashboard");
+      navigation.replace('MainTabs')
     } catch (err) {
       Alert.alert("Signup Failed", err.message);
     } finally {
