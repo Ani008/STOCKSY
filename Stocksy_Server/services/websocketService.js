@@ -1,95 +1,64 @@
-const WebSocket = require("ws");
-const protobuf = require("protobufjs");
-const path = require("path");
-const axios = require("axios"); // Add this!
+const WebSocket = require('ws');
+const redisClient = require('./redisService');
 
-let protoRoot = null;
+function initWebSocket(server) {
+    const wss = new WebSocket.Server({ server });
+    
+    console.log('WebSocket server ready');
 
-const loadProto = async () => {
-  protoRoot = await protobuf.load(
-    path.join(__dirname, "../proto/MarketDataV3.proto"),
-  );
-};
+    wss.on('connection', (ws) => {
+        console.log('React Native client connected');
 
-const getAuthorizedUrl = async (accessToken) => {
-  try {
-    const response = await axios.get(
-      "https://api.upstox.com/v3/feed/market-data-feed/authorize",
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          Accept: "application/json",
-        },
-      },
-    );
-    // This returns a one-time use WSS URL
-    return response.data.data.authorized_redirect_uri;
-  } catch (error) {
-    console.error(
-      "❌ Error getting Auth URL:",
-      error.response?.data || error.message,
-    );
-    throw error;
-  }
-};
+        // Send data every second to this client
+        const interval = setInterval(async () => {
+            try {
+                // Fetch all stock keys from Redis
+                const keys = await redisClient.keys('stock:*');
+                
+                if (keys.length === 0) {
+                    ws.send(JSON.stringify({ 
+                        error: 'No data in Redis yet. Is Python running?' 
+                    }));
+                    return;
+                }
 
-const initWebSocket = async (accessToken) => {
-  await loadProto();
-  const authorizedWsUrl = await getAuthorizedUrl(accessToken);
+                const stockData = {};
+                
+                for (const key of keys) {
+                    const value = await redisClient.get(key);
+                    if (value) {
+                        // key is "stock:NSE_INDEX|Nifty 50"
+                        // we clean it to just "NSE_INDEX|Nifty 50"
+                        const instrumentName = key.replace('stock:', '');
+                        stockData[instrumentName] = JSON.parse(value);
+                    }
+                }
 
-  // 1. Open the connection
-  const ws = new WebSocket(authorizedWsUrl, {
-    followRedirects: true,
-    handshakeTimeout: 10000, // 10 seconds timeout
-  });
+                // Send to React Native
+                ws.send(JSON.stringify({
+                    type: 'MARKET_DATA',
+                    timestamp: Date.now(),
+                    data: stockData
+                }));
 
-  // 2. Set binary type (Crucial for Protobuf)
-  ws.binaryType = "arraybuffer";
+            } catch (err) {
+                console.error('Error fetching from Redis:', err);
+            }
+        }, 1000); // every 1 second
 
-  ws.on("open", () => {
-    console.log("🔗 WebSocket Connected. Sending subscription in 1s...");
+        // Clean up when client disconnects
+        ws.on('close', () => {
+            console.log('React Native client disconnected');
+            clearInterval(interval);
+        });
 
-    // A tiny delay helps Upstox "warm up" your session
-    setTimeout(() => {
-      const subData = {
-        guid: `stocksy-${Date.now()}`, // Unique GUID is required
-        method: "sub",
-        data: {
-          mode: "ltpc",
-          instrumentKeys: ["NSE_EQ|INE002A01018"], // Reliance
-        },
-      };
-      ws.send(JSON.stringify(subData));
-      console.log("📡 Subscription Sent for Reliance");
-    }, 1000);
-  });
+        ws.on('error', (err) => {
+            console.error('WebSocket error:', err);
+            clearInterval(interval);
+        });
+    });
 
-  ws.on("message", (data) => {
-    try {
-      const FeedResponse = protoRoot.lookup("FeedResponse");
-      // Important: Use Uint8Array for the buffer
-      const decodedMessage = FeedResponse.decode(new Uint8Array(data));
-
-      if (decodedMessage.type === "market_info") {
-        console.log("✅ Market Status Received: Segments are Synchronized.");
-      } else if (decodedMessage.feeds) {
-        console.log(
-          "📈 LIVE DATA:",
-          JSON.stringify(decodedMessage.feeds, null, 2),
-        );
-        // PUSH TO REDIS & SOCKET.IO HERE
-      }
-    } catch (e) {
-      console.error("❌ Decoding Error:", e.message);
-    }
-  });
-
-  ws.on("close", () => {
-    console.log("⚠️ Connection Closed. Attempting reconnect in 5s...");
-    setTimeout(() => initWebSocket(accessToken), 5000);
-  });
-
-  ws.on("error", (err) => console.error("❌ WebSocket Error:", err.message));
-};
+    return wss;
+}
 
 module.exports = { initWebSocket };

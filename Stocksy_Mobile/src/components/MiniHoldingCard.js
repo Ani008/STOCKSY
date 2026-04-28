@@ -1,37 +1,45 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 /**
  * MiniHoldingCard — Small holding chip inside the Total Assets card.
  *
  * Props:
- *   ticker      string (required)  — Ticker label. e.g. "AMZN"
- *   name        string (required)  — Company name. e.g. "Amazon, Inc"
+ *   ticker      string (required)  — Ticker label. e.g. "NIFTY 50"
+ *   name        string (required)  — Company name or live price. e.g. "₹23,892"
  *   change      string             — Change string. e.g. "▲ 1.76%"
- *   isPositive  boolean / true     — Controls change color.
- *   iconName    string             — Ionicons icon name.
- *   iconColor   string / "black"   — Icon color.
+ *   isPositive  boolean            — Controls change color.
+ *   logoUrl     string             — Image URL for logo (takes priority over iconName).
+ *   iconName    string             — Ionicons icon name (fallback if no logoUrl).
+ *   iconColor   string             — Icon color (only used when falling back to Ionicons).
  */
 const MiniHoldingCard = ({
   ticker,
   name,
   change,
   isPositive = true,
+  logoUrl,
   iconName = "bar-chart-outline",
   iconColor = "#1E293B",
 }) => {
   return (
     <View style={styles.card}>
       <View style={styles.iconBox}>
-        <Ionicons name={iconName} size={18} color={iconColor} />
+        {logoUrl ? (
+          <Image source={{ uri: logoUrl }} style={styles.logo} />
+        ) : (
+          <Ionicons name={iconName} size={18} color={iconColor} />
+        )}
       </View>
       <View style={styles.text}>
         <Text style={styles.ticker}>{ticker}</Text>
         <Text style={styles.name}>{name}</Text>
       </View>
       {change ? (
-        <Text style={[styles.change, { color: isPositive ? "#10B981" : "#EF4444" }]}>
+        <Text
+          style={[styles.change, { color: isPositive ? "#10B981" : "#EF4444" }]}
+        >
           {change}
         </Text>
       ) : null}
@@ -59,10 +67,26 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderWidth: 1,
     borderColor: "#F1F5F9",
+    overflow: "hidden", // needed so Image respects borderRadius
+  },
+  logo: {
+    width: 32,
+    height: 32,
   },
   text: { flex: 1, marginLeft: 8 },
-  ticker: { fontSize: 12, fontWeight: "bold", color: "#1E293B" },
-  name: { fontSize: 10, color: "#94A3B8" },
+  // Suggested Style Changes
+  ticker: {
+    fontSize: 10,
+    fontWeight: "600", // Slightly less heavy than 'bold'
+    color: "#64748B", // Soft slate/gray color
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+  },
+  name: {
+    fontSize: 13, // Bumped up slightly
+    color: "#000000", // True black for importance
+    fontWeight: "700", // Heavy bold
+  },
   change: { fontSize: 10, fontWeight: "600" },
 });
 

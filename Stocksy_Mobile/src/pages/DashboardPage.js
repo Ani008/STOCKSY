@@ -10,16 +10,15 @@ import {
 } from "react-native";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
-// ─── Reusable components (from src/components/) ───────────────────────────────
-// Button is from the existing src/components/Button.js (docs: safe to reuse, add variants)
 import Button from "../components/Button";
-
-// ─── New reusable components (add to src/components/) ────────────────────────
 import StockCard from "../components/StockCard";
 import WatchlistItem from "../components/WatchlistItem";
 import MiniHoldingCard from "../components/MiniHoldingCard";
 
-// ─── Sample data (wire up to API via services/stockService.js) ───────────────
+// ─── Live market data hook ────────────────────────────────────────────────────
+import useMarketData from "../hooks/useMarketData";
+
+// ─── Sample data ─────────────────────────────────────────────────────────────
 const TOP_STOCKS = [
   {
     id: "1",
@@ -120,7 +119,6 @@ const MID_CAP = [
     isPositive: false,
     domain: "crompton.co.in",
   },
-  // ...3 more
 ];
 
 const SMALL_CAP = [
@@ -142,17 +140,37 @@ const SMALL_CAP = [
     isPositive: false,
     domain: "rvnl.org",
   },
-  // ...3 more
 ];
 
+// ─── Helper: compute % change from close price ───────────────────────────────
+const calcChange = (ltp, cp) => {
+  if (!ltp || !cp || cp === 0) return null;
+  const pct = ((ltp - cp) / cp) * 100;
+  const sign = pct >= 0 ? "▲" : "▼";
+  return {
+    label: `${sign} ${Math.abs(pct).toFixed(2)}%`,
+    isPositive: pct >= 0,
+  };
+};
+
 const DashboardPage = ({ navigation }) => {
+  // ── Live prices from WebSocket ──────────────────────────────────────────────
+  const { prices, isConnected } = useMarketData();
+
+  // Pull Nifty 50 data — key matches what Python saves to Redis (Section 9.2)
+  const nifty = prices["NSE_INDEX|Nifty 50"];
+  const niftyLtp = nifty?.ltp;
+  const niftyChange = nifty ? calcChange(nifty.ltp, nifty.cp) : null;
+
+  const bankNifty = prices["NSE_INDEX|Nifty Bank"];
+  const bankNiftyLtp = bankNifty?.ltp;
+  const bankNiftyChange = bankNifty ? calcChange(bankNifty.ltp, bankNifty.cp) : null;
+
+  // ── Auth ───────────────────────────────────────────────────────────────────
   const handleLogout = async () => {
     try {
-      // authService.logout() — keep in sync with docs (POST /auth/logout)
       navigation.replace("Login");
-    } catch (_) {
-      // silently fails per authService docs
-    }
+    } catch (_) {}
   };
 
   const confirmLogout = () => {
@@ -168,15 +186,25 @@ const DashboardPage = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scroll}
       >
-        {/* Blue header background strip */}
         <View style={styles.headerBackground} />
-        {/* ── Top Header ────────────────────────────────────────────────────── */}
+
+        {/* ── Top Header ──────────────────────────────────────────────────── */}
         <View style={styles.headerRow}>
           <View>
             <Text style={styles.greetingText}>Good Morning!</Text>
             <Text style={styles.userName}>Hi, Jessica H</Text>
           </View>
           <View style={styles.headerIcons}>
+            {/* WebSocket connection dot */}
+            <View style={styles.wsDot}>
+              <View
+                style={[
+                  styles.dot,
+                  { backgroundColor: isConnected ? "#10B981" : "#EF4444" },
+                ]}
+              />
+              <Text style={styles.wsLabel}>{isConnected ? "Live" : "Off"}</Text>
+            </View>
             <TouchableOpacity onPress={confirmLogout} style={styles.iconButton}>
               <MaterialCommunityIcons name="logout" size={22} color="white" />
             </TouchableOpacity>
@@ -187,14 +215,13 @@ const DashboardPage = ({ navigation }) => {
                   size={22}
                   color="white"
                 />
-                {/* Notification badge */}
                 <View style={styles.badge} />
               </View>
             </TouchableOpacity>
           </View>
         </View>
 
-        {/* ── Main Asset Card ───────────────────────────────────────────────── */}
+        {/* ── Main Asset Card ─────────────────────────────────────────────── */}
         <TouchableOpacity
           onPress={() => navigation.navigate("Portfolio")}
           style={styles.mainCard}
@@ -203,7 +230,6 @@ const DashboardPage = ({ navigation }) => {
             <Text style={styles.assetLabel}>Total Assets</Text>
             <View style={styles.priceRow}>
               <Text style={styles.totalAmount}>$27,170.01</Text>
-
               <Ionicons
                 name="eye-outline"
                 size={19}
@@ -214,7 +240,6 @@ const DashboardPage = ({ navigation }) => {
                 <Text style={styles.totalChange}>▲ 3.87% (24h)</Text>
               </View>
             </View>
-            {/* Mini holding chips — uses new MiniHoldingCard component */}
             <View style={styles.miniCardsRow}>
               <MiniHoldingCard
                 ticker="Amazon"
@@ -231,25 +256,36 @@ const DashboardPage = ({ navigation }) => {
                 iconColor="#1E293B"
               />
             </View>
-            {/* Action buttons — reuses existing Button component (docs: safe to reuse) */}
-            <View style={styles.actionRow}>
-              <Button
-                title="Deposit"
-                onPress={() => {}}
-                variant="primary"
-                style={styles.actionBtn}
-              />
-              <Button
-                title="Withdraw"
-                onPress={() => {}}
-                variant="outline"
-                style={styles.actionBtn}
-              />
-            </View>
           </View>
         </TouchableOpacity>
 
-        {/* ── Top Stocks ────────────────────────────────────────────────────── */}
+        {/* ── Index Section — LIVE DATA ────────────────────────────────────── */}
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Index</Text>
+        </View>
+
+        <View style={styles.miniCardsRow}>
+          <MiniHoldingCard
+            ticker="NIFTY 50"
+            name={
+              niftyLtp ? `₹${niftyLtp.toLocaleString("en-IN")}` : "Loading..."
+            }
+            change={niftyChange?.label ?? undefined}
+            isPositive={niftyChange?.isPositive ?? true}
+            logoUrl="https://img.logo.dev/nseindia.com?token=pk_Bym4BAakTJudMK4MGnfpnw"
+          />
+          <MiniHoldingCard
+            ticker="BANK NIFTY"
+            name={
+              bankNiftyLtp ? `₹${bankNiftyLtp.toLocaleString("en-IN")}` : "Loading..."
+            }
+            change={bankNiftyChange?.label ?? undefined}
+            isPositive={bankNiftyChange?.isPositive ?? true}
+            logoUrl="https://img.logo.dev/nseindia.com?token=pk_Bym4BAakTJudMK4MGnfpnw"
+          />
+        </View>
+
+        {/* ── Top Stocks ──────────────────────────────────────────────────── */}
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Top Stocks</Text>
           <TouchableOpacity>
@@ -257,7 +293,6 @@ const DashboardPage = ({ navigation }) => {
           </TouchableOpacity>
         </View>
 
-        {/* Horizontal scrollable stock cards — uses new StockCard component */}
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -277,8 +312,7 @@ const DashboardPage = ({ navigation }) => {
           ))}
         </ScrollView>
 
-        {/* ── Watchlist ─────────────────────────────────────────────────────── */}
-        {/* ── Large Cap ── */}
+        {/* ── Large Cap ───────────────────────────────────────────────────── */}
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Large Cap Stocks</Text>
           <TouchableOpacity>
@@ -298,7 +332,7 @@ const DashboardPage = ({ navigation }) => {
           />
         ))}
 
-        {/* ── Mid Cap ── */}
+        {/* ── Mid Cap ─────────────────────────────────────────────────────── */}
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Mid Cap Stocks</Text>
           <TouchableOpacity>
@@ -318,7 +352,7 @@ const DashboardPage = ({ navigation }) => {
           />
         ))}
 
-        {/* ── Small Cap ── */}
+        {/* ── Small Cap ───────────────────────────────────────────────────── */}
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Small Cap Stocks</Text>
           <TouchableOpacity>
@@ -362,7 +396,6 @@ const styles = StyleSheet.create({
     paddingBottom: 110,
   },
 
-  // ── Header ──────────────────────────────────────────────────────────────────
   headerRow: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -372,7 +405,7 @@ const styles = StyleSheet.create({
   },
   greetingText: { color: "rgba(255,255,255,0.8)", fontSize: 14 },
   userName: { color: "white", fontSize: 24, fontWeight: "bold", marginTop: 2 },
-  headerIcons: { flexDirection: "row", gap: 12 },
+  headerIcons: { flexDirection: "row", gap: 12, alignItems: "center" },
   iconButton: {
     width: 40,
     height: 40,
@@ -393,7 +426,19 @@ const styles = StyleSheet.create({
     borderColor: "#3B82F6",
   },
 
-  // ── Main Asset Card ──────────────────────────────────────────────────────────
+  // ── Live indicator ──────────────────────────────────────────────────────────
+  wsDot: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    backgroundColor: "rgba(255,255,255,0.15)",
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 20,
+  },
+  dot: { width: 7, height: 7, borderRadius: 4 },
+  wsLabel: { color: "white", fontSize: 11, fontWeight: "600" },
+
   mainCard: {
     backgroundColor: "white",
     borderRadius: 24,
@@ -423,21 +468,16 @@ const styles = StyleSheet.create({
 
   miniCardsRow: { flexDirection: "row", gap: 10, marginBottom: 18 },
 
-  actionRow: { flexDirection: "row", gap: 12 },
-  actionBtn: { flex: 1 },
-
-  // ── Section Header ───────────────────────────────────────────────────────────
   sectionHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 14,
-    marginTop: 24, // ← add this
+    marginTop: 24,
   },
   sectionTitle: { fontSize: 18, fontWeight: "bold", color: "#1E293B" },
   seeAll: { color: "#3B82F6", fontWeight: "600", fontSize: 14 },
 
-  // ── Stocks horizontal list ───────────────────────────────────────────────────
   horizontalScroll: { gap: 14, paddingRight: 4, marginBottom: 28 },
 });
 

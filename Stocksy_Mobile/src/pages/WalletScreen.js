@@ -20,7 +20,7 @@ const WalletScreen = ({ navigation }) => {
         {/* Main Balance Card */}
         <View style={styles.balanceCard}>
           <Text style={styles.cardLabel}>Your Demo Balance</Text>
-          <Text style={styles.mainBalance}>₹10,000.00</Text>
+          <Text style={styles.mainBalance}>₹10,000,00.00</Text>
           
           <View style={styles.dashedLine} />
 
