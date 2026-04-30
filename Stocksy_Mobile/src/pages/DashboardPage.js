@@ -195,28 +195,9 @@ const DashboardPage = ({ navigation }) => {
             <Text style={styles.userName}>Hi, Jessica H</Text>
           </View>
           <View style={styles.headerIcons}>
-            {/* WebSocket connection dot */}
-            <View style={styles.wsDot}>
-              <View
-                style={[
-                  styles.dot,
-                  { backgroundColor: isConnected ? "#10B981" : "#EF4444" },
-                ]}
-              />
-              <Text style={styles.wsLabel}>{isConnected ? "Live" : "Off"}</Text>
-            </View>
-            <TouchableOpacity onPress={confirmLogout} style={styles.iconButton}>
-              <MaterialCommunityIcons name="logout" size={22} color="white" />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.iconButton}>
-              <View>
-                <Ionicons
-                  name="notifications-outline"
-                  size={22}
-                  color="white"
-                />
-                <View style={styles.badge} />
-              </View>
+
+            <TouchableOpacity onPress={() => navigation.navigate("Search")} style={styles.iconButton}>
+              <Ionicons name="search-outline" size={22} color="white" />
             </TouchableOpacity>
           </View>
         </View>

@@ -10,10 +10,12 @@ import { Ionicons } from "@expo/vector-icons";
 import LoginPage from "./src/pages/LoginPage";
 import SignupPage from "./src/pages/SignupPage";
 import WalletScreen from "./src/pages/WalletScreen";
+import SearchPage from "./src/pages/SearchPage";
 
 // ─── Tab screens ──────────────────────────────────────────────────────────────
 import DashboardPage from "./src/pages/DashboardPage";
 import PortfolioPage from "./src/pages/PortfolioPage";
+
 import {
   ExchangePage,
   MarketsPage,
@@ -128,6 +130,8 @@ export default function App() {
         {/* ── Authenticated shell (tab bar lives inside here) ────────────── */}
         <Stack.Screen name="MainTabs"  component={MainTabs} />
         <Stack.Screen name="Wallet" component={WalletScreen} />
+
+        <Stack.Screen name="Search" component={SearchPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
