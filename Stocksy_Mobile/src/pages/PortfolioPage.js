@@ -18,7 +18,7 @@ import {
   SafeAreaView,
   StatusBar,
 } from "react-native";
-import { Ionicons, Plus } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import Svg, {
   Path,
   Circle,
@@ -28,7 +28,6 @@ import Svg, {
   Defs,
   LinearGradient,
   Stop,
-  add
 } from "react-native-svg";
 
 // ─── Constants ───────────────────────────────────────────────────────────────

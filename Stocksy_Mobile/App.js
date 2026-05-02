@@ -10,6 +10,7 @@ import { Ionicons } from "@expo/vector-icons";
 import LoginPage from "./src/pages/LoginPage";
 import SignupPage from "./src/pages/SignupPage";
 import WalletScreen from "./src/pages/WalletScreen";
+import ForgotPasswordScreen from "./src/pages/ForgotPasswordScreen";
 
 // ─── Tab screens ──────────────────────────────────────────────────────────────
 import DashboardPage from "./src/pages/DashboardPage";
@@ -122,8 +123,9 @@ export default function App() {
         screenOptions={{ headerShown: false }}
       >
         {/* ── Auth screens (no tab bar) ──────────────────────────────────── */}
-        <Stack.Screen name="Login"     component={LoginPage} />
-        <Stack.Screen name="Signup"    component={SignupPage} />
+        <Stack.Screen name="Login"          component={LoginPage} />
+        <Stack.Screen name="Signup"         component={SignupPage} />
+        <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
 
         {/* ── Authenticated shell (tab bar lives inside here) ────────────── */}
         <Stack.Screen name="MainTabs"  component={MainTabs} />
