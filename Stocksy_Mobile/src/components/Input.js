@@ -58,6 +58,8 @@ const Input = ({
           secureTextEntry={hideText}
           keyboardType={keyboardType}
           autoCapitalize={autoCapitalize}
+          autoComplete={isPassword ? "password" : "off"}
+          textContentType={isPassword ? "password" : "none"}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
           {...rest}
