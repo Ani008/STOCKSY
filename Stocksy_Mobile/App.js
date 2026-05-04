@@ -11,6 +11,7 @@ import LoginPage from "./src/pages/LoginPage";
 import SignupPage from "./src/pages/SignupPage";
 import WalletScreen from "./src/pages/WalletScreen";
 import ForgotPasswordScreen from "./src/pages/ForgotPasswordScreen";
+import SearchPage from "./src/pages/SearchPage";
 
 // ─── Tab screens ──────────────────────────────────────────────────────────────
 import DashboardPage from "./src/pages/DashboardPage";

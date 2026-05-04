@@ -14,6 +14,7 @@ import Button from "../components/Button";
 import StockCard from "../components/StockCard";
 import WatchlistItem from "../components/WatchlistItem";
 import MiniHoldingCard from "../components/MiniHoldingCard";
+import Search from "./SearchPage";
 
 // ─── Live market data hook ────────────────────────────────────────────────────
 import useMarketData from "../hooks/useMarketData";
@@ -164,7 +165,9 @@ const DashboardPage = ({ navigation }) => {
 
   const bankNifty = prices["NSE_INDEX|Nifty Bank"];
   const bankNiftyLtp = bankNifty?.ltp;
-  const bankNiftyChange = bankNifty ? calcChange(bankNifty.ltp, bankNifty.cp) : null;
+  const bankNiftyChange = bankNifty
+    ? calcChange(bankNifty.ltp, bankNifty.cp)
+    : null;
 
   // ── Auth ───────────────────────────────────────────────────────────────────
   const handleLogout = async () => {
@@ -195,8 +198,37 @@ const DashboardPage = ({ navigation }) => {
             <Text style={styles.userName}>Hi, Jessica H</Text>
           </View>
           <View style={styles.headerIcons}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Search")}
+              style={styles.iconButton}
+            >
+              <Ionicons name="search-outline" size={22} color="white" />
+            </TouchableOpacity>
+            <TouchableOpacity name="logout" onPress={confirmLogout} style={styles.iconButton}>
+              <MaterialCommunityIcons
+                name="logout"
+                size={22}
+                color="white"
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
 
-            <TouchableOpacity onPress={() => navigation.navigate("Search")} style={styles.iconButton}>
+        {/* ── Connection Status ─────────────────────────────────────────────── */}
+        <View style={styles.wsDot}>
+          <View
+            style={[
+              styles.dot,
+              { backgroundColor: isConnected ? "#34D399" : "#EF4444" },
+            ]}
+          />
+          <Text style={styles.wsLabel}>
+            {isConnected ? "Live Market Data" : "Disconnected"}
+          </Text>
+        </View>
+
+        {/* ── Search Button (duplicate for easy access) ─────────────────────────      
+            >
               <Ionicons name="search-outline" size={22} color="white" />
             </TouchableOpacity>
           </View>
@@ -258,7 +290,9 @@ const DashboardPage = ({ navigation }) => {
           <MiniHoldingCard
             ticker="BANK NIFTY"
             name={
-              bankNiftyLtp ? `₹${bankNiftyLtp.toLocaleString("en-IN")}` : "Loading..."
+              bankNiftyLtp
+                ? `₹${bankNiftyLtp.toLocaleString("en-IN")}`
+                : "Loading..."
             }
             change={bankNiftyChange?.label ?? undefined}
             isPositive={bankNiftyChange?.isPositive ?? true}
