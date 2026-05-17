@@ -4,29 +4,32 @@ const User = require('../models/User');
 const protect = async (req, res, next) => {
   let token;
 
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith('Bearer')
-  ) {
+  console.log('[AUTH MIDDLEWARE] Authorization header:', req.headers.authorization);
+
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
     try {
-      // Get token from header
       token = req.headers.authorization.split(' ')[1];
+      console.log('[AUTH MIDDLEWARE] Token found, verifying...');
 
-      // Verify token
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      console.log('[AUTH MIDDLEWARE] Token valid — user id:', decoded.id);
 
-      // Get user from the token
       req.user = await User.findById(decoded.id).select('-password');
 
+      if (!req.user) {
+        console.log('[AUTH MIDDLEWARE] ❌ No user found for decoded id:', decoded.id);
+        return res.status(401).json({ message: 'Not authorized, user not found' });
+      }
+
+      console.log('[AUTH MIDDLEWARE] ✅ User attached:', req.user.username);
       next();
     } catch (error) {
-      console.error(error);
-      res.status(401).json({ message: 'Not authorized' });
+      console.log('[AUTH MIDDLEWARE] ❌ Token verification failed:', error.message);
+      return res.status(401).json({ message: 'Not authorized, token invalid' });
     }
-  }
-
-  if (!token) {
-    res.status(401).json({ message: 'Not authorized, no token' });
+  } else {
+    console.log('[AUTH MIDDLEWARE] ❌ No Bearer token in Authorization header');
+    return res.status(401).json({ message: 'Not authorized, no token' });
   }
 };
 

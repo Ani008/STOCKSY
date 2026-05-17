@@ -12,6 +12,9 @@ import SignupPage from "./src/pages/SignupPage";
 import WalletScreen from "./src/pages/WalletScreen";
 import ForgotPasswordScreen from "./src/pages/ForgotPasswordScreen";
 import SearchPage from "./src/pages/SearchPage";
+import BuyOrderScreen from "./src/pages/Buyorderscreen";
+
+import StockDetailPage from "./src/pages/StockDetailPage";
 
 // ─── Tab screens ──────────────────────────────────────────────────────────────
 import DashboardPage from "./src/pages/DashboardPage";
@@ -134,6 +137,8 @@ export default function App() {
         <Stack.Screen name="Wallet" component={WalletScreen} />
 
         <Stack.Screen name="Search" component={SearchPage} />
+        <Stack.Screen name="StockDetail" component={StockDetailPage} />
+        <Stack.Screen name="BuyOrder" component={BuyOrderScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

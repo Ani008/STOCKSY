@@ -53,93 +53,108 @@ const TOP_STOCKS = [
   },
 ];
 
-const LARGE_CAP = [
+const LARGE_CAP_KEYS = [
   {
-    id: "1",
-    ticker: "RELIANCE",
-    name: "Reliance Industries Ltd.",
-    price: "$716.21",
-    change: "▲ 1.33%",
-    isPositive: true,
+    key: "NSE_EQ|INE002A01018",
+    symbol: "RELIANCE",
+    name: "Reliance Industries",
     domain: "ril.com",
   },
   {
-    id: "2",
-    ticker: "HDFCBANK",
-    name: "HDFC Bank",
-    price: "$186.40",
-    change: "▼ 0.57%",
-    isPositive: false,
+    key: "NSE_EQ|INE040A01034",
+    symbol: "HDFCBANK",
+    name: "HDFC Bank Ltd",
     domain: "hdfcbank.com",
   },
   {
-    id: "3",
-    ticker: "TCS",
+    key: "NSE_EQ|INE467B01029",
+    symbol: "TCS",
     name: "Tata Consultancy Services",
-    price: "$350.00",
-    change: "▲ 0.91%",
-    isPositive: true,
     domain: "tcs.com",
   },
   {
-    id: "4",
-    ticker: "BHARTIARTL",
-    name: "Bharti Airtel Ltd.",
-    price: "$186.40",
-    change: "▼ 0.57%",
-    isPositive: false,
+    key: "NSE_EQ|INE397D01024",
+    symbol: "BHARTIARTL",
+    name: "Bharti Airtel Ltd",
     domain: "airtel.in",
   },
   {
-    id: "5",
-    ticker: "SBIN",
+    key: "NSE_EQ|INE062A01020",
+    symbol: "SBIN",
     name: "State Bank of India",
-    price: "$186.40",
-    change: "▼ 0.57%",
-    isPositive: false,
     domain: "sbi.co.in",
   },
-];
-
-const MID_CAP = [
   {
-    id: "1",
-    ticker: "VOLTAS",
-    name: "Voltas Ltd.",
-    price: "$120.00",
-    change: "▲ 1.10%",
-    isPositive: true,
-    domain: "voltas.com",
+    key: "NSE_EQ|INE090A01021",
+    symbol: "ICICIBANK",
+    name: "ICICI Bank Ltd",
+    domain: "icicibank.com",
   },
   {
-    id: "2",
-    ticker: "CROMPTON",
-    name: "Crompton Greaves",
-    price: "$98.00",
-    change: "▼ 0.30%",
-    isPositive: false,
-    domain: "crompton.co.in",
+    key: "NSE_EQ|INE009A01021",
+    symbol: "INFY",
+    name: "Infosys Ltd",
+    domain: "infosys.com",
   },
 ];
 
-const SMALL_CAP = [
+const MID_CAP_KEYS = [
   {
-    id: "1",
-    ticker: "IRFC",
-    name: "Indian Railway Finance",
-    price: "$45.00",
-    change: "▲ 2.10%",
-    isPositive: true,
-    domain: "irfc.nic.in",
+    key: "NSE_EQ|INE860A01027",
+    symbol: "HCLTECH",
+    name: "HCL Technologies Ltd",
+    domain: "hcltech.com",
   },
   {
-    id: "2",
-    ticker: "RVNL",
-    name: "Rail Vikas Nigam Ltd.",
-    price: "$62.00",
-    change: "▼ 0.80%",
-    isPositive: false,
-    domain: "rvnl.org",
+    key: "NSE_EQ|INE669C01036",
+    symbol: "TECHM",
+    name: "Tech Mahindra Ltd",
+    domain: "techmahindra.com",
+  },
+  {
+    key: "NSE_EQ|INE081A01020",
+    symbol: "TATASTEEL",
+    name: "Tata Steel Ltd",
+    domain: "tatasteel.com",
+  },
+  {
+    key: "NSE_EQ|INE019A01038",
+    symbol: "JSWSTEEL",
+    name: "JSW Steel Ltd",
+    domain: "jsw.in",
+  },
+  {
+    key: "NSE_EQ|INE044A01036",
+    symbol: "SUNPHARMA",
+    name: "Sun Pharmaceutical",
+    domain: "sunpharma.com",
+  },
+];
+
+const SMALL_CAP_KEYS = [
+  {
+    key: "NSE_EQ|INE059A01026",
+    symbol: "CIPLA",
+    name: "Cipla Ltd",
+    domain: "cipla.com",
+  },
+  {
+    key: "NSE_EQ|INE522F01014",
+    symbol: "COALINDIA",
+    name: "Coal India Ltd",
+    domain: "coalindia.in",
+  },
+  {
+    key: "NSE_EQ|INE016A01026",
+    symbol: "DABUR",
+    name: "Dabur India Ltd",
+    domain: "dabur.com",
+  },
+  {
+    key: "NSE_EQ|INE216A01030",
+    symbol: "BRITANNIA",
+    name: "Britannia Industries",
+    domain: "britannia.co.in",
   },
 ];
 
@@ -157,6 +172,30 @@ const calcChange = (ltp, cp) => {
 const DashboardPage = ({ navigation }) => {
   // ── Live prices from WebSocket ──────────────────────────────────────────────
   const { prices, isConnected } = useMarketData();
+
+  // ── Renders a WatchlistItem with live price from WebSocket ──────────────────
+  const renderLiveStock = (item) => {
+    const live = prices[item.key];
+    const change = live ? calcChange(live.ltp, live.cp) : null;
+    return (
+      <WatchlistItem
+        key={item.key}
+        ticker={item.symbol}
+        name={item.name}
+        price={live?.ltp ? `₹${live.ltp.toLocaleString("en-IN")}` : "—"}
+        change={change?.label}
+        isPositive={change?.isPositive ?? true}
+        logoUrl={`https://img.logo.dev/${item.domain}?token=pk_Bym4BAakTJudMK4MGnfpnw`}
+        onPress={() => navigation.navigate("StockDetail", {   // ← add this
+        instrumentKey: item.key,
+        symbol: item.symbol,
+        name: item.name,
+        sector: item.sector ?? "Equity",
+        domain: item.domain,
+      })}
+      />
+    );
+  };
 
   // Pull Nifty 50 data — key matches what Python saves to Redis (Section 9.2)
   const nifty = prices["NSE_INDEX|Nifty 50"];
@@ -204,12 +243,12 @@ const DashboardPage = ({ navigation }) => {
             >
               <Ionicons name="search-outline" size={22} color="white" />
             </TouchableOpacity>
-            <TouchableOpacity name="logout" onPress={confirmLogout} style={styles.iconButton}>
-              <MaterialCommunityIcons
-                name="logout"
-                size={22}
-                color="white"
-              />
+            <TouchableOpacity
+              name="logout"
+              onPress={confirmLogout}
+              style={styles.iconButton}
+            >
+              <MaterialCommunityIcons name="logout" size={22} color="white" />
             </TouchableOpacity>
           </View>
         </View>
@@ -227,7 +266,7 @@ const DashboardPage = ({ navigation }) => {
           </Text>
         </View>
 
-        {/* ── Search Button (duplicate for easy access) ─────────────────────────      
+        {/* ── Search Button (duplicate for easy access) ─────────────────────────        
             >
               <Ionicons name="search-outline" size={22} color="white" />
             </TouchableOpacity>
@@ -327,65 +366,32 @@ const DashboardPage = ({ navigation }) => {
           ))}
         </ScrollView>
 
-        {/* ── Large Cap ───────────────────────────────────────────────────── */}
+        {/* ── Large Cap ─────────────────────────────────────────────────── */}
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Large Cap Stocks</Text>
           <TouchableOpacity>
             <Text style={styles.seeAll}>+ Add</Text>
           </TouchableOpacity>
         </View>
-        {LARGE_CAP.map((item) => (
-          <WatchlistItem
-            key={item.id}
-            ticker={item.ticker}
-            name={item.name}
-            price={item.price}
-            change={item.change}
-            isPositive={item.isPositive}
-            logoUrl={`https://img.logo.dev/${item.domain}?token=pk_Bym4BAakTJudMK4MGnfpnw`}
-            onPress={() => {}}
-          />
-        ))}
+        {LARGE_CAP_KEYS.map(renderLiveStock)}
 
-        {/* ── Mid Cap ─────────────────────────────────────────────────────── */}
+        {/* ── Mid Cap ───────────────────────────────────────────────────── */}
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Mid Cap Stocks</Text>
           <TouchableOpacity>
             <Text style={styles.seeAll}>+ Add</Text>
           </TouchableOpacity>
         </View>
-        {MID_CAP.map((item) => (
-          <WatchlistItem
-            key={item.id}
-            ticker={item.ticker}
-            name={item.name}
-            price={item.price}
-            change={item.change}
-            isPositive={item.isPositive}
-            logoUrl={`https://img.logo.dev/${item.domain}?token=pk_Bym4BAakTJudMK4MGnfpnw`}
-            onPress={() => {}}
-          />
-        ))}
+        {MID_CAP_KEYS.map(renderLiveStock)}
 
-        {/* ── Small Cap ───────────────────────────────────────────────────── */}
+        {/* ── Small Cap ─────────────────────────────────────────────────── */}
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Small Cap Stocks</Text>
           <TouchableOpacity>
             <Text style={styles.seeAll}>+ Add</Text>
           </TouchableOpacity>
         </View>
-        {SMALL_CAP.map((item) => (
-          <WatchlistItem
-            key={item.id}
-            ticker={item.ticker}
-            name={item.name}
-            price={item.price}
-            change={item.change}
-            isPositive={item.isPositive}
-            logoUrl={`https://img.logo.dev/${item.domain}?token=pk_Bym4BAakTJudMK4MGnfpnw`}
-            onPress={() => {}}
-          />
-        ))}
+        {SMALL_CAP_KEYS.map(renderLiveStock)}
       </ScrollView>
     </SafeAreaView>
   );
