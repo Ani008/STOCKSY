@@ -1,6 +1,6 @@
 const INSTRUMENTS = {
   // Indices
-  "NSE_INDEX|Nifty 50":      { symbol: "NIFTY 50",    name: "Nifty 50 Index",           sector: "Index" },
+  "NSE_INDEX|Nifty 50":      { symbol: "NIFTY 50",    name: "Nifty 50 Index",            sector: "Index" },
   "NSE_INDEX|Nifty Bank":    { symbol: "BANKNIFTY",   name: "Nifty Bank Index",          sector: "Index" },
   
 
@@ -66,6 +66,12 @@ const INSTRUMENTS = {
   "NSE_EQ|INE047A01021":     { symbol: "GRASIM",      name: "Grasim Industries Ltd",     sector: "Infrastructure" },
   "NSE_EQ|INE423A01024":     { symbol: "ADANIENT",    name: "Adani Enterprises Ltd",     sector: "Infrastructure" },
   "NSE_EQ|INE1NPP01017":     { symbol: "SIEMENS",     name: "Siemens Ltd",               sector: "Capital Goods" },
+
+  "NSE_EQ|INE205A01025":     { symbol: "VEDL",        name: "Vedanta Ltd",               sector: "Mining & Metals" },
+  "NSE_EQ|INE263A01024":     { symbol: "BEL",         name: "Bharat Electronics Ltd",    sector: "Defence" },
+  "NSE_EQ|INE053F01010":     { symbol: "IRFC",        name: "IRFC Ltd",                  sector: "Financial Services" },
+  "NSE_EQ|INE040H01021":     { symbol: "SUZLON",      name: "Suzlon Energy Ltd",         sector: "Renewable Energy" },
 };
+
 
 module.exports = INSTRUMENTS;

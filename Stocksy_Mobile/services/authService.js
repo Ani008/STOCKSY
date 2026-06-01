@@ -1,7 +1,7 @@
-import api from './api';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import api from "./api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const TOKEN_KEY = 'token';
+const TOKEN_KEY = "token";
 
 // ─── Token helpers ────────────────────────────────────────────────────────────
 
@@ -24,20 +24,38 @@ const clearToken = async () => {
 // ─── Auth calls ───────────────────────────────────────────────────────────────
 
 export const signup = async (username, email, password) => {
-  const response = await api.post('/auth/signup', { username, email, password });
+  const response = await api.post("/auth/signup", {
+    username,
+    email,
+    password,
+  });
   await storeToken(response.data.token);
   return response.data;
 };
 
 export const login = async (email, password) => {
-  const response = await api.post('/auth/login', { email, password });
+  const response = await api.post("/auth/login", { email, password });
+
   await storeToken(response.data.token);
+  console.log("LOGIN RESPONSE:", response.data);
+
+  await AsyncStorage.setItem(
+    "user",
+    JSON.stringify({
+      id: response.data._id,
+      username: response.data.username,
+      email: response.data.email,
+    }),
+  );
+  const test = await AsyncStorage.getItem("user");
+  console.log("STORED USER:", test);
+
   return response.data;
 };
 
 export const logout = async () => {
   await clearToken();
-  const response = await api.post('/auth/logout');
+  const response = await api.post("/auth/logout");
   return response.data;
 };
 

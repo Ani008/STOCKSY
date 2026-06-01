@@ -23,18 +23,19 @@
 //
 // ══════════════════════════════════════════════════════════════════════════════
 
-const WebSocket = require('ws');
-const INSTRUMENTS = require('../config/instruments');
+const WebSocket = require("ws");
+const connectedClients = new Map();
+const INSTRUMENTS = require("../config/instruments");
 
 // ── Flexible import — handles all 3 common export shapes ────────────────────
 // Shape A: module.exports = client          → require() returns client directly
 // Shape B: module.exports = { redisClient } → named export
 // Shape C: module.exports = { client }      → named export
-const _redisImport = require('./redisService');
+const _redisImport = require("./redisService");
 const redisClient =
-  _redisImport.redisClient ||   // shape B
-  _redisImport.client ||        // shape C
-  _redisImport;                 // shape A (default export)
+  _redisImport.redisClient || // shape B
+  _redisImport.client || // shape C
+  _redisImport; // shape A (default export)
 
 // All instrument keys — must match exactly what Python saves as stock:{key}
 const INSTRUMENT_KEYS = [
@@ -85,10 +86,15 @@ const INSTRUMENT_KEYS = [
   "NSE_EQ|INE047A01021",
   "NSE_EQ|INE423A01024",
   "NSE_EQ|INE1NPP01017",
+
+  "NSE_EQ|INE205A01025",
+  "NSE_EQ|INE263A01024",
+  "NSE_EQ|INE053F01010",
+  "NSE_EQ|INE040H01021",
 ];
 
 // Pre-build the Redis keys array once — no string building on every tick
-const REDIS_KEYS = INSTRUMENT_KEYS.map(k => `stock:${k}`);
+const REDIS_KEYS = INSTRUMENT_KEYS.map((k) => `stock:${k}`);
 
 // Push interval in ms
 const PUSH_INTERVAL_MS = 800; // slightly under 1s so app always feels live
@@ -96,8 +102,13 @@ const PUSH_INTERVAL_MS = 800; // slightly under 1s so app always feels live
 function initWebSocket(server) {
   const wss = new WebSocket.Server({ server });
 
-  wss.on('connection', (ws) => {
-    console.log('React Native client connected');
+  wss.on("connection", (ws, req) => {
+    const userId = req.headers["x-user-id"];
+
+    if (userId) {
+      connectedClients.set(userId, ws);
+    }
+    console.log("React Native client connected");
 
     let intervalId = null;
 
@@ -126,7 +137,7 @@ function initWebSocket(server) {
               ltpc: feedData.ltpc || feedData,
               symbol: meta.symbol || key,
               name: meta.name || key,
-              sector: meta.sector || 'Equity',
+              sector: meta.sector || "Equity",
             };
             hasData = true;
           } catch (parseErr) {
@@ -136,21 +147,27 @@ function initWebSocket(server) {
 
         if (!hasData) {
           if (ws.readyState === WebSocket.OPEN) {
-            ws.send(JSON.stringify({ error: 'No data in Redis yet. Is Python running?' }));
+            ws.send(
+              JSON.stringify({
+                error: "No data in Redis yet. Is Python running?",
+              }),
+            );
           }
           return;
         }
 
         if (ws.readyState === WebSocket.OPEN) {
-          ws.send(JSON.stringify({
-            type: 'MARKET_DATA',
-            timestamp: Date.now(),
-            data,
-          }));
+          ws.send(
+            JSON.stringify({
+              type: "MARKET_DATA",
+              timestamp: Date.now(),
+              data,
+            }),
+          );
         }
       } catch (err) {
         // Redis error — log but don't crash the interval
-        console.error('Redis read error in websocketService:', err.message);
+        console.error("Redis read error in websocketService:", err.message);
       }
     }
 
@@ -158,19 +175,33 @@ function initWebSocket(server) {
     pushMarketData();
     intervalId = setInterval(pushMarketData, PUSH_INTERVAL_MS);
 
-    ws.on('close', () => {
-      console.log('React Native client disconnected');
+    ws.on("close", () => {
+      if (userId) {
+        connectedClients.delete(userId);
+      }
+
+      console.log("React Native client disconnected");
       if (intervalId) clearInterval(intervalId);
     });
 
-    ws.on('error', (err) => {
-      console.error('WebSocket client error:', err.message);
+    ws.on("error", (err) => {
+      console.error("WebSocket client error:", err.message);
       if (intervalId) clearInterval(intervalId);
     });
   });
 
-  console.log('WebSocket enabled on port 5000');
+  console.log("WebSocket enabled on port 5000");
   return wss;
 }
 
-module.exports = { initWebSocket };
+function notifyClient(userId, payload) {
+  const client = connectedClients.get(String(userId));
+
+  if (client && client.readyState === WebSocket.OPEN) {
+    client.send(JSON.stringify(payload));
+  }
+}
+module.exports = {
+  initWebSocket,
+  notifyClient,
+};

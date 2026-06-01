@@ -1,5 +1,6 @@
-const jwt = require('jsonwebtoken');
+const jwt  = require('jsonwebtoken');
 const User = require('../models/User');
+const { getPgUserId } = require('../config/postgres');
 
 const protect = async (req, res, next) => {
   let token;
@@ -21,7 +22,11 @@ const protect = async (req, res, next) => {
         return res.status(401).json({ message: 'Not authorized, user not found' });
       }
 
-      console.log('[AUTH MIDDLEWARE] ✅ User attached:', req.user.username);
+      // ── OMS: attach PostgreSQL UUID so order routes can use it directly ──
+      req.user.pgId    = await getPgUserId(decoded.id);  // PostgreSQL UUID
+      req.user.mongoId = decoded.id;                     // MongoDB ObjectId
+      console.log('[AUTH MIDDLEWARE] ✅ User attached:', req.user.username, '| pgId:', req.user.pgId);
+
       next();
     } catch (error) {
       console.log('[AUTH MIDDLEWARE] ❌ Token verification failed:', error.message);

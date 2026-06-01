@@ -1,6 +1,7 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { TouchableOpacity } from "react-native";
 
 /**
  * StockCard — Reusable horizontal-scroll stock card for Top Stocks section.
@@ -20,25 +21,38 @@ const StockCard = ({
   price,
   change,
   isPositive = true,
-  iconName = "bar-chart-outline",
-  iconColor = "#3B82F6",
+  logoUrl,
+  onPress,
 }) => {
   return (
-    <View style={styles.card}>
-      <View style={styles.iconWrapper}>
-        <Ionicons name={iconName} size={22} color={iconColor} />
+    <TouchableOpacity activeOpacity={0.8} onPress={onPress}>
+      <View style={styles.card}>
+        <View style={styles.iconWrapper}>
+          {logoUrl ? (
+            <Image source={{ uri: logoUrl }} style={styles.logo} />
+          ) : (
+            <Text style={styles.fallbackText}>
+              {ticker?.slice(0, 2).toUpperCase()}
+            </Text>
+          )}
+        </View>
+        <Text style={styles.ticker}>{name}</Text>
+
+        <View style={styles.priceRow}>
+          <Text style={styles.price}>{price}</Text>
+          {change ? (
+            <Text
+              style={[
+                styles.change,
+                { color: isPositive ? "#10B981" : "#EF4444" },
+              ]}
+            >
+              {change}
+            </Text>
+          ) : null}
+        </View>
       </View>
-      <Text style={styles.ticker}>{name}</Text>
-      
-      <View style={styles.priceRow}>
-        <Text style={styles.price}>{price}</Text>
-        {change ? (
-          <Text style={[styles.change, { color: isPositive ? "#10B981" : "#EF4444" }]}>
-            {change}
-          </Text>
-        ) : null}
-      </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -84,6 +98,18 @@ const styles = StyleSheet.create({
   },
   price: { fontSize: 15, fontWeight: "bold", color: "#1E293B" },
   change: { fontSize: 11, fontWeight: "600" },
+
+  logo: {
+    width: 30,
+    height: 30,
+    borderRadius: 8,
+  },
+
+  fallbackText: {
+    fontSize: 13,
+    fontWeight: "700",
+    color: "#3B82F6",
+  },
 });
 
 export default StockCard;

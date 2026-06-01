@@ -18,6 +18,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import CreateWalletModal from "../components/CreateWalletModal";
 import { walletService } from "../../services/walletService";
 import { fetchWallets, createWallet } from "../../services/walletService";
+import { placeOrder } from "../../services/orderService";
 import useMarketData from "../hooks/useMarketData";
 
 /**
@@ -99,7 +100,7 @@ export default function BuyOrderScreen({ navigation, route }) {
       setWallets(data.wallets || []);
       setDemoBalance(data.demoBalance || 0);
       if (data.wallets && data.wallets.length > 0) {
-        setSelectedWalletId(data.wallets[0]._id);
+        setSelectedWalletId(data.wallets[0].id);
       }
     } catch (e) {
       Alert.alert("Error", "Could not load wallets. Please try again.");
@@ -116,7 +117,7 @@ export default function BuyOrderScreen({ navigation, route }) {
       setDemoBalance(data.demoBalance || 0);
       // Auto-select the newly created wallet
       const newest = data.wallets?.[data.wallets.length - 1];
-      if (newest) setSelectedWalletId(newest._id);
+      if (newest) setSelectedWalletId(newest.id);
       setModalVisible(false);
     } catch (e) {
       Alert.alert("Error", "Could not create wallet.");
@@ -131,7 +132,7 @@ export default function BuyOrderScreen({ navigation, route }) {
   const qtyNum = parseInt(qty) || 0;
   const orderTotal = effectivePrice * qtyNum;
 
-  const selectedWallet = wallets.find((w) => w._id === selectedWalletId);
+  const selectedWallet = wallets.find((w) => w.id === selectedWalletId);
   const walletBalance = selectedWallet?.balance || 0;
   const canAfford = orderType === "BUY" ? walletBalance >= orderTotal : true;
   const canPlace = qtyNum > 0 && selectedWalletId && canAfford && !placingOrder;
@@ -143,7 +144,16 @@ export default function BuyOrderScreen({ navigation, route }) {
     try {
       // TODO: wire to your order API when ready
       // await orderService.placeOrder({ instrumentKey, symbol, qty: qtyNum, price: effectivePrice, tradeType, orderType, walletId: selectedWalletId });
-      await new Promise((res) => setTimeout(res, 800)); // simulate API
+      await placeOrder({
+        instrument_key: instrumentKey,
+        symbol,
+        quantity: qtyNum,
+        price: effectivePrice,
+        order_type: orderMode.toUpperCase(),
+        side: orderType,
+        wallet_id: selectedWalletId,
+        trade_type: tradeType,
+      });
       Alert.alert(
         `Order Placed! 🎉`,
         `${orderType} ${qtyNum} × ${symbol}\n@ ₹${effectivePrice.toFixed(2)}\nTotal: ₹${orderTotal.toLocaleString("en-IN", { minimumFractionDigits: 2 })}\nWallet: ${selectedWallet?.name}`,
@@ -436,7 +446,7 @@ export default function BuyOrderScreen({ navigation, route }) {
                   style={{ marginBottom: 10 }}
                 >
                   {wallets.map((w, i) => {
-                    const isSelected = w._id === selectedWalletId;
+                    const isSelected = w.id === selectedWalletId;
                     const COLORS = [
                       "#3B82F6",
                       "#00C851",
@@ -447,7 +457,7 @@ export default function BuyOrderScreen({ navigation, route }) {
                     const wColor = COLORS[i % COLORS.length];
                     return (
                       <TouchableOpacity
-                        key={w._id}
+                        key={w.id}
                         style={[
                           styles.walletChip,
                           isSelected && {
@@ -455,7 +465,7 @@ export default function BuyOrderScreen({ navigation, route }) {
                             backgroundColor: wColor + "15",
                           },
                         ]}
-                        onPress={() => setSelectedWalletId(w._id)}
+                        onPress={() => setSelectedWalletId(w.id)}
                       >
                         <View
                           style={[
@@ -729,7 +739,7 @@ const styles = StyleSheet.create({
     paddingVertical: 13,
     fontSize: 18,
     fontWeight: "700",
-    color: "#1E293B"
+    color: "#1E293B",
   },
 
   // Summary card

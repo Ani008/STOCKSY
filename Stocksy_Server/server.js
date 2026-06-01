@@ -1,4 +1,5 @@
 require('dotenv').config();
+const { connectRedis } = require('./config/redis');
 const express = require('express');
 const cors = require('cors');
 const http = require('http');
@@ -6,7 +7,7 @@ const connectDB = require('./config/db');
 require('./config/postgres');
 const { initWebSocket } = require('./services/websocketService');
 
-
+connectRedis();
 const app = express();
 connectDB();
 
@@ -32,6 +33,8 @@ app.use((req, res, next) => {
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/wallet', require('./routes/wallet'));
 app.use('/api/historical', require('./routes/historical'));
+app.use('/api/fundamentals', require('./routes/fundamentals'));
+app.use('/api', require('./routes/orders'));
 
 // ─── Health check — hit this first from the app to confirm connectivity ───────
 // From the app: fetch('http://<YOUR_LAN_IP>:5000/health').then(r => r.text()).then(console.log)

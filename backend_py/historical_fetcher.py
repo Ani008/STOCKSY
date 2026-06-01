@@ -66,6 +66,11 @@ INSTRUMENT_KEYS = [
     "NSE_EQ|INE047A01021",
     "NSE_EQ|INE423A01024",
     "NSE_EQ|INE1NPP01017",
+
+    "NSE_EQ|INE205A01025",
+    "NSE_EQ|INE263A01024",
+    "NSE_EQ|INE053F01010",
+    "NSE_EQ|INE040H01021",
 ]
 
 # ─── Range config ─────────────────────────────────────────────────────────────

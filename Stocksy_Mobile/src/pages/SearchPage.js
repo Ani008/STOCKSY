@@ -34,10 +34,9 @@ const INSTRUMENTS = [
   { key: "NSE_EQ|INE090A01021",     symbol: "ICICIBANK",   name: "ICICI Bank Ltd",             domain: "icicibank.com",     sector: "Banking" },
   { key: "NSE_EQ|INE062A01020",     symbol: "SBIN",        name: "State Bank of India",        domain: "sbi.co.in",         sector: "Banking" },
   { key: "NSE_EQ|INE238A01034",     symbol: "AXISBANK",    name: "Axis Bank Ltd",              domain: "axisbank.com",      sector: "Banking" },
-  { key: "NSE_EQ|INE296A01032",     symbol: "BAJFINANCE",  name: "Bajaj Finance Ltd",          domain: "bajajfinserv.in",   sector: "Finance" },
+  { key: "NSE_EQ|INE296A01032",     symbol: "BAJFINANCE",  name: "Bajaj Finance Ltd",          domain: "bajajfinserv.in",   sector: "Banking" },
   { key: "NSE_EQ|INE237A01036",     symbol: "KOTAKBANK",   name: "Kotak Mahindra Bank",        domain: "kotak.com",         sector: "Banking" },
   { key: "NSE_EQ|INE795G01014",     symbol: "HDFCLIFE",    name: "HDFC Life Insurance",        domain: "hdfclife.com",      sector: "Insurance" },
-  { key: "NSE_EQ|INE918I01026",     symbol: "BAJAJFINSV",  name: "Bajaj Finserv Ltd",          domain: "bajajfinserv.in",   sector: "Finance" },
   { key: "NSE_EQ|INE467B01029",     symbol: "TCS",         name: "Tata Consultancy Services",  domain: "tcs.com",           sector: "IT" },
   { key: "NSE_EQ|INE009A01021",     symbol: "INFY",        name: "Infosys Ltd",                domain: "infosys.com",       sector: "IT" },
   { key: "NSE_EQ|INE075A01022",     symbol: "WIPRO",       name: "Wipro Ltd",                  domain: "wipro.com",         sector: "IT" },
@@ -72,9 +71,14 @@ const INSTRUMENTS = [
   { key: "NSE_EQ|INE364U01010",     symbol: "ADANIGREEN",  name: "Adani Green Energy",         domain: "adanigreenenergy.com",sector: "Energy" },
   { key: "NSE_EQ|INE481G01011",     symbol: "ULTRACEMCO",  name: "UltraTech Cement Ltd",       domain: "ultratechcement.com",sector: "Cement" },
   { key: "NSE_EQ|INE018A01030",     symbol: "LT",          name: "Larsen & Toubro Ltd",        domain: "larsentoubro.com",  sector: "Infrastructure" },
-  { key: "NSE_EQ|INE047A01021",     symbol: "GRASIM",      name: "Grasim Industries",          domain: "grasim.com",        sector: "Cement" },
+  { key: "NSE_EQ|INE047A01021",     symbol: "GRASIM",      name: "Grasim Industries",          domain: "grasim.com",        sector: "Chemicals" },
   { key: "NSE_EQ|INE423A01024",     symbol: "ADANIENT",    name: "Adani Enterprises Ltd",      domain: "adanienterprises.com",sector: "Conglomerate" },
   { key: "NSE_EQ|INE1NPP01017",     symbol: "SIEMENS",     name: "Siemens Ltd",                domain: "siemens.co.in",     sector: "Infrastructure" },
+
+  { key: "NSE_EQ|INE205A01025",     symbol: "VEDL",        name: "Vedanta Ltd",                domain: "vedanta-zincinternational.com",       sector: "Mining & Metals" },
+  { key: "NSE_EQ|INE263A01024",     symbol: "BEL",         name: "Bharat Electronics Ltd",     domain: "bel-india.in",                       sector: "Defense" },
+  { key: "NSE_EQ|INE053F01010",     symbol: "IRFC",        name: "Indian Railway Finance Corporation", domain: "irfc.co.in",                  sector: "Financial Services" },
+  { key: "NSE_EQ|INE040H01021",     symbol: "SUZLON",      name: "Suzlon Energy Ltd",          domain: "suzlon.de",                       sector: "Renewable Energy" },
 ];
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -306,7 +310,6 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     paddingBottom: 8,
     gap: 12,
-    marginTop: 30,
   },
   backButton: {
     width: 38,

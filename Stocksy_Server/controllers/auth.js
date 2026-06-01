@@ -1,7 +1,7 @@
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
-const pool = require("../config/postgres");
+const { pool } = require("../config/postgres");
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -63,13 +63,12 @@ const signupUser = async (req, res) => {
     await pool.query(
       `
   INSERT INTO users (
-    mongo_user_id,
-    username,
+    mongo_id,
     email
   )
-  VALUES ($1, $2, $3)
+  VALUES ($1, $2)
   `,
-      [user._id.toString(), user.username, user.email],
+      [user._id.toString(), user.email],
     );
     console.log("[SIGNUP] ✅ User created:", user._id);
 

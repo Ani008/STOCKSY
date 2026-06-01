@@ -1,4 +1,5 @@
 import React from "react";
+import { StatusBar } from "expo-status-bar";
 import {
   View,
   Text,
@@ -9,6 +10,8 @@ import {
   Alert,
 } from "react-native";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect, useState } from "react";
 
 import Button from "../components/Button";
 import StockCard from "../components/StockCard";
@@ -23,33 +26,31 @@ import useMarketData from "../hooks/useMarketData";
 const TOP_STOCKS = [
   {
     id: "1",
-    ticker: "TSLA",
-    name: "Tesla, Inc.",
-    price: "$131.46",
-    change: "▲ 2.13%",
-    isPositive: true,
-    iconName: "logo-tableau",
-    iconColor: "#E31937",
+    key: "NSE_EQ|INE205A01025",
+    ticker: "VEDL",
+    name: "Vedanta",
+    domain: "vedanta-zincinternational.com",
   },
   {
     id: "2",
-    ticker: "MSFT",
-    name: "Microsoft, Co.",
-    price: "$120.32",
-    change: "▲ 0.84%",
-    isPositive: true,
-    iconName: "logo-windows",
-    iconColor: "#00A4EF",
+    key: "NSE_EQ|INE263A01024",
+    ticker: "BEL",
+    name: "Bharat Electronics",
+    domain: "bel-india.in",
   },
   {
     id: "3",
-    ticker: "GOOGL",
-    name: "Alphabet, Inc.",
-    price: "$175.10",
-    change: "▼ 0.42%",
-    isPositive: false,
-    iconName: "search-outline",
-    iconColor: "#EA4335",
+    key: "NSE_EQ|INE053F01010",
+    ticker: "IRFC",
+    name: "IRFC",
+    domain: "irfc.co.in",
+  },
+  {
+    id: "4",
+    key: "NSE_EQ|INE040H01021",
+    ticker: "SUZLON",
+    name: "Suzlon Energy",
+    domain: "suzlon.de",
   },
 ];
 
@@ -172,6 +173,19 @@ const calcChange = (ltp, cp) => {
 const DashboardPage = ({ navigation }) => {
   // ── Live prices from WebSocket ──────────────────────────────────────────────
   const { prices, isConnected } = useMarketData();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const loadUser = async () => {
+      const stored = await AsyncStorage.getItem("user");
+
+      if (stored) {
+        setUser(JSON.parse(stored));
+      }
+    };
+
+    loadUser();
+  }, []);
 
   // ── Renders a WatchlistItem with live price from WebSocket ──────────────────
   const renderLiveStock = (item) => {
@@ -186,13 +200,42 @@ const DashboardPage = ({ navigation }) => {
         change={change?.label}
         isPositive={change?.isPositive ?? true}
         logoUrl={`https://img.logo.dev/${item.domain}?token=pk_Bym4BAakTJudMK4MGnfpnw`}
-        onPress={() => navigation.navigate("StockDetail", {   // ← add this
-        instrumentKey: item.key,
-        symbol: item.symbol,
-        name: item.name,
-        sector: item.sector ?? "Equity",
-        domain: item.domain,
-      })}
+        onPress={() =>
+          navigation.navigate("StockDetail", {
+            // ← add this
+            instrumentKey: item.key,
+            symbol: item.symbol,
+            name: item.name,
+            sector: item.sector ?? "Equity",
+            domain: item.domain,
+          })
+        }
+      />
+    );
+  };
+
+  const renderTopStock = (item) => {
+    const live = prices[item.key];
+    const change = live ? calcChange(live.ltp, live.cp) : null;
+
+    return (
+      <StockCard
+        key={item.key}
+        ticker={item.ticker}
+        name={item.name}
+        logoUrl={`https://img.logo.dev/${item.domain}?token=pk_Bym4BAakTJudMK4MGnfpnw`}
+        price={live?.ltp ? `₹${live.ltp.toLocaleString("en-IN")}` : "—"}
+        change={change?.label}
+        isPositive={change?.isPositive ?? true}
+        onPress={() =>
+          navigation.navigate("StockDetail", {
+            instrumentKey: item.key,
+            symbol: item.ticker,
+            name: item.name,
+            sector: item.sector ?? "Equity",
+            domain: item.domain,
+          })
+        }
       />
     );
   };
@@ -234,7 +277,10 @@ const DashboardPage = ({ navigation }) => {
         <View style={styles.headerRow}>
           <View>
             <Text style={styles.greetingText}>Good Morning!</Text>
-            <Text style={styles.userName}>Hi, Jessica H</Text>
+
+            <Text style={styles.userName}>
+              Hi, {user?.username || "Trader"}
+            </Text>
           </View>
           <View style={styles.headerIcons}>
             <TouchableOpacity
@@ -342,9 +388,6 @@ const DashboardPage = ({ navigation }) => {
         {/* ── Top Stocks ──────────────────────────────────────────────────── */}
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Top Stocks</Text>
-          <TouchableOpacity>
-            <Text style={styles.seeAll}>See All</Text>
-          </TouchableOpacity>
         </View>
 
         <ScrollView
@@ -352,44 +395,24 @@ const DashboardPage = ({ navigation }) => {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.horizontalScroll}
         >
-          {TOP_STOCKS.map((stock) => (
-            <StockCard
-              key={stock.id}
-              ticker={stock.ticker}
-              name={stock.name}
-              price={stock.price}
-              change={stock.change}
-              isPositive={stock.isPositive}
-              iconName={stock.iconName}
-              iconColor={stock.iconColor}
-            />
-          ))}
+          {TOP_STOCKS.map(renderTopStock)}
         </ScrollView>
 
         {/* ── Large Cap ─────────────────────────────────────────────────── */}
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Large Cap Stocks</Text>
-          <TouchableOpacity>
-            <Text style={styles.seeAll}>+ Add</Text>
-          </TouchableOpacity>
         </View>
         {LARGE_CAP_KEYS.map(renderLiveStock)}
 
         {/* ── Mid Cap ───────────────────────────────────────────────────── */}
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Mid Cap Stocks</Text>
-          <TouchableOpacity>
-            <Text style={styles.seeAll}>+ Add</Text>
-          </TouchableOpacity>
         </View>
         {MID_CAP_KEYS.map(renderLiveStock)}
 
         {/* ── Small Cap ─────────────────────────────────────────────────── */}
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Small Cap Stocks</Text>
-          <TouchableOpacity>
-            <Text style={styles.seeAll}>+ Add</Text>
-          </TouchableOpacity>
         </View>
         {SMALL_CAP_KEYS.map(renderLiveStock)}
       </ScrollView>
@@ -398,23 +421,26 @@ const DashboardPage = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: "#F8FAFC" },
+  safe: {
+    flex: 1,
+    backgroundColor: "#3B82F6",
+  },
 
   headerBackground: {
     position: "absolute",
     top: 0,
     left: 0,
     right: 0,
-    height: 240,
+    height: 300, // instead of 240
     backgroundColor: "#3B82F6",
     borderBottomLeftRadius: 32,
     borderBottomRightRadius: 32,
   },
-
   scroll: {
     paddingHorizontal: 20,
     paddingTop: 20,
     paddingBottom: 110,
+    backgroundColor: "#F8FAFC",
   },
 
   headerRow: {
@@ -422,8 +448,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 22,
-    marginTop: 48,
   },
+
   greetingText: { color: "rgba(255,255,255,0.8)", fontSize: 14 },
   userName: { color: "white", fontSize: 24, fontWeight: "bold", marginTop: 2 },
   headerIcons: { flexDirection: "row", gap: 12, alignItems: "center" },
@@ -497,7 +523,6 @@ const styles = StyleSheet.create({
     marginTop: 24,
   },
   sectionTitle: { fontSize: 18, fontWeight: "bold", color: "#1E293B" },
-  seeAll: { color: "#3B82F6", fontWeight: "600", fontSize: 14 },
 
   horizontalScroll: { gap: 14, paddingRight: 4, marginBottom: 28 },
 });

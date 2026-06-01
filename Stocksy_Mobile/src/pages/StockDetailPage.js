@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -10,10 +10,12 @@ import {
   Image,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { BarChart } from "react-native-gifted-charts";
 
 import useMarketData from "../hooks/useMarketData";
 import useHistoricalData from "../hooks/useHistoricalData";
 import ChartView from "../components/ChartView";
+import useFundamentals from "../hooks/useFundamentals";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
@@ -47,6 +49,8 @@ const StockDetailPage = ({ navigation, route }) => {
   const [activeRange, setActiveRange] = useState("1M");
 
   const { prices, isConnected } = useMarketData();
+  const { fundamentals, loading: fundamentalsLoading } =
+    useFundamentals(symbol);
   const live = prices[instrumentKey];
   const ltp = live?.ltp ?? null;
   const cp = live?.cp ?? null;
@@ -66,6 +70,53 @@ const StockDetailPage = ({ navigation, route }) => {
   const accentBg = isPositive
     ? "rgba(16,185,129,0.12)"
     : "rgba(239,68,68,0.12)";
+
+  const [showFundamentals, setShowFundamentals] = useState(false);
+
+  const [showDetails, setShowDetails] = useState(false);
+  const [financialType, setFinancialType] = useState("quarterly");
+  const financialData = fundamentals?.financials?.[financialType] || [];
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const selectedData = financialData[selectedIndex];
+  const profile = fundamentals?.profile;
+
+  const shareholding = fundamentals?.shareholding?.quarters || [];
+
+  const [selectedHoldingIndex, setSelectedHoldingIndex] = useState(0);
+
+  const selectedHolding = shareholding[selectedHoldingIndex];
+
+  useEffect(() => {
+    if (financialData.length > 0) {
+      setSelectedIndex(financialData.length - 1);
+    }
+  }, [financialType, financialData]);
+
+  const revenueData = financialData.map((item, index) => ({
+    value: item.revenue,
+
+    label: item.period,
+
+    frontColor: index === selectedIndex ? "#3B82F6" : "rgba(59,130,246,0.25)",
+
+    onPress: () => setSelectedIndex(index),
+
+    labelTextStyle: {
+      color: index === selectedIndex ? "#1E293B" : "#94A3B8",
+
+      fontWeight: index === selectedIndex ? "700" : "500",
+
+      fontSize: 11,
+    },
+  }));
+
+  const profitData = financialData.map((item, index) => ({
+    value: item.profit,
+
+    frontColor: index === selectedIndex ? "#10B981" : "rgba(16,185,129,0.25)",
+
+    onPress: () => setSelectedIndex(index),
+  }));
 
   return (
     <SafeAreaView style={styles.safe}>
@@ -152,55 +203,322 @@ const StockDetailPage = ({ navigation, route }) => {
           </View>
         </View>
 
-        {/* ── Stats row ───────────────────────────────────────────────────── */}
-        <View style={styles.statsRow}>
-          <StatPill
-            label="Open"
-            value={
-              candles.length > 0
-                ? formatPrice(candles[candles.length - 1]?.open)
-                : "—"
-            }
-          />
-          <StatPill
-            label="High"
-            value={
-              candles.length > 0
-                ? formatPrice(candles[candles.length - 1]?.high)
-                : "—"
-            }
-            color="#10B981"
-          />
-          <StatPill
-            label="Low"
-            value={
-              candles.length > 0
-                ? formatPrice(candles[candles.length - 1]?.low)
-                : "—"
-            }
-            color="#EF4444"
-          />
-          <StatPill label="Close" value={formatPrice(cp)} />
+        {/* ── Details Dropdown ─────────────────────────────────────────── */}
+        <View style={styles.card}>
+          <TouchableOpacity
+            style={styles.dropdownHeader}
+            onPress={() => setShowDetails(!showDetails)}
+          >
+            <View style={styles.sectionTitleRow}>
+              <Ionicons
+                name="information-circle-outline"
+                size={18}
+                color="black"
+              />
+
+              <Text style={styles.cardTitle}>Details</Text>
+            </View>
+
+            <Ionicons name="chevron-down" size={18} color="#64748B" />
+          </TouchableOpacity>
+
+          {showDetails && (
+            <View style={styles.statsRow}>
+              <StatPill
+                label="Open"
+                value={
+                  candles.length > 0
+                    ? formatPrice(candles[candles.length - 1]?.open)
+                    : "—"
+                }
+              />
+              <StatPill
+                label="High"
+                value={
+                  candles.length > 0
+                    ? formatPrice(candles[candles.length - 1]?.high)
+                    : "—"
+                }
+                color="#10B981"
+              />
+              <StatPill
+                label="Low"
+                value={
+                  candles.length > 0
+                    ? formatPrice(candles[candles.length - 1]?.low)
+                    : "—"
+                }
+                color="#EF4444"
+              />
+              <StatPill label="Close" value={formatPrice(cp)} />
+            </View>
+          )}
         </View>
 
-        {/* ── About card ──────────────────────────────────────────────────── */}
+        {/* ── Fundamentals Dropdown ───────────────────────────────────── */}
         <View style={styles.card}>
-          <Text style={styles.cardTitle}>Details</Text>
+          <TouchableOpacity
+            style={styles.dropdownHeader}
+            onPress={() => setShowFundamentals(!showFundamentals)}
+          >
+            <View style={styles.sectionTitleRow}>
+              <Ionicons
+                name="information-circle-outline"
+                size={18}
+                color="black"
+              />
 
-          <AboutRow label="Symbol" value={symbol} />
-          <AboutRow label="Sector" value={sector} />
-          <AboutRow label="Exchange" value="NSE" />
-          <AboutRow
-            label="Day Change"
-            value={`${isPositive ? "+" : ""}${diff !== 0 ? `₹${Math.abs(diff)}` : "—"}`}
-            valueColor={accentColor}
+              <Text style={styles.cardTitle}>Fundamentals</Text>
+            </View>
+
+            <Ionicons name="chevron-down" size={18} color="#64748B" />
+          </TouchableOpacity>
+          {showFundamentals && fundamentals && (
+            <View style={styles.fundamentalsGrid}>
+              <View style={styles.fundamentalItem}>
+                <Text style={styles.fundamentalLabel}>Market Cap</Text>
+                <Text style={styles.fundamentalValue}>
+                  ₹
+                  {Number(fundamentals.metrics.market_cap).toLocaleString(
+                    "en-IN",
+                  )}{" "}
+                  Cr
+                </Text>
+              </View>
+
+              <View style={styles.fundamentalItem}>
+                <Text style={styles.fundamentalLabel}>ROE</Text>
+                <Text style={styles.fundamentalValue}>
+                  {fundamentals.metrics.roe}%
+                </Text>
+              </View>
+
+              <View style={styles.fundamentalItem}>
+                <Text style={styles.fundamentalLabel}>P/E Ratio</Text>
+                <Text style={styles.fundamentalValue}>
+                  {fundamentals.metrics.pe_ratio}
+                </Text>
+              </View>
+
+              <View style={styles.fundamentalItem}>
+                <Text style={styles.fundamentalLabel}>Industry P/E</Text>
+                <Text style={styles.fundamentalValue}>
+                  {fundamentals.metrics.industry_pe}
+                </Text>
+              </View>
+
+              <View style={styles.fundamentalItem}>
+                <Text style={styles.fundamentalLabel}>Dividend Yield</Text>
+                <Text style={styles.fundamentalValue}>
+                  {fundamentals.metrics.dividend_yield}%
+                </Text>
+              </View>
+
+              <View style={styles.fundamentalItem}>
+                <Text style={styles.fundamentalLabel}>Book Value</Text>
+                <Text style={styles.fundamentalValue}>
+                  {fundamentals.metrics.book_value}
+                </Text>
+              </View>
+
+              <View style={styles.fundamentalItem}>
+                <Text style={styles.fundamentalLabel}>Debt to Equity</Text>
+                <Text style={styles.fundamentalValue}>
+                  {fundamentals.metrics.debt_to_equity}
+                </Text>
+              </View>
+            </View>
+          )}
+        </View>
+
+        {/* ── Financial Performance ───────────────────────── */}
+        <View style={styles.card}>
+          <View style={styles.sectionTitleRow}>
+            <Ionicons
+              name="information-circle-outline"
+              size={18}
+              color="black"
+            />
+
+            <Text style={styles.cardTitle}>Financial Performance</Text>
+          </View>
+          {selectedData && (
+            <View style={styles.financialStatsRow}>
+              {/* Revenue */}
+              <View>
+                <Text style={styles.financialStatLabel}>REVENUE (CR)</Text>
+
+                <Text style={styles.financialStatValue}>
+                  ₹
+                  {selectedData?.revenue != null
+                    ? Number(selectedData.revenue).toLocaleString("en-IN")
+                    : "--"}
+                </Text>
+              </View>
+
+              {/* Profit */}
+              <View>
+                <Text style={styles.financialStatLabel}>PROFIT (CR)</Text>
+
+                <Text style={[styles.financialStatValue, { color: "#10B981" }]}>
+                  ₹
+                  {selectedData?.profit != null
+                    ? Number(selectedData.profit).toLocaleString("en-IN")
+                    : "--"}
+                </Text>
+              </View>
+            </View>
+          )}
+
+          {/* Toggle Buttons */}
+          <View style={styles.financialToggleRow}>
+            <TouchableOpacity
+              onPress={() => setFinancialType("quarterly")}
+              style={[
+                styles.financialToggleBtn,
+                financialType === "quarterly" &&
+                  styles.financialToggleBtnActive,
+              ]}
+            >
+              <Text
+                style={[
+                  styles.financialToggleText,
+                  financialType === "quarterly" &&
+                    styles.financialToggleTextActive,
+                ]}
+              >
+                Quarterly
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => setFinancialType("yearly")}
+              style={[
+                styles.financialToggleBtn,
+                financialType === "yearly" && styles.financialToggleBtnActive,
+              ]}
+            >
+              <Text
+                style={[
+                  styles.financialToggleText,
+                  financialType === "yearly" &&
+                    styles.financialToggleTextActive,
+                ]}
+              >
+                Yearly
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          <BarChart
+            data={revenueData}
+            secondaryData={profitData}
+            barWidth={20}
+            spacing={38}
+            roundedTop
+            hideRules
+            xAxisThickness={0}
+            yAxisThickness={0}
+            noOfSections={4}
+            disableScroll
+            isAnimated
+            initialSpacing={16}
+            endSpacing={16}
+            xAxisLabelTextStyle={{
+              marginTop: 12,
+            }}
+            yAxisTextStyle={{
+              color: "#94A3B8",
+              fontSize: 10,
+            }}
           />
-          <AboutRow
-            label="Change %"
-            value={`${isPositive ? "+" : "-"}${Math.abs(changePct).toFixed(2)}%`}
-            valueColor={accentColor}
-            last
-          />
+        </View>
+
+        {/* ── About Company ───────────────────────── */}
+        <View style={styles.card}>
+          <View style={styles.sectionTitleRow}>
+            <Ionicons
+              name="information-circle-outline"
+              size={18}
+              color="black"
+            />
+
+            <Text style={styles.cardTitle}>About Company</Text>
+          </View>
+
+          {/* Description */}
+          <Text style={styles.companyDescription}>
+            {profile?.description || "No company description available."}
+          </Text>
+
+          <View style={styles.divider} />
+
+          <AboutRow label="CEO" value={profile?.ceo || "--"} />
+
+          <AboutRow label="Founded" value={profile?.founded || "--"} />
+
+          <AboutRow label="NSE Symbol" value={profile?.nse_symbol || symbol} />
+
+          <AboutRow label="Industry" value={profile?.industry || "--"} />
+        </View>
+
+        {/* ── Shareholding Pattern ───────────────────────── */}
+        <View style={styles.card}>
+          <View style={styles.sectionTitleRow}>
+            <Ionicons name="information-circle-outline" size={18} color="black" />
+
+            <Text style={styles.cardTitle}>Shareholding Pattern</Text>
+          </View>
+
+          {/* Quarter Selector */}
+          <View style={styles.holdingQuarterRow}>
+            {shareholding.map((item, index) => (
+              <TouchableOpacity
+                key={item.period}
+                onPress={() => setSelectedHoldingIndex(index)}
+                style={[
+                  styles.holdingQuarterChip,
+
+                  selectedHoldingIndex === index &&
+                    styles.holdingQuarterChipActive,
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.holdingQuarterText,
+
+                    selectedHoldingIndex === index &&
+                      styles.holdingQuarterTextActive,
+                  ]}
+                >
+                  {item.period}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+
+          {/* Bars */}
+          {selectedHolding?.data?.map((item) => (
+            <View key={item.category} style={styles.shareholdingItem}>
+              <View style={styles.shareholdingTopRow}>
+                <Text style={styles.shareholdingLabel}>{item.category}</Text>
+
+                <Text style={styles.shareholdingValue}>{item.value}%</Text>
+              </View>
+
+              {/* Progress Track */}
+              <View style={styles.shareholdingTrack}>
+                <View
+                  style={[
+                    styles.shareholdingBar,
+                    {
+                      width: `${item.value}%`,
+                    },
+                  ]}
+                />
+              </View>
+            </View>
+          ))}
         </View>
 
         {/* credit */}
@@ -261,7 +579,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 12,
     paddingBottom: 10,
-    marginTop: 20,
   },
   backBtn: {
     width: 36,
@@ -342,7 +659,6 @@ const styles = StyleSheet.create({
   // Chart card — white card like the reference image
   chartCard: {
     marginHorizontal: 16,
-    backgroundColor: "#FFFFFF",
     borderRadius: 20,
     paddingTop: 16,
     paddingBottom: 12,
@@ -386,6 +702,11 @@ const styles = StyleSheet.create({
     gap: 8,
     marginBottom: 16,
   },
+  dropdownHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
   statPill: {
     flex: 1,
     backgroundColor: "#FFFFFF",
@@ -428,7 +749,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "700",
     color: "#1E293B",
-    marginBottom: 12,
   },
   aboutRow: {
     flexDirection: "row",
@@ -487,6 +807,230 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     color: "#FFFFFF",
   },
+
+  fundamentalsGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    marginTop: 10,
+  },
+
+  fundamentalItem: {
+    width: "48%",
+    marginBottom: 20,
+    borderRightWidth: 0.5,
+    borderColor: "#E2E8F0",
+    paddingRight: 10,
+  },
+
+  fundamentalLabel: {
+    fontSize: 13,
+    color: "#64748B",
+    marginBottom: 6,
+  },
+
+  fundamentalValue: {
+    fontSize: 16,
+    fontWeight: "700",
+    color: "#1E293B",
+  },
+
+  financialToggleRow: {
+    flexDirection: "row",
+    backgroundColor: "#F1F5F9",
+    borderRadius: 12,
+    padding: 4,
+    marginBottom: 20,
+  },
+
+  financialToggleBtn: {
+    flex: 1,
+    paddingVertical: 10,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+
+  financialToggleBtnActive: {
+    backgroundColor: "#FFFFFF",
+  },
+
+  financialToggleText: {
+    color: "#64748B",
+    fontWeight: "600",
+  },
+
+  financialToggleTextActive: {
+    color: "#1E293B",
+    fontWeight: "700",
+  },
+
+  financialRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 18,
+  },
+
+  financialPeriod: {
+    fontSize: 13,
+    color: "#64748B",
+  },
+
+  financialRevenue: {
+    fontSize: 16,
+    fontWeight: "700",
+    color: "#1E293B",
+    textAlign: "right",
+  },
+
+  financialProfit: {
+    fontSize: 12,
+    color: "#94A3B8",
+    marginTop: 4,
+    textAlign: "right",
+  },
+
+  legendRow: {
+    flexDirection: "row",
+    gap: 24,
+    marginBottom: 20,
+  },
+
+  legendItem: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+
+  legendDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 3,
+    marginRight: 8,
+  },
+
+  legendText: {
+    fontSize: 12,
+    color: "#64748B",
+    fontWeight: "600",
+  },
+
+  financialStatsRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 24,
+  },
+
+  financialStatLabel: {
+    fontSize: 12,
+    color: "#94A3B8",
+    fontWeight: "700",
+    letterSpacing: 1,
+    marginBottom: 6,
+  },
+
+  financialStatValue: {
+    fontSize: 28,
+    fontWeight: "800",
+    color: "#1E293B",
+  },
+
+  periodSelectorRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 10,
+    marginTop: 24,
+  },
+
+  periodChip: {
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 20,
+    backgroundColor: "#F1F5F9",
+  },
+
+  periodChipText: {
+    color: "#64748B",
+    fontWeight: "600",
+    fontSize: 12,
+  },
+
+  companyDescription: {
+    fontSize: 14,
+    lineHeight: 24,
+    color: "#475569",
+    marginBottom: 18,
+  },
+
+  sectionTitleRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    marginBottom: 12,
+  },
+
+  holdingQuarterRow: {
+  flexDirection: "row",
+  flexWrap: "wrap",
+  gap: 10,
+  marginBottom: 24,
+},
+
+holdingQuarterChip: {
+  paddingHorizontal: 14,
+  paddingVertical: 8,
+  borderRadius: 20,
+  backgroundColor: "#F1F5F9",
+},
+
+holdingQuarterChipActive: {
+  backgroundColor: "rgba(59,130,246,0.12)",
+},
+
+holdingQuarterText: {
+  color: "#64748B",
+  fontWeight: "600",
+  fontSize: 12,
+},
+
+holdingQuarterTextActive: {
+  color: "#3B82F6",
+  fontWeight: "700",
+},
+
+shareholdingItem: {
+  marginBottom: 24,
+},
+
+shareholdingTopRow: {
+  flexDirection: "row",
+  justifyContent: "space-between",
+  marginBottom: 10,
+},
+
+shareholdingLabel: {
+  fontSize: 14,
+  color: "#1E293B",
+  fontWeight: "500",
+},
+
+shareholdingValue: {
+  fontSize: 14,
+  color: "#1E293B",
+  fontWeight: "700",
+},
+
+shareholdingTrack: {
+  height: 10,
+  backgroundColor: "#E2E8F0",
+  borderRadius: 10,
+  overflow: "hidden",
+},
+
+shareholdingBar: {
+  height: "100%",
+  backgroundColor: "#3B82F6",
+  borderRadius: 10,
+},
 });
 
 export default StockDetailPage;
