@@ -521,8 +521,6 @@ const StockDetailPage = ({ navigation, route }) => {
           ))}
         </View>
 
-        {/* credit */}
-        <Text style={styles.credit}>Charts by TradingView</Text>
       </ScrollView>
 
       {/* ── Action bar ──────────────────────────────────────────────────────── */}

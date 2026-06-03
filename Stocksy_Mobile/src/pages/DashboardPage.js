@@ -17,6 +17,7 @@ import Button from "../components/Button";
 import StockCard from "../components/StockCard";
 import WatchlistItem from "../components/WatchlistItem";
 import MiniHoldingCard from "../components/MiniHoldingCard";
+import { usePortfolio } from "../hooks/usePortfolio";
 import Search from "./SearchPage";
 
 // ─── Live market data hook ────────────────────────────────────────────────────
@@ -159,6 +160,30 @@ const SMALL_CAP_KEYS = [
   },
 ];
 
+// constants/companyDomains.js
+const COMPANY_DOMAINS = {
+  VEDL: "vedanta-zincinternational.com",
+  BEL: "bel-india.in",
+  IRFC: "irfc.co.in",
+  SUZLON: "suzlon.de",
+  RELIANCE: "ril.com",
+  TCS: "tcs.com",
+  HDFCBANK: "hdfcbank.com",
+  INFY: "infosys.com",
+  SBIN: "sbi.co.in",
+  ICICIBANK: "icicibank.com",
+  BHARTIARTL: "airtel.in",
+  HCLTECH: "hcltech.com",
+  TECHM: "techmahindra.com",
+  TATASTEEL: "tatasteel.com",
+  JSWSTEEL: "jsw.in",
+  SUNPHARMA: "sunpharma.com",
+  CIPLA: "cipla.com",
+  COALINDIA: "coalindia.in",
+  DABUR: "dabur.com",
+  BRITANNIA: "britannia.co.in",
+};
+
 // ─── Helper: compute % change from close price ───────────────────────────────
 const calcChange = (ltp, cp) => {
   if (!ltp || !cp || cp === 0) return null;
@@ -173,6 +198,7 @@ const calcChange = (ltp, cp) => {
 const DashboardPage = ({ navigation }) => {
   // ── Live prices from WebSocket ──────────────────────────────────────────────
   const { prices, isConnected } = useMarketData();
+  const { positions, totals, loading } = usePortfolio(prices);
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -327,32 +353,33 @@ const DashboardPage = ({ navigation }) => {
           <View>
             <Text style={styles.assetLabel}>Total Assets</Text>
             <View style={styles.priceRow}>
-              <Text style={styles.totalAmount}>$27,170.01</Text>
-              <Ionicons
-                name="eye-outline"
-                size={19}
-                color="#94A3B8"
-                style={{ marginLeft: 8 }}
-              />
+              <Text style={styles.totalAmount}>
+                ₹{totals.portfolioValue?.toLocaleString("en-IN") ?? "0"}
+              </Text>
+
               <View style={styles.changeChip}>
                 <Text style={styles.totalChange}>▲ 3.87% (24h)</Text>
               </View>
             </View>
             <View style={styles.miniCardsRow}>
-              <MiniHoldingCard
-                ticker="Amazon"
-                name="Amazon, Inc"
-                change="▲ 1.76%"
-                isPositive
-                iconName="logo-amazon"
-                iconColor="#FF9900"
-              />
-              <MiniHoldingCard
-                ticker="Apple"
-                name="Apple, Inc"
-                iconName="logo-apple"
-                iconColor="#1E293B"
-              />
+              {positions?.length > 0 ? (
+                positions
+                  .slice(0, 2)
+                  .map((position) => (
+                    <MiniHoldingCard
+                      key={position.instrument_key}
+                      ticker={position.symbol}
+                      name={`₹${position.ltp?.toLocaleString("en-IN")}`}
+                      change={`${position.unrealisedPct?.toFixed(2)}%`}
+                      isPositive={position.unrealisedPnl >= 0}
+                      logoUrl={`https://img.logo.dev/${
+                        COMPANY_DOMAINS[position.symbol]
+                      }?token=pk_Bym4BAakTJudMK4MGnfpnw`}
+                    />
+                  ))
+              ) : (
+                <Text>No Holdings Yet</Text>
+              )}
             </View>
           </View>
         </TouchableOpacity>

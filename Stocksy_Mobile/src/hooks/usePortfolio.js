@@ -191,7 +191,7 @@ export function usePortfolio(prices = {}) {
       totalLifetime,
       totalToday,
       cashBalance,
-      portfolioValue: totalCurrent + cashBalance,
+      portfolioValue: totalCurrent,
       todayPct: totalInvested > 0 ? (totalToday / totalInvested) * 100 : 0,
       lifetimePct:
         totalInvested > 0 ? (totalLifetime / totalInvested) * 100 : 0,

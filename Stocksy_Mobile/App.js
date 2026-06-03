@@ -14,16 +14,17 @@ import ForgotPasswordScreen from "./src/pages/ForgotPasswordScreen";
 import SearchPage from "./src/pages/SearchPage";
 import BuyOrderScreen from "./src/pages/Buyorderscreen";
 
+
 import StockDetailPage from "./src/pages/StockDetailPage";
 
 // ─── Tab screens ──────────────────────────────────────────────────────────────
 import DashboardPage from "./src/pages/DashboardPage";
 import PortfolioPage from "./src/pages/PortfolioPage";
+import ProfilePage from "./src/pages/ProfilePage";
 
 import {
   ExchangePage,
   MarketsPage,
-  ProfilePage,
 } from "./src/pages/PlaceholderPages";
 
 // ─── Token check ──────────────────────────────────────────────────────────────

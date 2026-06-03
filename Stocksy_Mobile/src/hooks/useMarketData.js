@@ -35,7 +35,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 // Find it with: ifconfig | grep "inet " (Mac/Linux) or ipconfig (Windows)
 // Must be your local network IP, e.g. 192.168.1.42
 // NEVER use 'localhost' or '127.0.0.1' on a physical device
-const WS_URL = 'ws://192.168.10.170:5000'; // ← UPDATE THIS
+const WS_URL = 'ws://192.168.43.192:5000'; // ← UPDATE THIS
 // const WS_URL = process.env.EXPO_PUBLIC_API_BASE_URL;
 
 const RECONNECT_DELAY_MS = 3000;

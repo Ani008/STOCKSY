@@ -28,57 +28,357 @@ import useMarketData from "../hooks/useMarketData";
 //   - Works offline / before WebSocket connects
 //   - No server cost per keystroke
 const INSTRUMENTS = [
-  { key: "NSE_INDEX|Nifty 50",      symbol: "NIFTY 50",    name: "Nifty 50 Index",            domain: "nseindia.com",      sector: "Index" },
-  { key: "NSE_INDEX|Nifty Bank",    symbol: "BANK NIFTY",  name: "Nifty Bank Index",           domain: "nseindia.com",      sector: "Index" },
-  { key: "NSE_EQ|INE040A01034",     symbol: "HDFCBANK",    name: "HDFC Bank Ltd",              domain: "hdfcbank.com",      sector: "Banking" },
-  { key: "NSE_EQ|INE090A01021",     symbol: "ICICIBANK",   name: "ICICI Bank Ltd",             domain: "icicibank.com",     sector: "Banking" },
-  { key: "NSE_EQ|INE062A01020",     symbol: "SBIN",        name: "State Bank of India",        domain: "sbi.co.in",         sector: "Banking" },
-  { key: "NSE_EQ|INE238A01034",     symbol: "AXISBANK",    name: "Axis Bank Ltd",              domain: "axisbank.com",      sector: "Banking" },
-  { key: "NSE_EQ|INE296A01032",     symbol: "BAJFINANCE",  name: "Bajaj Finance Ltd",          domain: "bajajfinserv.in",   sector: "Banking" },
-  { key: "NSE_EQ|INE237A01036",     symbol: "KOTAKBANK",   name: "Kotak Mahindra Bank",        domain: "kotak.com",         sector: "Banking" },
-  { key: "NSE_EQ|INE795G01014",     symbol: "HDFCLIFE",    name: "HDFC Life Insurance",        domain: "hdfclife.com",      sector: "Insurance" },
-  { key: "NSE_EQ|INE467B01029",     symbol: "TCS",         name: "Tata Consultancy Services",  domain: "tcs.com",           sector: "IT" },
-  { key: "NSE_EQ|INE009A01021",     symbol: "INFY",        name: "Infosys Ltd",                domain: "infosys.com",       sector: "IT" },
-  { key: "NSE_EQ|INE075A01022",     symbol: "WIPRO",       name: "Wipro Ltd",                  domain: "wipro.com",         sector: "IT" },
-  { key: "NSE_EQ|INE860A01027",     symbol: "HCLTECH",     name: "HCL Technologies Ltd",       domain: "hcltech.com",       sector: "IT" },
-  { key: "NSE_EQ|INE669C01036",     symbol: "TECHM",       name: "Tech Mahindra Ltd",          domain: "techmahindra.com",  sector: "IT" },
-  { key: "NSE_EQ|INE214T01019",     symbol: "LTIM",        name: "LTIMindtree Ltd",            domain: "ltimindtree.com",   sector: "IT" },
-  { key: "NSE_EQ|INE002A01018",     symbol: "RELIANCE",    name: "Reliance Industries Ltd",    domain: "ril.com",           sector: "Energy" },
-  { key: "NSE_EQ|INE213A01029",     symbol: "ONGC",        name: "Oil & Natural Gas Corp",     domain: "ongcindia.com",     sector: "Energy" },
-  { key: "NSE_EQ|INE029A01011",     symbol: "BPCL",        name: "Bharat Petroleum Corp",      domain: "bharatpetroleum.in",sector: "Energy" },
-  { key: "NSE_EQ|INE752E01010",     symbol: "POWERGRID",   name: "Power Grid Corp of India",   domain: "powergridindia.com",sector: "Energy" },
-  { key: "NSE_EQ|INE733E01010",     symbol: "NTPC",        name: "NTPC Ltd",                   domain: "ntpc.co.in",        sector: "Energy" },
-  { key: "NSE_EQ|INE585B01010",     symbol: "MARUTI",      name: "Maruti Suzuki India Ltd",    domain: "marutisuzuki.com",  sector: "Auto" },
-  { key: "NSE_EQ|INE1TAE01010",     symbol: "TATAMOTORS",  name: "Tata Motors Ltd",            domain: "tatamotors.com",    sector: "Auto" },
-  { key: "NSE_EQ|INE917I01010",     symbol: "BAJAJ-AUTO",  name: "Bajaj Auto Ltd",             domain: "bajajauto.com",     sector: "Auto" },
-  { key: "NSE_EQ|INE066A01021",     symbol: "EICHERMOT",   name: "Eicher Motors Ltd",          domain: "eichermotors.com",  sector: "Auto" },
-  { key: "NSE_EQ|INE158A01026",     symbol: "HEROMOTOCO",  name: "Hero MotoCorp Ltd",          domain: "heromotocorp.com",  sector: "Auto" },
-  { key: "NSE_EQ|INE030A01027",     symbol: "HINDUNILVR",  name: "Hindustan Unilever Ltd",     domain: "hul.co.in",         sector: "FMCG" },
-  { key: "NSE_EQ|INE154A01025",     symbol: "ITC",         name: "ITC Ltd",                    domain: "itcportal.com",     sector: "FMCG" },
-  { key: "NSE_EQ|INE239A01024",     symbol: "NESTLEIND",   name: "Nestle India",               domain: "nestle.in",         sector: "FMCG" },
-  { key: "NSE_EQ|INE016A01026",     symbol: "DABUR",       name: "Dabur India Ltd",            domain: "dabur.com",         sector: "FMCG" },
-  { key: "NSE_EQ|INE216A01030",     symbol: "BRITANNIA",   name: "Britannia Industries Ltd",   domain: "britannia.co.in",   sector: "FMCG" },
-  { key: "NSE_EQ|INE044A01036",     symbol: "SUNPHARMA",   name: "Sun Pharmaceutical",         domain: "sunpharma.com",     sector: "Pharma" },
-  { key: "NSE_EQ|INE089A01031",     symbol: "DRREDDY",     name: "Dr. Reddy's Laboratories",   domain: "drreddys.com",      sector: "Pharma" },
-  { key: "NSE_EQ|INE059A01026",     symbol: "CIPLA",       name: "Cipla Ltd",                  domain: "cipla.com",         sector: "Pharma" },
-  { key: "NSE_EQ|INE361B01024",     symbol: "DIVISLAB",    name: "Divi's Laboratories",        domain: "divislabs.com",     sector: "Pharma" },
-  { key: "NSE_EQ|INE081A01020",     symbol: "TATASTEEL",   name: "Tata Steel Ltd",             domain: "tatasteel.com",     sector: "Metals" },
-  { key: "NSE_EQ|INE038A01020",     symbol: "HINDALCO",    name: "Hindalco Industries",        domain: "hindalco.com",      sector: "Metals" },
-  { key: "NSE_EQ|INE019A01038",     symbol: "JSWSTEEL",    name: "JSW Steel Ltd",              domain: "jsw.in",            sector: "Metals" },
-  { key: "NSE_EQ|INE522F01014",     symbol: "COALINDIA",   name: "Coal India Ltd",             domain: "coalindia.in",      sector: "Metals" },
-  { key: "NSE_EQ|INE397D01024",     symbol: "BHARTIARTL",  name: "Bharti Airtel Ltd",          domain: "airtel.in",         sector: "Telecom" },
-  { key: "NSE_EQ|INE742F01042",     symbol: "ADANIPORTS",  name: "Adani Ports & SEZ",          domain: "adaniports.com",    sector: "Infrastructure" },
-  { key: "NSE_EQ|INE364U01010",     symbol: "ADANIGREEN",  name: "Adani Green Energy",         domain: "adanigreenenergy.com",sector: "Energy" },
-  { key: "NSE_EQ|INE481G01011",     symbol: "ULTRACEMCO",  name: "UltraTech Cement Ltd",       domain: "ultratechcement.com",sector: "Cement" },
-  { key: "NSE_EQ|INE018A01030",     symbol: "LT",          name: "Larsen & Toubro Ltd",        domain: "larsentoubro.com",  sector: "Infrastructure" },
-  { key: "NSE_EQ|INE047A01021",     symbol: "GRASIM",      name: "Grasim Industries",          domain: "grasim.com",        sector: "Chemicals" },
-  { key: "NSE_EQ|INE423A01024",     symbol: "ADANIENT",    name: "Adani Enterprises Ltd",      domain: "adanienterprises.com",sector: "Conglomerate" },
-  { key: "NSE_EQ|INE1NPP01017",     symbol: "SIEMENS",     name: "Siemens Ltd",                domain: "siemens.co.in",     sector: "Infrastructure" },
+  {
+    key: "NSE_INDEX|Nifty 50",
+    symbol: "NIFTY 50",
+    name: "Nifty 50 Index",
+    domain: "nseindia.com",
+    sector: "Index",
+  },
+  {
+    key: "NSE_INDEX|Nifty Bank",
+    symbol: "BANK NIFTY",
+    name: "Nifty Bank Index",
+    domain: "nseindia.com",
+    sector: "Index",
+  },
+  {
+    key: "NSE_EQ|INE040A01034",
+    symbol: "HDFCBANK",
+    name: "HDFC Bank Ltd",
+    domain: "hdfcbank.com",
+    sector: "Banking",
+  },
+  {
+    key: "NSE_EQ|INE090A01021",
+    symbol: "ICICIBANK",
+    name: "ICICI Bank Ltd",
+    domain: "icicibank.com",
+    sector: "Banking",
+  },
+  {
+    key: "NSE_EQ|INE062A01020",
+    symbol: "SBIN",
+    name: "State Bank of India",
+    domain: "sbi.co.in",
+    sector: "Banking",
+  },
+  {
+    key: "NSE_EQ|INE238A01034",
+    symbol: "AXISBANK",
+    name: "Axis Bank Ltd",
+    domain: "axisbank.com",
+    sector: "Banking",
+  },
+  {
+    key: "NSE_EQ|INE296A01032",
+    symbol: "BAJFINANCE",
+    name: "Bajaj Finance Ltd",
+    domain: "bajajfinserv.in",
+    sector: "Banking",
+  },
+  {
+    key: "NSE_EQ|INE237A01036",
+    symbol: "KOTAKBANK",
+    name: "Kotak Mahindra Bank",
+    domain: "kotak.com",
+    sector: "Banking",
+  },
+  {
+    key: "NSE_EQ|INE795G01014",
+    symbol: "HDFCLIFE",
+    name: "HDFC Life Insurance",
+    domain: "hdfclife.com",
+    sector: "Insurance",
+  },
+  {
+    key: "NSE_EQ|INE467B01029",
+    symbol: "TCS",
+    name: "Tata Consultancy Services",
+    domain: "tcs.com",
+    sector: "IT",
+  },
+  {
+    key: "NSE_EQ|INE009A01021",
+    symbol: "INFY",
+    name: "Infosys Ltd",
+    domain: "infosys.com",
+    sector: "IT",
+  },
+  {
+    key: "NSE_EQ|INE075A01022",
+    symbol: "WIPRO",
+    name: "Wipro Ltd",
+    domain: "wipro.com",
+    sector: "IT",
+  },
+  {
+    key: "NSE_EQ|INE860A01027",
+    symbol: "HCLTECH",
+    name: "HCL Technologies Ltd",
+    domain: "hcltech.com",
+    sector: "IT",
+  },
+  {
+    key: "NSE_EQ|INE669C01036",
+    symbol: "TECHM",
+    name: "Tech Mahindra Ltd",
+    domain: "techmahindra.com",
+    sector: "IT",
+  },
+  {
+    key: "NSE_EQ|INE214T01019",
+    symbol: "LTIM",
+    name: "LTIMindtree Ltd",
+    domain: "ltimindtree.com",
+    sector: "IT",
+  },
+  {
+    key: "NSE_EQ|INE002A01018",
+    symbol: "RELIANCE",
+    name: "Reliance Industries Ltd",
+    domain: "ril.com",
+    sector: "Energy",
+  },
+  {
+    key: "NSE_EQ|INE213A01029",
+    symbol: "ONGC",
+    name: "Oil & Natural Gas Corp",
+    domain: "ongcindia.com",
+    sector: "Energy",
+  },
+  {
+    key: "NSE_EQ|INE029A01011",
+    symbol: "BPCL",
+    name: "Bharat Petroleum Corp",
+    domain: "bharatpetroleum.in",
+    sector: "Energy",
+  },
+  {
+    key: "NSE_EQ|INE752E01010",
+    symbol: "POWERGRID",
+    name: "Power Grid Corp of India",
+    domain: "powergridindia.com",
+    sector: "Energy",
+  },
+  {
+    key: "NSE_EQ|INE733E01010",
+    symbol: "NTPC",
+    name: "NTPC Ltd",
+    domain: "ntpc.co.in",
+    sector: "Energy",
+  },
+  {
+    key: "NSE_EQ|INE585B01010",
+    symbol: "MARUTI",
+    name: "Maruti Suzuki India Ltd",
+    domain: "marutisuzuki.com",
+    sector: "Auto",
+  },
+  {
+    key: "NSE_EQ|INE1TAE01010",
+    symbol: "TATAMOTORS",
+    name: "Tata Motors Ltd",
+    domain: "tatamotors.com",
+    sector: "Auto",
+  },
+  {
+    key: "NSE_EQ|INE917I01010",
+    symbol: "BAJAJ-AUTO",
+    name: "Bajaj Auto Ltd",
+    domain: "bajajauto.com",
+    sector: "Auto",
+  },
+  {
+    key: "NSE_EQ|INE066A01021",
+    symbol: "EICHERMOT",
+    name: "Eicher Motors Ltd",
+    domain: "eichermotors.com",
+    sector: "Auto",
+  },
+  {
+    key: "NSE_EQ|INE158A01026",
+    symbol: "HEROMOTOCO",
+    name: "Hero MotoCorp Ltd",
+    domain: "heromotocorp.com",
+    sector: "Auto",
+  },
+  {
+    key: "NSE_EQ|INE030A01027",
+    symbol: "HINDUNILVR",
+    name: "Hindustan Unilever Ltd",
+    domain: "hul.co.in",
+    sector: "FMCG",
+  },
+  {
+    key: "NSE_EQ|INE154A01025",
+    symbol: "ITC",
+    name: "ITC Ltd",
+    domain: "itcportal.com",
+    sector: "FMCG",
+  },
+  {
+    key: "NSE_EQ|INE239A01024",
+    symbol: "NESTLEIND",
+    name: "Nestle India",
+    domain: "nestle.in",
+    sector: "FMCG",
+  },
+  {
+    key: "NSE_EQ|INE016A01026",
+    symbol: "DABUR",
+    name: "Dabur India Ltd",
+    domain: "dabur.com",
+    sector: "FMCG",
+  },
+  {
+    key: "NSE_EQ|INE216A01030",
+    symbol: "BRITANNIA",
+    name: "Britannia Industries Ltd",
+    domain: "britannia.co.in",
+    sector: "FMCG",
+  },
+  {
+    key: "NSE_EQ|INE044A01036",
+    symbol: "SUNPHARMA",
+    name: "Sun Pharmaceutical",
+    domain: "sunpharma.com",
+    sector: "Pharma",
+  },
+  {
+    key: "NSE_EQ|INE089A01031",
+    symbol: "DRREDDY",
+    name: "Dr. Reddy's Laboratories",
+    domain: "drreddys.com",
+    sector: "Pharma",
+  },
+  {
+    key: "NSE_EQ|INE059A01026",
+    symbol: "CIPLA",
+    name: "Cipla Ltd",
+    domain: "cipla.com",
+    sector: "Pharma",
+  },
+  {
+    key: "NSE_EQ|INE361B01024",
+    symbol: "DIVISLAB",
+    name: "Divi's Laboratories",
+    domain: "divislabs.com",
+    sector: "Pharma",
+  },
+  {
+    key: "NSE_EQ|INE081A01020",
+    symbol: "TATASTEEL",
+    name: "Tata Steel Ltd",
+    domain: "tatasteel.com",
+    sector: "Metals",
+  },
+  {
+    key: "NSE_EQ|INE038A01020",
+    symbol: "HINDALCO",
+    name: "Hindalco Industries",
+    domain: "hindalco.com",
+    sector: "Metals",
+  },
+  {
+    key: "NSE_EQ|INE019A01038",
+    symbol: "JSWSTEEL",
+    name: "JSW Steel Ltd",
+    domain: "jsw.in",
+    sector: "Metals",
+  },
+  {
+    key: "NSE_EQ|INE522F01014",
+    symbol: "COALINDIA",
+    name: "Coal India Ltd",
+    domain: "coalindia.in",
+    sector: "Metals",
+  },
+  {
+    key: "NSE_EQ|INE397D01024",
+    symbol: "BHARTIARTL",
+    name: "Bharti Airtel Ltd",
+    domain: "airtel.in",
+    sector: "Telecom",
+  },
+  {
+    key: "NSE_EQ|INE742F01042",
+    symbol: "ADANIPORTS",
+    name: "Adani Ports & SEZ",
+    domain: "adaniports.com",
+    sector: "Infrastructure",
+  },
+  {
+    key: "NSE_EQ|INE364U01010",
+    symbol: "ADANIGREEN",
+    name: "Adani Green Energy",
+    domain: "adanigreenenergy.com",
+    sector: "Energy",
+  },
+  {
+    key: "NSE_EQ|INE481G01011",
+    symbol: "ULTRACEMCO",
+    name: "UltraTech Cement Ltd",
+    domain: "ultratechcement.com",
+    sector: "Cement",
+  },
+  {
+    key: "NSE_EQ|INE018A01030",
+    symbol: "LT",
+    name: "Larsen & Toubro Ltd",
+    domain: "larsentoubro.com",
+    sector: "Infrastructure",
+  },
+  {
+    key: "NSE_EQ|INE047A01021",
+    symbol: "GRASIM",
+    name: "Grasim Industries",
+    domain: "grasim.com",
+    sector: "Chemicals",
+  },
+  {
+    key: "NSE_EQ|INE423A01024",
+    symbol: "ADANIENT",
+    name: "Adani Enterprises Ltd",
+    domain: "adanienterprises.com",
+    sector: "Conglomerate",
+  },
+  {
+    key: "NSE_EQ|INE1NPP01017",
+    symbol: "SIEMENS",
+    name: "Siemens Ltd",
+    domain: "siemens.co.in",
+    sector: "Infrastructure",
+  },
 
-  { key: "NSE_EQ|INE205A01025",     symbol: "VEDL",        name: "Vedanta Ltd",                domain: "vedanta-zincinternational.com",       sector: "Mining & Metals" },
-  { key: "NSE_EQ|INE263A01024",     symbol: "BEL",         name: "Bharat Electronics Ltd",     domain: "bel-india.in",                       sector: "Defense" },
-  { key: "NSE_EQ|INE053F01010",     symbol: "IRFC",        name: "Indian Railway Finance Corporation", domain: "irfc.co.in",                  sector: "Financial Services" },
-  { key: "NSE_EQ|INE040H01021",     symbol: "SUZLON",      name: "Suzlon Energy Ltd",          domain: "suzlon.de",                       sector: "Renewable Energy" },
+  {
+    key: "NSE_EQ|INE205A01025",
+    symbol: "VEDL",
+    name: "Vedanta Ltd",
+    domain: "vedanta-zincinternational.com",
+    sector: "Mining & Metals",
+  },
+  {
+    key: "NSE_EQ|INE263A01024",
+    symbol: "BEL",
+    name: "Bharat Electronics Ltd",
+    domain: "bel-india.in",
+    sector: "Defense",
+  },
+  {
+    key: "NSE_EQ|INE053F01010",
+    symbol: "IRFC",
+    name: "Indian Railway Finance Corporation",
+    domain: "irfc.co.in",
+    sector: "Financial Services",
+  },
+  {
+    key: "NSE_EQ|INE040H01021",
+    symbol: "SUZLON",
+    name: "Suzlon Energy Ltd",
+    domain: "suzlon.de",
+    sector: "Renewable Energy",
+  },
 ];
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -138,13 +438,13 @@ const SearchPage = ({ navigation }) => {
         (inst) =>
           inst.symbol.toLowerCase().includes(q) ||
           inst.name.toLowerCase().includes(q) ||
-          inst.sector.toLowerCase().includes(q)
+          inst.sector.toLowerCase().includes(q),
       );
 
       setResults(filtered);
       setIsSearching(false);
     },
-    [] // no deps — INSTRUMENTS is a module-level constant
+    [], // no deps — INSTRUMENTS is a module-level constant
   );
 
   // ── Debounced handler — called on every keystroke ─────────────────────────
@@ -173,7 +473,7 @@ const SearchPage = ({ navigation }) => {
     const liveData = prices[item.key]; // may be undefined if WS not connected yet
     const { label: changeLabel, isPositive } = calcChange(
       liveData?.ltp,
-      liveData?.cp
+      liveData?.cp,
     );
 
     return (
@@ -184,10 +484,15 @@ const SearchPage = ({ navigation }) => {
         change={changeLabel}
         isPositive={isPositive}
         logoUrl={`https://img.logo.dev/${item.domain}?token=pk_Bym4BAakTJudMK4MGnfpnw`}
-        onPress={() => {
-          // Wire to StockDetail screen when built
-          // navigation.navigate("StockDetail", { instrumentKey: item.key })
-        }}
+        onPress={() =>
+          navigation.navigate("StockDetail", {
+            instrumentKey: item.key,
+            symbol: item.symbol,
+            name: item.name,
+            sector: item.sector,
+            domain: item.domain,
+          })
+        }
       />
     );
   };
@@ -307,7 +612,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: 20,
-    paddingTop: 16,
     paddingBottom: 8,
     gap: 12,
   },
