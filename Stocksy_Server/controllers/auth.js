@@ -1,6 +1,5 @@
-const User = require("../models/User");
 const jwt = require("jsonwebtoken");
-const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 const { pool } = require("../config/postgres");
 
 const generateToken = (id) => {
@@ -13,15 +12,14 @@ const signupUser = async (req, res) => {
   console.log("\n───────────────────────────────────────");
   console.log("[SIGNUP] Request received");
   console.log("[SIGNUP] Body:", JSON.stringify(req.body, null, 2));
-  console.log("[SIGNUP] MongoDB readyState:", mongoose.connection.readyState);
   // readyState: 0 = disconnected, 1 = connected, 2 = connecting, 3 = disconnecting
 
-  const { username, email, password } = req.body;
+  const { fullName, email, password } = req.body;
 
-  if (!username || !email || !password) {
+  if (!fullName || !email || !password) {
     console.log(
-      "[SIGNUP] ❌ Missing fields — username:",
-      username,
+      "[SIGNUP] ❌ Missing fields — fullName:",
+      fullName,
       "| email:",
       email,
       "| password:",
@@ -29,55 +27,61 @@ const signupUser = async (req, res) => {
     );
     return res
       .status(400)
-      .json({ message: "username, email and password are all required" });
+      .json({ message: "fullName, email and password are all required" });
   }
 
-  // Mock Mode (DB not connected)
-  if (mongoose.connection.readyState !== 1) {
-    console.log("[SIGNUP] ⚠️  DB not connected — running in mock mode");
-    return res.status(201).json({
-      _id: "mock_id_" + Date.now(),
-      username,
-      email,
-      demoBalance: 1000000,
-      token: generateToken("mock_id"),
-    });
-  }
+  const username = fullName.trim().split(" ")[0];
+  const hashedPassword = await bcrypt.hash(password, 10);
 
   try {
     console.log("[SIGNUP] Checking if user already exists...");
-    const userExists = await User.findOne({ $or: [{ email }, { username }] });
-
-    if (userExists) {
-      console.log(
-        "[SIGNUP] ❌ User already exists:",
-        userExists.email,
-        "/",
-        userExists.username,
-      );
-      return res.status(400).json({ message: "User already exists" });
+    const existing = await pool.query(
+      `
+SELECT *
+FROM users
+WHERE email=$1
+`,
+      [email],
+    );
+    if (existing.rows.length > 0) {
+      return res.status(400).json({
+        message: "User already exists",
+      });
     }
 
     console.log("[SIGNUP] Creating new user...");
-    const user = await User.create({ username, email, password });
-    await pool.query(
+    const result = await pool.query(
       `
-  INSERT INTO users (
-    mongo_id,
-    email
-  )
-  VALUES ($1, $2)
-  `,
-      [user._id.toString(), user.email],
+INSERT INTO users(
+
+full_name,
+username,
+email,
+password
+
+)
+
+VALUES($1,$2,$3,$4)
+
+RETURNING *
+`,
+
+      [fullName, username, email, hashedPassword],
     );
-    console.log("[SIGNUP] ✅ User created:", user._id);
+
+    const user = result.rows[0];
+    console.log("[SIGNUP] ✅ User created:", user.id);
 
     res.status(201).json({
-      _id: user._id,
+      id: user.id,
+
       username: user.username,
+
       email: user.email,
-      demoBalance: user.demoBalance,
-      token: generateToken(user._id),
+
+      demoBalance: user.demo_balance,
+
+      token: generateToken(user.id),
     });
   } catch (error) {
     console.log("[SIGNUP] ❌ Error:", error.message);
@@ -90,7 +94,6 @@ const loginUser = async (req, res) => {
   console.log("\n───────────────────────────────────────");
   console.log("[LOGIN] Request received");
   console.log("[LOGIN] Body:", JSON.stringify(req.body, null, 2));
-  console.log("[LOGIN] MongoDB readyState:", mongoose.connection.readyState);
 
   const { email, password } = req.body;
 
@@ -104,43 +107,46 @@ const loginUser = async (req, res) => {
     return res.status(400).json({ message: "email and password are required" });
   }
 
-  // Mock Mode — FIXED: original code referenced undefined `username`
-  if (mongoose.connection.readyState !== 1) {
-    const mockUsername = email.split("@")[0];
-    console.log(
-      "[LOGIN] ⚠️  DB not connected — running in mock mode for:",
-      email,
-    );
-    return res.json({
-      _id: "mock_id_" + Date.now(),
-      username: mockUsername,
-      email,
-      demoBalance: 1000000,
-      token: generateToken("mock_id"),
-    });
-  }
-
   try {
     console.log("[LOGIN] Looking up user by email:", email);
-    const user = await User.findOne({ email });
+    const result = await pool.query(
+      `
+SELECT *
+FROM users
+WHERE email=$1
+`,
 
-    if (!user) {
-      console.log("[LOGIN] ❌ No user found for email:", email);
-      return res.status(401).json({ message: "Invalid credentials" });
+      [email],
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(401).json({
+        message: "Invalid credentials",
+      });
     }
 
-    console.log("[LOGIN] User found:", user._id, "— checking password...");
-    const isMatch = await user.matchPassword(password);
+    const user = result.rows[0];
+
+    console.log("[LOGIN] User found:", user.id, "— checking password...");
+    const isMatch = await bcrypt.compare(
+      password,
+
+      user.password,
+    );
     console.log("[LOGIN] Password match:", isMatch);
 
     if (isMatch) {
       console.log("[LOGIN] ✅ Login successful for:", user.username);
       res.json({
-        _id: user._id,
+        id: user.id,
+
         username: user.username,
+
         email: user.email,
-        demoBalance: user.demoBalance,
-        token: generateToken(user._id),
+
+        demoBalance: user.demo_balance,
+
+        token: generateToken(user.id),
       });
     } else {
       console.log("[LOGIN] ❌ Password did not match");

@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 /**
  * Reusable Input Component
@@ -71,7 +72,11 @@ const Input = ({
             style={styles.eyeBtn}
             hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
           >
-            <Text style={styles.eyeText}>{showPassword ? "🙈" : "👁️"}</Text>
+            <Ionicons
+              name={showPassword ? "eye-outline" : "eye-off-outline"}
+              size={22}
+              color="#64748B"
+            />
           </TouchableOpacity>
         )}
       </View>
@@ -115,10 +120,10 @@ const styles = StyleSheet.create({
     color: "#1E293B",
   },
   eyeBtn: {
-    paddingLeft: 8,
-  },
-  eyeText: {
-    fontSize: 16,
+    paddingLeft: 10,
+    paddingVertical: 8,
+    justifyContent: "center",
+    alignItems: "center",
   },
   errorText: {
     marginTop: 5,

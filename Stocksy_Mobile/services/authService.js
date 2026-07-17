@@ -23,13 +23,13 @@ const clearToken = async () => {
 
 // ─── Auth calls ───────────────────────────────────────────────────────────────
 
-export const signup = async (username, email, password) => {
+const signup = async ({ fullName, email, password }) => {
   const response = await api.post("/auth/signup", {
-    username,
+    fullName,
     email,
     password,
   });
-  await storeToken(response.data.token);
+
   return response.data;
 };
 

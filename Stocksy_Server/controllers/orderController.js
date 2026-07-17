@@ -1,9 +1,3 @@
-/**
- * controllers/orderController.js
- * Thin HTTP layer — delegates all logic to services.
- * All routes are JWT-protected via middleware/auth.js (existing protect()).
- */
-
 const { placeOrder, cancelOrder, getOrders } = require('../services/orderService');
 const { getPositions, getPortfolioSummary, getTrades } = require('../services/positionService');
 const { ValidationError, InsufficientFundsError, MarketClosedError } = require('../utils/errors');
@@ -12,7 +6,7 @@ const logger = require('../utils/logger');
 // ── POST /api/orders ──────────────────────────────────────────────────────────
 async function createOrder(req, res) {
   try {
-    const userId = req.user.pgId; // set by protect() middleware
+    const userId = req.user.id; // set by protect() middleware
     const { wallet_id, ...orderPayload } = req.body;
 
     if (!wallet_id) return res.status(400).json({ message: 'wallet_id is required' });
@@ -30,7 +24,7 @@ async function createOrder(req, res) {
 // ── GET /api/orders ───────────────────────────────────────────────────────────
 async function listOrders(req, res) {
   try {
-    const userId = req.user.pgId;
+    const userId = req.user.id;
     const { wallet_id, status, limit = 20, offset = 0 } = req.query;
     const orders = await getOrders(userId, { walletId: wallet_id, status, limit: +limit, offset: +offset });
     return res.json({ orders });
@@ -43,7 +37,7 @@ async function listOrders(req, res) {
 // ── DELETE /api/orders/:id ────────────────────────────────────────────────────
 async function cancelOrderHandler(req, res) {
   try {
-    const result = await cancelOrder(req.user.pgId, req.params.id);
+    const result = await cancelOrder(req.user.id, req.params.id);
     return res.json(result);
   } catch (err) {
     return handleOrderError(res, err);
@@ -53,7 +47,7 @@ async function cancelOrderHandler(req, res) {
 // ── GET /api/portfolio ────────────────────────────────────────────────────────
 async function getPortfolio(req, res) {
   try {
-    const summary = await getPortfolioSummary(req.user.pgId);
+    const summary = await getPortfolioSummary(req.user.id);
     return res.json(summary);
   } catch (err) {
     logger.error(`getPortfolio error: ${err.message}`);
@@ -65,7 +59,7 @@ async function getPortfolio(req, res) {
 async function getPositionsHandler(req, res) {
   try {
     const { wallet_id } = req.query;
-    const positions = await getPositions(req.user.pgId, wallet_id);
+    const positions = await getPositions(req.user.id, wallet_id);
     return res.json({ positions });
   } catch (err) {
     logger.error(`getPositions error: ${err.message}`);
@@ -77,7 +71,7 @@ async function getPositionsHandler(req, res) {
 async function getTradesHandler(req, res) {
   try {
     const { wallet_id, instrument_key, limit = 20, offset = 0 } = req.query;
-    const trades = await getTrades(req.user.pgId, {
+    const trades = await getTrades(req.user.id, {
       walletId: wallet_id, instrumentKey: instrument_key,
       limit: +limit, offset: +offset
     });

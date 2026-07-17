@@ -31,10 +31,7 @@ const WatchlistItem = ({
       <View style={styles.left}>
         <View style={styles.iconWrapper}>
           {logoUrl ? (
-            <Image
-              source={{ uri: logoUrl }}
-              style={styles.logo}
-            />
+            <Image source={{ uri: logoUrl }} style={styles.logo} />
           ) : (
             // Fallback: show ticker initials if no logo URL provided
             <Text style={styles.fallbackText}>
@@ -69,28 +66,54 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "white",
+
+    backgroundColor: "#FFFFFF",
+
     padding: 16,
-    borderRadius: 16,
-    marginBottom: 10,
-    shadowColor: "#000",
-    shadowOpacity: 0.04,
-    shadowRadius: 6,
-    elevation: 2,
+
+    borderRadius: 18,
+
+    marginBottom: 12,
+
+    shadowColor: "#0F172A",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.06,
+    shadowRadius: 10,
+
+    elevation: 4,
   },
   left: { flexDirection: "row", alignItems: "center" },
   iconWrapper: {
-    width: 42,
-    height: 42,
-    borderRadius: 13,
-    backgroundColor: "#F1F5F9",
+    width: 44,
+    height: 44,
+    borderRadius: 14,
+
+    backgroundColor: "#FFFFFF",
+
     justifyContent: "center",
     alignItems: "center",
+
+    borderWidth: 1,
+    borderColor: "#F1F5F9",
+
+    shadowColor: "#0F172A",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+
+    elevation: 3,
+
     overflow: "hidden",
   },
   logo: {
-    width: 32,
-    height: 32,
+    width: 34,
+    height: 34,
     borderRadius: 8,
   },
   fallbackText: {

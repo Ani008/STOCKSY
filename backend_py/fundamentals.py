@@ -179,7 +179,13 @@ def normalize_metrics(symbol, info):
 
 def get_optimal_fundamentals(symbol_list):
     session = requests.Session()
-    results = []
+    snapshot = {
+    "generated_at": int(time.time()),
+    "version": 1,
+    "stocks": {}
+}
+    success = 0
+    failed = 0
     
     print(f"🚀 Starting update for {len(symbol_list)} instruments...")
 
@@ -204,22 +210,39 @@ def get_optimal_fundamentals(symbol_list):
                 "last_updated": int(time.time())
             }
             
-            results.append(data)
+            snapshot["stocks"][symbol] = data
+            success += 1
             print("\n==============================")
             print(f"✅ {symbol} FUNDAMENTALS")
-            print("==============================")
-            print(json.dumps(data, indent=2))
 
             # 3. Rate Limit Protection
             # A 0.5s sleep is usually enough for 50 stocks to stay under the radar
             time.sleep(0.5) 
 
         except Exception as e:
+            failed += 1
             print(f"❌ Failed to fetch {symbol}: {str(e)}")
+
+
+        print("\n💾 Saving fundamentals snapshot...")
+        with open(
+            "fundamentals_snapshot.json",
+            "w",
+            encoding="utf-8"
+        ) as file:
+            json.dump(snapshot, file, indent=2)
+
+        print("✅ Snapshot saved.")
+        print("\n========================")
+        print(f"Fetched : {success}")
+        print(f"Failed  : {failed}")
+        print(f"Total   : {len(symbol_list)}")
+        print("========================\n")
+        
 
     # 4. Batch Send to Node.js
     try:
-        response = session.post(NODE_BACKEND_URL, json={"data": results}, timeout=10)
+        response = session.post(NODE_BACKEND_URL, json=snapshot, timeout=10)
         if response.status_code == 200:
             print("🚀 Successfully synced with Node backend.")
         else:

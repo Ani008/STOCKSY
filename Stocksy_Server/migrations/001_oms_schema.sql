@@ -12,11 +12,29 @@ CREATE EXTENSION IF NOT EXISTS "pg_trgm";     -- fast symbol search
 -- We mirror just the PK so FK constraints work in PostgreSQL
 -- =============================================================
 CREATE TABLE IF NOT EXISTS users (
-  id            UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  mongo_id      VARCHAR(24) UNIQUE NOT NULL,   -- MongoDB ObjectId string
-  email         VARCHAR(255) UNIQUE NOT NULL,
-  created_at    TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  updated_at    TIMESTAMPTZ NOT NULL DEFAULT NOW()
+
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+
+    full_name VARCHAR(150) NOT NULL,
+
+    username VARCHAR(50) NOT NULL,
+
+    email VARCHAR(255) UNIQUE NOT NULL,
+
+    password TEXT NOT NULL,
+
+    provider VARCHAR(20) NOT NULL DEFAULT 'local',
+
+    google_id TEXT,
+
+    avatar TEXT DEFAULT '',
+
+    demo_balance NUMERIC(18,2) NOT NULL DEFAULT 1000000,
+
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+
 );
 
 -- =============================================================

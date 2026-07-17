@@ -1,21 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
+import { API_BASE_URL } from "../config/env";
 
-const API_BASE =
-  'http://192.168.43.192:5000/api';
 
-// const API_BASE = process.env.EXPO_PUBLIC_API_BASE_URL;
+export default function useFundamentals(symbol) {
+  const [fundamentals, setFundamentals] = useState(null);
 
-export default function useFundamentals(
-  symbol
-) {
-  const [fundamentals, setFundamentals] =
-    useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const [loading, setLoading] =
-    useState(true);
-
-  const [error, setError] =
-    useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (!symbol) return;
@@ -24,18 +16,21 @@ export default function useFundamentals(
       try {
         setLoading(true);
 
-        const response = await fetch(
-          `${API_BASE}/fundamentals/${symbol}`
-        );
+        const response = await fetch(`${API_BASE_URL}/fundamentals/${symbol}`)
 
-        const data =
-          await response.json();
+        const data = await response.json();
 
-        console.log("FUNDAMENTALS API RESPONSE:",JSON.stringify(data, null, 2));
+        console.log("FUNDAMENTALS API RESPONSE:", data);
+
+        if (!response.ok) {
+          throw new Error(data.message || "Failed to fetch fundamentals");
+        }
 
         setFundamentals(data);
       } catch (err) {
+        console.error(err);
         setError(err.message);
+        setFundamentals(null);
       } finally {
         setLoading(false);
       }

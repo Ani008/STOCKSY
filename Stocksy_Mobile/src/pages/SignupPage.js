@@ -26,8 +26,7 @@ const SignupPage = ({ navigation }) => {
     if (!email.trim()) newErrors.email = "Email is required";
     else if (!/\S+@\S+\.\S+/.test(email)) newErrors.email = "Invalid email";
     if (!password) newErrors.password = "Password is required";
-    else if (password.length < 6)
-      newErrors.password = "Minimum 6 characters";
+    else if (password.length < 6) newErrors.password = "Minimum 6 characters";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -36,8 +35,12 @@ const SignupPage = ({ navigation }) => {
     if (!validate()) return;
     setLoading(true);
     try {
-      await authService.signup(name, email, password);
-      navigation.replace('MainTabs')
+      await authService.signup({
+        fullName: name,
+        email,
+        password,
+      });
+      navigation.replace("MainTabs");
     } catch (err) {
       Alert.alert("Signup Failed", err.message);
     } finally {
@@ -58,7 +61,7 @@ const SignupPage = ({ navigation }) => {
           {/* Header */}
           <View style={styles.header}>
             <Text style={styles.brand}>Stocksy</Text>
-            <Text style={styles.title}>Create account ✨</Text>
+            <Text style={styles.title}>Create account</Text>
             <Text style={styles.subtitle}>Get started for free today</Text>
           </View>
 
@@ -68,7 +71,7 @@ const SignupPage = ({ navigation }) => {
               label="Full Name"
               value={name}
               onChangeText={setName}
-              placeholder="John Doe"
+              placeholder="Enter Your Name"
               autoCapitalize="words"
               error={errors.name}
             />
@@ -76,7 +79,7 @@ const SignupPage = ({ navigation }) => {
               label="Email Address"
               value={email}
               onChangeText={setEmail}
-              placeholder="you@example.com"
+              placeholder="Enter Your Email"
               keyboardType="email-address"
               error={errors.email}
             />
@@ -84,7 +87,7 @@ const SignupPage = ({ navigation }) => {
               label="Password"
               value={password}
               onChangeText={setPassword}
-              placeholder="Create a password"
+              placeholder="Enter Your Password"
               secureTextEntry
               error={errors.password}
             />

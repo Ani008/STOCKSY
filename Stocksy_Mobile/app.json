@@ -12,9 +12,11 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
+      "bundleIdentifier": "com.stocksy.mobile",
       "supportsTablet": true
     },
     "android": {
+      "package": "com.stocksy.mobile",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -27,7 +29,13 @@
       "expo-asset",
       "expo-secure-store",
       "expo-font",
-      "expo-web-browser"
-    ]
+      "expo-web-browser",
+      "@react-native-google-signin/google-signin"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "91081826-ec63-45f3-8156-4e7e90cbb501"
+      }
+    }
   }
 }

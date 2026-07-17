@@ -8,9 +8,12 @@ import {
   TouchableOpacity,
   Dimensions,
   Image,
+  Modal,
+  StatusBar,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { BarChart } from "react-native-gifted-charts";
+import { WebView } from "react-native-webview";
 
 import useMarketData from "../hooks/useMarketData";
 import useHistoricalData from "../hooks/useHistoricalData";
@@ -49,11 +52,23 @@ const StockDetailPage = ({ navigation, route }) => {
   const [activeRange, setActiveRange] = useState("1M");
 
   const { prices, isConnected } = useMarketData();
-  const { fundamentals, loading: fundamentalsLoading } =
-    useFundamentals(symbol);
+  const {
+    fundamentals,
+    loading: fundamentalsLoading,
+    error,
+  } = useFundamentals(symbol);
   const live = prices[instrumentKey];
   const ltp = live?.ltp ?? null;
   const cp = live?.cp ?? null;
+  const isLive = live?.isLive ?? false;
+  const lastUpdated = live?.lastUpdated ?? null;
+  const lastUpdatedLabel = lastUpdated
+    ? new Date(lastUpdated * 1000).toLocaleString("en-IN", {
+        weekday: "short",
+        hour: "2-digit",
+        minute: "2-digit",
+      })
+    : null;
   const {
     label: changeLabel,
     isPositive,
@@ -71,9 +86,10 @@ const StockDetailPage = ({ navigation, route }) => {
     ? "rgba(16,185,129,0.12)"
     : "rgba(239,68,68,0.12)";
 
-  const [showFundamentals, setShowFundamentals] = useState(false);
+  const [showFundamentals, setShowFundamentals] = useState(true);
+  const [chartExpanded, setChartExpanded] = useState(false);
 
-  const [showDetails, setShowDetails] = useState(false);
+  const [showDetails, setShowDetails] = useState(true);
   const [financialType, setFinancialType] = useState("quarterly");
   const financialData = fundamentals?.financials?.[financialType] || [];
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -161,11 +177,17 @@ const StockDetailPage = ({ navigation, route }) => {
         {/* ── Price + change badge ─────────────────────────────────────────── */}
         <View style={styles.priceRow}>
           <Text style={styles.ltp}>{formatPrice(ltp)}</Text>
-          <View style={[styles.changeBadge, { backgroundColor: accentBg }]}>
-            <Text style={[styles.changeBadgeText, { color: accentColor }]}>
-              {changeLabel}
-            </Text>
-          </View>
+
+          <Text
+            style={[
+              styles.priceChange,
+              {
+                color: accentColor,
+              },
+            ]}
+          >
+            {`${changePct >= 0 ? "+" : ""}₹${Math.abs(diff)} (${changeLabel})`}
+          </Text>
         </View>
 
         {/* ── Chart card ──────────────────────────────────────────────────── */}
@@ -178,6 +200,15 @@ const StockDetailPage = ({ navigation, route }) => {
             loading={chartLoading}
             height={200}
           />
+
+          {/* ── Expand button — bottom-right corner of chart card ── */}
+          <TouchableOpacity
+            style={styles.expandBtn}
+            onPress={() => setChartExpanded(true)}
+            activeOpacity={0.8}
+          >
+            <Ionicons name="expand-outline" size={15} color="#64748B" />
+          </TouchableOpacity>
 
           {/* Range tabs inside the card at the bottom */}
           <View style={styles.rangeRow}>
@@ -203,6 +234,19 @@ const StockDetailPage = ({ navigation, route }) => {
           </View>
         </View>
 
+        {/* ── TradingView Advanced Chart Modal ────────────────────────────── */}
+        <TradingViewModal
+          visible={chartExpanded}
+          symbol={symbol}
+          name={name}
+          ltp={ltp}
+          changeLabel={changeLabel}
+          isPositive={isPositive}
+          accentColor={accentColor}
+          accentBg={accentBg}
+          onClose={() => setChartExpanded(false)}
+        />
+
         {/* ── Details Dropdown ─────────────────────────────────────────── */}
         <View style={styles.card}>
           <TouchableOpacity
@@ -219,7 +263,11 @@ const StockDetailPage = ({ navigation, route }) => {
               <Text style={styles.cardTitle}>Details</Text>
             </View>
 
-            <Ionicons name="chevron-down" size={18} color="#64748B" />
+            <Ionicons
+              name={showDetails ? "chevron-up" : "chevron-down"}
+              size={18}
+              color="#64748B"
+            />
           </TouchableOpacity>
 
           {showDetails && (
@@ -271,64 +319,76 @@ const StockDetailPage = ({ navigation, route }) => {
               <Text style={styles.cardTitle}>Fundamentals</Text>
             </View>
 
-            <Ionicons name="chevron-down" size={18} color="#64748B" />
+            <Ionicons
+              name={showFundamentals ? "chevron-up" : "chevron-down"}
+              size={18}
+              color="#64748B"
+            />
           </TouchableOpacity>
-          {showFundamentals && fundamentals && (
-            <View style={styles.fundamentalsGrid}>
-              <View style={styles.fundamentalItem}>
-                <Text style={styles.fundamentalLabel}>Market Cap</Text>
-                <Text style={styles.fundamentalValue}>
-                  ₹
-                  {Number(fundamentals.metrics.market_cap).toLocaleString(
-                    "en-IN",
-                  )}{" "}
-                  Cr
-                </Text>
-              </View>
-
-              <View style={styles.fundamentalItem}>
-                <Text style={styles.fundamentalLabel}>ROE</Text>
-                <Text style={styles.fundamentalValue}>
-                  {fundamentals.metrics.roe}%
-                </Text>
-              </View>
-
-              <View style={styles.fundamentalItem}>
-                <Text style={styles.fundamentalLabel}>P/E Ratio</Text>
-                <Text style={styles.fundamentalValue}>
-                  {fundamentals.metrics.pe_ratio}
-                </Text>
-              </View>
-
-              <View style={styles.fundamentalItem}>
-                <Text style={styles.fundamentalLabel}>Industry P/E</Text>
-                <Text style={styles.fundamentalValue}>
-                  {fundamentals.metrics.industry_pe}
-                </Text>
-              </View>
-
-              <View style={styles.fundamentalItem}>
-                <Text style={styles.fundamentalLabel}>Dividend Yield</Text>
-                <Text style={styles.fundamentalValue}>
-                  {fundamentals.metrics.dividend_yield}%
-                </Text>
-              </View>
-
-              <View style={styles.fundamentalItem}>
-                <Text style={styles.fundamentalLabel}>Book Value</Text>
-                <Text style={styles.fundamentalValue}>
-                  {fundamentals.metrics.book_value}
-                </Text>
-              </View>
-
-              <View style={styles.fundamentalItem}>
-                <Text style={styles.fundamentalLabel}>Debt to Equity</Text>
-                <Text style={styles.fundamentalValue}>
-                  {fundamentals.metrics.debt_to_equity}
-                </Text>
-              </View>
-            </View>
+          {showFundamentals && fundamentalsLoading && (
+            <Text style={{ marginTop: 12 }}>Loading fundamentals...</Text>
           )}
+          {showFundamentals && error && (
+            <Text style={{ color: "red", marginTop: 12 }}>{error}</Text>
+          )}
+          {showFundamentals &&
+            !fundamentalsLoading &&
+            fundamentals?.metrics && (
+              <View style={styles.fundamentalsGrid}>
+                <View style={styles.fundamentalItem}>
+                  <Text style={styles.fundamentalLabel}>Market Cap</Text>
+                  <Text style={styles.fundamentalValue}>
+                    ₹
+                    {Number(fundamentals.metrics.market_cap).toLocaleString(
+                      "en-IN",
+                    )}{" "}
+                    Cr
+                  </Text>
+                </View>
+
+                <View style={styles.fundamentalItem}>
+                  <Text style={styles.fundamentalLabel}>ROE</Text>
+                  <Text style={styles.fundamentalValue}>
+                    {fundamentals.metrics.roe}%
+                  </Text>
+                </View>
+
+                <View style={styles.fundamentalItem}>
+                  <Text style={styles.fundamentalLabel}>P/E Ratio</Text>
+                  <Text style={styles.fundamentalValue}>
+                    {fundamentals.metrics.pe_ratio}
+                  </Text>
+                </View>
+
+                <View style={styles.fundamentalItem}>
+                  <Text style={styles.fundamentalLabel}>Industry P/E</Text>
+                  <Text style={styles.fundamentalValue}>
+                    {fundamentals.metrics.industry_pe}
+                  </Text>
+                </View>
+
+                <View style={styles.fundamentalItem}>
+                  <Text style={styles.fundamentalLabel}>Dividend Yield</Text>
+                  <Text style={styles.fundamentalValue}>
+                    {fundamentals.metrics.dividend_yield}%
+                  </Text>
+                </View>
+
+                <View style={styles.fundamentalItem}>
+                  <Text style={styles.fundamentalLabel}>Book Value</Text>
+                  <Text style={styles.fundamentalValue}>
+                    {fundamentals.metrics.book_value}
+                  </Text>
+                </View>
+
+                <View style={styles.fundamentalItem}>
+                  <Text style={styles.fundamentalLabel}>Debt to Equity</Text>
+                  <Text style={styles.fundamentalValue}>
+                    {fundamentals.metrics.debt_to_equity}
+                  </Text>
+                </View>
+              </View>
+            )}
         </View>
 
         {/* ── Financial Performance ───────────────────────── */}
@@ -465,7 +525,11 @@ const StockDetailPage = ({ navigation, route }) => {
         {/* ── Shareholding Pattern ───────────────────────── */}
         <View style={styles.card}>
           <View style={styles.sectionTitleRow}>
-            <Ionicons name="information-circle-outline" size={18} color="black" />
+            <Ionicons
+              name="information-circle-outline"
+              size={18}
+              color="black"
+            />
 
             <Text style={styles.cardTitle}>Shareholding Pattern</Text>
           </View>
@@ -520,7 +584,6 @@ const StockDetailPage = ({ navigation, route }) => {
             </View>
           ))}
         </View>
-
       </ScrollView>
 
       {/* ── Action bar ──────────────────────────────────────────────────────── */}
@@ -635,14 +698,15 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: 20,
-    paddingBottom: 16,
+    paddingBottom: 20,
     gap: 12,
   },
   ltp: {
-    fontSize: 34,
-    fontWeight: "800",
+    fontSize: 32,
+    fontWeight: "700",
     color: "#0F172A",
-    letterSpacing: -1,
+    letterSpacing: -0.4,
+    lineHeight: 38,
   },
   changeBadge: {
     paddingHorizontal: 10,
@@ -667,6 +731,24 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     elevation: 3,
     overflow: "hidden",
+  },
+
+  // Expand button — floats at bottom-right inside chartCard above range tabs
+  expandBtn: {
+    position: "absolute",
+    bottom: 54,
+    right: 12,
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    backgroundColor: "#F1F5F9",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 10,
+    shadowColor: "#000",
+    shadowOpacity: 0.08,
+    shadowRadius: 4,
+    elevation: 2,
   },
 
   // Range tabs — inside card at bottom
@@ -967,68 +1049,257 @@ const styles = StyleSheet.create({
   },
 
   holdingQuarterRow: {
-  flexDirection: "row",
-  flexWrap: "wrap",
-  gap: 10,
-  marginBottom: 24,
-},
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 10,
+    marginBottom: 24,
+  },
 
-holdingQuarterChip: {
-  paddingHorizontal: 14,
-  paddingVertical: 8,
-  borderRadius: 20,
-  backgroundColor: "#F1F5F9",
-},
+  holdingQuarterChip: {
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 20,
+    backgroundColor: "#F1F5F9",
+  },
 
-holdingQuarterChipActive: {
-  backgroundColor: "rgba(59,130,246,0.12)",
-},
+  holdingQuarterChipActive: {
+    backgroundColor: "rgba(59,130,246,0.12)",
+  },
 
-holdingQuarterText: {
-  color: "#64748B",
-  fontWeight: "600",
-  fontSize: 12,
-},
+  holdingQuarterText: {
+    color: "#64748B",
+    fontWeight: "600",
+    fontSize: 12,
+  },
 
-holdingQuarterTextActive: {
-  color: "#3B82F6",
-  fontWeight: "700",
-},
+  holdingQuarterTextActive: {
+    color: "#3B82F6",
+    fontWeight: "700",
+  },
 
-shareholdingItem: {
-  marginBottom: 24,
-},
+  shareholdingItem: {
+    marginBottom: 24,
+  },
 
-shareholdingTopRow: {
-  flexDirection: "row",
-  justifyContent: "space-between",
-  marginBottom: 10,
-},
+  shareholdingTopRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 10,
+  },
 
-shareholdingLabel: {
-  fontSize: 14,
-  color: "#1E293B",
-  fontWeight: "500",
-},
+  shareholdingLabel: {
+    fontSize: 14,
+    color: "#1E293B",
+    fontWeight: "500",
+  },
 
-shareholdingValue: {
-  fontSize: 14,
-  color: "#1E293B",
-  fontWeight: "700",
-},
+  shareholdingValue: {
+    fontSize: 14,
+    color: "#1E293B",
+    fontWeight: "700",
+  },
 
-shareholdingTrack: {
-  height: 10,
-  backgroundColor: "#E2E8F0",
-  borderRadius: 10,
-  overflow: "hidden",
-},
+  shareholdingTrack: {
+    height: 10,
+    backgroundColor: "#E2E8F0",
+    borderRadius: 10,
+    overflow: "hidden",
+  },
 
-shareholdingBar: {
-  height: "100%",
-  backgroundColor: "#3B82F6",
-  borderRadius: 10,
-},
+  shareholdingBar: {
+    height: "100%",
+    backgroundColor: "#3B82F6",
+    borderRadius: 10,
+  },
+});
+
+// ── TradingView Advanced Chart Modal ─────────────────────────────────────────
+/**
+ * Maps your NSE symbol → TradingView ticker format.
+ * All NSE equity stocks use "NSE:" prefix.
+ * The two indices need special names.
+ */
+const toTVSymbol = (symbol) => {
+  const overrides = {
+    "NIFTY 50": "NSE:NIFTY",
+    "NIFTY BANK": "NSE:BANKNIFTY",
+  };
+  return overrides[symbol] ?? `NSE:${symbol}`;
+};
+
+const TradingViewModal = ({
+  visible,
+  symbol,
+  name,
+  ltp,
+  changeLabel,
+  isPositive,
+  accentColor,
+  accentBg,
+  onClose,
+}) => {
+  const tvSymbol = toTVSymbol(symbol);
+
+  // Full TradingView Advanced Chart widget — candlesticks, indicators,
+  // drawing tools, volume, all timeframes — exactly what Groww & Zerodha use.
+  const html = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html, body { width:100%; height:100vh; background:#131722; overflow:hidden; }
+    #tv_chart_container { width:100%; height:100vh; }
+  </style>
+</head>
+<body>
+  <div id="tv_chart_container"></div>
+  <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+  <script type="text/javascript">
+    new TradingView.widget({
+      autosize: true,
+      symbol: "${tvSymbol}",
+      interval: "D",
+      timezone: "Asia/Kolkata",
+      theme: "dark",
+      style: "1",
+      locale: "en",
+      toolbar_bg: "#1E2433",
+      enable_publishing: false,
+      allow_symbol_change: false,
+      container_id: "tv_chart_container",
+      hide_top_toolbar: false,
+      hide_legend: false,
+      save_image: false,
+      show_popup_button: false,
+      withdateranges: true,
+      hide_side_toolbar: false,
+      details: false,
+      hotlist: false,
+      calendar: false,
+    });
+  </script>
+</body>
+</html>`;
+
+  return (
+    <Modal
+      visible={visible}
+      animationType="slide"
+      statusBarTranslucent
+      onRequestClose={onClose}
+    >
+      <StatusBar barStyle="light-content" backgroundColor="#131722" />
+      <SafeAreaView style={tvStyles.safe}>
+        {/* ── Header ─────────────────────────────────────────────────── */}
+        <View style={tvStyles.header}>
+          {/* Symbol + company name */}
+          <View style={tvStyles.left}>
+            <Text style={tvStyles.symbol}>{symbol}</Text>
+            <Text style={tvStyles.name} numberOfLines={1}>
+              {name}
+            </Text>
+          </View>
+
+          {/* Live price + change badge */}
+          <View style={tvStyles.centre}>
+            <Text style={tvStyles.ltp}>
+              {ltp != null ? `₹${Number(ltp).toLocaleString("en-IN")}` : "—"}
+            </Text>
+            <View style={[tvStyles.badge, { backgroundColor: accentBg }]}>
+              <Text style={[tvStyles.badgeText, { color: accentColor }]}>
+                {changeLabel}
+              </Text>
+            </View>
+          </View>
+
+          {/* Close */}
+          <TouchableOpacity
+            style={tvStyles.closeBtn}
+            onPress={onClose}
+            activeOpacity={0.75}
+          >
+            <Ionicons name="close" size={18} color="#94A3B8" />
+          </TouchableOpacity>
+        </View>
+
+        {/* ── TradingView Advanced Chart ──────────────────────────────── */}
+        <WebView
+          source={{ html }}
+          style={{ flex: 1, backgroundColor: "#131722" }}
+          originWhitelist={["*"]}
+          javaScriptEnabled
+          domStorageEnabled
+          mixedContentMode="always"
+          allowsInlineMediaPlayback
+          scrollEnabled={false}
+          bounces={false}
+          onError={(e) => console.warn("TradingView error:", e.nativeEvent)}
+        />
+      </SafeAreaView>
+    </Modal>
+  );
+};
+
+const tvStyles = StyleSheet.create({
+  safe: {
+    flex: 1,
+    backgroundColor: "#131722",
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    backgroundColor: "#131722",
+    borderBottomWidth: 1,
+    borderBottomColor: "#1E2433",
+    gap: 8,
+  },
+  left: {
+    flex: 1.2,
+  },
+  symbol: {
+    fontSize: 16,
+    fontWeight: "800",
+    color: "#F8FAFC",
+    letterSpacing: -0.3,
+  },
+  name: {
+    fontSize: 11,
+    color: "#64748B",
+    marginTop: 1,
+  },
+  centre: {
+    flex: 1,
+    alignItems: "flex-end",
+  },
+  ltp: {
+    fontSize: 18,
+    fontWeight: "800",
+    color: "#F8FAFC",
+    letterSpacing: -0.5,
+  },
+  badge: {
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 20,
+    marginTop: 4,
+  },
+  badgeText: {
+    fontSize: 11,
+    fontWeight: "700",
+  },
+  closeBtn: {
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    backgroundColor: "#1E2433",
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 6,
+  },
 });
 
 export default StockDetailPage;

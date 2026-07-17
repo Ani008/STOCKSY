@@ -1,0 +1,4652 @@
+{
+  "generated_at": 1784233730,
+  "version": 1,
+  "stocks": {
+    "HDFCBANK": {
+      "symbol": "HDFCBANK",
+      "metrics": {
+        "market_cap": 1244879.49,
+        "pe_ratio": 18.02,
+        "pb_ratio": 2.12,
+        "industry_pe": 14.2,
+        "debt_to_equity": null,
+        "roe": 13.82,
+        "eps": 44.85,
+        "dividend_yield": 1.59,
+        "book_value": 380.72,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 120296,
+            "profit": 19285
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 133055,
+            "profit": 17090
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 118561,
+            "profit": 20364
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 126927,
+            "profit": 20691
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 116920,
+            "profit": 21074
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2021",
+            "revenue": 155885,
+            "profit": 31857
+          },
+          {
+            "period": "2022",
+            "revenue": 167695,
+            "profit": 38151
+          },
+          {
+            "period": "2023",
+            "revenue": 204666,
+            "profit": 46149
+          },
+          {
+            "period": "2024",
+            "revenue": 407995,
+            "profit": 65447
+          },
+          {
+            "period": "2025",
+            "revenue": 470916,
+            "profit": 73440
+          }
+        ]
+      },
+      "profile": {
+        "description": "HDFC Bank believes that modern banking is about more than managing money; it's about fulfilling aspirations and shaping the futures of its customers and communities. The institution's core purpose is to help every Indian make better money choices, for both today and for the future, fostering financial well-being nationwide.",
+        "ceo": "Sashidhar Jagdishan",
+        "founded": 1994,
+        "nse_symbol": "HDFCBANK",
+        "industry": "Banking"
+      },
+      "shareholding": {
+        "quarters": [
+          {
+            "period": "Jun '25",
+            "data": [
+              {
+                "category": "Foreign Institutions",
+                "value": 48.84
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 25.61
+              },
+              {
+                "category": "Retail And Others",
+                "value": 15.2
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 10.35
+              }
+            ]
+          },
+          {
+            "period": "Aug '25",
+            "data": [
+              {
+                "category": "Foreign Institutions",
+                "value": 48.61
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 25.82
+              },
+              {
+                "category": "Retail And Others",
+                "value": 15.35
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 10.22
+              }
+            ]
+          },
+          {
+            "period": "Sep '25",
+            "data": [
+              {
+                "category": "Foreign Institutions",
+                "value": 48.39
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 26.02
+              },
+              {
+                "category": "Retail And Others",
+                "value": 15.35
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 10.24
+              }
+            ]
+          },
+          {
+            "period": "Dec '25",
+            "data": [
+              {
+                "category": "Foreign Institutions",
+                "value": 47.67
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 26.66
+              },
+              {
+                "category": "Retail And Others",
+                "value": 15.14
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 10.53
+              }
+            ]
+          }
+        ]
+      },
+      "last_updated": 1784233731
+    },
+    "ICICIBANK": {
+      "symbol": "ICICIBANK",
+      "metrics": {
+        "market_cap": 1017300.75,
+        "pe_ratio": 18.96,
+        "pb_ratio": 2.8,
+        "industry_pe": 14.2,
+        "debt_to_equity": null,
+        "roe": 16.36,
+        "eps": 74.78,
+        "dividend_yield": 85.0,
+        "book_value": 506.99,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 79748,
+            "profit": 14323
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 74576,
+            "profit": 14394
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 76147,
+            "profit": 14256
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 76782,
+            "profit": 13411
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 84614,
+            "profit": 15612
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2021",
+            "revenue": 161192,
+            "profit": 20220
+          },
+          {
+            "period": "2022",
+            "revenue": 157536,
+            "profit": 25784
+          },
+          {
+            "period": "2023",
+            "revenue": 186719,
+            "profit": 34463
+          },
+          {
+            "period": "2024",
+            "revenue": 236038,
+            "profit": 45007
+          },
+          {
+            "period": "2025",
+            "revenue": 294587,
+            "profit": 54419
+          }
+        ]
+      },
+      "profile": {
+        "description": "ICICI Bank is India\u2019s second-largest private sector bank, headquartered in Mumbai. It provides a comprehensive range of banking products and financial services to corporate and retail customers through a variety of delivery channels and specialized subsidiaries.",
+        "ceo": "Sandeep Bakhshi",
+        "founded": 1994,
+        "nse_symbol": "ICICIBANK",
+        "industry": "Banking"
+      },
+      "shareholding": {
+        "quarters": [
+          {
+            "period": "Mar '25",
+            "data": [
+              {
+                "category": "Foreign Institutions",
+                "value": 44.83
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 29.86
+              },
+              {
+                "category": "Retail And Others",
+                "value": 14.91
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 9.4
+              }
+            ]
+          },
+          {
+            "period": "Jun '25",
+            "data": [
+              {
+                "category": "Foreign Institutions",
+                "value": 46.77
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 29.62
+              },
+              {
+                "category": "Retail And Others",
+                "value": 14.29
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 9.33
+              }
+            ]
+          },
+          {
+            "period": "Sep '25",
+            "data": [
+              {
+                "category": "Foreign Institutions",
+                "value": 45.56
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 30.76
+              },
+              {
+                "category": "Retail And Others",
+                "value": 14.3
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 9.38
+              }
+            ]
+          },
+          {
+            "period": "Dec '25",
+            "data": [
+              {
+                "category": "Foreign Institutions",
+                "value": 43.87
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 32.08
+              },
+              {
+                "category": "Retail And Others",
+                "value": 14.65
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 9.4
+              }
+            ]
+          },
+          {
+            "period": "Mar '26",
+            "data": [
+              {
+                "category": "Foreign Institutions",
+                "value": 34.49
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 27.83
+              },
+              {
+                "category": "Retail And Others",
+                "value": 25.56
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 12.11
+              }
+            ]
+          }
+        ]
+      },
+      "last_updated": 1784233732
+    },
+    "SBIN": {
+      "symbol": "SBIN",
+      "metrics": {
+        "market_cap": 951861.22,
+        "pe_ratio": 11.31,
+        "pb_ratio": 1.6,
+        "industry_pe": 14.2,
+        "debt_to_equity": null,
+        "roe": 15.48,
+        "eps": 91.16,
+        "dividend_yield": 1.68,
+        "book_value": 645.82,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 179562,
+            "profit": 19941
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 166992,
+            "profit": 21627
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 175898,
+            "profit": 21504
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 185648,
+            "profit": 21876
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 181079,
+            "profit": 20161
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2021",
+            "revenue": 385338,
+            "profit": 24280
+          },
+          {
+            "period": "2022",
+            "revenue": 406973,
+            "profit": 36356
+          },
+          {
+            "period": "2023",
+            "revenue": 473378,
+            "profit": 56558
+          },
+          {
+            "period": "2024",
+            "revenue": 594575,
+            "profit": 68138
+          },
+          {
+            "period": "2025",
+            "revenue": 663343,
+            "profit": 79017
+          }
+        ]
+      },
+      "profile": {
+        "description": "With a legacy of over 200 years, State Bank of India has solidified its position as the country's largest bank, playing a pivotal role in the nation's financial landscape. The bank's vision is to be the preferred choice for a transforming India, guiding the nation's financial progress and adapting to its evolving needs.",
+        "ceo": "Shri Ashwini Kumar Tewari",
+        "founded": 1955,
+        "nse_symbol": "SBIN",
+        "industry": "Banking"
+      },
+      "shareholding": {
+        "quarters": [
+          {
+            "period": "Jun '25",
+            "data": [
+              {
+                "category": "Promoters",
+                "value": 57.42
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 13.02
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 12.65
+              },
+              {
+                "category": "Foreign Institutions",
+                "value": 9.33
+              },
+              {
+                "category": "Retail And Others",
+                "value": 7.58
+              }
+            ]
+          },
+          {
+            "period": "Jul '25",
+            "data": [
+              {
+                "category": "Promoters",
+                "value": 55.5
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 13.83
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 13.39
+              },
+              {
+                "category": "Foreign Institutions",
+                "value": 9.98
+              },
+              {
+                "category": "Retail And Others",
+                "value": 7.3
+              }
+            ]
+          },
+          {
+            "period": "Sep '25",
+            "data": [
+              {
+                "category": "Promoters",
+                "value": 55.5
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 14.23
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 13.55
+              },
+              {
+                "category": "Foreign Institutions",
+                "value": 9.57
+              },
+              {
+                "category": "Retail And Others",
+                "value": 7.15
+              }
+            ]
+          },
+          {
+            "period": "Dec '25",
+            "data": [
+              {
+                "category": "Promoters",
+                "value": 55.5
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 13.76
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 13.42
+              },
+              {
+                "category": "Foreign Institutions",
+                "value": 10.34
+              },
+              {
+                "category": "Retail And Others",
+                "value": 6.98
+              }
+            ]
+          },
+          {
+            "period": "Mar '26",
+            "data": [
+              {
+                "category": "Promoters",
+                "value": 55.52
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 13.29
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 12.95
+              },
+              {
+                "category": "Foreign Institutions",
+                "value": 11.42
+              },
+              {
+                "category": "Retail And Others",
+                "value": 6.82
+              }
+            ]
+          }
+        ]
+      },
+      "last_updated": 1784233733
+    },
+    "AXISBANK": {
+      "symbol": "AXISBANK",
+      "metrics": {
+        "market_cap": 406790.0,
+        "pe_ratio": 15.47,
+        "pb_ratio": 1.89,
+        "industry_pe": 14.2,
+        "debt_to_equity": null,
+        "roe": 13.15,
+        "eps": 84.51,
+        "dividend_yield": 8.0,
+        "book_value": 691.84,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 39358,
+            "profit": 7490
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 40401,
+            "profit": 6260
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 39770,
+            "profit": 5558
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 40898,
+            "profit": 7044
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 41143,
+            "profit": 7632
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2021",
+            "revenue": 77974,
+            "profit": 7252
+          },
+          {
+            "period": "2022",
+            "revenue": 86114,
+            "profit": 14164
+          },
+          {
+            "period": "2023",
+            "revenue": 105797,
+            "profit": 10853
+          },
+          {
+            "period": "2024",
+            "revenue": 137989,
+            "profit": 26424
+          },
+          {
+            "period": "2025",
+            "revenue": 155917,
+            "profit": 28112
+          }
+        ]
+      },
+      "profile": {
+        "description": "Axis Bank is India's third-largest private sector bank, providing a complete suite of banking products and financial services covering retail, wholesale, and treasury operations. Its guiding vision is to be the preferred financial services provider, excelling in customer service delivery through insightful employees and the smart application of modern technology.",
+        "ceo": "Amitabh Chaudhry",
+        "founded": 1993,
+        "nse_symbol": "AXISBANK",
+        "industry": "Banking"
+      },
+      "shareholding": {
+        "quarters": [
+          {
+            "period": "Mar '25",
+            "data": [
+              {
+                "category": "Foreign Institutions",
+                "value": 43.94
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 32.02
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 8.86
+              },
+              {
+                "category": "Promoters",
+                "value": 8.18
+              },
+              {
+                "category": "Retail And Others",
+                "value": 6.99
+              }
+            ]
+          },
+          {
+            "period": "Jun '25",
+            "data": [
+              {
+                "category": "Foreign Institutions",
+                "value": 43.81
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 32.54
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 8.68
+              },
+              {
+                "category": "Promoters",
+                "value": 8.17
+              },
+              {
+                "category": "Retail And Others",
+                "value": 6.82
+              }
+            ]
+          },
+          {
+            "period": "Sep '25",
+            "data": [
+              {
+                "category": "Foreign Institutions",
+                "value": 41.89
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 33.97
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 8.91
+              },
+              {
+                "category": "Promoters",
+                "value": 8.16
+              },
+              {
+                "category": "Retail And Others",
+                "value": 7.07
+              }
+            ]
+          },
+          {
+            "period": "Dec '25",
+            "data": [
+              {
+                "category": "Foreign Institutions",
+                "value": 42.57
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 33.48
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 9.18
+              },
+              {
+                "category": "Promoters",
+                "value": 8.15
+              },
+              {
+                "category": "Retail And Others",
+                "value": 6.63
+              }
+            ]
+          },
+          {
+            "period": "Mar '25",
+            "data": [
+              {
+                "category": "Foreign Institutions",
+                "value": 42.05
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 34.11
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 9.25
+              },
+              {
+                "category": "Promoters",
+                "value": 8.14
+              },
+              {
+                "category": "Retail And Others",
+                "value": 6.45
+              }
+            ]
+          }
+        ]
+      },
+      "last_updated": 1784233734
+    },
+    "BAJFINANCE": {
+      "symbol": "BAJFINANCE",
+      "metrics": {
+        "market_cap": 645166.85,
+        "pe_ratio": 33.98,
+        "pb_ratio": 5.66,
+        "industry_pe": 14.2,
+        "debt_to_equity": 3.15,
+        "roe": 17.91,
+        "eps": 30.54,
+        "dividend_yield": 53.0,
+        "book_value": 183.34,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 11436,
+            "profit": -1200
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 12450,
+            "profit": -800
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 13100,
+            "profit": -500
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 13900,
+            "profit": -200
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 14360,
+            "profit": 51970
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2022",
+            "revenue": 42000,
+            "profit": 5000
+          },
+          {
+            "period": "2023",
+            "revenue": 51000,
+            "profit": 8200
+          }
+        ]
+      },
+      "profile": {
+        "description": "A subsidiary of Bajaj Finserv, Bajaj Finance is one of India\u2019s largest and most diversified Non-Banking Financial Companies (NBFCs). Headquartered in Pune, it has evolved from a captive auto-financier into a fintech powerhouse offering consumer durables financing, SME lending, and wealth management.",
+        "ceo": "N/A",
+        "founded": 1987,
+        "nse_symbol": "BAJFINANCE",
+        "industry": "Banking"
+      },
+      "shareholding": {
+        "quarters": [
+          {
+            "period": "Mar '25",
+            "data": [
+              {
+                "category": "Promoters",
+                "value": 54.73
+              },
+              {
+                "category": "Foreign Institutions",
+                "value": 21.46
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 9.0
+              },
+              {
+                "category": "Retail And Others",
+                "value": 8.94
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 5.87
+              }
+            ]
+          },
+          {
+            "period": "Jun '25",
+            "data": [
+              {
+                "category": "Promoters",
+                "value": 54.73
+              },
+              {
+                "category": "Foreign Institutions",
+                "value": 21.71
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 8.89
+              },
+              {
+                "category": "Retail And Others",
+                "value": 8.96
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 5.71
+              }
+            ]
+          },
+          {
+            "period": "Sep '25",
+            "data": [
+              {
+                "category": "Promoters",
+                "value": 54.66
+              },
+              {
+                "category": "Foreign Institutions",
+                "value": 21.97
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 8.89
+              },
+              {
+                "category": "Retail And Others",
+                "value": 8.89
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 5.58
+              }
+            ]
+          },
+          {
+            "period": "Dec '25",
+            "data": [
+              {
+                "category": "Promoters",
+                "value": 54.7
+              },
+              {
+                "category": "Foreign Institutions",
+                "value": 21.5
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 9.09
+              },
+              {
+                "category": "Retail And Others",
+                "value": 8.86
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 5.85
+              }
+            ]
+          },
+          {
+            "period": "Mar '26",
+            "data": [
+              {
+                "category": "Promoters",
+                "value": 54.7
+              },
+              {
+                "category": "Foreign Institutions",
+                "value": 21.33
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 8.76
+              },
+              {
+                "category": "Retail And Others",
+                "value": 8.78
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 6.42
+              }
+            ]
+          }
+        ]
+      },
+      "last_updated": 1784233735
+    },
+    "KOTAKBANK": {
+      "symbol": "KOTAKBANK",
+      "metrics": {
+        "market_cap": 375130.92,
+        "pe_ratio": 19.47,
+        "pb_ratio": 2.07,
+        "industry_pe": 14.2,
+        "debt_to_equity": null,
+        "roe": 11.39,
+        "eps": 19.37,
+        "dividend_yield": 17.0,
+        "book_value": 182.2,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 27174,
+            "profit": 4909
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 26704,
+            "profit": 4429
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 24901,
+            "profit": 4446
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 27851,
+            "profit": 4904
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 28108,
+            "profit": 5402
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2021",
+            "revenue": 56408,
+            "profit": 9903
+          },
+          {
+            "period": "2022",
+            "revenue": 58862,
+            "profit": 11932
+          },
+          {
+            "period": "2023",
+            "revenue": 68142,
+            "profit": 14780
+          },
+          {
+            "period": "2024",
+            "revenue": 94274,
+            "profit": 17977
+          },
+          {
+            "period": "2025",
+            "revenue": 107095,
+            "profit": 21947
+          }
+        ]
+      },
+      "profile": {
+        "description": "Established in 1985, Kotak is one of India's leading diversified and integrated financial services conglomerates, providing a wide range of financial solutions across India. Its primary goal is to make banking simple and understandable by truly catering to the needs of its customers and infusing simplicity into every transaction. ",
+        "ceo": "Ashok Vaswani",
+        "founded": 1985,
+        "nse_symbol": "KOTAKBANK",
+        "industry": "Banking"
+      },
+      "shareholding": {
+        "quarters": [
+          {
+            "period": "Mar '25",
+            "data": [
+              {
+                "category": "Promoters",
+                "value": 25.88
+              },
+              {
+                "category": "Retail And Others",
+                "value": 11.31
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 17.34
+              },
+              {
+                "category": "Foreign Institutions",
+                "value": 33.66
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 11.8
+              }
+            ]
+          },
+          {
+            "period": "Jun '25",
+            "data": [
+              {
+                "category": "Promoters",
+                "value": 25.88
+              },
+              {
+                "category": "Retail And Others",
+                "value": 11.26
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 18.35
+              },
+              {
+                "category": "Foreign Institutions",
+                "value": 33.25
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 11.26
+              }
+            ]
+          },
+          {
+            "period": "Sep '25",
+            "data": [
+              {
+                "category": "Promoters",
+                "value": 25.88
+              },
+              {
+                "category": "Retail And Others",
+                "value": 11.45
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 20.77
+              },
+              {
+                "category": "Foreign Institutions",
+                "value": 30.66
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 11.24
+              }
+            ]
+          },
+          {
+            "period": "Dec '25",
+            "data": [
+              {
+                "category": "Promoters",
+                "value": 25.87
+              },
+              {
+                "category": "Retail And Others",
+                "value": 11.35
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 21.18
+              },
+              {
+                "category": "Foreign Institutions",
+                "value": 29.9
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 11.7
+              }
+            ]
+          },
+          {
+            "period": "Mar '26",
+            "data": [
+              {
+                "category": "Promoters",
+                "value": 25.87
+              },
+              {
+                "category": "Retail And Others",
+                "value": 11.25
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 23.57
+              },
+              {
+                "category": "Foreign Institutions",
+                "value": 26.7
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 12.61
+              }
+            ]
+          }
+        ]
+      },
+      "last_updated": 1784233737
+    },
+    "HDFCLIFE": {
+      "symbol": "HDFCLIFE",
+      "metrics": {
+        "market_cap": 123279.04,
+        "pe_ratio": 61.97,
+        "pb_ratio": 6.9,
+        "industry_pe": 14.2,
+        "debt_to_equity": 0.16,
+        "roe": 10.8,
+        "eps": 9.16,
+        "dividend_yield": 37.0,
+        "book_value": 82.26,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 24314,
+            "profit": 475
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 29628,
+            "profit": 548
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 20808,
+            "profit": 448
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 29602,
+            "profit": 418
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 20318,
+            "profit": 497
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2021",
+            "revenue": 71928,
+            "profit": 1361
+          },
+          {
+            "period": "2022",
+            "revenue": 67892,
+            "profit": 1327
+          },
+          {
+            "period": "2023",
+            "revenue": 61644,
+            "profit": 1368
+          },
+          {
+            "period": "2024",
+            "revenue": 102021,
+            "profit": 1574
+          },
+          {
+            "period": "2025",
+            "revenue": 97385,
+            "profit": 1811
+          }
+        ]
+      },
+      "profile": {
+        "description": "HDFC Life Insurance Company Limited is a publicly listed life insurance provider in India, promoted by the country's leading private sector bank, HDFC Bank Limited. The company's vision is to be the most successful and admired Life Insurance Company, making it the most obvious choice for all its customers.",
+        "ceo": "Ms Vibha Padalkar",
+        "founded": 2000,
+        "nse_symbol": "HDFCLIFE",
+        "industry": "Banking"
+      },
+      "shareholding": {
+        "quarters": [
+          {
+            "period": "Mar '25",
+            "data": [
+              {
+                "category": "Promoters",
+                "value": 50.32
+              },
+              {
+                "category": "Retail And Others",
+                "value": 10.63
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 11.32
+              },
+              {
+                "category": "Foreign Institutions",
+                "value": 24.95
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 2.78
+              }
+            ]
+          },
+          {
+            "period": "Jun '25",
+            "data": [
+              {
+                "category": "Promoters",
+                "value": 50.28
+              },
+              {
+                "category": "Retail And Others",
+                "value": 10.39
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 11.78
+              },
+              {
+                "category": "Foreign Institutions",
+                "value": 24.75
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 2.79
+              }
+            ]
+          },
+          {
+            "period": "Sep '25",
+            "data": [
+              {
+                "category": "Promoters",
+                "value": 50.25
+              },
+              {
+                "category": "Retail And Others",
+                "value": 10.35
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 11.94
+              },
+              {
+                "category": "Foreign Institutions",
+                "value": 24.81
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 2.65
+              }
+            ]
+          },
+          {
+            "period": "Dec '25",
+            "data": [
+              {
+                "category": "Promoters",
+                "value": 50.21
+              },
+              {
+                "category": "Retail And Others",
+                "value": 10.29
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 12.73
+              },
+              {
+                "category": "Foreign Institutions",
+                "value": 24.26
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 2.51
+              }
+            ]
+          },
+          {
+            "period": "Mar '26",
+            "data": [
+              {
+                "category": "Promoters",
+                "value": 50.21
+              },
+              {
+                "category": "Retail And Others",
+                "value": 10.03
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 14.54
+              },
+              {
+                "category": "Foreign Institutions",
+                "value": 22.52
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 2.71
+              }
+            ]
+          }
+        ]
+      },
+      "last_updated": 1784233738
+    },
+    "BAJAJFINSV": {
+      "symbol": "BAJAJFINSV",
+      "metrics": {
+        "market_cap": 293943.12,
+        "pe_ratio": 30.12,
+        "pb_ratio": 3.77,
+        "industry_pe": 14.2,
+        "debt_to_equity": 2.56,
+        "roe": 14.6,
+        "eps": 61.04,
+        "dividend_yield": 7.0,
+        "book_value": 487.99,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 36596,
+            "profit": 4756
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 35451,
+            "profit": 5329
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 37403,
+            "profit": 4746
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 39708,
+            "profit": 4368
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 38508,
+            "profit": 5226
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2021",
+            "revenue": 60592,
+            "profit": 7367
+          },
+          {
+            "period": "2022",
+            "revenue": 68439,
+            "profit": 8314
+          },
+          {
+            "period": "2023",
+            "revenue": 82072,
+            "profit": 12210
+          },
+          {
+            "period": "2024",
+            "revenue": 110383,
+            "profit": 15597
+          },
+          {
+            "period": "2025",
+            "revenue": 133822,
+            "profit": 17558
+          }
+        ]
+      },
+      "profile": {
+        "description": "Bajaj Finserv Limited is one of India's largest diversified financial services groups, serving as a financial lifecycle partner to the country's mass-affluent and middle-income population. The company's vision is to be a diversified yet integrated financial services entity with a pan-India presence, offering lifecycle financial solutions for its various customers. ",
+        "ceo": "Sanjiv Bajaj",
+        "founded": 2007,
+        "nse_symbol": "BAJAJFINSV",
+        "industry": "Banking"
+      },
+      "shareholding": {
+        "quarters": [
+          {
+            "period": "Mar '25",
+            "data": [
+              {
+                "category": "Promoters",
+                "value": 60.64
+              },
+              {
+                "category": "Retail And Others",
+                "value": 22.83
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 5.43
+              },
+              {
+                "category": "Foreign Institutions",
+                "value": 7.52
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 3.58
+              }
+            ]
+          },
+          {
+            "period": "Jun '25",
+            "data": [
+              {
+                "category": "Promoters",
+                "value": 58.81
+              },
+              {
+                "category": "Retail And Others",
+                "value": 22.7
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 6.87
+              },
+              {
+                "category": "Foreign Institutions",
+                "value": 8.4
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 3.22
+              }
+            ]
+          },
+          {
+            "period": "Sep '25",
+            "data": [
+              {
+                "category": "Promoters",
+                "value": 58.81
+              },
+              {
+                "category": "Retail And Others",
+                "value": 22.59
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 7.62
+              },
+              {
+                "category": "Foreign Institutions",
+                "value": 8.11
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 2.87
+              }
+            ]
+          },
+          {
+            "period": "Dec '25",
+            "data": [
+              {
+                "category": "Promoters",
+                "value": 58.81
+              },
+              {
+                "category": "Retail And Others",
+                "value": 22.39
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 7.73
+              },
+              {
+                "category": "Foreign Institutions",
+                "value": 8.06
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 3.0
+              }
+            ]
+          },
+          {
+            "period": "Mar '26",
+            "data": [
+              {
+                "category": "Promoters",
+                "value": 58.71
+              },
+              {
+                "category": "Retail And Others",
+                "value": 22.29
+              },
+              {
+                "category": "Mutual Funds",
+                "value": 8.35
+              },
+              {
+                "category": "Foreign Institutions",
+                "value": 7.24
+              },
+              {
+                "category": "Other Domestic Institutions",
+                "value": 3.42
+              }
+            ]
+          }
+        ]
+      },
+      "last_updated": 1784233740
+    },
+    "TCS": {
+      "symbol": "TCS",
+      "metrics": {
+        "market_cap": 796341.04,
+        "pe_ratio": 15.98,
+        "pb_ratio": 7.26,
+        "industry_pe": 28.5,
+        "debt_to_equity": 0.1,
+        "roe": 47.74,
+        "eps": 137.7,
+        "dividend_yield": 2.97,
+        "book_value": 303.01,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Jun '25",
+            "revenue": 65097,
+            "profit": 12819
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 66666,
+            "profit": 12131
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 68205,
+            "profit": 10720
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 71455,
+            "profit": 13784
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2022",
+            "revenue": 195772,
+            "profit": 38449
+          },
+          {
+            "period": "2023",
+            "revenue": 228907,
+            "profit": 42303
+          },
+          {
+            "period": "2024",
+            "revenue": 245315,
+            "profit": 46099
+          },
+          {
+            "period": "2025",
+            "revenue": 259286,
+            "profit": 48797
+          }
+        ]
+      },
+      "profile": {
+        "description": "Tata Consultancy Services (TCS) is a global leader in IT services, consulting, and business solutions. The company leverages its deep industry knowledge and technology expertise to help clients transform their businesses and achieve their strategic objectives. TCS is committed to delivering innovative solutions that drive business value and enhance customer experiences.",
+        "ceo": "K. Krithivasan",
+        "founded": 1968,
+        "nse_symbol": "TCS",
+        "industry": "IT Services"
+      },
+      "shareholding": {},
+      "last_updated": 1784233741
+    },
+    "INFY": {
+      "symbol": "INFY",
+      "metrics": {
+        "market_cap": 438255.98,
+        "pe_ratio": 14.35,
+        "pb_ratio": 4.64,
+        "industry_pe": 28.5,
+        "debt_to_equity": 9.83,
+        "roe": 31.44,
+        "eps": 75.45,
+        "dividend_yield": 4.65,
+        "book_value": 233.15,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 42115,
+            "profit": 7038
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 43321,
+            "profit": 6924
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 45472,
+            "profit": 7375
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 46618,
+            "profit": 6666
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 47561,
+            "profit": 8509
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2022",
+            "revenue": 123936,
+            "profit": 22146
+          },
+          {
+            "period": "2023",
+            "revenue": 149468,
+            "profit": 24108
+          },
+          {
+            "period": "2024",
+            "revenue": 158381,
+            "profit": 26248
+          },
+          {
+            "period": "2025",
+            "revenue": 166590,
+            "profit": 26750
+          },
+          {
+            "period": "2026",
+            "revenue": 182972,
+            "profit": 29474
+          }
+        ]
+      },
+      "profile": {
+        "description": "Infosys is a global leader in next-generation digital services and consulting. The company enables clients in 50 countries to navigate their digital transformation, leveraging its expertise in technology, engineering, and business processes. Infosys is committed to delivering innovative solutions that drive business value and enhance customer experiences.",
+        "ceo": "Salil Parekh",
+        "founded": 1981,
+        "nse_symbol": "INFY",
+        "industry": "IT Services"
+      },
+      "shareholding": {},
+      "last_updated": 1784233743
+    },
+    "WIPRO": {
+      "symbol": "WIPRO",
+      "metrics": {
+        "market_cap": 175820.02,
+        "pe_ratio": 14.15,
+        "pb_ratio": 2.1,
+        "industry_pe": 28.5,
+        "debt_to_equity": 0.23,
+        "roe": 15.44,
+        "eps": 12.56,
+        "dividend_yield": 9.73,
+        "book_value": 84.51,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Jun '25",
+            "revenue": 23201,
+            "profit": 3337
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 23645,
+            "profit": 3262
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 24561,
+            "profit": 3145
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 25091,
+            "profit": 3522
+          },
+          {
+            "period": "Jun '26",
+            "revenue": 25458,
+            "profit": 3356
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2022",
+            "revenue": 81373,
+            "profit": 12243
+          },
+          {
+            "period": "2023",
+            "revenue": 92762,
+            "profit": 11367
+          },
+          {
+            "period": "2024",
+            "revenue": 92391,
+            "profit": 11112
+          },
+          {
+            "period": "2025",
+            "revenue": 92972,
+            "profit": 13218
+          },
+          {
+            "period": "2026",
+            "revenue": 96498,
+            "profit": 13266
+          }
+        ]
+      },
+      "profile": {
+        "description": "Wipro Limited is a leading global information technology, consulting, and business process services company. The company harnesses the power of cognitive computing, hyper-automation, robotics, cloud, analytics, and emerging technologies to help clients adapt to the digital world and make them successful.",
+        "ceo": "Srinivas Pallia",
+        "founded": 1945,
+        "nse_symbol": "WIPRO",
+        "industry": "IT Services"
+      },
+      "shareholding": {},
+      "last_updated": 1784233744
+    },
+    "HCLTECH": {
+      "symbol": "HCLTECH",
+      "metrics": {
+        "market_cap": 321282.74,
+        "pe_ratio": 18.48,
+        "pb_ratio": 4.25,
+        "industry_pe": 28.5,
+        "debt_to_equity": 7.06,
+        "roe": 24.07,
+        "eps": 64.24,
+        "dividend_yield": 5.14,
+        "book_value": 279.5,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Jun '25",
+            "revenue": 30805,
+            "profit": 3844
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 32357,
+            "profit": 4236
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 34257,
+            "profit": 4082
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 34303,
+            "profit": 4490
+          },
+          {
+            "period": "Mar '25",
+            "revenue": 34940,
+            "profit": 4626
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2021",
+            "revenue": 76306,
+            "profit": 11169
+          },
+          {
+            "period": "2022",
+            "revenue": 86718,
+            "profit": 13523
+          },
+          {
+            "period": "2023",
+            "revenue": 102814,
+            "profit": 14845
+          },
+          {
+            "period": "2024",
+            "revenue": 111408,
+            "profit": 15710
+          },
+          {
+            "period": "2025",
+            "revenue": 119540,
+            "profit": 17399
+          }
+        ]
+      },
+      "profile": {
+        "description": "HCL Technologies is a global technology company that helps enterprises reimagine their businesses for the digital age. The company offers an integrated portfolio of products, solutions, services, and IP through its Mode 1-2-3 strategy, built around digital, IoT, cloud, automation, cybersecurity, analytics, infrastructure management, and engineering services.",
+        "ceo": "C Vijayakumar",
+        "founded": 1976,
+        "nse_symbol": "HCLTECH",
+        "industry": "IT Services"
+      },
+      "shareholding": {},
+      "last_updated": 1784233746
+    },
+    "TECHM": {
+      "symbol": "TECHM",
+      "metrics": {
+        "market_cap": 133785.75,
+        "pe_ratio": 27.84,
+        "pb_ratio": 4.52,
+        "industry_pe": 28.5,
+        "debt_to_equity": 7.27,
+        "roe": 16.61,
+        "eps": 54.25,
+        "dividend_yield": 3.4,
+        "book_value": 334.41,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Jun '25",
+            "revenue": 13570,
+            "profit": 1129
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 14035,
+            "profit": 1202
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 14372,
+            "profit": 1119
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 14871,
+            "profit": 1356
+          },
+          {
+            "period": "Mar '25",
+            "revenue": 15606,
+            "profit": 1486
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2022",
+            "revenue": 45758,
+            "profit": 5630
+          },
+          {
+            "period": "2023",
+            "revenue": 54255,
+            "profit": 4857
+          },
+          {
+            "period": "2024",
+            "revenue": 52912,
+            "profit": 2397
+          },
+          {
+            "period": "2025",
+            "revenue": 53844,
+            "profit": 4253
+          },
+          {
+            "period": "2026",
+            "revenue": 56847,
+            "profit": 4806
+          }
+        ]
+      },
+      "profile": {
+        "description": "Tech Mahindra is a leading provider of digital transformation, consulting, and business reengineering services and solutions. The company enables enterprises, associates, and the society to Rise\u2122 by leveraging its deep domain knowledge, technology expertise, and innovation capabilities.",
+        "ceo": "Mr. Mohit Joshi",
+        "founded": 1986,
+        "nse_symbol": "TECHM",
+        "industry": "IT Services"
+      },
+      "shareholding": {},
+      "last_updated": 1784233747
+    },
+    "LTM": {
+      "symbol": "LTM",
+      "metrics": {
+        "market_cap": 120372.15,
+        "pe_ratio": 23.04,
+        "pb_ratio": 5.01,
+        "industry_pe": 28.5,
+        "debt_to_equity": 9.58,
+        "roe": 21.29,
+        "eps": 176.2,
+        "dividend_yield": 1.86,
+        "book_value": 810.39,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Jun '25",
+            "revenue": 10233,
+            "profit": 1255
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 10695,
+            "profit": 1381
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 11008,
+            "profit": 960
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 11466,
+            "profit": 1387
+          },
+          {
+            "period": "Mar '25",
+            "revenue": 11863,
+            "profit": 1469
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2022",
+            "revenue": 26875,
+            "profit": 3950
+          },
+          {
+            "period": "2023",
+            "revenue": 33740,
+            "profit": 4410
+          },
+          {
+            "period": "2024",
+            "revenue": 36219,
+            "profit": 4585
+          },
+          {
+            "period": "2025",
+            "revenue": 38998,
+            "profit": 4602
+          },
+          {
+            "period": "2021",
+            "revenue": 43402,
+            "profit": 4983
+          }
+        ]
+      },
+      "profile": {
+        "description": "Larsen & Toubro Infotech (LTI) is a global technology consulting and digital solutions company, helping more than 400 clients succeed in a converging world. The company specializes in digital transformation, providing innovative solutions that leverage the power of technology to drive business growth and efficiency.",
+        "ceo": "Mr. Debashis Chatterjee",
+        "founded": 1996,
+        "nse_symbol": "LTM",
+        "industry": "IT Services"
+      },
+      "shareholding": {},
+      "last_updated": 1784233749
+    },
+    "RELIANCE": {
+      "symbol": "RELIANCE",
+      "metrics": {
+        "market_cap": 1754620.28,
+        "pe_ratio": 21.71,
+        "pb_ratio": 1.94,
+        "industry_pe": 12.4,
+        "debt_to_equity": 0.37,
+        "roe": 9.14,
+        "eps": 59.72,
+        "dividend_yield": 46.0,
+        "book_value": 668.04,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 293043,
+            "profit": 22434
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 288371,
+            "profit": 30681
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 288030,
+            "profit": 22146
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 298743,
+            "profit": 22167
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 329737,
+            "profit": 20616
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2022",
+            "revenue": 710906,
+            "profit": 66184
+          },
+          {
+            "period": "2023",
+            "revenue": 889569,
+            "profit": 73670
+          },
+          {
+            "period": "2024",
+            "revenue": 917121,
+            "profit": 78633
+          },
+          {
+            "period": "2025",
+            "revenue": 982671,
+            "profit": 80787
+          },
+          {
+            "period": "2026",
+            "revenue": 1086181,
+            "profit": 95610
+          }
+        ]
+      },
+      "profile": {
+        "description": "Reliance Industries Limited is a Fortune Global 500 company and the largest private sector company in India. The company's growth mirrors the relentless spirit of dynamism and hope that defines the nation, with its core motto being 'Growth is Life'. Its mission is to be the most admired, innovative, and value-generating organisation for all its stakeholders, operating through growth engines like retail and digital services.",
+        "ceo": "Mukesh D. Ambani",
+        "founded": 1973,
+        "nse_symbol": "RELIANCE",
+        "industry": "Oil & Gas"
+      },
+      "shareholding": {},
+      "last_updated": 1784233750
+    },
+    "ONGC": {
+      "symbol": "ONGC",
+      "metrics": {
+        "market_cap": 310418.39,
+        "pe_ratio": 7.5,
+        "pb_ratio": 0.84,
+        "industry_pe": 12.4,
+        "debt_to_equity": 0.43,
+        "roe": 12.7,
+        "eps": 32.92,
+        "dividend_yield": 7.48,
+        "book_value": 295.5,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 170784,
+            "profit": 8965
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 165681,
+            "profit": 11554
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 161019,
+            "profit": 12615
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 170730,
+            "profit": 11946
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 177173,
+            "profit": 13678
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2021",
+            "revenue": 313225,
+            "profit": 21360
+          },
+          {
+            "period": "2022",
+            "revenue": 498738,
+            "profit": 49294
+          },
+          {
+            "period": "2023",
+            "revenue": 640400,
+            "profit": 32778
+          },
+          {
+            "period": "2024",
+            "revenue": 613612,
+            "profit": 55273
+          },
+          {
+            "period": "2025",
+            "revenue": 624459,
+            "profit": 38329
+          }
+        ]
+      },
+      "profile": {
+        "description": "Oil and Natural Gas Corporation (ONGC) is India's largest crude oil and natural gas company, engaged in exploration and production activities globally.",
+        "ceo": "Arun Kumar Singh",
+        "founded": 1956,
+        "nse_symbol": "ONGC",
+        "industry": "Oil & Gas"
+      },
+      "shareholding": {},
+      "last_updated": 1784233752
+    },
+    "BPCL": {
+      "symbol": "BPCL",
+      "metrics": {
+        "market_cap": 133304.65,
+        "pe_ratio": 5.16,
+        "pb_ratio": 1.33,
+        "industry_pe": 12.4,
+        "debt_to_equity": 0.54,
+        "roe": 28.47,
+        "eps": 60.5,
+        "dividend_yield": 6.46,
+        "book_value": 234.37,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 127721,
+            "profit": 4392
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 130364,
+            "profit": 6839
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 122557,
+            "profit": 6191
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 137299,
+            "profit": 7188
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 135899,
+            "profit": 5625
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2021",
+            "revenue": 232416,
+            "profit": 17320
+          },
+          {
+            "period": "2022",
+            "revenue": 349060,
+            "profit": 11682
+          },
+          {
+            "period": "2023",
+            "revenue": 474685,
+            "profit": 2131
+          },
+          {
+            "period": "2024",
+            "revenue": 450318,
+            "profit": 26859
+          },
+          {
+            "period": "2025",
+            "revenue": 442957,
+            "profit": 13337
+          }
+        ]
+      },
+      "profile": {
+        "description": "Bharat Petroleum Corporation Limited (BPCL) is a Maharatna energy giant and a cornerstone of India\u2019s petroleum sector. As the nation\u2019s second-largest oil marketing company, it operates an extensive downstream network of over 21,000 fuel stations and 6,200 LPG distributorships.",
+        "ceo": "G. Krishnakumar",
+        "founded": 1987,
+        "nse_symbol": "BPCL",
+        "industry": "Oil & Gas"
+      },
+      "shareholding": {},
+      "last_updated": 1784233753
+    },
+    "POWERGRID": {
+      "symbol": "POWERGRID",
+      "metrics": {
+        "market_cap": 261114.46,
+        "pe_ratio": 13.95,
+        "pb_ratio": 2.6,
+        "industry_pe": null,
+        "debt_to_equity": 1.51,
+        "roe": 16.49,
+        "eps": 20.13,
+        "dividend_yield": 4.36,
+        "book_value": 108.09,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 12591,
+            "profit": 4143
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 11444,
+            "profit": 3631
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 11670,
+            "profit": 3566
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 12599,
+            "profit": 4185
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 11971,
+            "profit": 4546
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2021",
+            "revenue": 40824,
+            "profit": 11675
+          },
+          {
+            "period": "2022",
+            "revenue": 42698,
+            "profit": 17354
+          },
+          {
+            "period": "2023",
+            "revenue": 46606,
+            "profit": 15171
+          },
+          {
+            "period": "2024",
+            "revenue": 46913,
+            "profit": 16145
+          },
+          {
+            "period": "2025",
+            "revenue": 47459,
+            "profit": 15245
+          }
+        ]
+      },
+      "profile": {
+        "description": "Power Grid Corporation of India Limited is a leading transmission company globally and a 'Maharatna' Public Sector Enterprise of the Government of India. Its vision is to become a world-class, integrated, global transmission company with dominant leadership in emerging power markets, ensuring reliability, safety, and economy. A key part of its mission is to set superior standards in capital project management and operations for the industry.",
+        "ceo": "Ravindra Kumar Tyagi",
+        "founded": 1989,
+        "nse_symbol": "POWERGRID",
+        "industry": "Infrastructure"
+      },
+      "shareholding": {},
+      "last_updated": 1784233755
+    },
+    "NTPC": {
+      "symbol": "NTPC",
+      "metrics": {
+        "market_cap": 332062.37,
+        "pe_ratio": 11.25,
+        "pb_ratio": 1.64,
+        "industry_pe": null,
+        "debt_to_equity": 1.18,
+        "roe": 13.69,
+        "eps": 30.44,
+        "dividend_yield": 3.3,
+        "book_value": 209.44,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 51085,
+            "profit": 7897
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 47821,
+            "profit": 6108
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 45262,
+            "profit": 5225
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 46305,
+            "profit": 5597
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 50411,
+            "profit": 10615
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2021",
+            "revenue": 115547,
+            "profit": 13066
+          },
+          {
+            "period": "2022",
+            "revenue": 134994,
+            "profit": 15474
+          },
+          {
+            "period": "2023",
+            "revenue": 177976,
+            "profit": 17534
+          },
+          {
+            "period": "2024",
+            "revenue": 181166,
+            "profit": 20332
+          },
+          {
+            "period": "2025",
+            "revenue": 190862,
+            "profit": 20251
+          }
+        ]
+      },
+      "profile": {
+        "description": "As India's largest power company, NTPC Limited holds a commanding 17% share of the country's total installed electricity generation capacity, playing a vital role in national energy security. The company's vision is to be the world's most prominent power company by actively fueling the growth and development of India.",
+        "ceo": "Gurdeep Singh",
+        "founded": 1975,
+        "nse_symbol": "NTPC",
+        "industry": "Infrastructure"
+      },
+      "shareholding": {},
+      "last_updated": 1784233756
+    },
+    "MARUTI": {
+      "symbol": "MARUTI",
+      "metrics": {
+        "market_cap": 433341.05,
+        "pe_ratio": 29.5,
+        "pb_ratio": 4.04,
+        "industry_pe": 24.1,
+        "debt_to_equity": 0.1,
+        "roe": 14.43,
+        "eps": 467.26,
+        "dividend_yield": 1.03,
+        "book_value": 3408.27,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 42431,
+            "profit": 3911
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 40493,
+            "profit": 3792
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 43290,
+            "profit": 3349
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 50959,
+            "profit": 3879
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 52946,
+            "profit": 3659
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2021",
+            "revenue": 73308,
+            "profit": 4389
+          },
+          {
+            "period": "2022",
+            "revenue": 90075,
+            "profit": 3880
+          },
+          {
+            "period": "2023",
+            "revenue": 119712,
+            "profit": 8211
+          },
+          {
+            "period": "2024",
+            "revenue": 145952,
+            "profit": 13488
+          },
+          {
+            "period": "2025",
+            "revenue": 157935,
+            "profit": 14500
+          }
+        ]
+      },
+      "profile": {
+        "description": "Maruti Suzuki India was founded with the vision to put the nation on wheels by providing the 'Joy of Mobility' and is now a leader in the Indian automobile industry. The company is committed to partnering in India's journey to become a developed nation, known as Viksit Bharat, by the year 2047.",
+        "ceo": "Mr. H. Takeuchi",
+        "founded": 1981,
+        "nse_symbol": "MARUTI",
+        "industry": "Automobile"
+      },
+      "shareholding": {},
+      "last_updated": 1784233758
+    },
+    "TMCV": {
+      "symbol": "TMCV",
+      "metrics": {
+        "market_cap": 151929.8,
+        "pe_ratio": 50.19,
+        "pb_ratio": 11.93,
+        "industry_pe": 24.1,
+        "debt_to_equity": 0.44,
+        "roe": 26.05,
+        "eps": 8.22,
+        "dividend_yield": 94.0,
+        "book_value": 34.58,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 99683,
+            "profit": 8556
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 88903,
+            "profit": 4003
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 73810,
+            "profit": 76248
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 71575,
+            "profit": -3483
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 107080,
+            "profit": 5878
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2022",
+            "revenue": 281507,
+            "profit": -11235
+          },
+          {
+            "period": "2023",
+            "revenue": 350704,
+            "profit": 2690
+          },
+          {
+            "period": "2024",
+            "revenue": 439708,
+            "profit": 32453
+          },
+          {
+            "period": "2025",
+            "revenue": 371615,
+            "profit": 19394
+          },
+          {
+            "period": "2021",
+            "revenue": 341547,
+            "profit": -1377
+          }
+        ]
+      },
+      "profile": {
+        "description": "Tata Motors (CV) is India\u2019s largest commercial vehicle manufacturer and a global leader in the trucks and buses segment. Post-demerger, it operates as a focused entity housing the entire domestic and international CV business, including small, light, medium, and heavy trucks, as well as buses and defense vehicles.",
+        "ceo": "Mr. Girish Wagh",
+        "founded": 1945,
+        "nse_symbol": "TMCV",
+        "industry": "Automobile"
+      },
+      "shareholding": {},
+      "last_updated": 1784233759
+    },
+    "BAJAJ-AUTO": {
+      "symbol": "BAJAJ-AUTO",
+      "metrics": {
+        "market_cap": 288529.61,
+        "pe_ratio": 26.9,
+        "pb_ratio": 7.44,
+        "industry_pe": 24.1,
+        "debt_to_equity": 0.56,
+        "roe": 28.05,
+        "eps": 384.02,
+        "dividend_yield": 1.45,
+        "book_value": 1389.35,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 13039,
+            "profit": 1802
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 13642,
+            "profit": 2210
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 16311,
+            "profit": 2122
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 16640,
+            "profit": 2750
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 18494,
+            "profit": 3492
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2022",
+            "revenue": 34429,
+            "profit": 6166
+          },
+          {
+            "period": "2023",
+            "revenue": 37643,
+            "profit": 6060
+          },
+          {
+            "period": "2024",
+            "revenue": 46306,
+            "profit": 7708
+          },
+          {
+            "period": "2025",
+            "revenue": 52469,
+            "profit": 7325
+          },
+          {
+            "period": "2026",
+            "revenue": 65087,
+            "profit": 10575
+          }
+        ]
+      },
+      "profile": {
+        "description": "Bajaj Auto is the world\u2019s third-largest manufacturer of motorcycles and the largest manufacturer of three-wheelers. Headquartered in Pune, it is the flagship company of the Bajaj Group. Bajaj Auto has solidified its leadership in the electric vehicle (EV) segment with the Chetak range and recently disrupted the market by launching the world\u2019s first CNG-powered motorcycle.",
+        "ceo": "Mr. Rajiv Bajaj",
+        "founded": 1945,
+        "nse_symbol": "BAJAJ-AUTO",
+        "industry": "Automobile"
+      },
+      "shareholding": {},
+      "last_updated": 1784233761
+    },
+    "EICHERMOT": {
+      "symbol": "EICHERMOT",
+      "metrics": {
+        "market_cap": 203636.0,
+        "pe_ratio": 36.97,
+        "pb_ratio": 8.11,
+        "industry_pe": 24.1,
+        "debt_to_equity": 2.05,
+        "roe": 23.77,
+        "eps": 200.66,
+        "dividend_yield": 1.11,
+        "book_value": 915.03,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 5622,
+            "profit": 1362
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 5488,
+            "profit": 1205
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 6523,
+            "profit": 1369
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 6451,
+            "profit": 1421
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 6432,
+            "profit": 1520
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2021",
+            "revenue": 9174,
+            "profit": 1347
+          },
+          {
+            "period": "2022",
+            "revenue": 10739,
+            "profit": 1677
+          },
+          {
+            "period": "2023",
+            "revenue": 15037,
+            "profit": 2914
+          },
+          {
+            "period": "2024",
+            "revenue": 17612,
+            "profit": 4001
+          },
+          {
+            "period": "2025",
+            "revenue": 20175,
+            "profit": 4734
+          }
+        ]
+      },
+      "profile": {
+        "description": "Eicher Motors Limited is an Indian multinational automotive company that manufactures iconic motorcycles under the Royal Enfield brand and modern commercial vehicles. The company's approach is defined as 'Pure Motorcycling,' which focuses on filling a rider's life with real and authentic experiences.",
+        "ceo": "Mr. Siddhartha Lal",
+        "founded": 1982,
+        "nse_symbol": "EICHERMOT",
+        "industry": "Automobile"
+      },
+      "shareholding": {},
+      "last_updated": 1784233762
+    },
+    "HEROMOTOCO": {
+      "symbol": "HEROMOTOCO",
+      "metrics": {
+        "market_cap": 98005.52,
+        "pe_ratio": 17.08,
+        "pb_ratio": 4.53,
+        "industry_pe": 24.1,
+        "debt_to_equity": 3.57,
+        "roe": 28.03,
+        "eps": 286.72,
+        "dividend_yield": 3.79,
+        "book_value": 1080.08,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 10244,
+            "profit": 1169
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 10038,
+            "profit": 1706
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 12459,
+            "profit": 1321
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 12785,
+            "profit": 1275
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 13188,
+            "profit": 1474
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2021",
+            "revenue": 31517,
+            "profit": 2936
+          },
+          {
+            "period": "2022",
+            "revenue": 30106,
+            "profit": 2329
+          },
+          {
+            "period": "2023",
+            "revenue": 34727,
+            "profit": 2800
+          },
+          {
+            "period": "2024",
+            "revenue": 38643,
+            "profit": 3742
+          },
+          {
+            "period": "2025",
+            "revenue": 41968,
+            "profit": 4376
+          }
+        ]
+      },
+      "profile": {
+        "description": "Hero MotoCorp Limited is the world's largest manufacturer of two-wheelers, producing a wide range of motorcycles and scooters.",
+        "ceo": "Harshavardhan Chitale",
+        "founded": 1984,
+        "nse_symbol": "HEROMOTOCO",
+        "industry": "Automobile"
+      },
+      "shareholding": {},
+      "last_updated": 1784233764
+    },
+    "HUL": {
+      "symbol": "HUL",
+      "metrics": {
+        "market_cap": null,
+        "pe_ratio": 0,
+        "pb_ratio": 0,
+        "industry_pe": 48.8,
+        "debt_to_equity": null,
+        "roe": null,
+        "eps": 0,
+        "dividend_yield": null,
+        "book_value": 0,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 15499,
+            "profit": 2475
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 16715,
+            "profit": 2768
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 16066,
+            "profit": 2694
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 16580,
+            "profit": 6603
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 16615,
+            "profit": 2994
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2022",
+            "revenue": 52704,
+            "profit": 8887
+          },
+          {
+            "period": "2023",
+            "revenue": 61092,
+            "profit": 10143
+          },
+          {
+            "period": "2024",
+            "revenue": 62707,
+            "profit": 10282
+          },
+          {
+            "period": "2025",
+            "revenue": 64138,
+            "profit": 10671
+          },
+          {
+            "period": "2026",
+            "revenue": 65219,
+            "profit": 10652
+          }
+        ]
+      },
+      "profile": {
+        "description": "Hindustan Unilever Limited (HUL) is India\u2019s largest Fast-Moving Consumer Goods company, guided by the belief that 'What is good for India, is good for HUL'. The company is focused on unlocking a billion aspirations, not just for its consumers, but for every stakeholder across its entire value chain.",
+        "ceo": "Mr. Rohit Jawa",
+        "founded": 1993,
+        "nse_symbol": "HINDUNILVR",
+        "industry": "Fmcg"
+      },
+      "shareholding": {},
+      "last_updated": 1784233766
+    },
+    "ITC": {
+      "symbol": "ITC",
+      "metrics": {
+        "market_cap": 350010.71,
+        "pe_ratio": 16.91,
+        "pb_ratio": 4.83,
+        "industry_pe": 48.8,
+        "debt_to_equity": 3.29,
+        "roe": 29.34,
+        "eps": 16.52,
+        "dividend_yield": 5.78,
+        "book_value": 57.87,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 21017,
+            "profit": 19808
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 23812,
+            "profit": 5343
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 21840,
+            "profit": 5187
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 22281,
+            "profit": 5018
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 24407,
+            "profit": 5470
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2022",
+            "revenue": 62504,
+            "profit": 15503
+          },
+          {
+            "period": "2023",
+            "revenue": 72917,
+            "profit": 19477
+          },
+          {
+            "period": "2024",
+            "revenue": 70625,
+            "profit": 20191
+          },
+          {
+            "period": "2025",
+            "revenue": 77861,
+            "profit": 20036
+          },
+          {
+            "period": "2021",
+            "revenue": 81294,
+            "profit": 21018
+          }
+        ]
+      },
+      "profile": {
+        "description": "ITC Limited is one of India's foremost private sector enterprises, operating across agriculture, manufacturing, and services to contribute significantly to the national economy. The company's core vision is to create substantial societal value through a model of 'Responsible Competitiveness,' ensuring business growth also benefits society and the environment.",
+        "ceo": "Sanjiv Puri",
+        "founded": 1910,
+        "nse_symbol": "ITC",
+        "industry": "Fmcg"
+      },
+      "shareholding": {},
+      "last_updated": 1784233767
+    },
+    "NESTLE": {
+      "symbol": "NESTLE",
+      "metrics": {
+        "market_cap": null,
+        "pe_ratio": 0,
+        "pb_ratio": 0,
+        "industry_pe": 48.8,
+        "debt_to_equity": null,
+        "roe": null,
+        "eps": 0,
+        "dividend_yield": null,
+        "book_value": 0,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [],
+        "yearly": []
+      },
+      "profile": {
+        "description": "Nestl\u00e9 India Limited is a major player in the country's food business, manufacturing and marketing a wide array of products for consumers. Guided by its promise to enhance life's quality, the company is dedicated to unlocking the power of food for both today's consumers and for future generations.",
+        "ceo": "Suresh Narayana",
+        "founded": 1959,
+        "nse_symbol": "NESTLEIND",
+        "industry": "Fmcg"
+      },
+      "shareholding": {},
+      "last_updated": 1784233769
+    },
+    "DABUR": {
+      "symbol": "DABUR",
+      "metrics": {
+        "market_cap": 76182.39,
+        "pe_ratio": 40.32,
+        "pb_ratio": 6.67,
+        "industry_pe": 48.8,
+        "debt_to_equity": 0.11,
+        "roe": 16.24,
+        "eps": 10.65,
+        "dividend_yield": 1.91,
+        "book_value": 64.38,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 2971,
+            "profit": 313
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 3549,
+            "profit": 508
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 3331,
+            "profit": 445
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 3699,
+            "profit": 554
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 3213,
+            "profit": 362
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2022",
+            "revenue": 11282,
+            "profit": 1742
+          },
+          {
+            "period": "2023",
+            "revenue": 11975,
+            "profit": 1701
+          },
+          {
+            "period": "2024",
+            "revenue": 12886,
+            "profit": 1811
+          },
+          {
+            "period": "2025",
+            "revenue": 13113,
+            "profit": 1740
+          },
+          {
+            "period": "2026",
+            "revenue": 13792,
+            "profit": 1869
+          }
+        ]
+      },
+      "profile": {
+        "description": "Dabur India Limited is one of India's leading FMCG companies, dealing in personal care, healthcare, and food products with a focus on Ayurveda.",
+        "ceo": "Mr. Mohit Malhotra",
+        "founded": 1975,
+        "nse_symbol": "DABUR",
+        "industry": "Fmcg"
+      },
+      "shareholding": {},
+      "last_updated": 1784233771
+    },
+    "BRITANIA": {
+      "symbol": "BRITANIA",
+      "metrics": {
+        "market_cap": null,
+        "pe_ratio": 0,
+        "pb_ratio": 0,
+        "industry_pe": 48.8,
+        "debt_to_equity": null,
+        "roe": null,
+        "eps": 0,
+        "dividend_yield": null,
+        "book_value": 0,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 4495,
+            "profit": 559
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 4679,
+            "profit": 520
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 4893,
+            "profit": 655
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 5029,
+            "profit": 682
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 4774,
+            "profit": 680
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2021",
+            "revenue": 13449,
+            "profit": 1851
+          },
+          {
+            "period": "2022",
+            "revenue": 14359,
+            "profit": 1516
+          },
+          {
+            "period": "2023",
+            "revenue": 16516,
+            "profit": 2316
+          },
+          {
+            "period": "2024",
+            "revenue": 16983,
+            "profit": 2134
+          },
+          {
+            "period": "2025",
+            "revenue": 18170,
+            "profit": 2178
+          }
+        ]
+      },
+      "profile": {
+        "description": "Part of the Wadia Group, Britannia is one of India's oldest and most iconic food companies, specializing in biscuits, dairy, and bakery products. Headquartered in Bengaluru, the company holds roughly one-third of the Indian biscuit market with flagship brands like Good Day, Marie Gold, and Tiger.",
+        "ceo": "Mr. Varun Berry",
+        "founded": 1892,
+        "nse_symbol": "BRITANNIA",
+        "industry": "Fmcg"
+      },
+      "shareholding": {},
+      "last_updated": 1784233773
+    },
+    "SUNPHARMA": {
+      "symbol": "SUNPHARMA",
+      "metrics": {
+        "market_cap": 467894.27,
+        "pe_ratio": 40.79,
+        "pb_ratio": 5.6,
+        "industry_pe": 35.36,
+        "debt_to_equity": 5.52,
+        "roe": 14.72,
+        "eps": 47.81,
+        "dividend_yield": 82.0,
+        "book_value": 348.31,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 13572,
+            "profit": 2161
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 14316,
+            "profit": 2303
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 14948,
+            "profit": 3137
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 16099,
+            "profit": 3401
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 15070,
+            "profit": 2724
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2022",
+            "revenue": 39730,
+            "profit": 3406
+          },
+          {
+            "period": "2023",
+            "revenue": 44520,
+            "profit": 8561
+          },
+          {
+            "period": "2024",
+            "revenue": 49887,
+            "profit": 9648
+          },
+          {
+            "period": "2025",
+            "revenue": 54729,
+            "profit": 10980
+          },
+          {
+            "period": "2026",
+            "revenue": 61674,
+            "profit": 11565
+          }
+        ]
+      },
+      "profile": {
+        "description": "Sun Pharmaceutical Industries Ltd. is a global pharmaceutical company and the largest in India by market share, with a significant presence in over 100 countries. The company's core purpose is to enhance global healthcare standards by making high-quality medicines more accessible and improving patient care for millions of people worldwide.",
+        "ceo": "Kirti Ganorkar",
+        "founded": 1993,
+        "nse_symbol": "SUNPHARMA",
+        "industry": "Pharmaceuticals"
+      },
+      "shareholding": {},
+      "last_updated": 1784233775
+    },
+    "DRREDDY": {
+      "symbol": "DRREDDY",
+      "metrics": {
+        "market_cap": 101957.04,
+        "pe_ratio": 23.83,
+        "pb_ratio": 2.7,
+        "industry_pe": 35.36,
+        "debt_to_equity": 0.2,
+        "roe": 11.83,
+        "eps": 51.39,
+        "dividend_yield": 65.0,
+        "book_value": 452.82,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 9051,
+            "profit": 1587
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 8862,
+            "profit": 1410
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 9152,
+            "profit": 1337
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 9022,
+            "profit": 1190
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 8022,
+            "profit": 221
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2022",
+            "revenue": 22030,
+            "profit": 2183
+          },
+          {
+            "period": "2023",
+            "revenue": 25725,
+            "profit": 4507
+          },
+          {
+            "period": "2024",
+            "revenue": 28905,
+            "profit": 5578
+          },
+          {
+            "period": "2025",
+            "revenue": 33741,
+            "profit": 5725
+          },
+          {
+            "period": "2026",
+            "revenue": 35059,
+            "profit": 4158
+          }
+        ]
+      },
+      "profile": {
+        "description": "Dr. Reddy's Laboratories Limited is a global pharmaceutical company based in Hyderabad, India, driven by the core purpose of 'Good Health Can't Wait'. The company's vision is to accelerate access to affordable and innovative medicines, aiming to serve 1.5 billion patients by the year 2030.",
+        "ceo": "GV Prasad",
+        "founded": 1984,
+        "nse_symbol": "DRREDDY",
+        "industry": "Pharmaceuticals"
+      },
+      "shareholding": {},
+      "last_updated": 1784233777
+    },
+    "CIPLA": {
+      "symbol": "CIPLA",
+      "metrics": {
+        "market_cap": 115481.48,
+        "pe_ratio": 29.76,
+        "pb_ratio": 3.35,
+        "industry_pe": 35.36,
+        "debt_to_equity": 1.78,
+        "roe": 11.74,
+        "eps": 48.03,
+        "dividend_yield": 90.0,
+        "book_value": 426.25,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 7019,
+            "profit": 1225
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 7216,
+            "profit": 1292
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 7858,
+            "profit": 1353
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 7281,
+            "profit": 675
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 6689,
+            "profit": 550
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2022",
+            "revenue": 22044,
+            "profit": 2559
+          },
+          {
+            "period": "2023",
+            "revenue": 23229,
+            "profit": 2835
+          },
+          {
+            "period": "2024",
+            "revenue": 26521,
+            "profit": 4155
+          },
+          {
+            "period": "2025",
+            "revenue": 28409,
+            "profit": 5291
+          },
+          {
+            "period": "2026",
+            "revenue": 29045,
+            "profit": 3870
+          }
+        ]
+      },
+      "profile": {
+        "description": "Founded in 1935, Cipla is a global pharmaceutical company driven by the purpose of making healthcare accessible to all. The company's vision is rooted in its belief that healthcare is a fundamental right, not a special privilege for a select few.",
+        "ceo": "Mr Umang Vohra",
+        "founded": 1935,
+        "nse_symbol": "CIPLA",
+        "industry": "Pharmaceuticals"
+      },
+      "shareholding": {},
+      "last_updated": 1784233779
+    },
+    "DIVISLAB": {
+      "symbol": "DIVISLAB",
+      "metrics": {
+        "market_cap": 194216.81,
+        "pe_ratio": 75.63,
+        "pb_ratio": 11.58,
+        "industry_pe": 35.36,
+        "debt_to_equity": 0.04,
+        "roe": 16.19,
+        "eps": 96.73,
+        "dividend_yield": 41.0,
+        "book_value": 631.83,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 2671,
+            "profit": 662
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 2529,
+            "profit": 545
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 2860,
+            "profit": 689
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 2692,
+            "profit": 583
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 2986,
+            "profit": 751
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2021",
+            "revenue": 7032,
+            "profit": 1984
+          },
+          {
+            "period": "2022",
+            "revenue": 9074,
+            "profit": 2960
+          },
+          {
+            "period": "2023",
+            "revenue": 8112,
+            "profit": 1823
+          },
+          {
+            "period": "2024",
+            "revenue": 8184,
+            "profit": 1600
+          },
+          {
+            "period": "2025",
+            "revenue": 9712,
+            "profit": 2191
+          }
+        ]
+      },
+      "profile": {
+        "description": "Divi's Laboratories is a prominent global manufacturer specializing in Active Pharmaceutical Ingredients (APIs), Custom Synthesis for innovator companies, and high-quality Nutraceutical ingredients. The company's vision is to create lasting value for its stakeholders by producing superior generic APIs and custom intermediates for the global pharmaceutical and nutraceutical industries.",
+        "ceo": "Murali K Divi",
+        "founded": 1990,
+        "nse_symbol": "DIVISLAB",
+        "industry": "Pharmaceuticals"
+      },
+      "shareholding": {},
+      "last_updated": 1784233781
+    },
+    "TATASTEEL": {
+      "symbol": "TATASTEEL",
+      "metrics": {
+        "market_cap": 231340.32,
+        "pe_ratio": 21.44,
+        "pb_ratio": 2.27,
+        "industry_pe": 27.5,
+        "debt_to_equity": 0.89,
+        "roe": 11.16,
+        "eps": 8.65,
+        "dividend_yield": 2.16,
+        "book_value": 81.84,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 56679,
+            "profit": 1201
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 53467,
+            "profit": 2007
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 59053,
+            "profit": 3183
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 57503,
+            "profit": 2730
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 63519,
+            "profit": 2965
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2022",
+            "revenue": 244744,
+            "profit": 41749
+          },
+          {
+            "period": "2023",
+            "revenue": 244390,
+            "profit": 8075
+          },
+          {
+            "period": "2024",
+            "revenue": 230980,
+            "profit": -4910
+          },
+          {
+            "period": "2025",
+            "revenue": 220083,
+            "profit": 3174
+          },
+          {
+            "period": "2026",
+            "revenue": 233542,
+            "profit": 10886
+          }
+        ]
+      },
+      "profile": {
+        "description": "Tata Steel Limited is a leading globally diversified integrated steel producer with a total capacity of 35 million tonnes per annum (MTPA) across its major operations. The company aspires to be the global steel industry's benchmark for both value creation for its customers and its role as a responsible corporate citizen worldwide.",
+        "ceo": "TV Narendra",
+        "founded": 1907,
+        "nse_symbol": "TATASTEEL",
+        "industry": "Steel"
+      },
+      "shareholding": {},
+      "last_updated": 1784233783
+    },
+    "HINDALCO": {
+      "symbol": "HINDALCO",
+      "metrics": {
+        "market_cap": 212948.98,
+        "pe_ratio": 15.93,
+        "pb_ratio": 1.56,
+        "industry_pe": 27.5,
+        "debt_to_equity": 0.73,
+        "roe": 10.29,
+        "eps": 60.22,
+        "dividend_yield": 52.0,
+        "book_value": 615.28,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 65590,
+            "profit": 5284
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 64834,
+            "profit": 4004
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 66771,
+            "profit": 4741
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 67070,
+            "profit": 2049
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 79158,
+            "profit": 2597
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2022",
+            "revenue": 196195,
+            "profit": 14201
+          },
+          {
+            "period": "2023",
+            "revenue": 224459,
+            "profit": 10097
+          },
+          {
+            "period": "2024",
+            "revenue": 217458,
+            "profit": 10155
+          },
+          {
+            "period": "2025",
+            "revenue": 241204,
+            "profit": 16002
+          },
+          {
+            "period": "2021",
+            "revenue": 277833,
+            "profit": 13391
+          }
+        ]
+      },
+      "profile": {
+        "description": "Hindalco Industries, the metals flagship of the Aditya Birla Group, is a leading global company in aluminium and copper, with a business model covering everything from mining to downstream products. Its vision is to be a world-class metals company, excelling in its operations and creating value for its stakeholders while being global in size and reach.",
+        "ceo": "Satish Pai",
+        "founded": 1958,
+        "nse_symbol": "HINDALCO",
+        "industry": "Steel"
+      },
+      "shareholding": {},
+      "last_updated": 1784233785
+    },
+    "JSWSTEEL": {
+      "symbol": "JSWSTEEL",
+      "metrics": {
+        "market_cap": 298024.96,
+        "pe_ratio": 13.38,
+        "pb_ratio": 2.98,
+        "industry_pe": 27.5,
+        "debt_to_equity": 0.95,
+        "roe": 27.26,
+        "eps": 91.28,
+        "dividend_yield": 58.0,
+        "book_value": 409.91,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 45049,
+            "profit": 1501
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 43497,
+            "profit": 2209
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 45436,
+            "profit": 1646
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 46264,
+            "profit": 2410
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 51521,
+            "profit": 19243
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2022",
+            "revenue": 147902,
+            "profit": 20938
+          },
+          {
+            "period": "2023",
+            "revenue": 166990,
+            "profit": 4139
+          },
+          {
+            "period": "2024",
+            "revenue": 176010,
+            "profit": 8973
+          },
+          {
+            "period": "2025",
+            "revenue": 169518,
+            "profit": 3491
+          },
+          {
+            "period": "2026",
+            "revenue": 186718,
+            "profit": 25508
+          }
+        ]
+      },
+      "profile": {
+        "description": "JSW Steel is one of India's leading integrated and geographically diverse steel manufacturers, committed to partnering in the nation's growth story and fostering progress. Its core purpose is to build world-class infrastructure, products, and solutions, while also deploying world-class capabilities and nurturing its communities.",
+        "ceo": "Sajjan Jindal",
+        "founded": 1994,
+        "nse_symbol": "JSWSTEEL",
+        "industry": "Steel"
+      },
+      "shareholding": {},
+      "last_updated": 1784233787
+    },
+    "COALINDIA": {
+      "symbol": "COALINDIA",
+      "metrics": {
+        "market_cap": 263364.2,
+        "pe_ratio": 8.47,
+        "pb_ratio": 2.21,
+        "industry_pe": null,
+        "debt_to_equity": 0.12,
+        "roe": 28.12,
+        "eps": 50.45,
+        "dividend_yield": 5.15,
+        "book_value": 193.28,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 41764,
+            "profit": 9593
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 37458,
+            "profit": 8734
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 32327,
+            "profit": 4263
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 37316,
+            "profit": 7166
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 51618,
+            "profit": 10908
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2021",
+            "revenue": 93818,
+            "profit": 12702
+          },
+          {
+            "period": "2022",
+            "revenue": 113597,
+            "profit": 17378
+          },
+          {
+            "period": "2023",
+            "revenue": 144812,
+            "profit": 31723
+          },
+          {
+            "period": "2024",
+            "revenue": 152732,
+            "profit": 37396
+          },
+          {
+            "period": "2025",
+            "revenue": 152839,
+            "profit": 35302
+          }
+        ]
+      },
+      "profile": {
+        "description": "Coal India Limited (CIL) is India's largest coal producer, operating under the Ministry of Coal and celebrating five decades of ensuring the nation's energy security and progress. Its vision is to emerge as a global player in the primary energy sector, committed to providing energy security through environmentally and socially sustainable growth using best practices.",
+        "ceo": "Shri P. M. Prasad",
+        "founded": 1973,
+        "nse_symbol": "COALINDIA",
+        "industry": "Mining"
+      },
+      "shareholding": {},
+      "last_updated": 1784233789
+    },
+    "BHARTIARTL": {
+      "symbol": "BHARTIARTL",
+      "metrics": {
+        "market_cap": 1198945.36,
+        "pe_ratio": 43.37,
+        "pb_ratio": 7.54,
+        "industry_pe": null,
+        "debt_to_equity": 1.0,
+        "roe": 19.36,
+        "eps": 44.31,
+        "dividend_yield": 1.25,
+        "book_value": 254.97,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 48362,
+            "profit": 12476
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 49971,
+            "profit": 7422
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 52873,
+            "profit": 8651
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 54684,
+            "profit": 8503
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 56262,
+            "profit": 9247
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2022",
+            "revenue": 117081,
+            "profit": 8305
+          },
+          {
+            "period": "2023",
+            "revenue": 140081,
+            "profit": 12287
+          },
+          {
+            "period": "2024",
+            "revenue": 1051418,
+            "profit": 8558
+          },
+          {
+            "period": "2025",
+            "revenue": 174559,
+            "profit": 37481
+          },
+          {
+            "period": "2026",
+            "revenue": 213790,
+            "profit": 33823
+          }
+        ]
+      },
+      "profile": {
+        "description": "As one of the world's leading integrated telecom providers, Airtel is shaping the digital future across 17 countries, connecting over half a billion people with its digital network. The company's core vision is to enrich the lives of its customers and aims to win them for life by providing an exceptional experience.",
+        "ceo": "Shashwat Sharma",
+        "founded": 1995,
+        "nse_symbol": "BHARTIARTL",
+        "industry": "Telecom"
+      },
+      "shareholding": {},
+      "last_updated": 1784233790
+    },
+    "ADANIPORTS": {
+      "symbol": "ADANIPORTS",
+      "metrics": {
+        "market_cap": 420795.1,
+        "pe_ratio": 31.4,
+        "pb_ratio": 4.39,
+        "industry_pe": null,
+        "debt_to_equity": 0.64,
+        "roe": 15.59,
+        "eps": 58.17,
+        "dividend_yield": 41.0,
+        "book_value": 416.5,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 8770,
+            "profit": 3023
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 9422,
+            "profit": 3311
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 10004,
+            "profit": 3120
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 9939,
+            "profit": 3043
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 11489,
+            "profit": 3308
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2022",
+            "revenue": 19343,
+            "profit": 4953
+          },
+          {
+            "period": "2023",
+            "revenue": 22405,
+            "profit": 5391
+          },
+          {
+            "period": "2024",
+            "revenue": 28201,
+            "profit": 8559
+          },
+          {
+            "period": "2025",
+            "revenue": 32383,
+            "profit": 11061
+          },
+          {
+            "period": "2026",
+            "revenue": 40854,
+            "profit": 12782
+          }
+        ]
+      },
+      "profile": {
+        "description": "Adani Ports and Special Economic Zone Limited is India's largest Integrated Transport Utility, providing unmatched connectivity from its ports to the customer's location using advanced digital technology. The company is pursuing the transformative direction of becoming an Integrated Transport Utility, investing boldly in expansion, decarbonisation, and automation to strengthen its leadership.",
+        "ceo": "Ashwin Gupta",
+        "founded": 1998,
+        "nse_symbol": "ADANIPORTS",
+        "industry": "Infrastructure"
+      },
+      "shareholding": {},
+      "last_updated": 1784233792
+    },
+    "ADANIGREEN": {
+      "symbol": "ADANIGREEN",
+      "metrics": {
+        "market_cap": 254274.57,
+        "pe_ratio": 160.13,
+        "pb_ratio": 13.18,
+        "industry_pe": null,
+        "debt_to_equity": 3.47,
+        "roe": 7.58,
+        "eps": 9.64,
+        "dividend_yield": null,
+        "book_value": 117.11,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 3278,
+            "profit": 292
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 4006,
+            "profit": 707
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 3249,
+            "profit": 529
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 2837,
+            "profit": -98.0
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 3727,
+            "profit": 432
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2022",
+            "revenue": 5577,
+            "profit": 489
+          },
+          {
+            "period": "2023",
+            "revenue": 8633,
+            "profit": 973
+          },
+          {
+            "period": "2024",
+            "revenue": 10460,
+            "profit": 1260
+          },
+          {
+            "period": "2025",
+            "revenue": 12422,
+            "profit": 2001
+          },
+          {
+            "period": "2021",
+            "revenue": 13819,
+            "profit": 1987
+          }
+        ]
+      },
+      "profile": {
+        "description": "Adani Green Energy Limited stands as India's largest and most rapidly expanding independent power producer focused purely on renewable energy. Its vision is to be a world-class leader in businesses that enrich lives and contribute to building national infrastructure through sustainable value creation.",
+        "ceo": "Ashish Khanna",
+        "founded": 2015,
+        "nse_symbol": "ADANIGREEN",
+        "industry": "Infrastructre"
+      },
+      "shareholding": {},
+      "last_updated": 1784233794
+    },
+    "ULTRACEMCO": {
+      "symbol": "ULTRACEMCO",
+      "metrics": {
+        "market_cap": 346267.08,
+        "pe_ratio": 42.41,
+        "pb_ratio": 4.81,
+        "industry_pe": null,
+        "debt_to_equity": 0.29,
+        "roe": 10.59,
+        "eps": 277.58,
+        "dividend_yield": 66.0,
+        "book_value": 2448.89,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 23165,
+            "profit": 2475
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 21456,
+            "profit": 2221
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 19781,
+            "profit": 1238
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 21965,
+            "profit": 1729
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 25887,
+            "profit": 3000
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2021",
+            "revenue": 45460,
+            "profit": 5319
+          },
+          {
+            "period": "2022",
+            "revenue": 53107,
+            "profit": 7174
+          },
+          {
+            "period": "2023",
+            "revenue": 63743,
+            "profit": 5073
+          },
+          {
+            "period": "2024",
+            "revenue": 71525,
+            "profit": 7004
+          },
+          {
+            "period": "2025",
+            "revenue": 76699,
+            "profit": 6040
+          }
+        ]
+      },
+      "profile": {
+        "description": "UltraTech Cement is the primary cement company of the Aditya Birla Group and a powerhouse in building solutions with a value of $8.4 billion. Its main vision is to establish itself as the foremost leader in providing comprehensive building solutions to its customers across the board.",
+        "ceo": "Kailash Chandra Jhanwar",
+        "founded": 2000,
+        "nse_symbol": "ULTRACEMCO",
+        "industry": "Cement"
+      },
+      "shareholding": {},
+      "last_updated": 1784233795
+    },
+    "LT": {
+      "symbol": "LT",
+      "metrics": {
+        "market_cap": 519420.3,
+        "pe_ratio": 32.29,
+        "pb_ratio": 4.75,
+        "industry_pe": null,
+        "debt_to_equity": 0.98,
+        "roe": 16.95,
+        "eps": 116.92,
+        "dividend_yield": 1.0,
+        "book_value": 794.47,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 75527,
+            "profit": 6133
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 65036,
+            "profit": 4326
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 69368,
+            "profit": 4687
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 72891,
+            "profit": 3829
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 84341,
+            "profit": 6318
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2022",
+            "revenue": 158788,
+            "profit": 10291
+          },
+          {
+            "period": "2023",
+            "revenue": 186270,
+            "profit": 12625
+          },
+          {
+            "period": "2024",
+            "revenue": 225271,
+            "profit": 15570
+          },
+          {
+            "period": "2025",
+            "revenue": 259983,
+            "profit": 17687
+          },
+          {
+            "period": "2026",
+            "revenue": 292569,
+            "profit": 19159
+          }
+        ]
+      },
+      "profile": {
+        "description": "Larsen & Toubro is a professionally managed Indian multinational corporation dedicated to achieving complete customer satisfaction and improving value for its shareholders. The company's vision is to have an innovative, entrepreneurial, and empowered team that consistently generates value and meets global benchmarks.",
+        "ceo": "S. N. Subrahmanyan",
+        "founded": 1946,
+        "nse_symbol": "LT",
+        "industry": "Infrastructure"
+      },
+      "shareholding": {},
+      "last_updated": 1784233796
+    },
+    "GRASIM": {
+      "symbol": "GRASIM",
+      "metrics": {
+        "market_cap": 208395.71,
+        "pe_ratio": 42.01,
+        "pb_ratio": 2.01,
+        "industry_pe": null,
+        "debt_to_equity": 1.34,
+        "roe": 6.29,
+        "eps": 73.14,
+        "dividend_yield": 32.0,
+        "book_value": 1525.83,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 44651,
+            "profit": 2973
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 40460,
+            "profit": 2767
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 40245,
+            "profit": 1498
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 44577,
+            "profit": 2233
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 51329,
+            "profit": 3802
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2021",
+            "revenue": 77450,
+            "profit": 6749
+          },
+          {
+            "period": "2022",
+            "revenue": 96522,
+            "profit": 10691
+          },
+          {
+            "period": "2023",
+            "revenue": 121239,
+            "profit": 11078
+          },
+          {
+            "period": "2024",
+            "revenue": 132243,
+            "profit": 9926
+          },
+          {
+            "period": "2025",
+            "revenue": 149937,
+            "profit": 7756
+          }
+        ]
+      },
+      "profile": {
+        "description": "Grasim Industries Limited stands as a leading diversified company in India and is a flagship entity of the Aditya Birla Group. It is the world\u2019s largest producer of Viscose Staple Fibre (VSF) and India\u2019s largest Chlor-Alkali producer. It recently disrupted the paints market with Birla Opus brand.",
+        "ceo": "Mr Himanshu Kapania",
+        "founded": 1947,
+        "nse_symbol": "GRASIM",
+        "industry": "Chemicals"
+      },
+      "shareholding": {},
+      "last_updated": 1784233798
+    },
+    "VEDL": {
+      "symbol": "VEDL",
+      "metrics": {
+        "market_cap": 100704.83,
+        "pe_ratio": 14.37,
+        "pb_ratio": 2.03,
+        "industry_pe": null,
+        "debt_to_equity": 0.48,
+        "roe": 20.4,
+        "eps": 17.95,
+        "dividend_yield": 13.05,
+        "book_value": 127.16,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 17032,
+            "profit": 4961
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 38809,
+            "profit": 4457
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 18985,
+            "profit": 3479
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 21823,
+            "profit": 7807
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 25027,
+            "profit": 9352
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2022",
+            "revenue": 135332,
+            "profit": 23709
+          },
+          {
+            "period": "2023",
+            "revenue": 150159,
+            "profit": 14506
+          },
+          {
+            "period": "2024",
+            "revenue": 146277,
+            "profit": 7539
+          },
+          {
+            "period": "2025",
+            "revenue": 64547,
+            "profit": 9276
+          },
+          {
+            "period": "2026",
+            "revenue": 79987,
+            "profit": 12480
+          }
+        ]
+      },
+      "profile": {
+        "description": "Vedanta Limited, a subsidiary of Vedanta Resources Limited (UK), is a globally diversified natural resources conglomerate. Headquartered in Mumbai, its operations span aluminum, copper, zinc, lead, silver, oil and gas, iron ore, and steel.",
+        "ceo": "Mr. Sunil Duggal",
+        "founded": 1965,
+        "nse_symbol": "VEDL",
+        "industry": "Metals & Mining"
+      },
+      "shareholding": {},
+      "last_updated": 1784233799
+    },
+    "BEL": {
+      "symbol": "BEL",
+      "metrics": {
+        "market_cap": 297581.1,
+        "pe_ratio": 49.05,
+        "pb_ratio": 12.41,
+        "industry_pe": null,
+        "debt_to_equity": 0.27,
+        "roe": 27.56,
+        "eps": 8.3,
+        "dividend_yield": 1.06,
+        "book_value": 32.82,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 9344,
+            "profit": 2121
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 4603,
+            "profit": 961
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 5946,
+            "profit": 1278
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 7292,
+            "profit": 1570
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 10335,
+            "profit": 2214
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2021",
+            "revenue": 14234,
+            "profit": 2069
+          },
+          {
+            "period": "2022",
+            "revenue": 15600,
+            "profit": 2354
+          },
+          {
+            "period": "2023",
+            "revenue": 18015,
+            "profit": 2940
+          },
+          {
+            "period": "2024",
+            "revenue": 20938,
+            "profit": 3943
+          },
+          {
+            "period": "2025",
+            "revenue": 24511,
+            "profit": 5287
+          }
+        ]
+      },
+      "profile": {
+        "description": "Bharat Electronics Limited is a Government of India Navratna PSU, playing a key role in providing advanced, technology-led solutions for both defence and civilian requirements. Its main vision is to be recognised as a world-class enterprise in the field of professional electronics by delivering innovative and high-value products.",
+        "ceo": "Manoj Jain",
+        "founded": 1954,
+        "nse_symbol": "BEL",
+        "industry": "Defence"
+      },
+      "shareholding": {},
+      "last_updated": 1784233801
+    },
+    "IRFC": {
+      "symbol": "IRFC",
+      "metrics": {
+        "market_cap": 115538.67,
+        "pe_ratio": 16.49,
+        "pb_ratio": 2.03,
+        "industry_pe": null,
+        "debt_to_equity": 7.73,
+        "roe": 12.81,
+        "eps": 5.36,
+        "dividend_yield": 3.26,
+        "book_value": 43.46,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 6724,
+            "profit": 1682
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 6918,
+            "profit": 1746
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 6372,
+            "profit": 1777
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 6719,
+            "profit": 1802
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 7329,
+            "profit": 1684
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2021",
+            "revenue": 15771,
+            "profit": 4416
+          },
+          {
+            "period": "2022",
+            "revenue": 20302,
+            "profit": 6090
+          },
+          {
+            "period": "2023",
+            "revenue": 23763,
+            "profit": 6167
+          },
+          {
+            "period": "2024",
+            "revenue": 26656,
+            "profit": 6412
+          },
+          {
+            "period": "2025",
+            "revenue": 27156,
+            "profit": 6502
+          }
+        ]
+      },
+      "profile": {
+        "description": "Indian Railway Finance Corporation (IRFC) is a Schedule 'A' Miniratna public sector enterprise operating under the administrative control of the Ministry of Railways. The company's vision is to serve as the pivotal financial services provider for the rail transport sector, while maintaining its strong relationship with the Ministry of Railways.",
+        "ceo": "Ms Shelly Verma",
+        "founded": 1986,
+        "nse_symbol": "IRFC",
+        "industry": "Financial Sservices"
+      },
+      "shareholding": {},
+      "last_updated": 1784233803
+    },
+    "SUZLON": {
+      "symbol": "SUZLON",
+      "metrics": {
+        "market_cap": 71427.35,
+        "pe_ratio": 22.5,
+        "pb_ratio": 7.55,
+        "industry_pe": null,
+        "debt_to_equity": 5.87,
+        "roe": 40.64,
+        "eps": 2.31,
+        "dividend_yield": null,
+        "book_value": 6.88,
+        "face_value": null
+      },
+      "financials": {
+        "quarterly": [
+          {
+            "period": "Mar '25",
+            "revenue": 3825,
+            "profit": 1181
+          },
+          {
+            "period": "Jun '25",
+            "revenue": 3165,
+            "profit": 324
+          },
+          {
+            "period": "Sep '25",
+            "revenue": 3897,
+            "profit": 1279
+          },
+          {
+            "period": "Dec '25",
+            "revenue": 4259,
+            "profit": 445
+          },
+          {
+            "period": "Mar '26",
+            "revenue": 5521,
+            "profit": 1114
+          }
+        ],
+        "yearly": [
+          {
+            "period": "2021",
+            "revenue": 3366,
+            "profit": 100
+          },
+          {
+            "period": "2022",
+            "revenue": 6604,
+            "profit": -166
+          },
+          {
+            "period": "2023",
+            "revenue": 5990,
+            "profit": 2887
+          },
+          {
+            "period": "2024",
+            "revenue": 6568,
+            "profit": 660
+          },
+          {
+            "period": "2025",
+            "revenue": 10993,
+            "profit": 2072
+          }
+        ]
+      },
+      "profile": {
+        "description": "The Suzlon Group is a leading global renewable energy solutions provider, with approximately 20.8 GW of wind energy capacity installed across 17 countries. It is focused on reducing mankind's carbon footprint by prioritising action today to build climate resilience and undoing the damage of the past and present.",
+        "ceo": "Mr JP Chalasani",
+        "founded": 1995,
+        "nse_symbol": "SUZLON",
+        "industry": "Eenewable Energy"
+      },
+      "shareholding": {},
+      "last_updated": 1784233805
+    }
+  }
+}

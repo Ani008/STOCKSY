@@ -126,7 +126,7 @@ RECONNECT_DELAY = 5
 # Ticks from Upstox arrive every ~1-2s during market hours.
 # 300s TTL = key survives a 5-minute gap (network blip, slow tick, etc.)
 # If Python process crashes, data stays visible for 5 min rather than 1 min.
-LIVE_DATA_TTL = 60  # seconds
+
 
 
 def get_market_data_feed_authorize_v3():
@@ -148,6 +148,40 @@ def decode_protobuf(buffer):
 
 
 def save_to_redis(data_dict):
+    import time
+    feeds = data_dict.get('feeds', {})
+    if not feeds:
+        print("⚠️  Empty feeds — check instrument keys")
+        return
+
+    for instrument_key, feed_data in feeds.items():
+
+        # ── Key 1: Permanent price storage — NO expiry, never deleted ────────
+        # This is what the app reads. Survives market close, weekends, restarts.
+        # Groww does the same — stores last known price forever.
+        r.set(
+            f"stock:{instrument_key}",
+            json.dumps(feed_data)
+        )
+
+        # ── Key 2: Live market indicator — expires in 90 seconds ─────────────
+        # If this key EXISTS → market is open, data is fresh
+        # If this key MISSING → market closed, showing last known price
+        # Node uses this to send isLive: true/false to React Native
+        r.setex(
+            f"stock_live:{instrument_key}",
+            90,
+            "1"
+        )
+
+        # ── Key 3: Timestamp of last update ───────────────────────────────────
+        # Stored permanently so app can show "As of Friday 3:30 PM"
+        r.set(
+            f"stock_ts:{instrument_key}",
+            str(time.time())
+        )
+
+        print(f"✅ {instrument_key} → ltp: {feed_data.get('ltpc', {}).get('ltp', '?')}")
     feeds = data_dict.get('feeds', {})
     if not feeds:
         print("⚠️  Empty feeds received — check instrument keys")

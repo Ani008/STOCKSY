@@ -170,6 +170,8 @@ export default function BuyOrderScreen({ navigation, route }) {
   const BUY_COLOR = "#00C851";
   const SELL_COLOR = "#FF4444";
   const accentColor = orderType === "BUY" ? BUY_COLOR : SELL_COLOR;
+  const BLUE_BORDER = "#3B82F6";
+  const BLUE_BG = "#3B82F6";
 
   return (
     <SafeAreaView style={styles.safeArea} edges={["top"]}>
@@ -194,7 +196,7 @@ export default function BuyOrderScreen({ navigation, route }) {
           <TouchableOpacity
             style={[
               styles.toggleBtn,
-              orderType === "BUY" && { backgroundColor: BUY_COLOR },
+              orderType === "BUY" && { backgroundColor: BLUE_BG },
             ]}
             onPress={() => setOrderType("BUY")}
           >
@@ -228,7 +230,7 @@ export default function BuyOrderScreen({ navigation, route }) {
 
       {/* ── Live price bar ──────────────────────────────────────────────────── */}
       <View
-        style={[styles.priceBar, { borderBottomColor: accentColor + "55" }]}
+        style={[styles.priceBar, { borderBottomColor: accentColor + "10" }]}
       >
         <View>
           <Text style={styles.priceLabel}>CURRENT PRICE</Text>
@@ -246,22 +248,6 @@ export default function BuyOrderScreen({ navigation, route }) {
               ? ltp.toLocaleString("en-IN", { minimumFractionDigits: 2 })
               : "—"}
           </Animated.Text>
-        </View>
-        <View style={styles.priceChangeBadge}>
-          <Ionicons
-            name={isPositive ? "trending-up" : "trending-down"}
-            size={14}
-            color={isPositive ? BUY_COLOR : SELL_COLOR}
-          />
-          <Text
-            style={[
-              styles.priceChangeTxt,
-              { color: isPositive ? BUY_COLOR : SELL_COLOR },
-            ]}
-          >
-            {isPositive ? "+" : ""}
-            {priceChange.toFixed(2)} ({pricePct}%)
-          </Text>
         </View>
       </View>
 
@@ -286,8 +272,8 @@ export default function BuyOrderScreen({ navigation, route }) {
                   style={[
                     styles.pill,
                     tradeType === t && {
-                      borderColor: accentColor,
-                      backgroundColor: accentColor + "18",
+                      borderColor: BLUE_BORDER,
+                      backgroundColor: BLUE_BG,
                     },
                   ]}
                   onPress={() => setTradeType(t)}
@@ -295,7 +281,7 @@ export default function BuyOrderScreen({ navigation, route }) {
                   <Text
                     style={[
                       styles.pillTxt,
-                      tradeType === t && { color: accentColor },
+                      tradeType === t && { color: "#ffff" },
                     ]}
                   >
                     {t}
@@ -315,8 +301,8 @@ export default function BuyOrderScreen({ navigation, route }) {
                   style={[
                     styles.pill,
                     orderMode === m && {
-                      borderColor: accentColor,
-                      backgroundColor: accentColor + "18",
+                      borderColor: BLUE_BORDER,
+                      backgroundColor: BLUE_BG,
                     },
                   ]}
                   onPress={() => setOrderMode(m)}
@@ -324,7 +310,7 @@ export default function BuyOrderScreen({ navigation, route }) {
                   <Text
                     style={[
                       styles.pillTxt,
-                      orderMode === m && { color: accentColor },
+                      orderMode === m && { color: "#ffff" },
                     ]}
                   >
                     {m}
@@ -559,18 +545,18 @@ export default function BuyOrderScreen({ navigation, route }) {
             activeOpacity={0.85}
           >
             {placingOrder ? (
-              <ActivityIndicator color="#fff" />
+              <ActivityIndicator color="#ffff" />
             ) : (
               <>
                 <Ionicons
                   name={orderType === "BUY" ? "trending-up" : "trending-down"}
                   size={18}
-                  color={canPlace ? "#fff" : "#444"}
+                  color={canPlace ? "#ffff" : "#444"}
                 />
                 <Text
                   style={[
                     styles.ctaBtnTxt,
-                    { color: canPlace ? "#fff" : "#444" },
+                    { color: canPlace ? "#ffff" : "#444" },
                   ]}
                 >
                   {orderType === "BUY" ? "Place Buy Order" : "Place Sell Order"}

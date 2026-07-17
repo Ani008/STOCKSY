@@ -52,22 +52,50 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
-    padding: 10,
+
+    padding: 12,
+
+    backgroundColor: "#FFFFFF",
+
+    borderRadius: 14,
+
     borderWidth: 1,
     borderColor: "#F1F5F9",
-    borderRadius: 12,
-    backgroundColor: "#FAFAFA",
+
+    shadowColor: "#0F172A",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.06,
+    shadowRadius: 8,
+
+    elevation: 3,
   },
   iconBox: {
-    width: 32,
-    height: 32,
+    width: 34,
+    height: 34,
     borderRadius: 10,
-    backgroundColor: "white",
+
+    backgroundColor: "#FFFFFF",
+
     justifyContent: "center",
     alignItems: "center",
+
     borderWidth: 1,
     borderColor: "#F1F5F9",
-    overflow: "hidden", // needed so Image respects borderRadius
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+
+    elevation: 2,
+
+    overflow: "hidden",
   },
   logo: {
     width: 32,

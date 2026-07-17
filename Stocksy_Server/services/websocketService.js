@@ -100,99 +100,82 @@ const REDIS_KEYS = INSTRUMENT_KEYS.map((k) => `stock:${k}`);
 const PUSH_INTERVAL_MS = 800; // slightly under 1s so app always feels live
 
 function initWebSocket(server) {
-  const wss = new WebSocket.Server({ server });
+    const wss = new WebSocket.Server({ server });
+    console.log('WebSocket server ready');
 
-  wss.on("connection", (ws, req) => {
-    const userId = req.headers["x-user-id"];
+    wss.on('connection', (ws) => {
+        console.log('React Native client connected');
 
-    if (userId) {
-      connectedClients.set(userId, ws);
-    }
-    console.log("React Native client connected");
+        const interval = setInterval(async () => {
+            try {
+                // ── ONE round trip for all stock prices ───────────────────────
+                const values = await redisClient.mGet(REDIS_KEYS);
 
-    let intervalId = null;
+                // ── ONE round trip for all live indicators ────────────────────
+                const liveKeys = INSTRUMENT_KEYS.map(k => `stock_live:${k}`);
+                const liveValues = await redisClient.mGet(liveKeys);
 
-    // ── THE FIX: use mGet for one round-trip instead of 47 ──────────────────
-    async function pushMarketData() {
-      try {
-        // redis v4 uses mGet, redis v3 uses mget (lowercase) — support both
-        const mgetFn = (redisClient.mGet || redisClient.mget).bind(redisClient);
-        const values = await mgetFn(REDIS_KEYS);
+                // ── ONE round trip for all timestamps ─────────────────────────
+                const tsKeys = INSTRUMENT_KEYS.map(k => `stock_ts:${k}`);
+                const tsValues = await redisClient.mGet(tsKeys);
 
-        const data = {};
-        let hasData = false;
+                // Check if we have any data at all
+                const hasData = values.some(v => v !== null);
+                if (!hasData) {
+                    ws.send(JSON.stringify({
+                        error: 'No data in Redis. Run python websocket_client.py first.'
+                    }));
+                    return;
+                }
 
-        for (let i = 0; i < INSTRUMENT_KEYS.length; i++) {
-          const raw = values[i];
-          if (!raw) continue; // key expired or not yet written
+                const stockData = {};
 
-          try {
-            const feedData = JSON.parse(raw);
-            const key = INSTRUMENT_KEYS[i];
-            const meta = INSTRUMENTS[key] || {};
+                INSTRUMENT_KEYS.forEach((instrumentKey, i) => {
+                    const raw = values[i];
+                    if (!raw) return; // instrument not yet in Redis, skip
 
-            // Flatten ltpc one level up for easy access in React Native
-            // feedData from Upstox looks like: { ltpc: { ltp, ltt, cp, atp } }
-            data[key] = {
-              ltpc: feedData.ltpc || feedData,
-              symbol: meta.symbol || key,
-              name: meta.name || key,
-              sector: meta.sector || "Equity",
-            };
-            hasData = true;
-          } catch (parseErr) {
-            // Bad JSON for one key — skip it, don't crash the whole push
-          }
-        }
+                    const meta = INSTRUMENTS[instrumentKey];
+                    const feedData = JSON.parse(raw);
+                    const isLive = liveValues[i] !== null; // key exists = market open
+                    const lastUpdated = tsValues[i] ? parseFloat(tsValues[i]) : null;
 
-        if (!hasData) {
-          if (ws.readyState === WebSocket.OPEN) {
-            ws.send(
-              JSON.stringify({
-                error: "No data in Redis yet. Is Python running?",
-              }),
-            );
-          }
-          return;
-        }
+                    stockData[instrumentKey] = {
+                        ...feedData,
+                        symbol:      meta?.symbol  || instrumentKey,
+                        name:        meta?.name    || instrumentKey,
+                        sector:      meta?.sector  || 'Unknown',
+                        isLive,
+                        lastUpdated,
+                    };
+                });
 
-        if (ws.readyState === WebSocket.OPEN) {
-          ws.send(
-            JSON.stringify({
-              type: "MARKET_DATA",
-              timestamp: Date.now(),
-              data,
-            }),
-          );
-        }
-      } catch (err) {
-        // Redis error — log but don't crash the interval
-        console.error("Redis read error in websocketService:", err.message);
-      }
-    }
+                if (ws.readyState === WebSocket.OPEN) {
+                    ws.send(JSON.stringify({
+                        type: 'MARKET_DATA',
+                        timestamp: Date.now(),
+                        data: stockData,
+                    }));
+                }
 
-    // Start pushing immediately, then every PUSH_INTERVAL_MS
-    pushMarketData();
-    intervalId = setInterval(pushMarketData, PUSH_INTERVAL_MS);
+            } catch (err) {
+                console.error('WebSocket interval error:', err);
+            }
+        }, PUSH_INTERVAL_MS);
 
-    ws.on("close", () => {
-      if (userId) {
-        connectedClients.delete(userId);
-      }
+        ws.on('close', () => {
+            console.log('Client disconnected');
+            clearInterval(interval);
+        });
 
-      console.log("React Native client disconnected");
-      if (intervalId) clearInterval(intervalId);
+        ws.on('error', (err) => {
+            console.error('WebSocket error:', err);
+            clearInterval(interval);
+        });
     });
 
-    ws.on("error", (err) => {
-      console.error("WebSocket client error:", err.message);
-      if (intervalId) clearInterval(intervalId);
-    });
-  });
-
-  console.log("WebSocket enabled on port 5000");
-  return wss;
+    return wss;
 }
+
 
 function notifyClient(userId, payload) {
   const client = connectedClients.get(String(userId));

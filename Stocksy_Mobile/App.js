@@ -5,27 +5,27 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StatusBar } from "expo-status-bar";
 import { Ionicons } from "@expo/vector-icons";
+import "react-native-get-random-values";
 
 // ─── Auth screens ─────────────────────────────────────────────────────────────
 import LoginPage from "./src/pages/LoginPage";
 import SignupPage from "./src/pages/SignupPage";
+
 import WalletScreen from "./src/pages/WalletScreen";
 import ForgotPasswordScreen from "./src/pages/ForgotPasswordScreen";
 import SearchPage from "./src/pages/SearchPage";
 import BuyOrderScreen from "./src/pages/Buyorderscreen";
-
 
 import StockDetailPage from "./src/pages/StockDetailPage";
 
 // ─── Tab screens ──────────────────────────────────────────────────────────────
 import DashboardPage from "./src/pages/DashboardPage";
 import PortfolioPage from "./src/pages/PortfolioPage";
+import MarketPage from "./src/pages/MarketPage";
 import ProfilePage from "./src/pages/ProfilePage";
 
-import {
-  ExchangePage,
-  MarketsPage,
-} from "./src/pages/PlaceholderPages";
+
+import { ExchangePage, MarketsPage } from "./src/pages/PlaceholderPages";
 
 // ─── Token check ──────────────────────────────────────────────────────────────
 import { getStoredToken } from "./services/authService";
@@ -34,11 +34,11 @@ import { getStoredToken } from "./services/authService";
 // Tab icon map
 // ─────────────────────────────────────────────────────────────────────────────
 const TAB_ICONS = {
-  Home:      { active: "home",                  inactive: "home-outline" },
-  Portfolio: { active: "briefcase",             inactive: "briefcase-outline" },
-  Exchange:  { active: "swap-horizontal",       inactive: "swap-horizontal-outline" },
-  Markets:   { active: "bar-chart",             inactive: "bar-chart-outline" },
-  Profile:   { active: "person",                inactive: "person-outline" },
+  Home: { active: "home", inactive: "home-outline" },
+  Portfolio: { active: "briefcase", inactive: "briefcase-outline" },
+  Exchange: { active: "swap-horizontal", inactive: "swap-horizontal-outline" },
+  Markets: { active: "bar-chart", inactive: "bar-chart-outline" },
+  Profile: { active: "person", inactive: "person-outline" },
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -78,15 +78,15 @@ function MainTabs() {
         tabBarIcon: ({ focused, color, size }) => {
           const icons = TAB_ICONS[route.name];
           const iconName = focused ? icons.active : icons.inactive;
+
           return <Ionicons name={iconName} size={22} color={color} />;
         },
       })}
     >
-      <Tab.Screen name="Home"      component={DashboardPage} />
+      <Tab.Screen name="Home" component={DashboardPage} />
       <Tab.Screen name="Portfolio" component={PortfolioPage} />
-      <Tab.Screen name="Exchange"  component={ExchangePage} />
-      <Tab.Screen name="Markets"   component={MarketsPage} />
-      <Tab.Screen name="Profile"   component={ProfilePage} />
+      <Tab.Screen name="Markets" component={MarketPage} />
+      <Tab.Screen name="Profile" component={ProfilePage} />
     </Tab.Navigator>
   );
 }
@@ -129,12 +129,12 @@ export default function App() {
         screenOptions={{ headerShown: false }}
       >
         {/* ── Auth screens (no tab bar) ──────────────────────────────────── */}
-        <Stack.Screen name="Login"          component={LoginPage} />
-        <Stack.Screen name="Signup"         component={SignupPage} />
+        <Stack.Screen name="Login" component={LoginPage} />
+        <Stack.Screen name="Signup" component={SignupPage} />
         <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
 
         {/* ── Authenticated shell (tab bar lives inside here) ────────────── */}
-        <Stack.Screen name="MainTabs"  component={MainTabs} />
+        <Stack.Screen name="MainTabs" component={MainTabs} />
         <Stack.Screen name="Wallet" component={WalletScreen} />
 
         <Stack.Screen name="Search" component={SearchPage} />

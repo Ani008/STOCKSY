@@ -1,14 +1,7 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
-import {
-  View,
-  Text,
-  StyleSheet,
-  SafeAreaView,
-  ScrollView,
-  TouchableOpacity,
-  Alert,
-} from "react-native";
+import {View, StyleSheet, ScrollView, TouchableOpacity, Alert, Text} from "react-native";
+import { Screen, Card, AppText, SectionHeader } from "../components";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
@@ -18,7 +11,7 @@ import StockCard from "../components/StockCard";
 import WatchlistItem from "../components/WatchlistItem";
 import MiniHoldingCard from "../components/MiniHoldingCard";
 import { usePortfolio } from "../hooks/usePortfolio";
-import Search from "./SearchPage";
+// import Search from "./SearchPage";
 
 // ─── Live market data hook ────────────────────────────────────────────────────
 import useMarketData from "../hooks/useMarketData";
@@ -292,53 +285,54 @@ const DashboardPage = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={styles.safe}>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.scroll}
-      >
-        <View style={styles.headerBackground} />
+    <Screen
+      style={{ backgroundColor: "#3B82F6" }}
+      contentContainerStyle={styles.scroll}
+    >
+      <View style={styles.headerBackground} />
 
-        {/* ── Top Header ──────────────────────────────────────────────────── */}
-        <View style={styles.headerRow}>
-          <View>
-            <Text style={styles.greetingText}>Good Morning!</Text>
+      {/* ── Top Header ──────────────────────────────────────────────────── */}
+      <View style={styles.headerRow}>
+        <View>
+          <AppText variant="caption" color="rgba(255,255,255,0.8)">
+            Good Morning!
+          </AppText>
 
-            <Text style={styles.userName}>
-              Hi, {user?.username || "Trader"}
-            </Text>
-          </View>
-          <View style={styles.headerIcons}>
-            <TouchableOpacity
-              onPress={() => navigation.navigate("Search")}
-              style={styles.iconButton}
-            >
-              <Ionicons name="search-outline" size={22} color="white" />
-            </TouchableOpacity>
-            <TouchableOpacity
-              name="logout"
-              onPress={confirmLogout}
-              style={styles.iconButton}
-            >
-              <MaterialCommunityIcons name="logout" size={22} color="white" />
-            </TouchableOpacity>
-          </View>
+          <AppText variant="h2" color="white" style={{ marginTop: 2 }}>
+            Hi, {user?.username || "Trader"}
+          </AppText>
         </View>
-
-        {/* ── Connection Status ─────────────────────────────────────────────── */}
-        <View style={styles.wsDot}>
-          <View
-            style={[
-              styles.dot,
-              { backgroundColor: isConnected ? "#34D399" : "#EF4444" },
-            ]}
-          />
-          <Text style={styles.wsLabel}>
-            {isConnected ? "Live Market Data" : "Disconnected"}
-          </Text>
+        <View style={styles.headerIcons}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Search")}
+            style={styles.iconButton}
+          >
+            <Ionicons name="search-outline" size={22} color="white" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            name="logout"
+            onPress={confirmLogout}
+            style={styles.iconButton}
+          >
+            <MaterialCommunityIcons name="logout" size={22} color="white" />
+          </TouchableOpacity>
         </View>
+      </View>
 
-        {/* ── Search Button (duplicate for easy access) ─────────────────────────        
+      {/* ── Connection Status ───────────────────────────────────────────────
+      <View style={styles.wsDot}>
+        <View
+          style={[
+            styles.dot,
+            { backgroundColor: isConnected ? "#34D399" : "#EF4444" },
+          ]}
+        />
+        <AppText variant="small" color="white" style={{ fontWeight: "600" }}>
+          {isConnected ? "Live Market Data" : "Disconnected"}
+        </AppText>
+      </View> */}
+
+      {/* ── Search Button (duplicate for easy access) ─────────────────────────        
             >
               <Ionicons name="search-outline" size={22} color="white" />
             </TouchableOpacity>
@@ -346,19 +340,25 @@ const DashboardPage = ({ navigation }) => {
         </View>
 
         {/* ── Main Asset Card ─────────────────────────────────────────────── */}
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Portfolio")}
-          style={styles.mainCard}
-        >
+      <TouchableOpacity onPress={() => navigation.navigate("Portfolio")}>
+        <Card style={styles.mainCard}>
           <View>
-            <Text style={styles.assetLabel}>Total Assets</Text>
+            <AppText variant="caption" color="#64748B">
+              Total Assets
+            </AppText>
             <View style={styles.priceRow}>
-              <Text style={styles.totalAmount}>
+              <AppText variant="h1">
                 ₹{totals.portfolioValue?.toLocaleString("en-IN") ?? "0"}
-              </Text>
+              </AppText>
 
               <View style={styles.changeChip}>
-                <Text style={styles.totalChange}>▲ 3.87% (24h)</Text>
+                <AppText
+                  variant="caption"
+                  color="#10B981"
+                  style={{ fontWeight: "700" }}
+                >
+                  ▲ 3.87% (24h)
+                </AppText>
               </View>
             </View>
             <View style={styles.miniCardsRow}>
@@ -378,80 +378,69 @@ const DashboardPage = ({ navigation }) => {
                     />
                   ))
               ) : (
-                <Text>No Holdings Yet</Text>
+                <AppText variant="caption" color="#64748B">
+                  No Holdings Yet
+                </AppText>
               )}
             </View>
           </View>
-        </TouchableOpacity>
+        </Card>
+      </TouchableOpacity>
 
-        {/* ── Index Section — LIVE DATA ────────────────────────────────────── */}
-        <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Index</Text>
-        </View>
+      {/* ── Index Section — LIVE DATA ────────────────────────────────────── */}
+      <SectionHeader title="Index" />
 
-        <View style={styles.miniCardsRow}>
-          <MiniHoldingCard
-            ticker="NIFTY 50"
-            name={
-              niftyLtp ? `₹${niftyLtp.toLocaleString("en-IN")}` : "Loading..."
-            }
-            change={niftyChange?.label ?? undefined}
-            isPositive={niftyChange?.isPositive ?? true}
-            logoUrl="https://img.logo.dev/nseindia.com?token=pk_Bym4BAakTJudMK4MGnfpnw"
-          />
-          <MiniHoldingCard
-            ticker="BANK NIFTY"
-            name={
-              bankNiftyLtp
-                ? `₹${bankNiftyLtp.toLocaleString("en-IN")}`
-                : "Loading..."
-            }
-            change={bankNiftyChange?.label ?? undefined}
-            isPositive={bankNiftyChange?.isPositive ?? true}
-            logoUrl="https://img.logo.dev/nseindia.com?token=pk_Bym4BAakTJudMK4MGnfpnw"
-          />
-        </View>
+      <View style={styles.miniCardsRow}>
+        <MiniHoldingCard
+          ticker="NIFTY 50"
+          name={
+            niftyLtp ? `₹${niftyLtp.toLocaleString("en-IN")}` : "Loading..."
+          }
+          change={niftyChange?.label ?? undefined}
+          isPositive={niftyChange?.isPositive ?? true}
+          logoUrl="https://img.logo.dev/nseindia.com?token=pk_Bym4BAakTJudMK4MGnfpnw"
+        />
+        <MiniHoldingCard
+          ticker="BANK NIFTY"
+          name={
+            bankNiftyLtp
+              ? `₹${bankNiftyLtp.toLocaleString("en-IN")}`
+              : "Loading..."
+          }
+          change={bankNiftyChange?.label ?? undefined}
+          isPositive={bankNiftyChange?.isPositive ?? true}
+          logoUrl="https://img.logo.dev/nseindia.com?token=pk_Bym4BAakTJudMK4MGnfpnw"
+        />
+      </View>
 
-        {/* ── Top Stocks ──────────────────────────────────────────────────── */}
-        <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Top Stocks</Text>
-        </View>
+      {/* ── Top Stocks ──────────────────────────────────────────────────── */}
+      <SectionHeader title="Top Stocks" />
 
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.horizontalScroll}
-        >
-          {TOP_STOCKS.map(renderTopStock)}
-        </ScrollView>
-
-        {/* ── Large Cap ─────────────────────────────────────────────────── */}
-        <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Large Cap Stocks</Text>
-        </View>
-        {LARGE_CAP_KEYS.map(renderLiveStock)}
-
-        {/* ── Mid Cap ───────────────────────────────────────────────────── */}
-        <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Mid Cap Stocks</Text>
-        </View>
-        {MID_CAP_KEYS.map(renderLiveStock)}
-
-        {/* ── Small Cap ─────────────────────────────────────────────────── */}
-        <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Small Cap Stocks</Text>
-        </View>
-        {SMALL_CAP_KEYS.map(renderLiveStock)}
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.horizontalScroll}
+      >
+        {TOP_STOCKS.map(renderTopStock)}
       </ScrollView>
-    </SafeAreaView>
+
+      {/* ── Large Cap ─────────────────────────────────────────────────── */}
+      <SectionHeader title="Large Cap Stocks" />
+      {LARGE_CAP_KEYS.map(renderLiveStock)}
+
+      {/* ── Mid Cap ───────────────────────────────────────────────────── */}
+      <SectionHeader title="Mid Cap Stocks" />
+      {MID_CAP_KEYS.map(renderLiveStock)}
+
+      {/* ── Small Cap ─────────────────────────────────────────────────── */}
+      <SectionHeader title="Small Cap Stocks" />
+      {SMALL_CAP_KEYS.map(renderLiveStock)}
+    </Screen>
   );
 };
 
 const styles = StyleSheet.create({
-  safe: {
-    flex: 1,
-    backgroundColor: "#3B82F6",
-  },
+
 
   headerBackground: {
     position: "absolute",
@@ -477,8 +466,6 @@ const styles = StyleSheet.create({
     marginBottom: 22,
   },
 
-  greetingText: { color: "rgba(255,255,255,0.8)", fontSize: 14 },
-  userName: { color: "white", fontSize: 24, fontWeight: "bold", marginTop: 2 },
   headerIcons: { flexDirection: "row", gap: 12, alignItems: "center" },
   iconButton: {
     width: 40,
@@ -511,7 +498,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   dot: { width: 7, height: 7, borderRadius: 4 },
-  wsLabel: { color: "white", fontSize: 11, fontWeight: "600" },
 
   mainCard: {
     backgroundColor: "white",
@@ -524,13 +510,11 @@ const styles = StyleSheet.create({
     elevation: 5,
     marginBottom: 28,
   },
-  assetLabel: { color: "#64748B", fontSize: 13, marginBottom: 6 },
   priceRow: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 18,
   },
-  totalAmount: { fontSize: 28, fontWeight: "bold", color: "#1E293B" },
   changeChip: {
     marginLeft: "auto",
     backgroundColor: "#ECFDF5",
@@ -538,7 +522,6 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     borderRadius: 20,
   },
-  totalChange: { color: "#10B981", fontSize: 13, fontWeight: "700" },
 
   miniCardsRow: { flexDirection: "row", gap: 10, marginBottom: 18 },
 
@@ -549,7 +532,6 @@ const styles = StyleSheet.create({
     marginBottom: 14,
     marginTop: 24,
   },
-  sectionTitle: { fontSize: 18, fontWeight: "bold", color: "#1E293B" },
 
   horizontalScroll: { gap: 14, paddingRight: 4, marginBottom: 28 },
 });

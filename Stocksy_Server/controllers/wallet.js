@@ -1,15 +1,13 @@
-const {findFinancialUserByMongoId,} = require('../repositories/userRepository');
+
 
 const {getWalletsByUserId, createWallet: createWalletRepo, updateWalletName, deleteWallet: deleteWalletRepo,} = require('../repositories/walletRepository');
 
 const getWallets = async (req, res) => {
   try {
     // Mongo user id from JWT auth middleware
-    const mongoUserId = req.user._id.toString();
+    const userId = req.user.id;
 
-    // Find matching PostgreSQL financial user
-    const financialUser =
-      await findFinancialUserByMongoId(mongoUserId);
+    const financialUser = req.user;
 
     if (!financialUser) {
       return res.status(404).json({
@@ -52,11 +50,9 @@ const createWallet = async (req, res) => {
 
   try {
     // Mongo user id from JWT
-    const mongoUserId = req.user._id.toString();
+    const userId = req.user.id;
 
-    // Find PostgreSQL financial user
-    const financialUser =
-      await findFinancialUserByMongoId(mongoUserId);
+    const financialUser = req.user;
 
     if (!financialUser) {
       return res.status(404).json({
@@ -107,10 +103,9 @@ const updateWallet = async (req, res) => {
   }
 
   try {
-    const mongoUserId = req.user._id.toString();
+    const userId = req.user.id;
 
-    const financialUser =
-      await findFinancialUserByMongoId(mongoUserId);
+   const financialUser = req.user;
 
     if (!financialUser) {
       return res.status(404).json({
@@ -148,10 +143,9 @@ const deleteWallet = async (req, res) => {
   const { walletId } = req.params;
 
   try {
-    const mongoUserId = req.user._id.toString();
+    const userId = req.user.id;
+    const financialUser = req.user;
 
-    const financialUser =
-      await findFinancialUserByMongoId(mongoUserId);
 
     if (!financialUser) {
       return res.status(404).json({
