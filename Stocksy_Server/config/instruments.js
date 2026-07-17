@@ -1,7 +1,9 @@
 const INSTRUMENTS = {
   // Indices
-  "NSE_INDEX|Nifty 50":      { symbol: "NIFTY 50",    name: "Nifty 50 Index",            sector: "Index" },
-  "NSE_INDEX|Nifty Bank":    { symbol: "BANKNIFTY",   name: "Nifty Bank Index",          sector: "Index" },
+  "NSE_INDEX|Nifty 50":          { symbol: "NIFTY 50",    name: "Nifty 50 Index",           sector: "Index" },
+  "NSE_INDEX|Nifty Bank":        { symbol: "BANKNIFTY",   name: "Nifty Bank Index",         sector: "Index" },
+  "NSE_INDEX|Nifty Fin Service": { symbol: "FINNIFTY",     name: "Nifty Financial Services", sector: "Index"},
+  "BSE_INDEX|SENSEX":            { symbol: "SENSEX",       name: "Sensex",                   sector: "Index"},
   
 
   // Banking & Finance

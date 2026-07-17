@@ -41,6 +41,8 @@ const redisClient =
 const INSTRUMENT_KEYS = [
   "NSE_INDEX|Nifty 50",
   "NSE_INDEX|Nifty Bank",
+  "BSE_INDEX|SENSEX",
+  "NSE_INDEX|Nifty Fin Service",
   "NSE_EQ|INE040A01034",
   "NSE_EQ|INE090A01021",
   "NSE_EQ|INE062A01020",

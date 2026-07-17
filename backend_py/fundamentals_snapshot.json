@@ -1,18 +1,18 @@
 {
-  "generated_at": 1784233730,
+  "generated_at": 1784316264,
   "version": 1,
   "stocks": {
     "HDFCBANK": {
       "symbol": "HDFCBANK",
       "metrics": {
-        "market_cap": 1244879.49,
-        "pe_ratio": 18.02,
-        "pb_ratio": 2.12,
+        "market_cap": 1262282.92,
+        "pe_ratio": 18.3,
+        "pb_ratio": 2.15,
         "industry_pe": 14.2,
         "debt_to_equity": null,
         "roe": 13.82,
-        "eps": 44.85,
-        "dividend_yield": 1.59,
+        "eps": 44.78,
+        "dividend_yield": 1.61,
         "book_value": 380.72,
         "face_value": null
       },
@@ -167,18 +167,18 @@
           }
         ]
       },
-      "last_updated": 1784233731
+      "last_updated": 1784316265
     },
     "ICICIBANK": {
       "symbol": "ICICIBANK",
       "metrics": {
-        "market_cap": 1017300.75,
-        "pe_ratio": 18.96,
-        "pb_ratio": 2.8,
+        "market_cap": 1036036.5,
+        "pe_ratio": 19.32,
+        "pb_ratio": 2.85,
         "industry_pe": 14.2,
         "debt_to_equity": null,
         "roe": 16.36,
-        "eps": 74.78,
+        "eps": 74.74,
         "dividend_yield": 85.0,
         "book_value": 506.99,
         "face_value": null
@@ -355,14 +355,14 @@
           }
         ]
       },
-      "last_updated": 1784233732
+      "last_updated": 1784316266
     },
     "SBIN": {
       "symbol": "SBIN",
       "metrics": {
-        "market_cap": 951861.22,
-        "pe_ratio": 11.31,
-        "pb_ratio": 1.6,
+        "market_cap": 963953.4,
+        "pe_ratio": 11.46,
+        "pb_ratio": 1.62,
         "industry_pe": 14.2,
         "debt_to_equity": null,
         "roe": 15.48,
@@ -563,18 +563,18 @@
           }
         ]
       },
-      "last_updated": 1784233733
+      "last_updated": 1784316268
     },
     "AXISBANK": {
       "symbol": "AXISBANK",
       "metrics": {
-        "market_cap": 406790.0,
-        "pe_ratio": 15.47,
-        "pb_ratio": 1.89,
+        "market_cap": 413291.93,
+        "pe_ratio": 15.73,
+        "pb_ratio": 1.92,
         "industry_pe": 14.2,
         "debt_to_equity": null,
         "roe": 13.15,
-        "eps": 84.51,
+        "eps": 84.47,
         "dividend_yield": 8.0,
         "book_value": 691.84,
         "face_value": null
@@ -771,19 +771,19 @@
           }
         ]
       },
-      "last_updated": 1784233734
+      "last_updated": 1784316269
     },
     "BAJFINANCE": {
       "symbol": "BAJFINANCE",
       "metrics": {
-        "market_cap": 645166.85,
-        "pe_ratio": 33.98,
-        "pb_ratio": 5.66,
+        "market_cap": 656794.35,
+        "pe_ratio": 34.62,
+        "pb_ratio": 5.76,
         "industry_pe": 14.2,
         "debt_to_equity": 3.15,
         "roe": 17.91,
-        "eps": 30.54,
-        "dividend_yield": 53.0,
+        "eps": 30.51,
+        "dividend_yield": 52.0,
         "book_value": 183.34,
         "face_value": null
       },
@@ -964,18 +964,18 @@
           }
         ]
       },
-      "last_updated": 1784233735
+      "last_updated": 1784316270
     },
     "KOTAKBANK": {
       "symbol": "KOTAKBANK",
       "metrics": {
-        "market_cap": 375130.92,
-        "pe_ratio": 19.47,
-        "pb_ratio": 2.07,
+        "market_cap": 387862.42,
+        "pe_ratio": 20.11,
+        "pb_ratio": 2.14,
         "industry_pe": 14.2,
         "debt_to_equity": null,
         "roe": 11.39,
-        "eps": 19.37,
+        "eps": 19.39,
         "dividend_yield": 17.0,
         "book_value": 182.2,
         "face_value": null
@@ -1172,18 +1172,18 @@
           }
         ]
       },
-      "last_updated": 1784233737
+      "last_updated": 1784316271
     },
     "HDFCLIFE": {
       "symbol": "HDFCLIFE",
       "metrics": {
-        "market_cap": 123279.04,
-        "pe_ratio": 61.97,
-        "pb_ratio": 6.9,
+        "market_cap": 122421.13,
+        "pe_ratio": 61.67,
+        "pb_ratio": 6.85,
         "industry_pe": 14.2,
         "debt_to_equity": 0.16,
         "roe": 10.8,
-        "eps": 9.16,
+        "eps": 9.14,
         "dividend_yield": 37.0,
         "book_value": 82.26,
         "face_value": null
@@ -1380,14 +1380,14 @@
           }
         ]
       },
-      "last_updated": 1784233738
+      "last_updated": 1784316272
     },
     "BAJAJFINSV": {
       "symbol": "BAJAJFINSV",
       "metrics": {
-        "market_cap": 293943.12,
-        "pe_ratio": 30.12,
-        "pb_ratio": 3.77,
+        "market_cap": 296405.15,
+        "pe_ratio": 30.37,
+        "pb_ratio": 3.8,
         "industry_pe": 14.2,
         "debt_to_equity": 2.56,
         "roe": 14.6,
@@ -1588,19 +1588,19 @@
           }
         ]
       },
-      "last_updated": 1784233740
+      "last_updated": 1784316273
     },
     "TCS": {
       "symbol": "TCS",
       "metrics": {
-        "market_cap": 796341.04,
-        "pe_ratio": 15.98,
-        "pb_ratio": 7.26,
+        "market_cap": 820944.04,
+        "pe_ratio": 16.49,
+        "pb_ratio": 7.49,
         "industry_pe": 28.5,
         "debt_to_equity": 0.1,
         "roe": 47.74,
-        "eps": 137.7,
-        "dividend_yield": 2.97,
+        "eps": 137.56,
+        "dividend_yield": 2.95,
         "book_value": 303.01,
         "face_value": null
       },
@@ -1658,19 +1658,19 @@
         "industry": "IT Services"
       },
       "shareholding": {},
-      "last_updated": 1784233741
+      "last_updated": 1784316274
     },
     "INFY": {
       "symbol": "INFY",
       "metrics": {
-        "market_cap": 438255.98,
-        "pe_ratio": 14.35,
-        "pb_ratio": 4.64,
+        "market_cap": 443964.98,
+        "pe_ratio": 14.53,
+        "pb_ratio": 4.7,
         "industry_pe": 28.5,
         "debt_to_equity": 9.83,
         "roe": 31.44,
-        "eps": 75.45,
-        "dividend_yield": 4.65,
+        "eps": 75.44,
+        "dividend_yield": 4.62,
         "book_value": 233.15,
         "face_value": null
       },
@@ -1738,19 +1738,19 @@
         "industry": "IT Services"
       },
       "shareholding": {},
-      "last_updated": 1784233743
+      "last_updated": 1784316276
     },
     "WIPRO": {
       "symbol": "WIPRO",
       "metrics": {
-        "market_cap": 175820.02,
-        "pe_ratio": 14.15,
-        "pb_ratio": 2.1,
+        "market_cap": 174103.3,
+        "pe_ratio": 14.0,
+        "pb_ratio": 2.08,
         "industry_pe": 28.5,
         "debt_to_equity": 0.23,
         "roe": 15.44,
-        "eps": 12.56,
-        "dividend_yield": 9.73,
+        "eps": 12.57,
+        "dividend_yield": 4.5,
         "book_value": 84.51,
         "face_value": null
       },
@@ -1818,20 +1818,20 @@
         "industry": "IT Services"
       },
       "shareholding": {},
-      "last_updated": 1784233744
+      "last_updated": 1784316277
     },
     "HCLTECH": {
       "symbol": "HCLTECH",
       "metrics": {
-        "market_cap": 321282.74,
-        "pe_ratio": 18.48,
-        "pb_ratio": 4.25,
+        "market_cap": 325747.26,
+        "pe_ratio": 18.74,
+        "pb_ratio": 4.35,
         "industry_pe": 28.5,
         "debt_to_equity": 7.06,
         "roe": 24.07,
         "eps": 64.24,
-        "dividend_yield": 5.14,
-        "book_value": 279.5,
+        "dividend_yield": 5.05,
+        "book_value": 276.75,
         "face_value": null
       },
       "financials": {
@@ -1898,19 +1898,19 @@
         "industry": "IT Services"
       },
       "shareholding": {},
-      "last_updated": 1784233746
+      "last_updated": 1784316278
     },
     "TECHM": {
       "symbol": "TECHM",
       "metrics": {
-        "market_cap": 133785.75,
-        "pe_ratio": 27.84,
-        "pb_ratio": 4.52,
+        "market_cap": 139330.99,
+        "pe_ratio": 27.19,
+        "pb_ratio": 4.7,
         "industry_pe": 28.5,
         "debt_to_equity": 7.27,
-        "roe": 16.61,
-        "eps": 54.25,
-        "dividend_yield": 3.4,
+        "roe": null,
+        "eps": 57.84,
+        "dividend_yield": 3.38,
         "book_value": 334.41,
         "face_value": null
       },
@@ -1978,19 +1978,19 @@
         "industry": "IT Services"
       },
       "shareholding": {},
-      "last_updated": 1784233747
+      "last_updated": 1784316279
     },
     "LTM": {
       "symbol": "LTM",
       "metrics": {
-        "market_cap": 120372.15,
-        "pe_ratio": 23.04,
-        "pb_ratio": 5.01,
+        "market_cap": 120825.73,
+        "pe_ratio": 23.13,
+        "pb_ratio": 5.03,
         "industry_pe": 28.5,
-        "debt_to_equity": 9.58,
-        "roe": 21.29,
-        "eps": 176.2,
-        "dividend_yield": 1.86,
+        "debt_to_equity": 9.87,
+        "roe": 21.97,
+        "eps": 176.22,
+        "dividend_yield": 1.85,
         "book_value": 810.39,
         "face_value": null
       },
@@ -2058,18 +2058,18 @@
         "industry": "IT Services"
       },
       "shareholding": {},
-      "last_updated": 1784233749
+      "last_updated": 1784316280
     },
     "RELIANCE": {
       "symbol": "RELIANCE",
       "metrics": {
-        "market_cap": 1754620.28,
-        "pe_ratio": 21.71,
-        "pb_ratio": 1.94,
+        "market_cap": 1796029.7,
+        "pe_ratio": 22.25,
+        "pb_ratio": 1.99,
         "industry_pe": 12.4,
         "debt_to_equity": 0.37,
         "roe": 9.14,
-        "eps": 59.72,
+        "eps": 59.64,
         "dividend_yield": 46.0,
         "book_value": 668.04,
         "face_value": null
@@ -2138,19 +2138,19 @@
         "industry": "Oil & Gas"
       },
       "shareholding": {},
-      "last_updated": 1784233750
+      "last_updated": 1784316281
     },
     "ONGC": {
       "symbol": "ONGC",
       "metrics": {
-        "market_cap": 310418.39,
-        "pe_ratio": 7.5,
+        "market_cap": 311097.71,
+        "pe_ratio": 7.51,
         "pb_ratio": 0.84,
         "industry_pe": 12.4,
         "debt_to_equity": 0.43,
         "roe": 12.7,
-        "eps": 32.92,
-        "dividend_yield": 7.48,
+        "eps": 32.94,
+        "dividend_yield": 7.5,
         "book_value": 295.5,
         "face_value": null
       },
@@ -2218,19 +2218,19 @@
         "industry": "Oil & Gas"
       },
       "shareholding": {},
-      "last_updated": 1784233752
+      "last_updated": 1784316282
     },
     "BPCL": {
       "symbol": "BPCL",
       "metrics": {
-        "market_cap": 133304.65,
-        "pe_ratio": 5.16,
-        "pb_ratio": 1.33,
+        "market_cap": 134821.42,
+        "pe_ratio": 5.22,
+        "pb_ratio": 1.35,
         "industry_pe": 12.4,
         "debt_to_equity": 0.54,
         "roe": 28.47,
         "eps": 60.5,
-        "dividend_yield": 6.46,
+        "dividend_yield": 6.41,
         "book_value": 234.37,
         "face_value": null
       },
@@ -2298,18 +2298,18 @@
         "industry": "Oil & Gas"
       },
       "shareholding": {},
-      "last_updated": 1784233753
+      "last_updated": 1784316283
     },
     "POWERGRID": {
       "symbol": "POWERGRID",
       "metrics": {
-        "market_cap": 261114.46,
-        "pe_ratio": 13.95,
-        "pb_ratio": 2.6,
+        "market_cap": 263718.62,
+        "pe_ratio": 14.11,
+        "pb_ratio": 2.62,
         "industry_pe": null,
         "debt_to_equity": 1.51,
         "roe": 16.49,
-        "eps": 20.13,
+        "eps": 20.1,
         "dividend_yield": 4.36,
         "book_value": 108.09,
         "face_value": null
@@ -2378,19 +2378,19 @@
         "industry": "Infrastructure"
       },
       "shareholding": {},
-      "last_updated": 1784233755
+      "last_updated": 1784316284
     },
     "NTPC": {
       "symbol": "NTPC",
       "metrics": {
-        "market_cap": 332062.37,
-        "pe_ratio": 11.25,
-        "pb_ratio": 1.64,
+        "market_cap": 331480.56,
+        "pe_ratio": 11.23,
+        "pb_ratio": 1.63,
         "industry_pe": null,
         "debt_to_equity": 1.18,
         "roe": 13.69,
         "eps": 30.44,
-        "dividend_yield": 3.3,
+        "dividend_yield": 3.31,
         "book_value": 209.44,
         "face_value": null
       },
@@ -2458,19 +2458,19 @@
         "industry": "Infrastructure"
       },
       "shareholding": {},
-      "last_updated": 1784233756
+      "last_updated": 1784316285
     },
     "MARUTI": {
       "symbol": "MARUTI",
       "metrics": {
-        "market_cap": 433341.05,
-        "pe_ratio": 29.5,
-        "pb_ratio": 4.04,
+        "market_cap": 433969.85,
+        "pe_ratio": 29.54,
+        "pb_ratio": 4.05,
         "industry_pe": 24.1,
         "debt_to_equity": 0.1,
         "roe": 14.43,
-        "eps": 467.26,
-        "dividend_yield": 1.03,
+        "eps": 467.24,
+        "dividend_yield": 1.02,
         "book_value": 3408.27,
         "face_value": null
       },
@@ -2538,19 +2538,19 @@
         "industry": "Automobile"
       },
       "shareholding": {},
-      "last_updated": 1784233758
+      "last_updated": 1784316286
     },
     "TMCV": {
       "symbol": "TMCV",
       "metrics": {
-        "market_cap": 151929.8,
-        "pe_ratio": 50.19,
-        "pb_ratio": 11.93,
+        "market_cap": 152703.17,
+        "pe_ratio": 50.51,
+        "pb_ratio": 11.99,
         "industry_pe": 24.1,
         "debt_to_equity": 0.44,
         "roe": 26.05,
-        "eps": 8.22,
-        "dividend_yield": 94.0,
+        "eps": 8.21,
+        "dividend_yield": 97.0,
         "book_value": 34.58,
         "face_value": null
       },
@@ -2618,18 +2618,18 @@
         "industry": "Automobile"
       },
       "shareholding": {},
-      "last_updated": 1784233759
+      "last_updated": 1784316287
     },
     "BAJAJ-AUTO": {
       "symbol": "BAJAJ-AUTO",
       "metrics": {
-        "market_cap": 288529.61,
-        "pe_ratio": 26.9,
-        "pb_ratio": 7.44,
+        "market_cap": 291643.48,
+        "pe_ratio": 27.17,
+        "pb_ratio": 7.52,
         "industry_pe": 24.1,
         "debt_to_equity": 0.56,
         "roe": 28.05,
-        "eps": 384.02,
+        "eps": 384.33,
         "dividend_yield": 1.45,
         "book_value": 1389.35,
         "face_value": null
@@ -2698,18 +2698,18 @@
         "industry": "Automobile"
       },
       "shareholding": {},
-      "last_updated": 1784233761
+      "last_updated": 1784316288
     },
     "EICHERMOT": {
       "symbol": "EICHERMOT",
       "metrics": {
-        "market_cap": 203636.0,
-        "pe_ratio": 36.97,
-        "pb_ratio": 8.11,
+        "market_cap": 207616.21,
+        "pe_ratio": 37.62,
+        "pb_ratio": 8.27,
         "industry_pe": 24.1,
         "debt_to_equity": 2.05,
         "roe": 23.77,
-        "eps": 200.66,
+        "eps": 201.04,
         "dividend_yield": 1.11,
         "book_value": 915.03,
         "face_value": null
@@ -2778,19 +2778,19 @@
         "industry": "Automobile"
       },
       "shareholding": {},
-      "last_updated": 1784233762
+      "last_updated": 1784316289
     },
     "HEROMOTOCO": {
       "symbol": "HEROMOTOCO",
       "metrics": {
-        "market_cap": 98005.52,
-        "pe_ratio": 17.08,
-        "pb_ratio": 4.53,
+        "market_cap": 98243.63,
+        "pe_ratio": 17.14,
+        "pb_ratio": 4.55,
         "industry_pe": 24.1,
         "debt_to_equity": 3.57,
         "roe": 28.03,
-        "eps": 286.72,
-        "dividend_yield": 3.79,
+        "eps": 286.53,
+        "dividend_yield": 3.78,
         "book_value": 1080.08,
         "face_value": null
       },
@@ -2858,7 +2858,7 @@
         "industry": "Automobile"
       },
       "shareholding": {},
-      "last_updated": 1784233764
+      "last_updated": 1784316291
     },
     "HUL": {
       "symbol": "HUL",
@@ -2938,19 +2938,19 @@
         "industry": "Fmcg"
       },
       "shareholding": {},
-      "last_updated": 1784233766
+      "last_updated": 1784316292
     },
     "ITC": {
       "symbol": "ITC",
       "metrics": {
-        "market_cap": 350010.71,
-        "pe_ratio": 16.91,
-        "pb_ratio": 4.83,
+        "market_cap": 351702.19,
+        "pe_ratio": 17.0,
+        "pb_ratio": 4.85,
         "industry_pe": 48.8,
         "debt_to_equity": 3.29,
         "roe": 29.34,
-        "eps": 16.52,
-        "dividend_yield": 5.78,
+        "eps": 16.51,
+        "dividend_yield": 5.73,
         "book_value": 57.87,
         "face_value": null
       },
@@ -3018,7 +3018,7 @@
         "industry": "Fmcg"
       },
       "shareholding": {},
-      "last_updated": 1784233767
+      "last_updated": 1784316293
     },
     "NESTLE": {
       "symbol": "NESTLE",
@@ -3046,1607 +3046,7 @@
         "industry": "Fmcg"
       },
       "shareholding": {},
-      "last_updated": 1784233769
-    },
-    "DABUR": {
-      "symbol": "DABUR",
-      "metrics": {
-        "market_cap": 76182.39,
-        "pe_ratio": 40.32,
-        "pb_ratio": 6.67,
-        "industry_pe": 48.8,
-        "debt_to_equity": 0.11,
-        "roe": 16.24,
-        "eps": 10.65,
-        "dividend_yield": 1.91,
-        "book_value": 64.38,
-        "face_value": null
-      },
-      "financials": {
-        "quarterly": [
-          {
-            "period": "Mar '25",
-            "revenue": 2971,
-            "profit": 313
-          },
-          {
-            "period": "Jun '25",
-            "revenue": 3549,
-            "profit": 508
-          },
-          {
-            "period": "Sep '25",
-            "revenue": 3331,
-            "profit": 445
-          },
-          {
-            "period": "Dec '25",
-            "revenue": 3699,
-            "profit": 554
-          },
-          {
-            "period": "Mar '26",
-            "revenue": 3213,
-            "profit": 362
-          }
-        ],
-        "yearly": [
-          {
-            "period": "2022",
-            "revenue": 11282,
-            "profit": 1742
-          },
-          {
-            "period": "2023",
-            "revenue": 11975,
-            "profit": 1701
-          },
-          {
-            "period": "2024",
-            "revenue": 12886,
-            "profit": 1811
-          },
-          {
-            "period": "2025",
-            "revenue": 13113,
-            "profit": 1740
-          },
-          {
-            "period": "2026",
-            "revenue": 13792,
-            "profit": 1869
-          }
-        ]
-      },
-      "profile": {
-        "description": "Dabur India Limited is one of India's leading FMCG companies, dealing in personal care, healthcare, and food products with a focus on Ayurveda.",
-        "ceo": "Mr. Mohit Malhotra",
-        "founded": 1975,
-        "nse_symbol": "DABUR",
-        "industry": "Fmcg"
-      },
-      "shareholding": {},
-      "last_updated": 1784233771
-    },
-    "BRITANIA": {
-      "symbol": "BRITANIA",
-      "metrics": {
-        "market_cap": null,
-        "pe_ratio": 0,
-        "pb_ratio": 0,
-        "industry_pe": 48.8,
-        "debt_to_equity": null,
-        "roe": null,
-        "eps": 0,
-        "dividend_yield": null,
-        "book_value": 0,
-        "face_value": null
-      },
-      "financials": {
-        "quarterly": [
-          {
-            "period": "Mar '25",
-            "revenue": 4495,
-            "profit": 559
-          },
-          {
-            "period": "Jun '25",
-            "revenue": 4679,
-            "profit": 520
-          },
-          {
-            "period": "Sep '25",
-            "revenue": 4893,
-            "profit": 655
-          },
-          {
-            "period": "Dec '25",
-            "revenue": 5029,
-            "profit": 682
-          },
-          {
-            "period": "Mar '26",
-            "revenue": 4774,
-            "profit": 680
-          }
-        ],
-        "yearly": [
-          {
-            "period": "2021",
-            "revenue": 13449,
-            "profit": 1851
-          },
-          {
-            "period": "2022",
-            "revenue": 14359,
-            "profit": 1516
-          },
-          {
-            "period": "2023",
-            "revenue": 16516,
-            "profit": 2316
-          },
-          {
-            "period": "2024",
-            "revenue": 16983,
-            "profit": 2134
-          },
-          {
-            "period": "2025",
-            "revenue": 18170,
-            "profit": 2178
-          }
-        ]
-      },
-      "profile": {
-        "description": "Part of the Wadia Group, Britannia is one of India's oldest and most iconic food companies, specializing in biscuits, dairy, and bakery products. Headquartered in Bengaluru, the company holds roughly one-third of the Indian biscuit market with flagship brands like Good Day, Marie Gold, and Tiger.",
-        "ceo": "Mr. Varun Berry",
-        "founded": 1892,
-        "nse_symbol": "BRITANNIA",
-        "industry": "Fmcg"
-      },
-      "shareholding": {},
-      "last_updated": 1784233773
-    },
-    "SUNPHARMA": {
-      "symbol": "SUNPHARMA",
-      "metrics": {
-        "market_cap": 467894.27,
-        "pe_ratio": 40.79,
-        "pb_ratio": 5.6,
-        "industry_pe": 35.36,
-        "debt_to_equity": 5.52,
-        "roe": 14.72,
-        "eps": 47.81,
-        "dividend_yield": 82.0,
-        "book_value": 348.31,
-        "face_value": null
-      },
-      "financials": {
-        "quarterly": [
-          {
-            "period": "Mar '25",
-            "revenue": 13572,
-            "profit": 2161
-          },
-          {
-            "period": "Jun '25",
-            "revenue": 14316,
-            "profit": 2303
-          },
-          {
-            "period": "Sep '25",
-            "revenue": 14948,
-            "profit": 3137
-          },
-          {
-            "period": "Dec '25",
-            "revenue": 16099,
-            "profit": 3401
-          },
-          {
-            "period": "Mar '26",
-            "revenue": 15070,
-            "profit": 2724
-          }
-        ],
-        "yearly": [
-          {
-            "period": "2022",
-            "revenue": 39730,
-            "profit": 3406
-          },
-          {
-            "period": "2023",
-            "revenue": 44520,
-            "profit": 8561
-          },
-          {
-            "period": "2024",
-            "revenue": 49887,
-            "profit": 9648
-          },
-          {
-            "period": "2025",
-            "revenue": 54729,
-            "profit": 10980
-          },
-          {
-            "period": "2026",
-            "revenue": 61674,
-            "profit": 11565
-          }
-        ]
-      },
-      "profile": {
-        "description": "Sun Pharmaceutical Industries Ltd. is a global pharmaceutical company and the largest in India by market share, with a significant presence in over 100 countries. The company's core purpose is to enhance global healthcare standards by making high-quality medicines more accessible and improving patient care for millions of people worldwide.",
-        "ceo": "Kirti Ganorkar",
-        "founded": 1993,
-        "nse_symbol": "SUNPHARMA",
-        "industry": "Pharmaceuticals"
-      },
-      "shareholding": {},
-      "last_updated": 1784233775
-    },
-    "DRREDDY": {
-      "symbol": "DRREDDY",
-      "metrics": {
-        "market_cap": 101957.04,
-        "pe_ratio": 23.83,
-        "pb_ratio": 2.7,
-        "industry_pe": 35.36,
-        "debt_to_equity": 0.2,
-        "roe": 11.83,
-        "eps": 51.39,
-        "dividend_yield": 65.0,
-        "book_value": 452.82,
-        "face_value": null
-      },
-      "financials": {
-        "quarterly": [
-          {
-            "period": "Mar '25",
-            "revenue": 9051,
-            "profit": 1587
-          },
-          {
-            "period": "Jun '25",
-            "revenue": 8862,
-            "profit": 1410
-          },
-          {
-            "period": "Sep '25",
-            "revenue": 9152,
-            "profit": 1337
-          },
-          {
-            "period": "Dec '25",
-            "revenue": 9022,
-            "profit": 1190
-          },
-          {
-            "period": "Mar '26",
-            "revenue": 8022,
-            "profit": 221
-          }
-        ],
-        "yearly": [
-          {
-            "period": "2022",
-            "revenue": 22030,
-            "profit": 2183
-          },
-          {
-            "period": "2023",
-            "revenue": 25725,
-            "profit": 4507
-          },
-          {
-            "period": "2024",
-            "revenue": 28905,
-            "profit": 5578
-          },
-          {
-            "period": "2025",
-            "revenue": 33741,
-            "profit": 5725
-          },
-          {
-            "period": "2026",
-            "revenue": 35059,
-            "profit": 4158
-          }
-        ]
-      },
-      "profile": {
-        "description": "Dr. Reddy's Laboratories Limited is a global pharmaceutical company based in Hyderabad, India, driven by the core purpose of 'Good Health Can't Wait'. The company's vision is to accelerate access to affordable and innovative medicines, aiming to serve 1.5 billion patients by the year 2030.",
-        "ceo": "GV Prasad",
-        "founded": 1984,
-        "nse_symbol": "DRREDDY",
-        "industry": "Pharmaceuticals"
-      },
-      "shareholding": {},
-      "last_updated": 1784233777
-    },
-    "CIPLA": {
-      "symbol": "CIPLA",
-      "metrics": {
-        "market_cap": 115481.48,
-        "pe_ratio": 29.76,
-        "pb_ratio": 3.35,
-        "industry_pe": 35.36,
-        "debt_to_equity": 1.78,
-        "roe": 11.74,
-        "eps": 48.03,
-        "dividend_yield": 90.0,
-        "book_value": 426.25,
-        "face_value": null
-      },
-      "financials": {
-        "quarterly": [
-          {
-            "period": "Mar '25",
-            "revenue": 7019,
-            "profit": 1225
-          },
-          {
-            "period": "Jun '25",
-            "revenue": 7216,
-            "profit": 1292
-          },
-          {
-            "period": "Sep '25",
-            "revenue": 7858,
-            "profit": 1353
-          },
-          {
-            "period": "Dec '25",
-            "revenue": 7281,
-            "profit": 675
-          },
-          {
-            "period": "Mar '26",
-            "revenue": 6689,
-            "profit": 550
-          }
-        ],
-        "yearly": [
-          {
-            "period": "2022",
-            "revenue": 22044,
-            "profit": 2559
-          },
-          {
-            "period": "2023",
-            "revenue": 23229,
-            "profit": 2835
-          },
-          {
-            "period": "2024",
-            "revenue": 26521,
-            "profit": 4155
-          },
-          {
-            "period": "2025",
-            "revenue": 28409,
-            "profit": 5291
-          },
-          {
-            "period": "2026",
-            "revenue": 29045,
-            "profit": 3870
-          }
-        ]
-      },
-      "profile": {
-        "description": "Founded in 1935, Cipla is a global pharmaceutical company driven by the purpose of making healthcare accessible to all. The company's vision is rooted in its belief that healthcare is a fundamental right, not a special privilege for a select few.",
-        "ceo": "Mr Umang Vohra",
-        "founded": 1935,
-        "nse_symbol": "CIPLA",
-        "industry": "Pharmaceuticals"
-      },
-      "shareholding": {},
-      "last_updated": 1784233779
-    },
-    "DIVISLAB": {
-      "symbol": "DIVISLAB",
-      "metrics": {
-        "market_cap": 194216.81,
-        "pe_ratio": 75.63,
-        "pb_ratio": 11.58,
-        "industry_pe": 35.36,
-        "debt_to_equity": 0.04,
-        "roe": 16.19,
-        "eps": 96.73,
-        "dividend_yield": 41.0,
-        "book_value": 631.83,
-        "face_value": null
-      },
-      "financials": {
-        "quarterly": [
-          {
-            "period": "Mar '25",
-            "revenue": 2671,
-            "profit": 662
-          },
-          {
-            "period": "Jun '25",
-            "revenue": 2529,
-            "profit": 545
-          },
-          {
-            "period": "Sep '25",
-            "revenue": 2860,
-            "profit": 689
-          },
-          {
-            "period": "Dec '25",
-            "revenue": 2692,
-            "profit": 583
-          },
-          {
-            "period": "Mar '26",
-            "revenue": 2986,
-            "profit": 751
-          }
-        ],
-        "yearly": [
-          {
-            "period": "2021",
-            "revenue": 7032,
-            "profit": 1984
-          },
-          {
-            "period": "2022",
-            "revenue": 9074,
-            "profit": 2960
-          },
-          {
-            "period": "2023",
-            "revenue": 8112,
-            "profit": 1823
-          },
-          {
-            "period": "2024",
-            "revenue": 8184,
-            "profit": 1600
-          },
-          {
-            "period": "2025",
-            "revenue": 9712,
-            "profit": 2191
-          }
-        ]
-      },
-      "profile": {
-        "description": "Divi's Laboratories is a prominent global manufacturer specializing in Active Pharmaceutical Ingredients (APIs), Custom Synthesis for innovator companies, and high-quality Nutraceutical ingredients. The company's vision is to create lasting value for its stakeholders by producing superior generic APIs and custom intermediates for the global pharmaceutical and nutraceutical industries.",
-        "ceo": "Murali K Divi",
-        "founded": 1990,
-        "nse_symbol": "DIVISLAB",
-        "industry": "Pharmaceuticals"
-      },
-      "shareholding": {},
-      "last_updated": 1784233781
-    },
-    "TATASTEEL": {
-      "symbol": "TATASTEEL",
-      "metrics": {
-        "market_cap": 231340.32,
-        "pe_ratio": 21.44,
-        "pb_ratio": 2.27,
-        "industry_pe": 27.5,
-        "debt_to_equity": 0.89,
-        "roe": 11.16,
-        "eps": 8.65,
-        "dividend_yield": 2.16,
-        "book_value": 81.84,
-        "face_value": null
-      },
-      "financials": {
-        "quarterly": [
-          {
-            "period": "Mar '25",
-            "revenue": 56679,
-            "profit": 1201
-          },
-          {
-            "period": "Jun '25",
-            "revenue": 53467,
-            "profit": 2007
-          },
-          {
-            "period": "Sep '25",
-            "revenue": 59053,
-            "profit": 3183
-          },
-          {
-            "period": "Dec '25",
-            "revenue": 57503,
-            "profit": 2730
-          },
-          {
-            "period": "Mar '26",
-            "revenue": 63519,
-            "profit": 2965
-          }
-        ],
-        "yearly": [
-          {
-            "period": "2022",
-            "revenue": 244744,
-            "profit": 41749
-          },
-          {
-            "period": "2023",
-            "revenue": 244390,
-            "profit": 8075
-          },
-          {
-            "period": "2024",
-            "revenue": 230980,
-            "profit": -4910
-          },
-          {
-            "period": "2025",
-            "revenue": 220083,
-            "profit": 3174
-          },
-          {
-            "period": "2026",
-            "revenue": 233542,
-            "profit": 10886
-          }
-        ]
-      },
-      "profile": {
-        "description": "Tata Steel Limited is a leading globally diversified integrated steel producer with a total capacity of 35 million tonnes per annum (MTPA) across its major operations. The company aspires to be the global steel industry's benchmark for both value creation for its customers and its role as a responsible corporate citizen worldwide.",
-        "ceo": "TV Narendra",
-        "founded": 1907,
-        "nse_symbol": "TATASTEEL",
-        "industry": "Steel"
-      },
-      "shareholding": {},
-      "last_updated": 1784233783
-    },
-    "HINDALCO": {
-      "symbol": "HINDALCO",
-      "metrics": {
-        "market_cap": 212948.98,
-        "pe_ratio": 15.93,
-        "pb_ratio": 1.56,
-        "industry_pe": 27.5,
-        "debt_to_equity": 0.73,
-        "roe": 10.29,
-        "eps": 60.22,
-        "dividend_yield": 52.0,
-        "book_value": 615.28,
-        "face_value": null
-      },
-      "financials": {
-        "quarterly": [
-          {
-            "period": "Mar '25",
-            "revenue": 65590,
-            "profit": 5284
-          },
-          {
-            "period": "Jun '25",
-            "revenue": 64834,
-            "profit": 4004
-          },
-          {
-            "period": "Sep '25",
-            "revenue": 66771,
-            "profit": 4741
-          },
-          {
-            "period": "Dec '25",
-            "revenue": 67070,
-            "profit": 2049
-          },
-          {
-            "period": "Mar '26",
-            "revenue": 79158,
-            "profit": 2597
-          }
-        ],
-        "yearly": [
-          {
-            "period": "2022",
-            "revenue": 196195,
-            "profit": 14201
-          },
-          {
-            "period": "2023",
-            "revenue": 224459,
-            "profit": 10097
-          },
-          {
-            "period": "2024",
-            "revenue": 217458,
-            "profit": 10155
-          },
-          {
-            "period": "2025",
-            "revenue": 241204,
-            "profit": 16002
-          },
-          {
-            "period": "2021",
-            "revenue": 277833,
-            "profit": 13391
-          }
-        ]
-      },
-      "profile": {
-        "description": "Hindalco Industries, the metals flagship of the Aditya Birla Group, is a leading global company in aluminium and copper, with a business model covering everything from mining to downstream products. Its vision is to be a world-class metals company, excelling in its operations and creating value for its stakeholders while being global in size and reach.",
-        "ceo": "Satish Pai",
-        "founded": 1958,
-        "nse_symbol": "HINDALCO",
-        "industry": "Steel"
-      },
-      "shareholding": {},
-      "last_updated": 1784233785
-    },
-    "JSWSTEEL": {
-      "symbol": "JSWSTEEL",
-      "metrics": {
-        "market_cap": 298024.96,
-        "pe_ratio": 13.38,
-        "pb_ratio": 2.98,
-        "industry_pe": 27.5,
-        "debt_to_equity": 0.95,
-        "roe": 27.26,
-        "eps": 91.28,
-        "dividend_yield": 58.0,
-        "book_value": 409.91,
-        "face_value": null
-      },
-      "financials": {
-        "quarterly": [
-          {
-            "period": "Mar '25",
-            "revenue": 45049,
-            "profit": 1501
-          },
-          {
-            "period": "Jun '25",
-            "revenue": 43497,
-            "profit": 2209
-          },
-          {
-            "period": "Sep '25",
-            "revenue": 45436,
-            "profit": 1646
-          },
-          {
-            "period": "Dec '25",
-            "revenue": 46264,
-            "profit": 2410
-          },
-          {
-            "period": "Mar '26",
-            "revenue": 51521,
-            "profit": 19243
-          }
-        ],
-        "yearly": [
-          {
-            "period": "2022",
-            "revenue": 147902,
-            "profit": 20938
-          },
-          {
-            "period": "2023",
-            "revenue": 166990,
-            "profit": 4139
-          },
-          {
-            "period": "2024",
-            "revenue": 176010,
-            "profit": 8973
-          },
-          {
-            "period": "2025",
-            "revenue": 169518,
-            "profit": 3491
-          },
-          {
-            "period": "2026",
-            "revenue": 186718,
-            "profit": 25508
-          }
-        ]
-      },
-      "profile": {
-        "description": "JSW Steel is one of India's leading integrated and geographically diverse steel manufacturers, committed to partnering in the nation's growth story and fostering progress. Its core purpose is to build world-class infrastructure, products, and solutions, while also deploying world-class capabilities and nurturing its communities.",
-        "ceo": "Sajjan Jindal",
-        "founded": 1994,
-        "nse_symbol": "JSWSTEEL",
-        "industry": "Steel"
-      },
-      "shareholding": {},
-      "last_updated": 1784233787
-    },
-    "COALINDIA": {
-      "symbol": "COALINDIA",
-      "metrics": {
-        "market_cap": 263364.2,
-        "pe_ratio": 8.47,
-        "pb_ratio": 2.21,
-        "industry_pe": null,
-        "debt_to_equity": 0.12,
-        "roe": 28.12,
-        "eps": 50.45,
-        "dividend_yield": 5.15,
-        "book_value": 193.28,
-        "face_value": null
-      },
-      "financials": {
-        "quarterly": [
-          {
-            "period": "Mar '25",
-            "revenue": 41764,
-            "profit": 9593
-          },
-          {
-            "period": "Jun '25",
-            "revenue": 37458,
-            "profit": 8734
-          },
-          {
-            "period": "Sep '25",
-            "revenue": 32327,
-            "profit": 4263
-          },
-          {
-            "period": "Dec '25",
-            "revenue": 37316,
-            "profit": 7166
-          },
-          {
-            "period": "Mar '26",
-            "revenue": 51618,
-            "profit": 10908
-          }
-        ],
-        "yearly": [
-          {
-            "period": "2021",
-            "revenue": 93818,
-            "profit": 12702
-          },
-          {
-            "period": "2022",
-            "revenue": 113597,
-            "profit": 17378
-          },
-          {
-            "period": "2023",
-            "revenue": 144812,
-            "profit": 31723
-          },
-          {
-            "period": "2024",
-            "revenue": 152732,
-            "profit": 37396
-          },
-          {
-            "period": "2025",
-            "revenue": 152839,
-            "profit": 35302
-          }
-        ]
-      },
-      "profile": {
-        "description": "Coal India Limited (CIL) is India's largest coal producer, operating under the Ministry of Coal and celebrating five decades of ensuring the nation's energy security and progress. Its vision is to emerge as a global player in the primary energy sector, committed to providing energy security through environmentally and socially sustainable growth using best practices.",
-        "ceo": "Shri P. M. Prasad",
-        "founded": 1973,
-        "nse_symbol": "COALINDIA",
-        "industry": "Mining"
-      },
-      "shareholding": {},
-      "last_updated": 1784233789
-    },
-    "BHARTIARTL": {
-      "symbol": "BHARTIARTL",
-      "metrics": {
-        "market_cap": 1198945.36,
-        "pe_ratio": 43.37,
-        "pb_ratio": 7.54,
-        "industry_pe": null,
-        "debt_to_equity": 1.0,
-        "roe": 19.36,
-        "eps": 44.31,
-        "dividend_yield": 1.25,
-        "book_value": 254.97,
-        "face_value": null
-      },
-      "financials": {
-        "quarterly": [
-          {
-            "period": "Mar '25",
-            "revenue": 48362,
-            "profit": 12476
-          },
-          {
-            "period": "Jun '25",
-            "revenue": 49971,
-            "profit": 7422
-          },
-          {
-            "period": "Sep '25",
-            "revenue": 52873,
-            "profit": 8651
-          },
-          {
-            "period": "Dec '25",
-            "revenue": 54684,
-            "profit": 8503
-          },
-          {
-            "period": "Mar '26",
-            "revenue": 56262,
-            "profit": 9247
-          }
-        ],
-        "yearly": [
-          {
-            "period": "2022",
-            "revenue": 117081,
-            "profit": 8305
-          },
-          {
-            "period": "2023",
-            "revenue": 140081,
-            "profit": 12287
-          },
-          {
-            "period": "2024",
-            "revenue": 1051418,
-            "profit": 8558
-          },
-          {
-            "period": "2025",
-            "revenue": 174559,
-            "profit": 37481
-          },
-          {
-            "period": "2026",
-            "revenue": 213790,
-            "profit": 33823
-          }
-        ]
-      },
-      "profile": {
-        "description": "As one of the world's leading integrated telecom providers, Airtel is shaping the digital future across 17 countries, connecting over half a billion people with its digital network. The company's core vision is to enrich the lives of its customers and aims to win them for life by providing an exceptional experience.",
-        "ceo": "Shashwat Sharma",
-        "founded": 1995,
-        "nse_symbol": "BHARTIARTL",
-        "industry": "Telecom"
-      },
-      "shareholding": {},
-      "last_updated": 1784233790
-    },
-    "ADANIPORTS": {
-      "symbol": "ADANIPORTS",
-      "metrics": {
-        "market_cap": 420795.1,
-        "pe_ratio": 31.4,
-        "pb_ratio": 4.39,
-        "industry_pe": null,
-        "debt_to_equity": 0.64,
-        "roe": 15.59,
-        "eps": 58.17,
-        "dividend_yield": 41.0,
-        "book_value": 416.5,
-        "face_value": null
-      },
-      "financials": {
-        "quarterly": [
-          {
-            "period": "Mar '25",
-            "revenue": 8770,
-            "profit": 3023
-          },
-          {
-            "period": "Jun '25",
-            "revenue": 9422,
-            "profit": 3311
-          },
-          {
-            "period": "Sep '25",
-            "revenue": 10004,
-            "profit": 3120
-          },
-          {
-            "period": "Dec '25",
-            "revenue": 9939,
-            "profit": 3043
-          },
-          {
-            "period": "Mar '26",
-            "revenue": 11489,
-            "profit": 3308
-          }
-        ],
-        "yearly": [
-          {
-            "period": "2022",
-            "revenue": 19343,
-            "profit": 4953
-          },
-          {
-            "period": "2023",
-            "revenue": 22405,
-            "profit": 5391
-          },
-          {
-            "period": "2024",
-            "revenue": 28201,
-            "profit": 8559
-          },
-          {
-            "period": "2025",
-            "revenue": 32383,
-            "profit": 11061
-          },
-          {
-            "period": "2026",
-            "revenue": 40854,
-            "profit": 12782
-          }
-        ]
-      },
-      "profile": {
-        "description": "Adani Ports and Special Economic Zone Limited is India's largest Integrated Transport Utility, providing unmatched connectivity from its ports to the customer's location using advanced digital technology. The company is pursuing the transformative direction of becoming an Integrated Transport Utility, investing boldly in expansion, decarbonisation, and automation to strengthen its leadership.",
-        "ceo": "Ashwin Gupta",
-        "founded": 1998,
-        "nse_symbol": "ADANIPORTS",
-        "industry": "Infrastructure"
-      },
-      "shareholding": {},
-      "last_updated": 1784233792
-    },
-    "ADANIGREEN": {
-      "symbol": "ADANIGREEN",
-      "metrics": {
-        "market_cap": 254274.57,
-        "pe_ratio": 160.13,
-        "pb_ratio": 13.18,
-        "industry_pe": null,
-        "debt_to_equity": 3.47,
-        "roe": 7.58,
-        "eps": 9.64,
-        "dividend_yield": null,
-        "book_value": 117.11,
-        "face_value": null
-      },
-      "financials": {
-        "quarterly": [
-          {
-            "period": "Mar '25",
-            "revenue": 3278,
-            "profit": 292
-          },
-          {
-            "period": "Jun '25",
-            "revenue": 4006,
-            "profit": 707
-          },
-          {
-            "period": "Sep '25",
-            "revenue": 3249,
-            "profit": 529
-          },
-          {
-            "period": "Dec '25",
-            "revenue": 2837,
-            "profit": -98.0
-          },
-          {
-            "period": "Mar '26",
-            "revenue": 3727,
-            "profit": 432
-          }
-        ],
-        "yearly": [
-          {
-            "period": "2022",
-            "revenue": 5577,
-            "profit": 489
-          },
-          {
-            "period": "2023",
-            "revenue": 8633,
-            "profit": 973
-          },
-          {
-            "period": "2024",
-            "revenue": 10460,
-            "profit": 1260
-          },
-          {
-            "period": "2025",
-            "revenue": 12422,
-            "profit": 2001
-          },
-          {
-            "period": "2021",
-            "revenue": 13819,
-            "profit": 1987
-          }
-        ]
-      },
-      "profile": {
-        "description": "Adani Green Energy Limited stands as India's largest and most rapidly expanding independent power producer focused purely on renewable energy. Its vision is to be a world-class leader in businesses that enrich lives and contribute to building national infrastructure through sustainable value creation.",
-        "ceo": "Ashish Khanna",
-        "founded": 2015,
-        "nse_symbol": "ADANIGREEN",
-        "industry": "Infrastructre"
-      },
-      "shareholding": {},
-      "last_updated": 1784233794
-    },
-    "ULTRACEMCO": {
-      "symbol": "ULTRACEMCO",
-      "metrics": {
-        "market_cap": 346267.08,
-        "pe_ratio": 42.41,
-        "pb_ratio": 4.81,
-        "industry_pe": null,
-        "debt_to_equity": 0.29,
-        "roe": 10.59,
-        "eps": 277.58,
-        "dividend_yield": 66.0,
-        "book_value": 2448.89,
-        "face_value": null
-      },
-      "financials": {
-        "quarterly": [
-          {
-            "period": "Mar '25",
-            "revenue": 23165,
-            "profit": 2475
-          },
-          {
-            "period": "Jun '25",
-            "revenue": 21456,
-            "profit": 2221
-          },
-          {
-            "period": "Sep '25",
-            "revenue": 19781,
-            "profit": 1238
-          },
-          {
-            "period": "Dec '25",
-            "revenue": 21965,
-            "profit": 1729
-          },
-          {
-            "period": "Mar '26",
-            "revenue": 25887,
-            "profit": 3000
-          }
-        ],
-        "yearly": [
-          {
-            "period": "2021",
-            "revenue": 45460,
-            "profit": 5319
-          },
-          {
-            "period": "2022",
-            "revenue": 53107,
-            "profit": 7174
-          },
-          {
-            "period": "2023",
-            "revenue": 63743,
-            "profit": 5073
-          },
-          {
-            "period": "2024",
-            "revenue": 71525,
-            "profit": 7004
-          },
-          {
-            "period": "2025",
-            "revenue": 76699,
-            "profit": 6040
-          }
-        ]
-      },
-      "profile": {
-        "description": "UltraTech Cement is the primary cement company of the Aditya Birla Group and a powerhouse in building solutions with a value of $8.4 billion. Its main vision is to establish itself as the foremost leader in providing comprehensive building solutions to its customers across the board.",
-        "ceo": "Kailash Chandra Jhanwar",
-        "founded": 2000,
-        "nse_symbol": "ULTRACEMCO",
-        "industry": "Cement"
-      },
-      "shareholding": {},
-      "last_updated": 1784233795
-    },
-    "LT": {
-      "symbol": "LT",
-      "metrics": {
-        "market_cap": 519420.3,
-        "pe_ratio": 32.29,
-        "pb_ratio": 4.75,
-        "industry_pe": null,
-        "debt_to_equity": 0.98,
-        "roe": 16.95,
-        "eps": 116.92,
-        "dividend_yield": 1.0,
-        "book_value": 794.47,
-        "face_value": null
-      },
-      "financials": {
-        "quarterly": [
-          {
-            "period": "Mar '25",
-            "revenue": 75527,
-            "profit": 6133
-          },
-          {
-            "period": "Jun '25",
-            "revenue": 65036,
-            "profit": 4326
-          },
-          {
-            "period": "Sep '25",
-            "revenue": 69368,
-            "profit": 4687
-          },
-          {
-            "period": "Dec '25",
-            "revenue": 72891,
-            "profit": 3829
-          },
-          {
-            "period": "Mar '26",
-            "revenue": 84341,
-            "profit": 6318
-          }
-        ],
-        "yearly": [
-          {
-            "period": "2022",
-            "revenue": 158788,
-            "profit": 10291
-          },
-          {
-            "period": "2023",
-            "revenue": 186270,
-            "profit": 12625
-          },
-          {
-            "period": "2024",
-            "revenue": 225271,
-            "profit": 15570
-          },
-          {
-            "period": "2025",
-            "revenue": 259983,
-            "profit": 17687
-          },
-          {
-            "period": "2026",
-            "revenue": 292569,
-            "profit": 19159
-          }
-        ]
-      },
-      "profile": {
-        "description": "Larsen & Toubro is a professionally managed Indian multinational corporation dedicated to achieving complete customer satisfaction and improving value for its shareholders. The company's vision is to have an innovative, entrepreneurial, and empowered team that consistently generates value and meets global benchmarks.",
-        "ceo": "S. N. Subrahmanyan",
-        "founded": 1946,
-        "nse_symbol": "LT",
-        "industry": "Infrastructure"
-      },
-      "shareholding": {},
-      "last_updated": 1784233796
-    },
-    "GRASIM": {
-      "symbol": "GRASIM",
-      "metrics": {
-        "market_cap": 208395.71,
-        "pe_ratio": 42.01,
-        "pb_ratio": 2.01,
-        "industry_pe": null,
-        "debt_to_equity": 1.34,
-        "roe": 6.29,
-        "eps": 73.14,
-        "dividend_yield": 32.0,
-        "book_value": 1525.83,
-        "face_value": null
-      },
-      "financials": {
-        "quarterly": [
-          {
-            "period": "Mar '25",
-            "revenue": 44651,
-            "profit": 2973
-          },
-          {
-            "period": "Jun '25",
-            "revenue": 40460,
-            "profit": 2767
-          },
-          {
-            "period": "Sep '25",
-            "revenue": 40245,
-            "profit": 1498
-          },
-          {
-            "period": "Dec '25",
-            "revenue": 44577,
-            "profit": 2233
-          },
-          {
-            "period": "Mar '26",
-            "revenue": 51329,
-            "profit": 3802
-          }
-        ],
-        "yearly": [
-          {
-            "period": "2021",
-            "revenue": 77450,
-            "profit": 6749
-          },
-          {
-            "period": "2022",
-            "revenue": 96522,
-            "profit": 10691
-          },
-          {
-            "period": "2023",
-            "revenue": 121239,
-            "profit": 11078
-          },
-          {
-            "period": "2024",
-            "revenue": 132243,
-            "profit": 9926
-          },
-          {
-            "period": "2025",
-            "revenue": 149937,
-            "profit": 7756
-          }
-        ]
-      },
-      "profile": {
-        "description": "Grasim Industries Limited stands as a leading diversified company in India and is a flagship entity of the Aditya Birla Group. It is the world\u2019s largest producer of Viscose Staple Fibre (VSF) and India\u2019s largest Chlor-Alkali producer. It recently disrupted the paints market with Birla Opus brand.",
-        "ceo": "Mr Himanshu Kapania",
-        "founded": 1947,
-        "nse_symbol": "GRASIM",
-        "industry": "Chemicals"
-      },
-      "shareholding": {},
-      "last_updated": 1784233798
-    },
-    "VEDL": {
-      "symbol": "VEDL",
-      "metrics": {
-        "market_cap": 100704.83,
-        "pe_ratio": 14.37,
-        "pb_ratio": 2.03,
-        "industry_pe": null,
-        "debt_to_equity": 0.48,
-        "roe": 20.4,
-        "eps": 17.95,
-        "dividend_yield": 13.05,
-        "book_value": 127.16,
-        "face_value": null
-      },
-      "financials": {
-        "quarterly": [
-          {
-            "period": "Mar '25",
-            "revenue": 17032,
-            "profit": 4961
-          },
-          {
-            "period": "Jun '25",
-            "revenue": 38809,
-            "profit": 4457
-          },
-          {
-            "period": "Sep '25",
-            "revenue": 18985,
-            "profit": 3479
-          },
-          {
-            "period": "Dec '25",
-            "revenue": 21823,
-            "profit": 7807
-          },
-          {
-            "period": "Mar '26",
-            "revenue": 25027,
-            "profit": 9352
-          }
-        ],
-        "yearly": [
-          {
-            "period": "2022",
-            "revenue": 135332,
-            "profit": 23709
-          },
-          {
-            "period": "2023",
-            "revenue": 150159,
-            "profit": 14506
-          },
-          {
-            "period": "2024",
-            "revenue": 146277,
-            "profit": 7539
-          },
-          {
-            "period": "2025",
-            "revenue": 64547,
-            "profit": 9276
-          },
-          {
-            "period": "2026",
-            "revenue": 79987,
-            "profit": 12480
-          }
-        ]
-      },
-      "profile": {
-        "description": "Vedanta Limited, a subsidiary of Vedanta Resources Limited (UK), is a globally diversified natural resources conglomerate. Headquartered in Mumbai, its operations span aluminum, copper, zinc, lead, silver, oil and gas, iron ore, and steel.",
-        "ceo": "Mr. Sunil Duggal",
-        "founded": 1965,
-        "nse_symbol": "VEDL",
-        "industry": "Metals & Mining"
-      },
-      "shareholding": {},
-      "last_updated": 1784233799
-    },
-    "BEL": {
-      "symbol": "BEL",
-      "metrics": {
-        "market_cap": 297581.1,
-        "pe_ratio": 49.05,
-        "pb_ratio": 12.41,
-        "industry_pe": null,
-        "debt_to_equity": 0.27,
-        "roe": 27.56,
-        "eps": 8.3,
-        "dividend_yield": 1.06,
-        "book_value": 32.82,
-        "face_value": null
-      },
-      "financials": {
-        "quarterly": [
-          {
-            "period": "Mar '25",
-            "revenue": 9344,
-            "profit": 2121
-          },
-          {
-            "period": "Jun '25",
-            "revenue": 4603,
-            "profit": 961
-          },
-          {
-            "period": "Sep '25",
-            "revenue": 5946,
-            "profit": 1278
-          },
-          {
-            "period": "Dec '25",
-            "revenue": 7292,
-            "profit": 1570
-          },
-          {
-            "period": "Mar '26",
-            "revenue": 10335,
-            "profit": 2214
-          }
-        ],
-        "yearly": [
-          {
-            "period": "2021",
-            "revenue": 14234,
-            "profit": 2069
-          },
-          {
-            "period": "2022",
-            "revenue": 15600,
-            "profit": 2354
-          },
-          {
-            "period": "2023",
-            "revenue": 18015,
-            "profit": 2940
-          },
-          {
-            "period": "2024",
-            "revenue": 20938,
-            "profit": 3943
-          },
-          {
-            "period": "2025",
-            "revenue": 24511,
-            "profit": 5287
-          }
-        ]
-      },
-      "profile": {
-        "description": "Bharat Electronics Limited is a Government of India Navratna PSU, playing a key role in providing advanced, technology-led solutions for both defence and civilian requirements. Its main vision is to be recognised as a world-class enterprise in the field of professional electronics by delivering innovative and high-value products.",
-        "ceo": "Manoj Jain",
-        "founded": 1954,
-        "nse_symbol": "BEL",
-        "industry": "Defence"
-      },
-      "shareholding": {},
-      "last_updated": 1784233801
-    },
-    "IRFC": {
-      "symbol": "IRFC",
-      "metrics": {
-        "market_cap": 115538.67,
-        "pe_ratio": 16.49,
-        "pb_ratio": 2.03,
-        "industry_pe": null,
-        "debt_to_equity": 7.73,
-        "roe": 12.81,
-        "eps": 5.36,
-        "dividend_yield": 3.26,
-        "book_value": 43.46,
-        "face_value": null
-      },
-      "financials": {
-        "quarterly": [
-          {
-            "period": "Mar '25",
-            "revenue": 6724,
-            "profit": 1682
-          },
-          {
-            "period": "Jun '25",
-            "revenue": 6918,
-            "profit": 1746
-          },
-          {
-            "period": "Sep '25",
-            "revenue": 6372,
-            "profit": 1777
-          },
-          {
-            "period": "Dec '25",
-            "revenue": 6719,
-            "profit": 1802
-          },
-          {
-            "period": "Mar '26",
-            "revenue": 7329,
-            "profit": 1684
-          }
-        ],
-        "yearly": [
-          {
-            "period": "2021",
-            "revenue": 15771,
-            "profit": 4416
-          },
-          {
-            "period": "2022",
-            "revenue": 20302,
-            "profit": 6090
-          },
-          {
-            "period": "2023",
-            "revenue": 23763,
-            "profit": 6167
-          },
-          {
-            "period": "2024",
-            "revenue": 26656,
-            "profit": 6412
-          },
-          {
-            "period": "2025",
-            "revenue": 27156,
-            "profit": 6502
-          }
-        ]
-      },
-      "profile": {
-        "description": "Indian Railway Finance Corporation (IRFC) is a Schedule 'A' Miniratna public sector enterprise operating under the administrative control of the Ministry of Railways. The company's vision is to serve as the pivotal financial services provider for the rail transport sector, while maintaining its strong relationship with the Ministry of Railways.",
-        "ceo": "Ms Shelly Verma",
-        "founded": 1986,
-        "nse_symbol": "IRFC",
-        "industry": "Financial Sservices"
-      },
-      "shareholding": {},
-      "last_updated": 1784233803
-    },
-    "SUZLON": {
-      "symbol": "SUZLON",
-      "metrics": {
-        "market_cap": 71427.35,
-        "pe_ratio": 22.5,
-        "pb_ratio": 7.55,
-        "industry_pe": null,
-        "debt_to_equity": 5.87,
-        "roe": 40.64,
-        "eps": 2.31,
-        "dividend_yield": null,
-        "book_value": 6.88,
-        "face_value": null
-      },
-      "financials": {
-        "quarterly": [
-          {
-            "period": "Mar '25",
-            "revenue": 3825,
-            "profit": 1181
-          },
-          {
-            "period": "Jun '25",
-            "revenue": 3165,
-            "profit": 324
-          },
-          {
-            "period": "Sep '25",
-            "revenue": 3897,
-            "profit": 1279
-          },
-          {
-            "period": "Dec '25",
-            "revenue": 4259,
-            "profit": 445
-          },
-          {
-            "period": "Mar '26",
-            "revenue": 5521,
-            "profit": 1114
-          }
-        ],
-        "yearly": [
-          {
-            "period": "2021",
-            "revenue": 3366,
-            "profit": 100
-          },
-          {
-            "period": "2022",
-            "revenue": 6604,
-            "profit": -166
-          },
-          {
-            "period": "2023",
-            "revenue": 5990,
-            "profit": 2887
-          },
-          {
-            "period": "2024",
-            "revenue": 6568,
-            "profit": 660
-          },
-          {
-            "period": "2025",
-            "revenue": 10993,
-            "profit": 2072
-          }
-        ]
-      },
-      "profile": {
-        "description": "The Suzlon Group is a leading global renewable energy solutions provider, with approximately 20.8 GW of wind energy capacity installed across 17 countries. It is focused on reducing mankind's carbon footprint by prioritising action today to build climate resilience and undoing the damage of the past and present.",
-        "ceo": "Mr JP Chalasani",
-        "founded": 1995,
-        "nse_symbol": "SUZLON",
-        "industry": "Eenewable Energy"
-      },
-      "shareholding": {},
-      "last_updated": 1784233805
+      "last_updated": 1784316295
     }
   }
 }

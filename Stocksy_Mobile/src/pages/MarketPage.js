@@ -1,120 +1,131 @@
-import React, { useState, useCallback } from "react";
+// src/pages/MarketPage.js
+// ─────────────────────────────────────────────────────────────────────────────
+// Markets screen — mood, indices, gainers, losers, sector performance.
+// Data flow:  useMarketData (WebSocket) → this page computes everything
+//             (mood %, gainers/losers, sector avg) client-side from live ticks.
+// No new backend endpoint needed for this version — see NOTE blocks below
+// for the two things that DO need backend work (indices coverage, and any
+// future volume/view-based cards).
+// ─────────────────────────────────────────────────────────────────────────────
+
+import React, { useMemo } from 'react';
 import {
   View,
   Text,
   ScrollView,
   StyleSheet,
-  RefreshControl,
+  TouchableOpacity,
+  ActivityIndicator,
   SafeAreaView,
-} from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import { Feather } from "@expo/vector-icons";
+  StatusBar,
+} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import useMarketData from '../hooks/useMarketData';
+import { SECTOR_COLORS } from '../hooks/usePortfolio';
 
-// ─────────────────────────────────────────────────────────
-// MOCK DATA
-// Shaped exactly like the future API response so swapping
-// to real endpoints later is a one-line change (see bottom).
-// ─────────────────────────────────────────────────────────
-
-const MOCK_MARKET_DATA = {
-  mood: {
-    percentage: 68,
-    label: "Market is mostly positive today",
-    subtext: "32 of 50 Nifty stocks are up",
-  },
-  indices: [
-    { symbol: "NIFTY 50", value: "24,812", change: 0.62 },
-    { symbol: "SENSEX", value: "81,405", change: 0.58 },
-    { symbol: "BANK NIFTY", value: "52,190", change: -0.21 },
-    { symbol: "FIN NIFTY", value: "23,760", change: 0.34 },
-  ],
-  gainers: [
-    { symbol: "TATAMOTORS", name: "Tata Motors Ltd", change: 4.82 },
-    { symbol: "BHARTIARTL", name: "Bharti Airtel Ltd", change: 3.91 },
-    { symbol: "ADANIENT", name: "Adani Enterprises Ltd", change: 3.2 },
-    { symbol: "HDFCBANK", name: "HDFC Bank Ltd", change: 2.65 },
-  ],
-  losers: [
-    { symbol: "VEDL", name: "Vedanta Ltd", change: -3.44 },
-    { symbol: "TATASTEEL", name: "Tata Steel Ltd", change: -2.9 },
-    { symbol: "ONGC", name: "Oil & Natural Gas Corp", change: -2.11 },
-    { symbol: "COALINDIA", name: "Coal India Ltd", change: -1.78 },
-  ],
-  // NOTE: needs volume data in the Python/Redis pipeline — backend not ready yet.
-  mostActive: [
-    { symbol: "RELIANCE", volume: "8.2Cr" },
-    { symbol: "SBIN", volume: "6.4Cr" },
-    { symbol: "ICICIBANK", volume: "5.9Cr" },
-    { symbol: "INFY", volume: "4.7Cr" },
-  ],
-  // NOTE: needs a stock_view event log table — backend not ready yet.
-  // Do NOT randomize this in production, it should be real view counts.
-  trending: [
-    { symbol: "HCLTECH", views: "2.1k" },
-    { symbol: "SUNPHARMA", views: "1.8k" },
-    { symbol: "LT", views: "1.5k" },
-    { symbol: "HYUNDAI", views: "1.2k" },
-  ],
-  // NOTE: needs a sector-tag map for all 50 Nifty instruments — backend not ready yet.
-  sectors: [
-    { name: "IT", change: 2.5, color: "#F0997B" },
-    { name: "Pharma", change: 1.8, color: "#5DCAA5" },
-    { name: "FMCG", change: 1.2, color: "#F0997B" },
-    { name: "Banking", change: -0.8, color: "#ED93B1" },
-    { name: "Auto", change: -0.4, color: "#ED93B1" },
-  ],
+// ─── Design tokens — matches PortfolioPage / StockDetailPage, not the
+// generic theme/Card system, so Markets sits visually with the rest of
+// the live-data screens. ──────────────────────────────────────────────
+const C = {
+  blue: '#1A56DB',
+  blueDark: '#1240A8',
+  green: '#059669',
+  greenBg: '#D1FAE5',
+  red: '#DC2626',
+  redBg: '#FEE2E2',
+  bg: '#F0F4FF',
+  white: '#FFFFFF',
+  textPri: '#0F172A',
+  textSec: '#64748B',
+  textTer: '#94A3B8',
+  border: '#E2E8F0',
 };
 
-const COLORS = {
-  headerBlue: "#2F6BFF",
-  bg: "#F1F3F9",
-  card: "#FFFFFF",
-  border: "#E9EBF2",
-  textPrimary: "#14161B",
-  textSecondary: "#6B7280",
-  green: "#16A34A",
-  red: "#DC2626",
-};
+// ─── Utility helpers — same conventions as PortfolioPage.js ──────────────────
+function fmt(n, decimals = 2) {
+  if (n == null || isNaN(n)) return '—';
+  return (
+    '₹' +
+    Math.abs(n).toLocaleString('en-IN', {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    })
+  );
+}
 
-// ─────────────────────────────────────────────────────────
-// SUB-COMPONENTS
-// ─────────────────────────────────────────────────────────
+function fmtPct(n) {
+  if (n == null || isNaN(n)) return '—';
+  return (n >= 0 ? '+' : '') + n.toFixed(2) + '%';
+}
 
-function MarketMoodBanner({ mood }) {
+// ─── SUB-COMPONENTS ────────────────────────────────────────────────────────
+
+function MarketMoodBanner({ percentage, positiveCount, total }) {
+  const isPositive = percentage >= 50;
   return (
     <View style={styles.moodBanner}>
       <View style={styles.moodCircle}>
-        <Text style={styles.moodPercentage}>{mood.percentage}%</Text>
+        <Text style={styles.moodPercentage}>{percentage}%</Text>
       </View>
       <View style={{ flex: 1 }}>
-        <Text style={styles.moodLabel}>{mood.label}</Text>
-        <Text style={styles.moodSubtext}>{mood.subtext}</Text>
+        <Text style={styles.moodLabel}>
+          Market is mostly {isPositive ? 'positive' : 'negative'} today
+        </Text>
+        <Text style={styles.moodSubtext}>
+          {positiveCount} of {total} tracked stocks are up
+        </Text>
       </View>
     </View>
   );
 }
 
-function IndicesGrid({ indices }) {
+function IndexTile({ item, onPress }) {
+  const isUp = item.changePct >= 0;
+  return (
+    <TouchableOpacity style={styles.indexCard} onPress={onPress} activeOpacity={0.75}>
+      <Text style={styles.indexSymbol}>{item.symbol}</Text>
+      <Text style={styles.indexValue}>{fmt(item.ltp, 2)}</Text>
+      <Text style={[styles.indexChange, { color: isUp ? C.green : C.red }]}>
+        {fmtPct(item.changePct)}
+      </Text>
+    </TouchableOpacity>
+  );
+}
+
+function StockListCard({ title, icon, data, onPressItem }) {
+  if (data.length === 0) return null;
   return (
     <View>
-      <Text style={styles.sectionLabel}>Indices</Text>
-      <View style={styles.indicesGrid}>
-        {indices.map((item) => {
-          const isUp = item.change >= 0;
+      <View style={styles.cardHeaderRow}>
+        {icon ? (
+          <Ionicons name={icon} size={14} color={C.textSec} style={{ marginRight: 6 }} />
+        ) : null}
+        <Text style={styles.sectionLabel}>{title}</Text>
+      </View>
+
+      <View style={styles.card}>
+        {data.map((item, idx) => {
+          const isUp = item.changePct >= 0;
           return (
-            <View key={item.symbol} style={styles.indexCard}>
-              <Text style={styles.indexSymbol}>{item.symbol}</Text>
-              <Text style={styles.indexValue}>{item.value}</Text>
-              <Text
-                style={[
-                  styles.indexChange,
-                  { color: isUp ? COLORS.green : COLORS.red },
-                ]}
-              >
-                {isUp ? "+" : ""}
-                {item.change.toFixed(2)}%
-              </Text>
-            </View>
+            <TouchableOpacity
+              key={item.key}
+              style={[styles.listRow, idx === data.length - 1 && { borderBottomWidth: 0 }]}
+              onPress={() => onPressItem(item)}
+              activeOpacity={0.7}
+            >
+              <View style={{ flex: 1 }}>
+                <Text style={styles.listSymbol}>{item.symbol}</Text>
+                <Text style={styles.listName} numberOfLines={1}>
+                  {item.name}
+                </Text>
+              </View>
+              <View style={{ alignItems: 'flex-end' }}>
+                <Text style={styles.listPrice}>{fmt(item.ltp, 2)}</Text>
+                <Text style={{ color: isUp ? C.green : C.red, fontWeight: '600', fontSize: 12 }}>
+                  {fmtPct(item.changePct)}
+                </Text>
+              </View>
+            </TouchableOpacity>
           );
         })}
       </View>
@@ -122,81 +133,40 @@ function IndicesGrid({ indices }) {
   );
 }
 
-// Reusable list card — used for gainers, losers, most active, trending
-function StockListCard({ title, icon, data, renderRight }) {
-  return (
-    <View>
-      <View style={styles.cardHeaderRow}>
-        {icon ? (
-          <Feather
-            name={icon}
-            size={13}
-            color={COLORS.textSecondary}
-            style={{ marginRight: 6 }}
-          />
-        ) : null}
-
-        <Text style={styles.sectionLabel}>{title}</Text>
-      </View>
-
-      <View style={styles.card}>
-        {data.map((item, idx) => (
-          <View
-            key={item.symbol}
-            style={[
-              styles.listRow,
-              idx === data.length - 1 && { borderBottomWidth: 0 },
-            ]}
-          >
-            <Text style={styles.listSymbol}>{item.symbol}</Text>
-            {renderRight(item)}
-          </View>
-        ))}
-      </View>
-    </View>
-  );
-}
-
 function SectorPerformanceCard({ sectors }) {
-  const total = sectors.reduce((sum, s) => sum + Math.abs(s.change), 0);
+  if (sectors.length === 0) return null;
+  const totalWeight = sectors.reduce((sum, s) => sum + Math.abs(s.changePct), 0) || 1;
+
   return (
     <View style={styles.card}>
       <Text style={styles.sectionLabel}>Sector performance</Text>
+
       <View style={styles.sectorBar}>
         {sectors.map((s) => (
           <View
             key={s.name}
             style={{
-              flex: Math.abs(s.change) / total,
+              flex: Math.max(Math.abs(s.changePct) / totalWeight, 0.02),
               backgroundColor: s.color,
-              height: "100%",
+              height: '100%',
             }}
           />
         ))}
       </View>
+
       {sectors.map((s, idx) => {
-        const isUp = s.change >= 0;
+        const isUp = s.changePct >= 0;
         return (
           <View
             key={s.name}
-            style={[
-              styles.listRow,
-              idx === sectors.length - 1 && { borderBottomWidth: 0 },
-            ]}
+            style={[styles.listRow, idx === sectors.length - 1 && { borderBottomWidth: 0 }]}
           >
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <View style={[styles.sectorDot, { backgroundColor: s.color }]} />
               <Text style={styles.listSymbol}>{s.name}</Text>
             </View>
-            <Text
-              style={{
-                color: isUp ? COLORS.green : COLORS.red,
-                fontWeight: "500",
-                fontSize: 13,
-              }}
-            >
-              {isUp ? "+" : ""}
-              {s.change.toFixed(1)}%
+            <Text style={{ color: isUp ? C.green : C.red, fontWeight: '600', fontSize: 13 }}>
+              {fmtPct(s.changePct)}
             </Text>
           </View>
         );
@@ -209,92 +179,137 @@ function SectorPerformanceCard({ sectors }) {
 // MAIN SCREEN
 // ─────────────────────────────────────────────────────────
 
-export default function MarketPage() {
-  const [marketData, setMarketData] = useState(MOCK_MARKET_DATA);
-  const [refreshing, setRefreshing] = useState(false);
+export default function MarketPage({ navigation }) {
+  const { prices, isConnected } = useMarketData();
 
-  const onRefresh = useCallback(async () => {
-    setRefreshing(true);
-    // TODO: replace with real fetch once backend is ready, e.g.
-    // const res = await fetch(`${API_BASE_URL}/api/markets/overview`);
-    // const data = await res.json();
-    // setMarketData(data);
-    await new Promise((resolve) => setTimeout(resolve, 600));
-    setRefreshing(false);
-  }, []);
+  const goToStock = (item) => {
+    navigation.navigate('StockDetail', { instrumentKey: item.key });
+  };
+
+  // ── Flatten the live WS feed into a sortable list, recomputed on
+  // every tick since `prices` changes reference each update. ────────────
+  const stockList = useMemo(() => {
+    return Object.entries(prices).map(([key, data]) => {
+      const ltp = data.ltp || 0;
+      const cp = data.cp || 0;
+      const changePct = cp > 0 ? ((ltp - cp) / cp) * 100 : 0;
+      return {
+        key,
+        symbol: data.symbol || key,
+        name: data.name || key,
+        sector: data.sector || 'Other',
+        ltp,
+        cp,
+        changePct,
+      };
+    });
+  }, [prices]);
+
+  // NOTE: only Nifty 50 and Bank Nifty are in the Python feed's
+  // INSTRUMENT_KEYS today. Sensex and Fin Nifty need their instrument
+  // keys added to backend_py/websocket_client.py + config/instruments.js
+  // before they can show up here — this screen doesn't fake them.
+  const indices = useMemo(
+    () => stockList.filter((s) => s.sector === 'Index'),
+    [stockList]
+  );
+
+  const equities = useMemo(
+    () => stockList.filter((s) => s.sector !== 'Index' && s.cp > 0),
+    [stockList]
+  );
+
+  const mood = useMemo(() => {
+    const total = equities.length;
+    const positiveCount = equities.filter((s) => s.changePct > 0).length;
+    const percentage = total > 0 ? Math.round((positiveCount / total) * 100) : 0;
+    return { percentage, positiveCount, total };
+  }, [equities]);
+
+  const gainers = useMemo(
+    () => [...equities].sort((a, b) => b.changePct - a.changePct).slice(0, 4),
+    [equities]
+  );
+
+  const losers = useMemo(
+    () => [...equities].sort((a, b) => a.changePct - b.changePct).slice(0, 4),
+    [equities]
+  );
+
+  // NOTE: SECTOR_COLORS (from usePortfolio.js) uses slightly different
+  // keys than config/instruments.js in a few places (e.g. "Metal" vs
+  // "Metals", "Infra" vs "Infrastructure") — those fall back to the
+  // generic fallback color below until that map is reconciled.
+  const sectorPerformance = useMemo(() => {
+    const groups = {};
+    equities.forEach((s) => {
+      if (!groups[s.sector]) groups[s.sector] = { total: 0, count: 0 };
+      groups[s.sector].total += s.changePct;
+      groups[s.sector].count += 1;
+    });
+
+    return Object.entries(groups)
+      .map(([name, { total, count }]) => ({
+        name,
+        changePct: total / count,
+        color: SECTOR_COLORS[name] || SECTOR_COLORS.Other || C.textTer,
+      }))
+      .sort((a, b) => b.changePct - a.changePct)
+      .slice(0, 6);
+  }, [equities]);
+
+  const isLoading = !isConnected && stockList.length === 0;
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ScrollView
-        style={styles.container}
-        showsVerticalScrollIndicator={false}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-      >
-        <LinearGradient
-          colors={[COLORS.headerBlue, "#1E52D6"]}
-          style={styles.header}
-        >
+      <StatusBar barStyle="light-content" backgroundColor={C.blue} />
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+        <View style={styles.header}>
           <View style={styles.headerTopRow}>
             <Text style={styles.headerTitle}>Markets</Text>
           </View>
-          <MarketMoodBanner mood={marketData.mood} />
-        </LinearGradient>
-
-        <View style={styles.body}>
-          <IndicesGrid indices={marketData.indices} />
-
-          <StockListCard
-            title="Top gainers"
-            icon="trending-up"
-            data={marketData.gainers}
-            renderRight={(item) => (
-              <Text
-                style={{ color: COLORS.green, fontWeight: "500", fontSize: 13 }}
-              >
-                +{item.change.toFixed(2)}%
-              </Text>
-            )}
+          <MarketMoodBanner
+            percentage={mood.percentage}
+            positiveCount={mood.positiveCount}
+            total={mood.total}
           />
-
-          <StockListCard
-            title="Top losers"
-            icon="trending-down"
-            data={marketData.losers}
-            renderRight={(item) => (
-              <Text
-                style={{ color: COLORS.red, fontWeight: "500", fontSize: 13 }}
-              >
-                {item.change.toFixed(2)}%
-              </Text>
-            )}
-          />
-
-          <StockListCard
-            title="Most active"
-            icon="bar-chart-2"
-            data={marketData.mostActive}
-            renderRight={(item) => (
-              <Text style={{ color: COLORS.textSecondary, fontSize: 12 }}>
-                Vol {item.volume}
-              </Text>
-            )}
-          />
-
-          <StockListCard
-            title="Trending on Stocksy"
-            icon="trending-up"
-            data={marketData.trending}
-            renderRight={(item) => (
-              <Text style={{ color: COLORS.textSecondary, fontSize: 12 }}>
-                {item.views} views
-              </Text>
-            )}
-          />
-
-          <SectorPerformanceCard sectors={marketData.sectors} />
         </View>
+
+        {isLoading ? (
+          <View style={styles.loadingBox}>
+            <ActivityIndicator size="large" color={C.blue} />
+            <Text style={styles.loadingText}>Connecting to live market feed…</Text>
+          </View>
+        ) : (
+          <View style={styles.body}>
+            {indices.length > 0 && (
+              <View>
+                <Text style={styles.sectionLabel}>Indices</Text>
+                <View style={styles.indicesGrid}>
+                  {indices.map((item) => (
+                    <IndexTile key={item.key} item={item} onPress={() => goToStock(item)} />
+                  ))}
+                </View>
+              </View>
+            )}
+
+            <StockListCard
+              title="Top gainers"
+              icon="trending-up"
+              data={gainers}
+              onPressItem={goToStock}
+            />
+
+            <StockListCard
+              title="Top losers"
+              icon="trending-down"
+              data={losers}
+              onPressItem={goToStock}
+            />
+
+            <SectorPerformanceCard sectors={sectorPerformance} />
+          </View>
+        )}
       </ScrollView>
     </SafeAreaView>
   );
@@ -307,13 +322,14 @@ export default function MarketPage() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: COLORS.headerBlue,
+    backgroundColor: C.blue,
   },
   container: {
     flex: 1,
-    backgroundColor: COLORS.bg,
+    backgroundColor: C.bg,
   },
   header: {
+    backgroundColor: C.blue,
     paddingHorizontal: 16,
     paddingTop: 8,
     paddingBottom: 20,
@@ -321,46 +337,56 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 24,
   },
   headerTopRow: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     marginBottom: 14,
   },
   headerTitle: {
-    color: "#FFFFFF",
+    color: C.white,
     fontSize: 20,
-    fontWeight: "600",
+    fontWeight: '600',
   },
   moodBanner: {
-    backgroundColor: "rgba(255,255,255,0.14)",
+    backgroundColor: 'rgba(255,255,255,0.14)',
     borderRadius: 16,
     padding: 14,
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   moodCircle: {
     width: 52,
     height: 52,
     borderRadius: 26,
     borderWidth: 4,
-    borderColor: "rgba(255,255,255,0.35)",
-    alignItems: "center",
-    justifyContent: "center",
+    borderColor: 'rgba(255,255,255,0.35)',
+    alignItems: 'center',
+    justifyContent: 'center',
     marginRight: 12,
   },
   moodPercentage: {
-    color: "#FFFFFF",
+    color: C.white,
     fontSize: 14,
-    fontWeight: "600",
+    fontWeight: '600',
   },
   moodLabel: {
-    color: "#FFFFFF",
+    color: C.white,
     fontSize: 14,
-    fontWeight: "500",
+    fontWeight: '500',
     marginBottom: 2,
   },
   moodSubtext: {
-    color: "rgba(255,255,255,0.75)",
+    color: 'rgba(255,255,255,0.75)',
     fontSize: 12,
+  },
+  loadingBox: {
+    paddingVertical: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  loadingText: {
+    marginTop: 12,
+    fontSize: 13,
+    color: C.textSec,
   },
   body: {
     paddingHorizontal: 14,
@@ -370,70 +396,82 @@ const styles = StyleSheet.create({
   },
   sectionLabel: {
     fontSize: 15,
-    fontWeight: "600",
-    color: COLORS.textPrimary,
+    fontWeight: '600',
+    color: C.textPri,
   },
   cardHeaderRow: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: 8,
     paddingHorizontal: 2,
   },
   indicesGrid: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    marginTop: 8,
     marginBottom: 14,
   },
   indexCard: {
-    width: "48.5%",
-    backgroundColor: COLORS.card,
+    width: '48.5%',
+    backgroundColor: C.white,
     borderRadius: 12,
     borderWidth: 0.5,
-    borderColor: COLORS.border,
+    borderColor: C.border,
     padding: 12,
     marginBottom: 10,
   },
   indexSymbol: {
     fontSize: 12,
-    color: COLORS.textSecondary,
+    color: C.textSec,
     marginBottom: 4,
   },
   indexValue: {
     fontSize: 15,
-    fontWeight: "600",
-    color: COLORS.textPrimary,
+    fontWeight: '600',
+    color: C.textPri,
     marginBottom: 2,
   },
   indexChange: {
     fontSize: 12,
-    fontWeight: "500",
+    fontWeight: '600',
   },
   card: {
-    backgroundColor: COLORS.card,
+    backgroundColor: C.white,
     borderRadius: 12,
     borderWidth: 0.5,
-    borderColor: COLORS.border,
+    borderColor: C.border,
     padding: 12,
   },
   listRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingVertical: 8,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 9,
     borderBottomWidth: 0.5,
-    borderBottomColor: COLORS.border,
+    borderBottomColor: C.border,
   },
   listSymbol: {
     fontSize: 13,
-    fontWeight: "500",
-    color: COLORS.textPrimary,
+    fontWeight: '600',
+    color: C.textPri,
+  },
+  listName: {
+    fontSize: 11,
+    color: C.textTer,
+    marginTop: 1,
+  },
+  listPrice: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: C.textPri,
   },
   sectorBar: {
-    flexDirection: "row",
+    flexDirection: 'row',
     height: 8,
     borderRadius: 4,
-    overflow: "hidden",
+    overflow: 'hidden',
+    marginTop: 8,
     marginBottom: 10,
   },
   sectorDot: {
