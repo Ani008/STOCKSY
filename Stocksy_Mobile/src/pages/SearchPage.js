@@ -17,6 +17,8 @@ import WatchlistItem from "../components/WatchlistItem";
 // ─── Live prices hook — same one Dashboard uses ──────────────────────────────
 import useMarketData from "../hooks/useMarketData";
 
+import { Colors, Typography, fontScale, moderateScale } from "../theme";
+
 // ─── Static instrument metadata ──────────────────────────────────────────────
 // This is the client-side mirror of config/instruments.js on the backend.
 // Keys must exactly match what Python saves to Redis (Section 9.2 of backend docs).
@@ -502,7 +504,7 @@ const SearchPage = ({ navigation }) => {
     if (!query.trim()) {
       return (
         <View style={styles.emptyState}>
-          <Ionicons name="search-outline" size={48} color="#CBD5E1" />
+          <Ionicons name="search-outline" size={48} color={Colors.borderLight} />
           <Text style={styles.emptyTitle}>Search stocks & indices</Text>
           <Text style={styles.emptySubtitle}>
             Try "Reliance", "IT", "INFY" or "Banking"
@@ -513,7 +515,7 @@ const SearchPage = ({ navigation }) => {
     if (!isSearching && results.length === 0) {
       return (
         <View style={styles.emptyState}>
-          <Ionicons name="alert-circle-outline" size={48} color="#CBD5E1" />
+          <Ionicons name="alert-circle-outline" size={48} color={Colors.borderLight} />
           <Text style={styles.emptyTitle}>No results for "{query}"</Text>
           <Text style={styles.emptySubtitle}>
             Try a ticker symbol, company name, or sector
@@ -532,7 +534,7 @@ const SearchPage = ({ navigation }) => {
           onPress={() => navigation.goBack()}
           style={styles.backButton}
         >
-          <Ionicons name="arrow-back" size={22} color="#1E293B" />
+          <Ionicons name="arrow-back" size={22} color={Colors.text} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Search</Text>
       </View>
@@ -543,13 +545,13 @@ const SearchPage = ({ navigation }) => {
           <Ionicons
             name="search-outline"
             size={18}
-            color="#94A3B8"
+            color={Colors.textMuted}
             style={styles.searchIcon}
           />
           <TextInput
             style={styles.input}
             placeholder="Symbol, company or sector..."
-            placeholderTextColor="#94A3B8"
+            placeholderTextColor={Colors.textMuted}
             value={query}
             onChangeText={handleQueryChange}
             autoFocus
@@ -561,8 +563,8 @@ const SearchPage = ({ navigation }) => {
           {isSearching && (
             <ActivityIndicator
               size="small"
-              color="#3B82F6"
-              style={{ marginRight: 4 }}
+              color={Colors.primary}
+              style={{ marginRight: moderateScale(4) }}
             />
           )}
           {/* Clear button */}
@@ -573,7 +575,7 @@ const SearchPage = ({ navigation }) => {
                 setResults([]);
               }}
             >
-              <Ionicons name="close-circle" size={18} color="#94A3B8" />
+              <Ionicons name="close-circle" size={18} color={Colors.textMuted} />
             </TouchableOpacity>
           )}
         </View>
@@ -605,70 +607,70 @@ const SearchPage = ({ navigation }) => {
 
 // ─── Styles ───────────────────────────────────────────────────────────────────
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: "#F8FAFC" },
+  safe: { flex: 1, backgroundColor: Colors.background },
 
   // ── Header ──────────────────────────────────────────────────────────────────
   header: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 20,
-    paddingBottom: 8,
-    gap: 12,
+    paddingHorizontal: moderateScale(20),
+    paddingBottom: moderateScale(8),
+    gap: moderateScale(12),
   },
   backButton: {
     width: 38,
     height: 38,
     borderRadius: 12,
-    backgroundColor: "#F1F5F9",
+    backgroundColor: Colors.divider,
     justifyContent: "center",
     alignItems: "center",
   },
   headerTitle: {
-    fontSize: 20,
+    fontSize: fontScale(Typography.h3),
     fontWeight: "bold",
-    color: "#1E293B",
+    color: Colors.text,
   },
 
   // ── Search Bar ──────────────────────────────────────────────────────────────
   searchBarWrapper: {
-    paddingHorizontal: 20,
-    paddingBottom: 8,
+    paddingHorizontal: moderateScale(20),
+    paddingBottom: moderateScale(8),
   },
   searchBar: {
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "white",
     borderRadius: 14,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
+    paddingHorizontal: moderateScale(14),
+    paddingVertical: moderateScale(12),
     borderWidth: 1,
-    borderColor: "#E2E8F0",
-    shadowColor: "#000",
+    borderColor: Colors.border,
+    shadowColor: Colors.black,
     shadowOpacity: 0.04,
     shadowRadius: 6,
     elevation: 2,
   },
-  searchIcon: { marginRight: 8 },
+  searchIcon: { marginRight: moderateScale(8) },
   input: {
     flex: 1,
-    fontSize: 15,
-    color: "#1E293B",
-    padding: 0, // removes default Android padding
+    fontSize: fontScale(Typography.body),
+    color: Colors.text,
+    padding: moderateScale(0), // removes default Android padding
   },
 
   // ── Result count ────────────────────────────────────────────────────────────
   resultCount: {
-    fontSize: 12,
-    color: "#94A3B8",
+    fontSize: fontScale(Typography.small),
+    color: Colors.textMuted,
     fontWeight: "600",
-    paddingHorizontal: 20,
-    paddingBottom: 8,
+    paddingHorizontal: moderateScale(20),
+    paddingBottom: moderateScale(8),
   },
 
   // ── List ────────────────────────────────────────────────────────────────────
   listContent: {
-    paddingHorizontal: 20,
-    paddingBottom: 40,
+    paddingHorizontal: moderateScale(20),
+    paddingBottom: moderateScale(40),
     flexGrow: 1,
   },
 
@@ -677,20 +679,20 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: 80,
-    gap: 10,
+    paddingTop: moderateScale(80),
+    gap: moderateScale(10),
   },
   emptyTitle: {
-    fontSize: 16,
+    fontSize: fontScale(Typography.bodyLarge),
     fontWeight: "700",
-    color: "#64748B",
-    marginTop: 8,
+    color: Colors.textSecondary,
+    marginTop: moderateScale(8),
   },
   emptySubtitle: {
-    fontSize: 13,
-    color: "#94A3B8",
+    fontSize: fontScale(Typography.caption),
+    color: Colors.textMuted,
     textAlign: "center",
-    paddingHorizontal: 32,
+    paddingHorizontal: moderateScale(32),
   },
 });
 

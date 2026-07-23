@@ -9,6 +9,8 @@ import { View, Text, StyleSheet } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { Colors, fontScale, moderateScale } from "../theme";
+
 const makeScreen = (label) => () => (
   <View style={styles.container}>
     <Text style={styles.text}>{label}</Text>
@@ -17,9 +19,9 @@ const makeScreen = (label) => () => (
 );
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#F8FAFC" },
-  text: { fontSize: 22, fontWeight: "bold", color: "#1E293B" },
-  sub: { fontSize: 14, color: "#94A3B8", marginTop: 6 },
+  container: { flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: Colors.background },
+  text: { fontSize: fontScale(22), fontWeight: "bold", color: Colors.text },
+  sub: { fontSize: fontScale(14), color: Colors.textMuted, marginTop: moderateScale(6) },
 });
 
 export const PortfolioPage  = makeScreen("Portfolio");

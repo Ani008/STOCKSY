@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 
+import { Colors, Typography, fontScale, moderateScale } from "../theme";
+
 /**
  * StockCard — Reusable horizontal-scroll stock card for Top Stocks section.
  *
@@ -44,7 +46,7 @@ const StockCard = ({
             <Text
               style={[
                 styles.change,
-                { color: isPositive ? "#10B981" : "#EF4444" },
+                { color: isPositive ? Colors.success : Colors.danger },
               ]}
             >
               {change}
@@ -61,10 +63,10 @@ const styles = StyleSheet.create({
     width: 155,
     backgroundColor: "white",
     borderRadius: 20,
-    padding: 16,
+    padding: moderateScale(16),
     borderWidth: 1,
-    borderColor: "#F1F5F9",
-    shadowColor: "#000",
+    borderColor: Colors.divider,
+    shadowColor: Colors.black,
     shadowOpacity: 0.04,
     shadowRadius: 6,
     elevation: 2,
@@ -73,31 +75,31 @@ const styles = StyleSheet.create({
     width: 38,
     height: 38,
     borderRadius: 12,
-    backgroundColor: "#F8FAFC",
+    backgroundColor: Colors.background,
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 10,
+    marginBottom: moderateScale(10),
   },
-  ticker: { fontSize: 15, fontWeight: "bold", color: "#1E293B" },
-  name: { fontSize: 11, color: "#94A3B8", marginBottom: 12 },
+  ticker: { fontSize: fontScale(Typography.body), fontWeight: "bold", color: Colors.text },
+  name: { fontSize: fontScale(Typography.tiny), color: Colors.textMuted, marginBottom: moderateScale(12) },
   label: {
-    fontSize: 10,
-    color: "#94A3B8",
-    backgroundColor: "#F1F5F9",
+    fontSize: fontScale(10),
+    color: Colors.textMuted,
+    backgroundColor: Colors.divider,
     alignSelf: "flex-start",
-    paddingHorizontal: 6,
-    paddingVertical: 2,
+    paddingHorizontal: moderateScale(6),
+    paddingVertical: moderateScale(2),
     borderRadius: 4,
-    marginBottom: 6,
+    marginBottom: moderateScale(6),
   },
   priceRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginTop: 35,
+    marginTop: moderateScale(35),
   },
-  price: { fontSize: 15, fontWeight: "bold", color: "#1E293B" },
-  change: { fontSize: 11, fontWeight: "600" },
+  price: { fontSize: fontScale(Typography.body), fontWeight: "bold", color: Colors.text },
+  change: { fontSize: fontScale(Typography.tiny), fontWeight: "600" },
 
   logo: {
     width: 30,
@@ -106,9 +108,9 @@ const styles = StyleSheet.create({
   },
 
   fallbackText: {
-    fontSize: 13,
+    fontSize: fontScale(Typography.caption),
     fontWeight: "700",
-    color: "#3B82F6",
+    color: Colors.primary,
   },
 });
 

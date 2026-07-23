@@ -8,6 +8,8 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
+import { Colors, Typography, fontScale, moderateScale } from "../theme";
+
 /**
  * Reusable Input Component
  * Props:
@@ -55,7 +57,7 @@ const Input = ({
           value={value}
           onChangeText={onChangeText}
           placeholder={placeholder}
-          placeholderTextColor="#94A3B8"
+          placeholderTextColor={Colors.textMuted}
           secureTextEntry={hideText}
           keyboardType={keyboardType}
           autoCapitalize={autoCapitalize}
@@ -75,7 +77,7 @@ const Input = ({
             <Ionicons
               name={showPassword ? "eye-outline" : "eye-off-outline"}
               size={22}
-              color="#64748B"
+              color={Colors.textSecondary}
             />
           </TouchableOpacity>
         )}
@@ -88,47 +90,47 @@ const Input = ({
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 16,
+    marginBottom: moderateScale(16),
   },
   label: {
-    fontSize: 13,
+    fontSize: fontScale(Typography.caption),
     fontWeight: "600",
-    color: "#475569",
-    marginBottom: 6,
+    color: Colors.textSecondary,
+    marginBottom: moderateScale(6),
     letterSpacing: 0.2,
   },
   inputWrapper: {
     flexDirection: "row",
     alignItems: "center",
     borderWidth: 1.5,
-    borderColor: "#CBD5E1",
+    borderColor: Colors.borderLight,
     borderRadius: 10,
-    backgroundColor: "#F8FAFC",
-    paddingHorizontal: 14,
+    backgroundColor: Colors.background,
+    paddingHorizontal: moderateScale(14),
   },
   inputFocused: {
-    borderColor: "#2563EB",
-    backgroundColor: "#FFFFFF",
+    borderColor: Colors.primaryDark,
+    backgroundColor: Colors.white,
   },
   inputError: {
-    borderColor: "#EF4444",
+    borderColor: Colors.danger,
   },
   input: {
     flex: 1,
-    paddingVertical: 13,
-    fontSize: 15,
-    color: "#1E293B",
+    paddingVertical: moderateScale(13),
+    fontSize: fontScale(Typography.body),
+    color: Colors.text,
   },
   eyeBtn: {
-    paddingLeft: 10,
-    paddingVertical: 8,
+    paddingLeft: moderateScale(10),
+    paddingVertical: moderateScale(8),
     justifyContent: "center",
     alignItems: "center",
   },
   errorText: {
-    marginTop: 5,
-    fontSize: 12,
-    color: "#EF4444",
+    marginTop: moderateScale(5),
+    fontSize: fontScale(Typography.small),
+    color: Colors.danger,
     fontWeight: "500",
   },
 });

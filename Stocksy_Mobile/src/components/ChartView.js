@@ -2,6 +2,8 @@ import React, { useMemo } from "react";
 import { View, StyleSheet, ActivityIndicator, Text } from "react-native";
 import { WebView } from "react-native-webview";
 
+import { Colors, fontScale, moderateScale } from "../theme";
+
 /**
  * ChartView — TradingView Lightweight Charts — Line chart, transparent bg.
  * Credit: https://www.tradingview.com/lightweight-charts/
@@ -20,7 +22,7 @@ const ChartView = ({
   loading = false,
   height = 220,
 }) => {
-  const lineColor    = isPositive ? "#10B981" : "#EF4444";
+  const lineColor    = isPositive ? Colors.success : Colors.danger;
   const areaTopColor = isPositive ? "rgba(16,185,129,0.15)" : "rgba(239,68,68,0.15)";
   const areaBotColor = isPositive ? "rgba(16,185,129,0.0)"  : "rgba(239,68,68,0.0)";
 
@@ -36,7 +38,7 @@ const ChartView = ({
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
+    * { margin: 0; padding: 0; box-sizing:border-box; }
     html, body {
       width:100%; height:100vh;
       background:transparent;
@@ -177,7 +179,7 @@ const ChartView = ({
   if (loading) {
     return (
       <View style={[styles.placeholder, { height }]}>
-        <ActivityIndicator size="small" color="#3B82F6" />
+        <ActivityIndicator size="small" color={Colors.primary} />
       </View>
     );
   }
@@ -212,8 +214,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 4,
     right: 8,
-    fontSize: 9,
-    color: "#CBD5E1",
+    fontSize: fontScale(9),
+    color: Colors.borderLight,
   },
 });
 

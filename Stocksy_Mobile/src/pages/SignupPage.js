@@ -14,6 +14,8 @@ import authService from "../../services/authService";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { Colors, Typography, fontScale, moderateScale } from "../theme";
+
 const SignupPage = ({ navigation }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -118,29 +120,29 @@ const SignupPage = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: "#F8FAFC" },
+  safe: { flex: 1, backgroundColor: Colors.background },
   flex: { flex: 1 },
-  scroll: { flexGrow: 1, justifyContent: "center", padding: 24 },
-  header: { marginBottom: 36 },
+  scroll: { flexGrow: 1, justifyContent: "center", padding: moderateScale(24) },
+  header: { marginBottom: moderateScale(36) },
   brand: {
-    fontSize: 28,
+    fontSize: fontScale(Typography.h1),
     fontWeight: "800",
-    color: "#2563EB",
+    color: Colors.primaryDark,
     letterSpacing: -0.5,
-    marginBottom: 12,
+    marginBottom: moderateScale(12),
   },
   title: {
-    fontSize: 26,
+    fontSize: fontScale(26),
     fontWeight: "700",
-    color: "#1E293B",
-    marginBottom: 6,
+    color: Colors.text,
+    marginBottom: moderateScale(6),
   },
-  subtitle: { fontSize: 15, color: "#64748B" },
-  form: { marginBottom: 24 },
-  btn: { marginTop: 8 },
-  footer: { flexDirection: "row", justifyContent: "center", marginTop: 16 },
-  footerText: { fontSize: 14, color: "#64748B" },
-  link: { fontSize: 14, color: "#2563EB", fontWeight: "600" },
+  subtitle: { fontSize: fontScale(Typography.body), color: Colors.textSecondary },
+  form: { marginBottom: moderateScale(24) },
+  btn: { marginTop: moderateScale(8) },
+  footer: { flexDirection: "row", justifyContent: "center", marginTop: moderateScale(16) },
+  footerText: { fontSize: fontScale(14), color: Colors.textSecondary },
+  link: { fontSize: fontScale(14), color: Colors.primaryDark, fontWeight: "600" },
 });
 
 export default SignupPage;

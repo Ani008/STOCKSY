@@ -32,14 +32,16 @@ import {
 } from "../../services/walletService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import { Colors, Typography, fontScale, moderateScale } from "../theme";
+
 // Palette for sub-wallet icon colours
 const WALLET_COLORS = [
-  "#00D09C",
-  "#3B82F6",
-  "#F59E0B",
+  Colors.gain,
+  Colors.primary,
+  Colors.warning,
   "#EC4899",
   "#8B5CF6",
-  "#EF4444",
+  Colors.danger,
 ];
 
 const WALLET_ICONS = [
@@ -241,7 +243,7 @@ const WalletScreen = ({ navigation }) => {
   if (loading) {
     return (
       <SafeAreaView style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#00D09C" />
+        <ActivityIndicator size="large" color={Colors.gain} />
         <Text style={styles.loadingText}>Loading wallet…</Text>
       </SafeAreaView>
     );
@@ -249,7 +251,7 @@ const WalletScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor="#F7F8FA" />
+      <StatusBar barStyle="dark-content" backgroundColor={Colors.surfaceAlt} />
 
       {/* ── Header ────────────────────────────────────────────────── */}
       <Animated.View style={[styles.header, { opacity: headerOpacity }]}>
@@ -258,7 +260,7 @@ const WalletScreen = ({ navigation }) => {
           style={styles.headerBtn}
           hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
         >
-          <Ionicons name="arrow-back" size={20} color="#1E293B" />
+          <Ionicons name="arrow-back" size={20} color={Colors.text} />
         </TouchableOpacity>
 
         <Text style={styles.headerTitle}>My Wallet</Text>
@@ -267,7 +269,7 @@ const WalletScreen = ({ navigation }) => {
           onPress={() => navigation.navigate("AllTransactions")}
           style={styles.headerBtn}
         >
-          <Ionicons name="time-outline" size={20} color="#1E293B" />
+          <Ionicons name="time-outline" size={20} color={Colors.text} />
         </TouchableOpacity>
       </Animated.View>
 
@@ -278,7 +280,7 @@ const WalletScreen = ({ navigation }) => {
           <RefreshControl
             refreshing={refreshing}
             onRefresh={() => loadWallets(true)}
-            tintColor="#00D09C"
+            tintColor={Colors.gain}
           />
         }
       >
@@ -290,19 +292,19 @@ const WalletScreen = ({ navigation }) => {
               style={styles.actionButton}
               onPress={() => setModalVisible(true)}
             >
-              <Ionicons name="add" size={22} color="#1E293B" />
+              <Ionicons name="add" size={22} color={Colors.text} />
             </TouchableOpacity>
             <Text style={styles.actionLabel}>Create</Text>
 
 
             <TouchableOpacity style={styles.actionButton} onPress={() => navigation.navigate("Dashboard")}>
-              <Ionicons name="arrow-up-outline" size={20} color="#1E293B" />
+              <Ionicons name="arrow-up-outline" size={20} color={Colors.text} />
             </TouchableOpacity>
             <Text style={styles.actionLabel}>Invest</Text>
 
 
             <TouchableOpacity style={styles.actionButton}>
-              <Ionicons name="receipt-outline" size={20} color="#1E293B" />
+              <Ionicons name="receipt-outline" size={20} color={Colors.text} />
             </TouchableOpacity>
             <Text style={styles.actionLabel}>Transactions</Text>
           </View>
@@ -340,7 +342,7 @@ const WalletScreen = ({ navigation }) => {
           ]}
         >
           <View style={styles.breakdownItem}>
-            <View style={[styles.breakDot, { backgroundColor: "#00D09C" }]} />
+            <View style={[styles.breakDot, { backgroundColor: Colors.gain }]} />
             <View>
               <Text style={styles.breakLabel}>Available</Text>
               <Text style={styles.breakValue}>₹{formatINR(demoBalance)}</Text>
@@ -350,7 +352,7 @@ const WalletScreen = ({ navigation }) => {
           <View style={styles.breakDivider} />
 
           <View style={styles.breakdownItem}>
-            <View style={[styles.breakDot, { backgroundColor: "#3B82F6" }]} />
+            <View style={[styles.breakDot, { backgroundColor: Colors.primary }]} />
             <View>
               <Text style={styles.breakLabel}>Allocated</Text>
               <Text style={styles.breakValue}>
@@ -381,7 +383,7 @@ const WalletScreen = ({ navigation }) => {
           {wallets.length === 0 ? (
             <View style={styles.emptyState}>
               <View style={styles.emptyIconRing}>
-                <Ionicons name="wallet-outline" size={28} color="#94A3B8" />
+                <Ionicons name="wallet-outline" size={28} color={Colors.textMuted} />
               </View>
               <Text style={styles.emptyTitle}>No sub Wallets yet</Text>
               <Text style={styles.emptySubtitle}>
@@ -416,7 +418,7 @@ const WalletScreen = ({ navigation }) => {
 
           <View style={styles.emptyTransactions}>
             <View style={styles.emptyIconRing}>
-              <Ionicons name="receipt-outline" size={28} color="#94A3B8" />
+              <Ionicons name="receipt-outline" size={28} color={Colors.textMuted} />
             </View>
             <Text style={styles.emptyTitle}>No transactions yet</Text>
             <Text style={styles.emptySubtitle}>
@@ -436,14 +438,14 @@ const WalletScreen = ({ navigation }) => {
           activeOpacity={0.85}
         >
           <LinearGradient
-            colors={["#3B82F6", "#3B82F6"]}
+            colors={[Colors.primary, Colors.primary]}
             style={styles.addMoneyGradient}
           >
             <Ionicons
               name="add-circle-outline"
               size={20}
-              color="#FFF"
-              style={{ marginRight: 8 }}
+              color={Colors.white}
+              style={{ marginRight: moderateScale(8) }}
             />
             <Text style={styles.addMoneyText}>Add Money</Text>
           </LinearGradient>
@@ -476,7 +478,7 @@ const WalletScreen = ({ navigation }) => {
               value={renameValue}
               onChangeText={setRenameValue}
               placeholder="Wallet name"
-              placeholderTextColor="#94A3B8"
+              placeholderTextColor={Colors.textMuted}
               style={styles.renameInput}
               autoFocus
             />
@@ -504,18 +506,18 @@ const WalletScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F7F8FA",
+    backgroundColor: Colors.background,
   },
   loadingContainer: {
     flex: 1,
-    backgroundColor: "#F7F8FA",
+    backgroundColor: Colors.surfaceAlt,
     justifyContent: "center",
     alignItems: "center",
-    gap: 12,
+    gap: moderateScale(12),
   },
   loadingText: {
-    color: "#94A3B8",
-    fontSize: 14,
+    color: Colors.textMuted,
+    fontSize: fontScale(14),
     fontWeight: "500",
   },
 
@@ -524,81 +526,81 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 20,
-    paddingVertical: 14,
-    backgroundColor: "#F7F8FA",
+    paddingHorizontal: moderateScale(20),
+    paddingVertical: moderateScale(14),
+    backgroundColor: Colors.surfaceAlt,
   },
   headerBtn: {
     width: 38,
     height: 38,
     borderRadius: 12,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.white,
     justifyContent: "center",
     alignItems: "center",
-    shadowColor: "#94A3B8",
+    shadowColor: Colors.textMuted,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 6,
     elevation: 2,
   },
   headerTitle: {
-    fontSize: 17,
+    fontSize: fontScale(17),
     fontWeight: "700",
-    color: "#1E293B",
+    color: Colors.text,
     letterSpacing: 0.2,
   },
 
   // Scroll
   scrollContent: {
-    paddingTop: 8,
+    paddingTop: moderateScale(8),
   },
 
   // Card section
   cardSection: {
     flexDirection: "row",
     alignItems: "center",
-    paddingLeft: 20,
-    paddingVertical: 16,
-    marginBottom: 8,
+    paddingLeft: moderateScale(20),
+    paddingVertical: moderateScale(16),
+    marginBottom: moderateScale(8),
   },
   actionColumn: {
     width: 68,
     alignItems: "center",
-    marginRight: 4,
+    marginRight: moderateScale(4),
   },
   actionButton: {
     width: 52,
     height: 52,
     borderRadius: 16,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.white,
     justifyContent: "center",
     alignItems: "center",
-    shadowColor: "#94A3B8",
+    shadowColor: Colors.textMuted,
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.12,
     shadowRadius: 8,
     elevation: 3,
   },
   actionLabel: {
-    fontSize: 10,
+    fontSize: fontScale(10),
     fontWeight: "600",
-    color: "#64748B",
-    marginTop: 6,
-    marginBottom: 16,
+    color: Colors.textSecondary,
+    marginTop: moderateScale(6),
+    marginBottom: moderateScale(16),
     letterSpacing: 0.2,
   },
   cardStackArea: {
     position: "relative",
     width: 310,
     height: 210,
-    marginLeft: 16,
+    marginLeft: moderateScale(16),
   },
   stackShadow1: {
     position: "absolute",
     width: 280,
     height: 170,
     borderRadius: 22,
-    backgroundColor: "#CBD5E1",
+    backgroundColor: Colors.borderLight,
     top: 12,
     left: 18,
     transform: [{ rotate: "-9deg" }],
@@ -609,7 +611,7 @@ const styles = StyleSheet.create({
     width: 265,
     height: 165,
     borderRadius: 22,
-    backgroundColor: "#E2E8F0",
+    backgroundColor: Colors.border,
     top: 18,
     left: 22,
     transform: [{ rotate: "-18deg" }],
@@ -619,36 +621,36 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: 4,
-    marginTop: 8,
+    gap: moderateScale(4),
+    marginTop: moderateScale(8),
   },
   editHintText: {
-    fontSize: 11,
+    fontSize: fontScale(Typography.tiny),
     color: "rgba(100,116,139,0.7)",
     fontWeight: "500",
   },
 
   // Balance breakdown
   balanceBreakdown: {
-    backgroundColor: "#FFFFFF",
-    marginHorizontal: 20,
+    backgroundColor: Colors.white,
+    marginHorizontal: moderateScale(20),
     borderRadius: 18,
-    padding: 18,
+    padding: moderateScale(18),
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 16,
-    shadowColor: "#94A3B8",
+    marginBottom: moderateScale(16),
+    shadowColor: Colors.textMuted,
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.08,
     shadowRadius: 10,
     elevation: 2,
     flexWrap: "wrap",
-    gap: 4,
+    gap: moderateScale(4),
   },
   breakdownItem: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 10,
+    gap: moderateScale(10),
     flex: 1,
   },
   breakDot: {
@@ -657,92 +659,92 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   breakLabel: {
-    fontSize: 11,
-    color: "#94A3B8",
+    fontSize: fontScale(Typography.tiny),
+    color: Colors.textMuted,
     fontWeight: "500",
     letterSpacing: 0.3,
-    marginBottom: 2,
+    marginBottom: moderateScale(2),
   },
   breakValue: {
-    fontSize: 16,
+    fontSize: fontScale(Typography.bodyLarge),
     fontWeight: "700",
-    color: "#1E293B",
+    color: Colors.text,
   },
   breakDivider: {
     width: 1,
     height: 36,
-    backgroundColor: "#F1F5F9",
-    marginHorizontal: 8,
+    backgroundColor: Colors.divider,
+    marginHorizontal: moderateScale(8),
   },
   progressBarOuter: {
     width: "100%",
     height: 4,
-    backgroundColor: "#F1F5F9",
+    backgroundColor: Colors.divider,
     borderRadius: 2,
-    marginTop: 14,
+    marginTop: moderateScale(14),
     overflow: "hidden",
   },
   progressBarInner: {
     height: 4,
     borderRadius: 2,
-    backgroundColor: "#3B82F6",
+    backgroundColor: Colors.primary,
   },
 
   // Section
   section: {
-    marginHorizontal: 20,
-    marginBottom: 16,
+    marginHorizontal: moderateScale(20),
+    marginBottom: moderateScale(16),
   },
   sectionHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 14,
+    marginBottom: moderateScale(14),
   },
   sectionTitle: {
-    fontSize: 16,
+    fontSize: fontScale(Typography.bodyLarge),
     fontWeight: "700",
-    color: "#1E293B",
+    color: Colors.text,
     letterSpacing: 0.1,
   },
   addWalletBtn: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 4,
-    backgroundColor: "#ECFDF5",
-    paddingHorizontal: 12,
-    paddingVertical: 6,
+    gap: moderateScale(4),
+    backgroundColor: Colors.successBg,
+    paddingHorizontal: moderateScale(12),
+    paddingVertical: moderateScale(6),
     borderRadius: 20,
   },
   addWalletText: {
-    fontSize: 13,
+    fontSize: fontScale(Typography.caption),
     fontWeight: "600",
-    color: "#00D09C",
+    color: Colors.gain,
   },
   seeAllText: {
-    fontSize: 13,
+    fontSize: fontScale(Typography.caption),
     fontWeight: "600",
-    color: "#3B82F6",
+    color: Colors.primary,
   },
 
   // Empty states
   emptyState: {
     alignItems: "center",
-    paddingVertical: 32,
-    backgroundColor: "#FFFFFF",
+    paddingVertical: moderateScale(32),
+    backgroundColor: Colors.white,
     borderRadius: 18,
-    gap: 8,
+    gap: moderateScale(8),
     borderWidth: 1,
-    borderColor: "#F1F5F9",
+    borderColor: Colors.divider,
     borderStyle: "dashed",
   },
   emptyTransactions: {
     alignItems: "center",
-    paddingVertical: 32,
-    backgroundColor: "#FFFFFF",
+    paddingVertical: moderateScale(32),
+    backgroundColor: Colors.white,
     borderRadius: 18,
-    gap: 8,
-    shadowColor: "#94A3B8",
+    gap: moderateScale(8),
+    shadowColor: Colors.textMuted,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.06,
     shadowRadius: 8,
@@ -752,24 +754,24 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 30,
-    backgroundColor: "#F8FAFC",
+    backgroundColor: Colors.background,
     borderWidth: 1.5,
-    borderColor: "#E2E8F0",
+    borderColor: Colors.border,
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 4,
+    marginBottom: moderateScale(4),
   },
   emptyTitle: {
-    fontSize: 15,
+    fontSize: fontScale(Typography.body),
     fontWeight: "600",
-    color: "#475569",
+    color: Colors.textSecondary,
   },
   emptySubtitle: {
-    fontSize: 13,
-    color: "#94A3B8",
+    fontSize: fontScale(Typography.caption),
+    color: Colors.textMuted,
     textAlign: "center",
     lineHeight: 20,
-    paddingHorizontal: 24,
+    paddingHorizontal: moderateScale(24),
   },
 
   // Bottom bar
@@ -778,17 +780,17 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    paddingHorizontal: 20,
-    paddingBottom: 32,
-    paddingTop: 12,
+    paddingHorizontal: moderateScale(20),
+    paddingBottom: moderateScale(32),
+    paddingTop: moderateScale(12),
     backgroundColor: "rgba(247,248,250,0.95)",
     borderTopWidth: 1,
-    borderTopColor: "#F1F5F9",
+    borderTopColor: Colors.divider,
   },
   addMoneyBtn: {
     borderRadius: 16,
     overflow: "hidden",
-    shadowColor: "#3B82F6",
+    shadowColor: Colors.primary,
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.3,
     shadowRadius: 12,
@@ -798,12 +800,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 16,
+    paddingVertical: moderateScale(16),
     borderRadius: 16,
   },
   addMoneyText: {
-    color: "#FFFFFF",
-    fontSize: 16,
+    color: Colors.white,
+    fontSize: fontScale(Typography.bodyLarge),
     fontWeight: "700",
     letterSpacing: 0.3,
   },
@@ -813,61 +815,61 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "rgba(0,0,0,0.45)",
     justifyContent: "center",
-    paddingHorizontal: 24,
+    paddingHorizontal: moderateScale(24),
   },
   renameSheet: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.white,
     borderRadius: 20,
-    padding: 24,
-    shadowColor: "#000",
+    padding: moderateScale(24),
+    shadowColor: Colors.black,
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.2,
     shadowRadius: 20,
     elevation: 10,
   },
   renameTitle: {
-    fontSize: 18,
+    fontSize: fontScale(Typography.h4),
     fontWeight: "700",
-    color: "#1E293B",
-    marginBottom: 16,
+    color: Colors.text,
+    marginBottom: moderateScale(16),
   },
   renameInput: {
     borderWidth: 1.5,
-    borderColor: "#E2E8F0",
+    borderColor: Colors.border,
     borderRadius: 12,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
-    fontSize: 15,
-    color: "#1E293B",
-    marginBottom: 20,
-    backgroundColor: "#F8FAFC",
+    paddingHorizontal: moderateScale(14),
+    paddingVertical: moderateScale(12),
+    fontSize: fontScale(Typography.body),
+    color: Colors.text,
+    marginBottom: moderateScale(20),
+    backgroundColor: Colors.background,
   },
   renameActions: {
     flexDirection: "row",
     justifyContent: "flex-end",
-    gap: 12,
+    gap: moderateScale(12),
   },
   renameCancelBtn: {
-    paddingHorizontal: 20,
-    paddingVertical: 11,
+    paddingHorizontal: moderateScale(20),
+    paddingVertical: moderateScale(11),
     borderRadius: 10,
-    backgroundColor: "#F1F5F9",
+    backgroundColor: Colors.divider,
   },
   renameCancelText: {
-    color: "#64748B",
+    color: Colors.textSecondary,
     fontWeight: "600",
-    fontSize: 14,
+    fontSize: fontScale(14),
   },
   renameSaveBtn: {
-    paddingHorizontal: 24,
-    paddingVertical: 11,
+    paddingHorizontal: moderateScale(24),
+    paddingVertical: moderateScale(11),
     borderRadius: 10,
-    backgroundColor: "#1E293B",
+    backgroundColor: Colors.text,
   },
   renameSaveText: {
-    color: "#FFFFFF",
+    color: Colors.white,
     fontWeight: "700",
-    fontSize: 14,
+    fontSize: fontScale(14),
   },
 });
 

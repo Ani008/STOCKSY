@@ -22,6 +22,8 @@ import { placeOrder } from "../../services/orderService";
 import { fetchLeverage } from "../../services/leverageService";
 import useMarketData from "../hooks/useMarketData";
 
+import { Colors, Typography, fontScale, moderateScale } from "../theme";
+
 /**
  * BuyOrderScreen
  *
@@ -186,15 +188,15 @@ export default function BuyOrderScreen({ navigation, route }) {
   }
 
   // ─── Colour helpers ──────────────────────────────────────────────────────────
-  const BUY_COLOR = "#00C851";
-  const SELL_COLOR = "#FF4444";
+  const BUY_COLOR = Colors.gain;
+  const SELL_COLOR = Colors.danger;
   const accentColor = orderType === "BUY" ? BUY_COLOR : SELL_COLOR;
-  const BLUE_BORDER = "#3B82F6";
-  const BLUE_BG = "#3B82F6";
+  const BLUE_BORDER = Colors.primary;
+  const BLUE_BG = Colors.primary;
 
   return (
     <SafeAreaView style={styles.safeArea} edges={["top"]}>
-      <StatusBar barStyle="light-content" backgroundColor="#FFFFFF" />
+      <StatusBar barStyle="light-content" backgroundColor={Colors.white} />
 
       {/* ── Header ─────────────────────────────────────────────────────────── */}
       <View style={styles.header}>
@@ -222,7 +224,7 @@ export default function BuyOrderScreen({ navigation, route }) {
             <Text
               style={[
                 styles.toggleText,
-                orderType === "BUY" && { color: "#fff" },
+                orderType === "BUY" && { color: Colors.white },
               ]}
             >
               BUY
@@ -238,7 +240,7 @@ export default function BuyOrderScreen({ navigation, route }) {
             <Text
               style={[
                 styles.toggleText,
-                orderType === "SELL" && { color: "#fff" },
+                orderType === "SELL" && { color: Colors.white },
               ]}
             >
               SELL
@@ -300,7 +302,7 @@ export default function BuyOrderScreen({ navigation, route }) {
                   <Text
                     style={[
                       styles.pillTxt,
-                      tradeType === t && { color: "#ffff" },
+                      tradeType === t && { color: Colors.white },
                     ]}
                   >
                     {t}
@@ -312,14 +314,14 @@ export default function BuyOrderScreen({ navigation, route }) {
 
           {/* ── QTY + Price inputs ────────────────────────────────────────── */}
           <View style={styles.inputRow}>
-            <View style={[styles.inputGroup, { flex: 1, marginRight: 10 }]}>
+            <View style={[styles.inputGroup, { flex: 1, marginRight: moderateScale(10) }]}>
               <Text style={styles.inputLabel}>QTY</Text>
               <TextInput
                 style={styles.input}
                 value={qty}
                 onChangeText={(v) => setQty(v.replace(/[^0-9]/g, ""))}
                 placeholder="0"
-                placeholderTextColor="#444"
+                placeholderTextColor={Colors.text}
                 keyboardType="numeric"
                 returnKeyType="done"
               />
@@ -332,7 +334,7 @@ export default function BuyOrderScreen({ navigation, route }) {
                   value={priceLimit}
                   onChangeText={(v) => setPriceLimit(v.replace(/[^0-9.]/g, ""))}
                   placeholder={ltp ? ltp.toFixed(2) : "0.00"}
-                  placeholderTextColor="#444"
+                  placeholderTextColor={Colors.text}
                   keyboardType="decimal-pad"
                   returnKeyType="done"
                 />
@@ -380,7 +382,7 @@ export default function BuyOrderScreen({ navigation, route }) {
                 <Text
                   style={[
                     styles.summaryKey,
-                    { color: "#1E293B", fontWeight: "700" },
+                    { color: Colors.text, fontWeight: "700" },
                   ]}
                 >
                   {orderType === "BUY" ? "Margin required" : "Estimated credit"}
@@ -388,7 +390,7 @@ export default function BuyOrderScreen({ navigation, route }) {
                 <Text
                   style={[
                     styles.summaryVal,
-                    { color: accentColor, fontWeight: "700", fontSize: 16 },
+                    { color: accentColor, fontWeight: "700", fontSize: fontScale(Typography.bodyLarge) },
                   ]}
                 >
                   ₹
@@ -419,7 +421,7 @@ export default function BuyOrderScreen({ navigation, route }) {
                   <Text
                     style={[
                       styles.pillTxt,
-                      orderMode === m && { color: "#ffff" },
+                      orderMode === m && { color: Colors.white },
                     ]}
                   >
                     {m}
@@ -436,11 +438,11 @@ export default function BuyOrderScreen({ navigation, route }) {
             {walletsLoading ? (
               <ActivityIndicator
                 color={accentColor}
-                style={{ marginVertical: 16 }}
+                style={{ marginVertical: moderateScale(16) }}
               />
             ) : wallets.length === 0 ? (
               <View style={styles.noWalletBox}>
-                <Ionicons name="wallet-outline" size={32} color="#444" />
+                <Ionicons name="wallet-outline" size={32} color={Colors.text} />
                 <Text style={styles.noWalletTxt}>No wallets yet</Text>
                 <Text style={styles.noWalletSub}>
                   Create a wallet from your demo balance to start trading
@@ -466,16 +468,16 @@ export default function BuyOrderScreen({ navigation, route }) {
                 <ScrollView
                   horizontal
                   showsHorizontalScrollIndicator={false}
-                  style={{ marginBottom: 10 }}
+                  style={{ marginBottom: moderateScale(10) }}
                 >
                   {wallets.map((w, i) => {
                     const isSelected = w.id === selectedWalletId;
                     const COLORS = [
-                      "#3B82F6",
-                      "#00C851",
-                      "#FF9F43",
+                      Colors.primary,
+                      Colors.gain,
+                      Colors.warning,
                       "#A855F7",
-                      "#F43F5E",
+                      Colors.danger,
                     ];
                     const wColor = COLORS[i % COLORS.length];
                     return (
@@ -523,7 +525,7 @@ export default function BuyOrderScreen({ navigation, route }) {
                             name="checkmark-circle"
                             size={16}
                             color={wColor}
-                            style={{ marginLeft: 6 }}
+                            style={{ marginLeft: moderateScale(6) }}
                           />
                         )}
                       </TouchableOpacity>
@@ -537,7 +539,7 @@ export default function BuyOrderScreen({ navigation, route }) {
                     <Ionicons
                       name="add-circle-outline"
                       size={18}
-                      color="#666"
+                      color={Colors.textSecondary}
                     />
                     <Text style={styles.walletChipAddTxt}>New</Text>
                   </TouchableOpacity>
@@ -575,25 +577,25 @@ export default function BuyOrderScreen({ navigation, route }) {
           <TouchableOpacity
             style={[
               styles.ctaBtn,
-              { backgroundColor: canPlace ? accentColor : "#3B82F6" },
+              { backgroundColor: canPlace ? accentColor : Colors.primary },
             ]}
             onPress={handlePlaceOrder}
             disabled={!canPlace}
             activeOpacity={0.85}
           >
             {placingOrder ? (
-              <ActivityIndicator color="#ffff" />
+              <ActivityIndicator color={Colors.white} />
             ) : (
               <>
                 <Ionicons
                   name={orderType === "BUY" ? "trending-up" : "trending-down"}
                   size={18}
-                  color={canPlace ? "#ffff" : "#444"}
+                  color={canPlace ? Colors.white : Colors.text}
                 />
                 <Text
                   style={[
                     styles.ctaBtnTxt,
-                    { color: canPlace ? "#ffff" : "#444" },
+                    { color: canPlace ? Colors.white : Colors.text },
                   ]}
                 >
                   {orderType === "BUY" ? "Place Buy Order" : "Place Sell Order"}
@@ -621,56 +623,56 @@ export default function BuyOrderScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.white,
   },
 
   // Header
   header: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingHorizontal: moderateScale(16),
+    paddingVertical: moderateScale(12),
     borderBottomWidth: 1,
-    borderBottomColor: "#E2E8F0",
+    borderBottomColor: Colors.border,
   },
   backBtn: {
     width: 36,
     height: 36,
     borderRadius: 18,
-    backgroundColor: "#F8FAFC",
+    backgroundColor: Colors.background,
     alignItems: "center",
     justifyContent: "center",
   },
   headerCenter: {
     flex: 1,
-    marginLeft: 12,
+    marginLeft: moderateScale(12),
   },
   headerSymbol: {
-    fontSize: 17,
+    fontSize: fontScale(17),
     fontWeight: "700",
-    color: "#1E293B",
+    color: Colors.text,
     letterSpacing: 0.5,
   },
   headerName: {
-    fontSize: 12,
-    color: "#64748B",
-    marginTop: 1,
+    fontSize: fontScale(Typography.small),
+    color: Colors.textSecondary,
+    marginTop: moderateScale(1),
   },
   orderTypeToggle: {
     flexDirection: "row",
-    backgroundColor: "#F8FAFC",
+    backgroundColor: Colors.background,
     borderRadius: 8,
-    padding: 3,
+    padding: moderateScale(3),
   },
   toggleBtn: {
-    paddingHorizontal: 14,
-    paddingVertical: 6,
+    paddingHorizontal: moderateScale(14),
+    paddingVertical: moderateScale(6),
     borderRadius: 6,
   },
   toggleText: {
-    fontSize: 12,
+    fontSize: fontScale(Typography.small),
     fontWeight: "700",
-    color: "#94A3B8",
+    color: Colors.textMuted,
     letterSpacing: 0.5,
   },
 
@@ -679,97 +681,97 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 16,
-    paddingVertical: 14,
+    paddingHorizontal: moderateScale(16),
+    paddingVertical: moderateScale(14),
     borderBottomWidth: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.white,
   },
   priceLabel: {
-    fontSize: 10,
-    color: "#94A3B8",
+    fontSize: fontScale(10),
+    color: Colors.textMuted,
     letterSpacing: 1,
     fontWeight: "600",
-    marginBottom: 2,
+    marginBottom: moderateScale(2),
   },
   livePrice: {
-    fontSize: 26,
+    fontSize: fontScale(26),
     fontWeight: "800",
     letterSpacing: -0.5,
   },
   priceChangeBadge: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 4,
+    gap: moderateScale(4),
     backgroundColor: "#1A1A24",
-    paddingHorizontal: 10,
-    paddingVertical: 6,
+    paddingHorizontal: moderateScale(10),
+    paddingVertical: moderateScale(6),
     borderRadius: 20,
   },
   priceChangeTxt: {
-    fontSize: 13,
+    fontSize: fontScale(Typography.caption),
     fontWeight: "600",
   },
 
   // Scroll
   scroll: { flex: 1 },
-  scrollContent: { padding: 16 },
+  scrollContent: { padding: moderateScale(16) },
 
   // Section
-  section: { marginBottom: 20 },
+  section: { marginBottom: moderateScale(20) },
   sectionLabel: {
-    fontSize: 10,
-    color: "#94A3B8",
+    fontSize: fontScale(10),
+    color: Colors.textMuted,
     letterSpacing: 1.2,
     fontWeight: "700",
-    marginBottom: 10,
+    marginBottom: moderateScale(10),
   },
 
   // Pills (Intraday/Delivery, Market/Limit)
-  pillRow: { flexDirection: "row", gap: 10 },
+  pillRow: { flexDirection: "row", gap: moderateScale(10) },
   pill: {
-    paddingHorizontal: 18,
-    paddingVertical: 9,
+    paddingHorizontal: moderateScale(18),
+    paddingVertical: moderateScale(9),
     borderRadius: 8,
     borderWidth: 1,
-    backgroundColor: "#FFFFFF",
-    borderColor: "#E2E8F0",
+    backgroundColor: Colors.white,
+    borderColor: Colors.border,
   },
   pillTxt: {
-    fontSize: 14,
+    fontSize: fontScale(14),
     fontWeight: "600",
-    color: "#64748B",
+    color: Colors.textSecondary,
   },
 
   // Inputs
-  inputRow: { flexDirection: "row", marginBottom: 20 },
+  inputRow: { flexDirection: "row", marginBottom: moderateScale(20) },
   inputGroup: {},
   inputLabel: {
-    fontSize: 10,
-    color: "#94A3B8",
+    fontSize: fontScale(10),
+    color: Colors.textMuted,
     letterSpacing: 1.2,
     fontWeight: "700",
-    marginBottom: 8,
+    marginBottom: moderateScale(8),
   },
   input: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.white,
     borderWidth: 1,
-    borderColor: "#E2E8F0",
+    borderColor: Colors.border,
     borderRadius: 10,
-    paddingHorizontal: 14,
-    paddingVertical: 13,
-    fontSize: 18,
+    paddingHorizontal: moderateScale(14),
+    paddingVertical: moderateScale(13),
+    fontSize: fontScale(Typography.h4),
     fontWeight: "700",
-    color: "#1E293B",
+    color: Colors.text,
   },
 
   // Summary card
   summaryCard: {
-    backgroundColor: "#F8FAFC",
+    backgroundColor: Colors.background,
     borderRadius: 12,
     borderWidth: 1,
-    padding: 14,
-    marginBottom: 20,
-    gap: 8,
+    padding: moderateScale(14),
+    marginBottom: moderateScale(20),
+    gap: moderateScale(8),
   },
   summaryRow: {
     flexDirection: "row",
@@ -778,37 +780,37 @@ const styles = StyleSheet.create({
   },
   summaryTotal: {
     borderTopWidth: 1,
-    borderTopColor: "#E2E8F0",
-    paddingTop: 10,
-    marginTop: 2,
+    borderTopColor: Colors.border,
+    paddingTop: moderateScale(10),
+    marginTop: moderateScale(2),
   },
-  summaryKey: { fontSize: 13, color: "#777" },
-  summaryVal: { fontSize: 13, color: "#1E293B", fontWeight: "600" },
+  summaryKey: { fontSize: fontScale(Typography.caption), color: "#777" },
+  summaryVal: { fontSize: fontScale(Typography.caption), color: Colors.text, fontWeight: "600" },
   leverageBadge: {
-    backgroundColor: "#DBEAFE",
-    paddingHorizontal: 10,
-    paddingVertical: 3,
+    backgroundColor: Colors.primaryLight,
+    paddingHorizontal: moderateScale(10),
+    paddingVertical: moderateScale(3),
     borderRadius: 6,
   },
   leverageBadgeTxt: {
-    fontSize: 12,
+    fontSize: fontScale(Typography.small),
     fontWeight: "700",
-    color: "#1A56DB",
+    color: Colors.primaryDark,
   },
 
   // Wallet
   noWalletBox: {
     alignItems: "center",
-    padding: 24,
+    padding: moderateScale(24),
     backgroundColor: "#14141C",
     borderRadius: 12,
     borderWidth: 1,
     borderColor: "#1E1E28",
-    gap: 8,
+    gap: moderateScale(8),
   },
-  noWalletTxt: { fontSize: 15, color: "#AAA", fontWeight: "600" },
+  noWalletTxt: { fontSize: fontScale(Typography.body), color: Colors.textMuted, fontWeight: "600" },
   noWalletSub: {
-    fontSize: 13,
+    fontSize: fontScale(Typography.caption),
     color: "#555",
     textAlign: "center",
     lineHeight: 18,
@@ -816,26 +818,26 @@ const styles = StyleSheet.create({
   createWalletBtn: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 6,
-    marginTop: 6,
-    paddingHorizontal: 18,
-    paddingVertical: 10,
+    gap: moderateScale(6),
+    marginTop: moderateScale(6),
+    paddingHorizontal: moderateScale(18),
+    paddingVertical: moderateScale(10),
     borderRadius: 8,
     borderWidth: 1,
   },
-  createWalletBtnTxt: { fontSize: 14, fontWeight: "700" },
+  createWalletBtnTxt: { fontSize: fontScale(14), fontWeight: "700" },
 
   walletChip: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 8,
-    paddingHorizontal: 14,
-    paddingVertical: 10,
+    gap: moderateScale(8),
+    paddingHorizontal: moderateScale(14),
+    paddingVertical: moderateScale(10),
     borderRadius: 10,
     borderWidth: 1,
-    backgroundColor: "#FFFFFF",
-    borderColor: "#E2E8F0",
-    marginRight: 10,
+    backgroundColor: Colors.white,
+    borderColor: Colors.border,
+    marginRight: moderateScale(10),
   },
   walletChipIcon: {
     width: 28,
@@ -845,35 +847,35 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   walletChipName: {
-    fontSize: 13,
+    fontSize: fontScale(Typography.caption),
     fontWeight: "600",
-    color: "#1E293B",
+    color: Colors.text,
   },
   walletChipBalance: {
-    fontSize: 11,
-    color: "#64748B",
-    marginTop: 1,
+    fontSize: fontScale(Typography.tiny),
+    color: Colors.textSecondary,
+    marginTop: moderateScale(1),
   },
   walletChipAdd: {
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
-    gap: 2,
+    gap: moderateScale(2),
     minWidth: 60,
   },
   walletChipAddTxt: {
-    fontSize: 11,
-    color: "#666",
+    fontSize: fontScale(Typography.tiny),
+    color: Colors.textSecondary,
   },
   walletDetailRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 4,
-    marginTop: 4,
+    paddingHorizontal: moderateScale(4),
+    marginTop: moderateScale(4),
   },
-  walletDetailTxt: { fontSize: 13, color: "#666" },
-  insufficientTxt: { fontSize: 12, color: "#FF4444", fontWeight: "600" },
+  walletDetailTxt: { fontSize: fontScale(Typography.caption), color: Colors.textSecondary },
+  insufficientTxt: { fontSize: fontScale(Typography.small), color: Colors.danger, fontWeight: "600" },
 
   // CTA
   ctaContainer: {
@@ -881,25 +883,25 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    paddingHorizontal: 16,
+    paddingHorizontal: moderateScale(16),
     paddingBottom: Platform.OS === "ios" ? 30 : 20,
-    paddingTop: 12,
-    backgroundColor: "#FFFFFF",
+    paddingTop: moderateScale(12),
+    backgroundColor: Colors.white,
     borderTopWidth: 1,
-    borderTopColor: "#E2E8F0",
+    borderTopColor: Colors.border,
   },
   ctaBtn: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: 8,
+    gap: moderateScale(8),
     borderRadius: 12,
-    paddingVertical: 16,
+    paddingVertical: moderateScale(16),
   },
   ctaBtnTxt: {
-    fontSize: 16,
+    fontSize: fontScale(Typography.bodyLarge),
     fontWeight: "800",
     letterSpacing: 0.3,
-    color: "#ffff",
+    color: Colors.white,
   },
 });

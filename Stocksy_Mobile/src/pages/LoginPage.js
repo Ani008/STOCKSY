@@ -21,6 +21,8 @@ import { API_BASE_URL, WEB_CLIENT_ID } from "../config/env";
 // import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import * as SecureStore from "expo-secure-store";
 
+import { Colors, Typography, fontScale, moderateScale } from "../theme";
+
 const LoginPage = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -51,11 +53,11 @@ const LoginPage = ({ navigation }) => {
   const GoogleIcon = () => (
     <Svg width={20} height={20} viewBox="0 0 48 48">
       <Path
-        fill="#FFC107"
+        fill={Colors.warning}
         d="M43.6 20.5H42V20H24v8h11.3C33.6 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12S17.4 12 24 12c3 0 5.7 1.1 7.8 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"
       />
       <Path
-        fill="#FF3D00"
+        fill={Colors.danger}
         d="M6.3 14.7l6.6 4.8C14.7 15.1 18.9 12 24 12c3 0 5.7 1.1 7.8 3l5.7-5.7C34 6.1 29.3 4 24 4c-7.7 0-14.4 4.3-17.7 10.7z"
       />
       <Path
@@ -219,57 +221,57 @@ const LoginPage = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: "#F8FAFC" },
+  safe: { flex: 1, backgroundColor: Colors.background },
   flex: { flex: 1 },
-  scroll: { flexGrow: 1, justifyContent: "center", padding: 24 },
-  header: { marginBottom: 36 },
+  scroll: { flexGrow: 1, justifyContent: "center", padding: moderateScale(24) },
+  header: { marginBottom: moderateScale(36) },
   brand: {
-    fontSize: 28,
+    fontSize: fontScale(Typography.h1),
     fontWeight: "800",
-    color: "#2563EB",
+    color: Colors.primaryDark,
     letterSpacing: -0.5,
-    marginBottom: 12,
+    marginBottom: moderateScale(12),
   },
   title: {
-    fontSize: 26,
+    fontSize: fontScale(26),
     fontWeight: "700",
-    color: "#1E293B",
-    marginBottom: 6,
+    color: Colors.text,
+    marginBottom: moderateScale(6),
   },
-  subtitle: { fontSize: 15, color: "#64748B" },
-  form: { marginBottom: 24 },
-  btn: { marginTop: 8 },
-  footer: { flexDirection: "row", justifyContent: "center", marginTop: 16 },
-  footerText: { fontSize: 14, color: "#64748B" },
-  link: { fontSize: 14, color: "#2563EB", fontWeight: "600" },
+  subtitle: { fontSize: fontScale(Typography.body), color: Colors.textSecondary },
+  form: { marginBottom: moderateScale(24) },
+  btn: { marginTop: moderateScale(8) },
+  footer: { flexDirection: "row", justifyContent: "center", marginTop: moderateScale(16) },
+  footerText: { fontSize: fontScale(14), color: Colors.textSecondary },
+  link: { fontSize: fontScale(14), color: Colors.primaryDark, fontWeight: "600" },
 
   // Forgot Password
   forgotBtn: {
     alignItems: "center",
-    marginTop: 16,
+    marginTop: moderateScale(16),
   },
   forgotText: {
-    fontSize: 14,
-    color: "#64748B",
+    fontSize: fontScale(14),
+    color: Colors.textSecondary,
   },
 
   dividerContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 28,
-    marginBottom: 20,
+    marginTop: moderateScale(28),
+    marginBottom: moderateScale(20),
   },
 
   divider: {
     flex: 1,
     height: 1,
-    backgroundColor: "#E2E8F0",
+    backgroundColor: Colors.border,
   },
 
   dividerText: {
-    marginHorizontal: 12,
-    color: "#94A3B8",
-    fontSize: 13,
+    marginHorizontal: moderateScale(12),
+    color: Colors.textMuted,
+    fontSize: fontScale(Typography.caption),
     fontWeight: "500",
   },
 
@@ -279,23 +281,23 @@ const styles = StyleSheet.create({
     justifyContent: "center",
 
     borderWidth: 1,
-    borderColor: "#CBD5E1",
+    borderColor: Colors.borderLight,
 
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.white,
 
     borderRadius: 12,
 
-    paddingVertical: 14,
+    paddingVertical: moderateScale(14),
   },
 
   googleButtonText: {
-    marginLeft: 12,
+    marginLeft: moderateScale(12),
 
-    fontSize: 15,
+    fontSize: fontScale(Typography.body),
 
     fontWeight: "600",
 
-    color: "#1E293B",
+    color: Colors.text,
   },
 });
 

@@ -20,6 +20,8 @@ import useHistoricalData from "../hooks/useHistoricalData";
 import ChartView from "../components/ChartView";
 import useFundamentals from "../hooks/useFundamentals";
 
+import { Colors, Typography, fontScale, moderateScale } from "../theme";
+
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
 const RANGES = ["1D", "1W", "1M", "3M", "1Y"];
@@ -81,7 +83,7 @@ const StockDetailPage = ({ navigation, route }) => {
     activeRange,
   );
 
-  const accentColor = isPositive ? "#10B981" : "#EF4444";
+  const accentColor = isPositive ? Colors.success : Colors.danger;
   const accentBg = isPositive
     ? "rgba(16,185,129,0.12)"
     : "rgba(239,68,68,0.12)";
@@ -113,23 +115,23 @@ const StockDetailPage = ({ navigation, route }) => {
 
     label: item.period,
 
-    frontColor: index === selectedIndex ? "#3B82F6" : "rgba(59,130,246,0.25)",
+    frontColor: index === selectedIndex ? Colors.primary : "rgba(59,130,246,0.25)",
 
     onPress: () => setSelectedIndex(index),
 
     labelTextStyle: {
-      color: index === selectedIndex ? "#1E293B" : "#94A3B8",
+      color: index === selectedIndex ? Colors.text : Colors.textMuted,
 
       fontWeight: index === selectedIndex ? "700" : "500",
 
-      fontSize: 11,
+      fontSize: fontScale(Typography.tiny),
     },
   }));
 
   const profitData = financialData.map((item, index) => ({
     value: item.profit,
 
-    frontColor: index === selectedIndex ? "#10B981" : "rgba(16,185,129,0.25)",
+    frontColor: index === selectedIndex ? Colors.success : "rgba(16,185,129,0.25)",
 
     onPress: () => setSelectedIndex(index),
   }));
@@ -142,7 +144,7 @@ const StockDetailPage = ({ navigation, route }) => {
           onPress={() => navigation.goBack()}
           style={styles.backBtn}
         >
-          <Ionicons name="arrow-back" size={20} color="#1E293B" />
+          <Ionicons name="arrow-back" size={20} color={Colors.text} />
         </TouchableOpacity>
 
         <Text style={styles.headerTitle}>{symbol}</Text>
@@ -201,16 +203,7 @@ const StockDetailPage = ({ navigation, route }) => {
             height={200}
           />
 
-          {/* ── Expand button — bottom-right corner of chart card ── */}
-          <TouchableOpacity
-            style={styles.expandBtn}
-            onPress={() => setChartExpanded(true)}
-            activeOpacity={0.8}
-          >
-            <Ionicons name="expand-outline" size={15} color="#64748B" />
-          </TouchableOpacity>
-
-          {/* Range tabs inside the card at the bottom */}
+          {/* Range tabs + expand button share one row, so expand sits right beside 1Y */}
           <View style={styles.rangeRow}>
             {RANGES.map((r) => (
               <TouchableOpacity
@@ -231,6 +224,14 @@ const StockDetailPage = ({ navigation, route }) => {
                 </Text>
               </TouchableOpacity>
             ))}
+
+            <TouchableOpacity
+              style={styles.expandBtn}
+              onPress={() => setChartExpanded(true)}
+              activeOpacity={0.8}
+            >
+              <Ionicons name="expand-outline" size={15} color={Colors.textSecondary} />
+            </TouchableOpacity>
           </View>
         </View>
 
@@ -266,7 +267,7 @@ const StockDetailPage = ({ navigation, route }) => {
             <Ionicons
               name={showDetails ? "chevron-up" : "chevron-down"}
               size={18}
-              color="#64748B"
+              color={Colors.textSecondary}
             />
           </TouchableOpacity>
 
@@ -287,7 +288,7 @@ const StockDetailPage = ({ navigation, route }) => {
                     ? formatPrice(candles[candles.length - 1]?.high)
                     : "—"
                 }
-                color="#10B981"
+                color={Colors.success}
               />
               <StatPill
                 label="Low"
@@ -296,7 +297,7 @@ const StockDetailPage = ({ navigation, route }) => {
                     ? formatPrice(candles[candles.length - 1]?.low)
                     : "—"
                 }
-                color="#EF4444"
+                color={Colors.danger}
               />
               <StatPill label="Close" value={formatPrice(cp)} />
             </View>
@@ -322,14 +323,14 @@ const StockDetailPage = ({ navigation, route }) => {
             <Ionicons
               name={showFundamentals ? "chevron-up" : "chevron-down"}
               size={18}
-              color="#64748B"
+              color={Colors.textSecondary}
             />
           </TouchableOpacity>
           {showFundamentals && fundamentalsLoading && (
-            <Text style={{ marginTop: 12 }}>Loading fundamentals...</Text>
+            <Text style={{ marginTop: moderateScale(12) }}>Loading fundamentals...</Text>
           )}
           {showFundamentals && error && (
-            <Text style={{ color: "red", marginTop: 12 }}>{error}</Text>
+            <Text style={{ color: "red", marginTop: moderateScale(12) }}>{error}</Text>
           )}
           {showFundamentals &&
             !fundamentalsLoading &&
@@ -420,7 +421,7 @@ const StockDetailPage = ({ navigation, route }) => {
               <View>
                 <Text style={styles.financialStatLabel}>PROFIT (CR)</Text>
 
-                <Text style={[styles.financialStatValue, { color: "#10B981" }]}>
+                <Text style={[styles.financialStatValue, { color: Colors.success }]}>
                   ₹
                   {selectedData?.profit != null
                     ? Number(selectedData.profit).toLocaleString("en-IN")
@@ -485,11 +486,11 @@ const StockDetailPage = ({ navigation, route }) => {
             initialSpacing={16}
             endSpacing={16}
             xAxisLabelTextStyle={{
-              marginTop: 12,
+              marginTop: moderateScale(12),
             }}
             yAxisTextStyle={{
-              color: "#94A3B8",
-              fontSize: 10,
+              color: Colors.textMuted,
+              fontSize: fontScale(10),
             }}
           />
         </View>
@@ -623,14 +624,14 @@ const StockDetailPage = ({ navigation, route }) => {
 
 // ── Sub-components ────────────────────────────────────────────────────────────
 
-const StatPill = ({ label, value, color = "#1E293B" }) => (
+const StatPill = ({ label, value, color = Colors.text }) => (
   <View style={styles.statPill}>
     <Text style={styles.statLabel}>{label}</Text>
     <Text style={[styles.statValue, { color }]}>{value}</Text>
   </View>
 );
 
-const AboutRow = ({ label, value, valueColor = "#1E293B", last = false }) => (
+const AboutRow = ({ label, value, valueColor = Colors.text, last = false }) => (
   <>
     <View style={styles.aboutRow}>
       <Text style={styles.aboutLabel}>{label}</Text>
@@ -642,101 +643,101 @@ const AboutRow = ({ label, value, valueColor = "#1E293B", last = false }) => (
 
 // ── Styles ────────────────────────────────────────────────────────────────────
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: "#F8FAFC" },
+  safe: { flex: 1, backgroundColor: Colors.background },
 
   // Header
   header: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 20,
-    paddingTop: 12,
-    paddingBottom: 10,
+    paddingHorizontal: moderateScale(20),
+    paddingTop: moderateScale(12),
+    paddingBottom: moderateScale(10),
   },
   backBtn: {
     width: 36,
     height: 36,
     borderRadius: 10,
-    backgroundColor: "#F1F5F9",
+    backgroundColor: Colors.divider,
     justifyContent: "center",
     alignItems: "center",
-    marginRight: 12,
+    marginRight: moderateScale(12),
   },
   headerTitle: {
     flex: 1,
-    fontSize: 18,
+    fontSize: fontScale(Typography.h4),
     fontWeight: "700",
-    color: "#1E293B",
+    color: Colors.text,
     letterSpacing: -0.3,
   },
   liveChip: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 5,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
+    gap: moderateScale(5),
+    paddingHorizontal: moderateScale(10),
+    paddingVertical: moderateScale(5),
     borderRadius: 20,
   },
   liveDot: { width: 6, height: 6, borderRadius: 3 },
-  liveText: { fontSize: 12, fontWeight: "600" },
+  liveText: { fontSize: fontScale(Typography.small), fontWeight: "600" },
 
-  scroll: { paddingBottom: 110 },
+  scroll: { paddingBottom: moderateScale(110) },
 
   // Company row
   companyRow: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 20,
-    paddingTop: 8,
-    paddingBottom: 12,
-    gap: 12,
+    paddingHorizontal: moderateScale(20),
+    paddingTop: moderateScale(8),
+    paddingBottom: moderateScale(12),
+    gap: moderateScale(12),
   },
   logoBox: {
     width: 44,
     height: 44,
     borderRadius: 12,
-    backgroundColor: "#F1F5F9",
+    backgroundColor: Colors.divider,
     justifyContent: "center",
     alignItems: "center",
     overflow: "hidden",
   },
   logo: { width: 36, height: 36, borderRadius: 8 },
-  logoFallback: { fontSize: 15, fontWeight: "700", color: "#3B82F6" },
-  companyName: { fontSize: 15, fontWeight: "600", color: "#1E293B" },
-  sectorLabel: { fontSize: 12, color: "#94A3B8", marginTop: 2 },
+  logoFallback: { fontSize: fontScale(Typography.body), fontWeight: "700", color: Colors.primary },
+  companyName: { fontSize: fontScale(Typography.body), fontWeight: "600", color: Colors.text },
+  sectorLabel: { fontSize: fontScale(Typography.small), color: Colors.textMuted, marginTop: moderateScale(2) },
 
   // Price
   priceRow: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 20,
-    paddingBottom: 20,
-    gap: 12,
+    paddingHorizontal: moderateScale(20),
+    paddingBottom: moderateScale(20),
+    gap: moderateScale(12),
   },
   ltp: {
-    fontSize: 32,
+    fontSize: fontScale(Typography.display),
     fontWeight: "700",
-    color: "#0F172A",
+    color: Colors.text,
     letterSpacing: -0.4,
     lineHeight: 38,
   },
   changeBadge: {
-    paddingHorizontal: 10,
-    paddingVertical: 5,
+    paddingHorizontal: moderateScale(10),
+    paddingVertical: moderateScale(5),
     borderRadius: 20,
   },
   changeBadgeText: {
-    fontSize: 13,
+    fontSize: fontScale(Typography.caption),
     fontWeight: "700",
   },
 
   // Chart card — white card like the reference image
   chartCard: {
-    marginHorizontal: 16,
+    marginHorizontal: moderateScale(16),
     borderRadius: 20,
-    paddingTop: 16,
-    paddingBottom: 12,
-    marginBottom: 16,
-    shadowColor: "#000",
+    paddingTop: moderateScale(16),
+    paddingBottom: moderateScale(12),
+    marginBottom: moderateScale(16),
+    shadowColor: Colors.black,
     shadowOpacity: 0.06,
     shadowRadius: 12,
     shadowOffset: { width: 0, height: 4 },
@@ -746,52 +747,49 @@ const styles = StyleSheet.create({
 
   // Expand button — floats at bottom-right inside chartCard above range tabs
   expandBtn: {
-    position: "absolute",
-    bottom: 54,
-    right: 12,
     width: 30,
     height: 30,
     borderRadius: 15,
-    backgroundColor: "#F1F5F9",
+    backgroundColor: Colors.divider,
     justifyContent: "center",
     alignItems: "center",
-    zIndex: 10,
-    shadowColor: "#000",
+    shadowColor: Colors.black,
     shadowOpacity: 0.08,
     shadowRadius: 4,
     elevation: 2,
   },
 
-  // Range tabs — inside card at bottom
+  // Range tabs + expand button — inside card at bottom, sharing one row
   rangeRow: {
     flexDirection: "row",
+    alignItems: "center",
     justifyContent: "center",
-    gap: 6,
-    paddingHorizontal: 16,
-    paddingTop: 12,
+    gap: moderateScale(6),
+    paddingHorizontal: moderateScale(16),
+    paddingTop: moderateScale(12),
   },
   rangeTab: {
-    paddingHorizontal: 14,
-    paddingVertical: 7,
+    paddingHorizontal: moderateScale(14),
+    paddingVertical: moderateScale(7),
     borderRadius: 20,
-    backgroundColor: "#F1F5F9",
+    backgroundColor: Colors.divider,
   },
   rangeLabel: {
-    fontSize: 12,
+    fontSize: fontScale(Typography.small),
     fontWeight: "600",
-    color: "#64748B",
+    color: Colors.textSecondary,
   },
   rangeLabelActive: {
-    color: "#FFFFFF",
+    color: Colors.white,
     fontWeight: "700",
   },
 
   // Stats row
   statsRow: {
     flexDirection: "row",
-    paddingHorizontal: 16,
-    gap: 8,
-    marginBottom: 16,
+    paddingHorizontal: moderateScale(16),
+    gap: moderateScale(8),
+    marginBottom: moderateScale(16),
   },
   dropdownHeader: {
     flexDirection: "row",
@@ -800,63 +798,63 @@ const styles = StyleSheet.create({
   },
   statPill: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.white,
     borderRadius: 14,
-    paddingVertical: 12,
-    paddingHorizontal: 8,
+    paddingVertical: moderateScale(12),
+    paddingHorizontal: moderateScale(8),
     alignItems: "center",
-    shadowColor: "#000",
+    shadowColor: Colors.black,
     shadowOpacity: 0.04,
     shadowRadius: 6,
     elevation: 1,
   },
   statLabel: {
-    fontSize: 10,
-    color: "#94A3B8",
+    fontSize: fontScale(10),
+    color: Colors.textMuted,
     fontWeight: "500",
-    marginBottom: 4,
+    marginBottom: moderateScale(4),
     textTransform: "uppercase",
     letterSpacing: 0.3,
   },
   statValue: {
-    fontSize: 12,
+    fontSize: fontScale(Typography.small),
     fontWeight: "700",
-    color: "#1E293B",
+    color: Colors.text,
   },
 
   // About card
   card: {
-    marginHorizontal: 16,
-    backgroundColor: "#FFFFFF",
+    marginHorizontal: moderateScale(16),
+    backgroundColor: Colors.white,
     borderRadius: 20,
-    padding: 16,
-    shadowColor: "#000",
+    padding: moderateScale(16),
+    shadowColor: Colors.black,
     shadowOpacity: 0.04,
     shadowRadius: 8,
     elevation: 2,
-    marginBottom: 12,
+    marginBottom: moderateScale(12),
   },
   cardTitle: {
-    fontSize: 15,
+    fontSize: fontScale(Typography.body),
     fontWeight: "700",
-    color: "#1E293B",
+    color: Colors.text,
   },
   aboutRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingVertical: 11,
+    paddingVertical: moderateScale(11),
   },
-  divider: { height: 1, backgroundColor: "#F8FAFC" },
-  aboutLabel: { fontSize: 13, color: "#94A3B8" },
-  aboutValue: { fontSize: 13, fontWeight: "600", color: "#1E293B" },
+  divider: { height: 1, backgroundColor: Colors.background },
+  aboutLabel: { fontSize: fontScale(Typography.caption), color: Colors.textMuted },
+  aboutValue: { fontSize: fontScale(Typography.caption), fontWeight: "600", color: Colors.text },
 
   // Credit
   credit: {
     textAlign: "center",
-    fontSize: 10,
-    color: "#CBD5E1",
-    marginBottom: 4,
+    fontSize: fontScale(10),
+    color: Colors.borderLight,
+    marginBottom: moderateScale(4),
   },
 
   // Action bar
@@ -866,92 +864,92 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     flexDirection: "row",
-    paddingHorizontal: 16,
-    paddingTop: 12,
-    paddingBottom: 28,
-    backgroundColor: "#FFFFFF",
+    paddingHorizontal: moderateScale(16),
+    paddingTop: moderateScale(12),
+    paddingBottom: moderateScale(28),
+    backgroundColor: Colors.white,
     borderTopWidth: 1,
-    borderTopColor: "#F1F5F9",
-    gap: 12,
+    borderTopColor: Colors.divider,
+    gap: moderateScale(12),
   },
   sellBtn: {
     flex: 1,
-    paddingVertical: 15,
+    paddingVertical: moderateScale(15),
     borderRadius: 14,
-    backgroundColor: "#FEE2E2",
+    backgroundColor: Colors.lossBg,
     alignItems: "center",
   },
   sellText: {
-    fontSize: 16,
+    fontSize: fontScale(Typography.bodyLarge),
     fontWeight: "700",
-    color: "#EF4444",
+    color: Colors.danger,
   },
   buyBtn: {
     flex: 1,
-    paddingVertical: 15,
+    paddingVertical: moderateScale(15),
     borderRadius: 14,
-    backgroundColor: "#3B82F6",
+    backgroundColor: Colors.primary,
     alignItems: "center",
   },
   buyText: {
-    fontSize: 16,
+    fontSize: fontScale(Typography.bodyLarge),
     fontWeight: "700",
-    color: "#FFFFFF",
+    color: Colors.white,
   },
 
   fundamentalsGrid: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
-    marginTop: 10,
+    marginTop: moderateScale(10),
   },
 
   fundamentalItem: {
     width: "48%",
-    marginBottom: 20,
+    marginBottom: moderateScale(20),
     borderRightWidth: 0.5,
-    borderColor: "#E2E8F0",
-    paddingRight: 10,
+    borderColor: Colors.border,
+    paddingRight: moderateScale(10),
   },
 
   fundamentalLabel: {
-    fontSize: 13,
-    color: "#64748B",
-    marginBottom: 6,
+    fontSize: fontScale(Typography.caption),
+    color: Colors.textSecondary,
+    marginBottom: moderateScale(6),
   },
 
   fundamentalValue: {
-    fontSize: 16,
+    fontSize: fontScale(Typography.bodyLarge),
     fontWeight: "700",
-    color: "#1E293B",
+    color: Colors.text,
   },
 
   financialToggleRow: {
     flexDirection: "row",
-    backgroundColor: "#F1F5F9",
+    backgroundColor: Colors.divider,
     borderRadius: 12,
-    padding: 4,
-    marginBottom: 20,
+    padding: moderateScale(4),
+    marginBottom: moderateScale(20),
   },
 
   financialToggleBtn: {
     flex: 1,
-    paddingVertical: 10,
+    paddingVertical: moderateScale(10),
     borderRadius: 10,
     alignItems: "center",
   },
 
   financialToggleBtnActive: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.white,
   },
 
   financialToggleText: {
-    color: "#64748B",
+    color: Colors.textSecondary,
     fontWeight: "600",
   },
 
   financialToggleTextActive: {
-    color: "#1E293B",
+    color: Colors.text,
     fontWeight: "700",
   },
 
@@ -959,32 +957,32 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 18,
+    marginBottom: moderateScale(18),
   },
 
   financialPeriod: {
-    fontSize: 13,
-    color: "#64748B",
+    fontSize: fontScale(Typography.caption),
+    color: Colors.textSecondary,
   },
 
   financialRevenue: {
-    fontSize: 16,
+    fontSize: fontScale(Typography.bodyLarge),
     fontWeight: "700",
-    color: "#1E293B",
+    color: Colors.text,
     textAlign: "right",
   },
 
   financialProfit: {
-    fontSize: 12,
-    color: "#94A3B8",
-    marginTop: 4,
+    fontSize: fontScale(Typography.small),
+    color: Colors.textMuted,
+    marginTop: moderateScale(4),
     textAlign: "right",
   },
 
   legendRow: {
     flexDirection: "row",
-    gap: 24,
-    marginBottom: 20,
+    gap: moderateScale(24),
+    marginBottom: moderateScale(20),
   },
 
   legendItem: {
@@ -996,81 +994,81 @@ const styles = StyleSheet.create({
     width: 10,
     height: 10,
     borderRadius: 3,
-    marginRight: 8,
+    marginRight: moderateScale(8),
   },
 
   legendText: {
-    fontSize: 12,
-    color: "#64748B",
+    fontSize: fontScale(Typography.small),
+    color: Colors.textSecondary,
     fontWeight: "600",
   },
 
   financialStatsRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 24,
+    marginBottom: moderateScale(24),
   },
 
   financialStatLabel: {
-    fontSize: 12,
-    color: "#94A3B8",
+    fontSize: fontScale(Typography.small),
+    color: Colors.textMuted,
     fontWeight: "700",
     letterSpacing: 1,
-    marginBottom: 6,
+    marginBottom: moderateScale(6),
   },
 
   financialStatValue: {
-    fontSize: 28,
+    fontSize: fontScale(Typography.h1),
     fontWeight: "800",
-    color: "#1E293B",
+    color: Colors.text,
   },
 
   periodSelectorRow: {
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: 10,
-    marginTop: 24,
+    gap: moderateScale(10),
+    marginTop: moderateScale(24),
   },
 
   periodChip: {
-    paddingHorizontal: 14,
-    paddingVertical: 8,
+    paddingHorizontal: moderateScale(14),
+    paddingVertical: moderateScale(8),
     borderRadius: 20,
-    backgroundColor: "#F1F5F9",
+    backgroundColor: Colors.divider,
   },
 
   periodChipText: {
-    color: "#64748B",
+    color: Colors.textSecondary,
     fontWeight: "600",
-    fontSize: 12,
+    fontSize: fontScale(Typography.small),
   },
 
   companyDescription: {
-    fontSize: 14,
+    fontSize: fontScale(14),
     lineHeight: 24,
-    color: "#475569",
-    marginBottom: 18,
+    color: Colors.textSecondary,
+    marginBottom: moderateScale(18),
   },
 
   sectionTitleRow: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 8,
-    marginBottom: 12,
+    gap: moderateScale(8),
+    marginBottom: moderateScale(12),
   },
 
   holdingQuarterRow: {
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: 10,
-    marginBottom: 24,
+    gap: moderateScale(10),
+    marginBottom: moderateScale(24),
   },
 
   holdingQuarterChip: {
-    paddingHorizontal: 14,
-    paddingVertical: 8,
+    paddingHorizontal: moderateScale(14),
+    paddingVertical: moderateScale(8),
     borderRadius: 20,
-    backgroundColor: "#F1F5F9",
+    backgroundColor: Colors.divider,
   },
 
   holdingQuarterChipActive: {
@@ -1078,48 +1076,48 @@ const styles = StyleSheet.create({
   },
 
   holdingQuarterText: {
-    color: "#64748B",
+    color: Colors.textSecondary,
     fontWeight: "600",
-    fontSize: 12,
+    fontSize: fontScale(Typography.small),
   },
 
   holdingQuarterTextActive: {
-    color: "#3B82F6",
+    color: Colors.primary,
     fontWeight: "700",
   },
 
   shareholdingItem: {
-    marginBottom: 24,
+    marginBottom: moderateScale(24),
   },
 
   shareholdingTopRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 10,
+    marginBottom: moderateScale(10),
   },
 
   shareholdingLabel: {
-    fontSize: 14,
-    color: "#1E293B",
+    fontSize: fontScale(14),
+    color: Colors.text,
     fontWeight: "500",
   },
 
   shareholdingValue: {
-    fontSize: 14,
-    color: "#1E293B",
+    fontSize: fontScale(14),
+    color: Colors.text,
     fontWeight: "700",
   },
 
   shareholdingTrack: {
     height: 10,
-    backgroundColor: "#E2E8F0",
+    backgroundColor: Colors.border,
     borderRadius: 10,
     overflow: "hidden",
   },
 
   shareholdingBar: {
     height: "100%",
-    backgroundColor: "#3B82F6",
+    backgroundColor: Colors.primary,
     borderRadius: 10,
   },
 });
@@ -1159,7 +1157,7 @@ const TradingViewModal = ({
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
+    * { margin: 0; padding: 0; box-sizing:border-box; }
     html, body { width:100%; height:100vh; background:#131722; overflow:hidden; }
     #tv_chart_container { width:100%; height:100vh; }
   </style>
@@ -1201,7 +1199,7 @@ const TradingViewModal = ({
       statusBarTranslucent
       onRequestClose={onClose}
     >
-      <StatusBar barStyle="light-content" backgroundColor="#131722" />
+      <StatusBar barStyle="light-content" backgroundColor={Colors.chartBg} />
       <SafeAreaView style={tvStyles.safe}>
         {/* ── Header ─────────────────────────────────────────────────── */}
         <View style={tvStyles.header}>
@@ -1231,14 +1229,14 @@ const TradingViewModal = ({
             onPress={onClose}
             activeOpacity={0.75}
           >
-            <Ionicons name="close" size={18} color="#94A3B8" />
+            <Ionicons name="close" size={18} color={Colors.textMuted} />
           </TouchableOpacity>
         </View>
 
         {/* ── TradingView Advanced Chart ──────────────────────────────── */}
         <WebView
           source={{ html }}
-          style={{ flex: 1, backgroundColor: "#131722" }}
+          style={{ flex: 1, backgroundColor: Colors.chartBg }}
           originWhitelist={["*"]}
           javaScriptEnabled
           domStorageEnabled
@@ -1256,60 +1254,60 @@ const TradingViewModal = ({
 const tvStyles = StyleSheet.create({
   safe: {
     flex: 1,
-    backgroundColor: "#131722",
+    backgroundColor: Colors.chartBg,
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    backgroundColor: "#131722",
+    paddingHorizontal: moderateScale(16),
+    paddingVertical: moderateScale(12),
+    backgroundColor: Colors.chartBg,
     borderBottomWidth: 1,
-    borderBottomColor: "#1E2433",
-    gap: 8,
+    borderBottomColor: Colors.chartSurface,
+    gap: moderateScale(8),
   },
   left: {
     flex: 1.2,
   },
   symbol: {
-    fontSize: 16,
+    fontSize: fontScale(Typography.bodyLarge),
     fontWeight: "800",
-    color: "#F8FAFC",
+    color: Colors.background,
     letterSpacing: -0.3,
   },
   name: {
-    fontSize: 11,
-    color: "#64748B",
-    marginTop: 1,
+    fontSize: fontScale(Typography.tiny),
+    color: Colors.textSecondary,
+    marginTop: moderateScale(1),
   },
   centre: {
     flex: 1,
     alignItems: "flex-end",
   },
   ltp: {
-    fontSize: 18,
+    fontSize: fontScale(Typography.h4),
     fontWeight: "800",
-    color: "#F8FAFC",
+    color: Colors.background,
     letterSpacing: -0.5,
   },
   badge: {
-    paddingHorizontal: 8,
-    paddingVertical: 3,
+    paddingHorizontal: moderateScale(8),
+    paddingVertical: moderateScale(3),
     borderRadius: 20,
-    marginTop: 4,
+    marginTop: moderateScale(4),
   },
   badgeText: {
-    fontSize: 11,
+    fontSize: fontScale(Typography.tiny),
     fontWeight: "700",
   },
   closeBtn: {
     width: 34,
     height: 34,
     borderRadius: 17,
-    backgroundColor: "#1E2433",
+    backgroundColor: Colors.chartSurface,
     justifyContent: "center",
     alignItems: "center",
-    marginLeft: 6,
+    marginLeft: moderateScale(6),
   },
 });
 

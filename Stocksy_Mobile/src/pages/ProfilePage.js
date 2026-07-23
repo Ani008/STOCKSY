@@ -15,6 +15,8 @@ import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
   
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { Colors, Typography, fontScale, moderateScale } from "../theme";
+
 const ProfilePage = ({ navigation }) => {
   const [user, setUser] = useState(null);
   const [aboutExpanded, setAboutExpanded] = useState(false);
@@ -91,7 +93,7 @@ const ProfilePage = ({ navigation }) => {
           onPress={() => navigation.navigate("OrderHistory")}
         >
           <View style={styles.cardLeft}>
-            <Ionicons name="bar-chart" size={22} color="#2563EB" />
+            <Ionicons name="bar-chart" size={22} color={Colors.primaryDark} />
 
             <View>
               <Text style={styles.cardTitle}>Trading</Text>
@@ -100,7 +102,7 @@ const ProfilePage = ({ navigation }) => {
             </View>
           </View>
 
-          <Ionicons name="chevron-forward" size={20} color="#94A3B8" />
+          <Ionicons name="chevron-forward" size={20} color={Colors.textMuted} />
         </TouchableOpacity>
         {/* Analytics */}
         <TouchableOpacity
@@ -111,7 +113,7 @@ const ProfilePage = ({ navigation }) => {
             <MaterialCommunityIcons
               name="chart-line"
               size={22}
-              color="#10B981"
+              color={Colors.success}
             />
 
             <View>
@@ -121,7 +123,7 @@ const ProfilePage = ({ navigation }) => {
             </View>
           </View>
 
-          <Ionicons name="chevron-forward" size={20} color="#94A3B8" />
+          <Ionicons name="chevron-forward" size={20} color={Colors.textMuted} />
         </TouchableOpacity>
         {/* About */}
         <TouchableOpacity
@@ -129,7 +131,7 @@ const ProfilePage = ({ navigation }) => {
           onPress={() => setAboutExpanded(!aboutExpanded)}
         >
           <View style={styles.cardLeft}>
-            <Ionicons name="information-circle" size={22} color="#F59E0B" />
+            <Ionicons name="information-circle" size={22} color={Colors.warning} />
 
             <Text style={styles.cardTitle}>About</Text>
           </View>
@@ -137,7 +139,7 @@ const ProfilePage = ({ navigation }) => {
           <Ionicons
             name={aboutExpanded ? "chevron-up" : "chevron-down"}
             size={20}
-            color="#94A3B8"
+            color={Colors.textMuted}
           />
         </TouchableOpacity>
         {aboutExpanded && (
@@ -162,7 +164,7 @@ const ProfilePage = ({ navigation }) => {
               style={[
                 styles.aboutText,
                 {
-                  marginTop: 10,
+                  marginTop: moderateScale(10),
                 },
               ]}
             >
@@ -172,7 +174,7 @@ const ProfilePage = ({ navigation }) => {
         )}
         {/* Logout */}
         <TouchableOpacity style={styles.logoutCard} onPress={handleLogout}>
-          <MaterialCommunityIcons name="logout" size={22} color="#EF4444" />
+          <MaterialCommunityIcons name="logout" size={22} color={Colors.danger} />
 
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>
@@ -184,29 +186,29 @@ const ProfilePage = ({ navigation }) => {
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
-    backgroundColor: "#F8FAFC",
+    backgroundColor: Colors.background,
   },
 
   scroll: {
-    padding: 20,
-    paddingBottom: 50,
+    padding: moderateScale(20),
+    paddingBottom: moderateScale(50),
   },
 
   title: {
-    fontSize: 28,
+    fontSize: fontScale(Typography.h1),
     fontWeight: "bold",
-    color: "#1E293B",
-    marginBottom: 20,
+    color: Colors.text,
+    marginBottom: moderateScale(20),
   },
 
   profileCard: {
     backgroundColor: "white",
     borderRadius: 24,
-    padding: 24,
+    padding: moderateScale(24),
     alignItems: "center",
-    marginBottom: 24,
+    marginBottom: moderateScale(24),
 
-    shadowColor: "#000",
+    shadowColor: Colors.black,
     shadowOpacity: 0.06,
     shadowRadius: 10,
     elevation: 4,
@@ -216,51 +218,51 @@ const styles = StyleSheet.create({
     width: 90,
     height: 90,
     borderRadius: 45,
-    marginBottom: 16,
+    marginBottom: moderateScale(16),
   },
 
   nameRow: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 8,
-    marginBottom: 6,
+    gap: moderateScale(8),
+    marginBottom: moderateScale(6),
   },
 
   name: {
-    fontSize: 24,
+    fontSize: fontScale(Typography.h2),
     fontWeight: "bold",
-    color: "#1E293B",
+    color: Colors.text,
   },
 
   badge: {
-    backgroundColor: "#DBEAFE",
-    paddingHorizontal: 10,
-    paddingVertical: 4,
+    backgroundColor: Colors.primaryLight,
+    paddingHorizontal: moderateScale(10),
+    paddingVertical: moderateScale(4),
     borderRadius: 999,
   },
 
   badgeText: {
-    color: "#2563EB",
+    color: Colors.primaryDark,
     fontWeight: "600",
-    fontSize: 12,
+    fontSize: fontScale(Typography.small),
   },
 
   email: {
-    color: "#64748B",
-    fontSize: 14,
+    color: Colors.textSecondary,
+    fontSize: fontScale(14),
   },
 
   card: {
     backgroundColor: "white",
     borderRadius: 18,
-    padding: 18,
-    marginBottom: 14,
+    padding: moderateScale(18),
+    marginBottom: moderateScale(14),
 
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
 
-    shadowColor: "#000",
+    shadowColor: Colors.black,
     shadowOpacity: 0.05,
     shadowRadius: 8,
     elevation: 3,
@@ -269,50 +271,50 @@ const styles = StyleSheet.create({
   cardLeft: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 12,
+    gap: moderateScale(12),
   },
 
   cardTitle: {
-    fontSize: 16,
+    fontSize: fontScale(Typography.bodyLarge),
     fontWeight: "700",
-    color: "#1E293B",
+    color: Colors.text,
   },
 
   cardSub: {
-    fontSize: 12,
-    color: "#64748B",
+    fontSize: fontScale(Typography.small),
+    color: Colors.textSecondary,
   },
 
   aboutContent: {
     backgroundColor: "white",
     borderRadius: 18,
-    padding: 18,
-    marginBottom: 14,
+    padding: moderateScale(18),
+    marginBottom: moderateScale(14),
   },
 
   aboutText: {
-    color: "#475569",
-    marginBottom: 6,
+    color: Colors.textSecondary,
+    marginBottom: moderateScale(6),
     lineHeight: 22,
   },
 
   logoutCard: {
     backgroundColor: "white",
     borderRadius: 18,
-    padding: 18,
+    padding: moderateScale(18),
 
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    gap: 10,
+    gap: moderateScale(10),
 
-    marginTop: 10,
+    marginTop: moderateScale(10),
   },
 
   logoutText: {
-    color: "#EF4444",
+    color: Colors.danger,
     fontWeight: "700",
-    fontSize: 16,
+    fontSize: fontScale(Typography.bodyLarge),
   },
 });
 

@@ -3,6 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import { useFocusEffect } from "@react-navigation/native";
 import {View, StyleSheet, ScrollView, TouchableOpacity, Alert, Text} from "react-native";
 import { Screen, Card, AppText, SectionHeader } from "../components";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
@@ -16,6 +17,8 @@ import { usePortfolio } from "../hooks/usePortfolio";
 
 // ─── Live market data hook ────────────────────────────────────────────────────
 import useMarketData from "../hooks/useMarketData";
+
+import { Colors, moderateScale } from "../theme";
 
 // ─── Sample data ─────────────────────────────────────────────────────────────
 const TOP_STOCKS = [
@@ -190,6 +193,8 @@ const calcChange = (ltp, cp) => {
 };
 
 const DashboardPage = ({ navigation }) => {
+  const insets = useSafeAreaInsets();
+
   // ── Live prices from WebSocket ──────────────────────────────────────────────
   const { prices, isConnected } = useMarketData();
   const { positions, totals, loading, refresh } = usePortfolio(prices);
@@ -296,106 +301,105 @@ const DashboardPage = ({ navigation }) => {
 
   return (
     <Screen
-      style={{ backgroundColor: "#3B82F6" }}
+      style={{ backgroundColor: Colors.background }}
       contentContainerStyle={styles.scroll}
+      edges={["left", "right", "bottom"]}
+      statusBarStyle="light-content"
     >
-      <View style={styles.headerBackground} />
+      <View style={[styles.heroSection, { paddingTop: insets.top + moderateScale(20) }]}>
+        {/* ── Top Header ──────────────────────────────────────────────────── */}
+        <View style={styles.headerRow}>
+          <View>
+            <AppText variant="caption" color="rgba(255,255,255,0.8)">
+              Good Morning!
+            </AppText>
 
-      {/* ── Top Header ──────────────────────────────────────────────────── */}
-      <View style={styles.headerRow}>
-        <View>
-          <AppText variant="caption" color="rgba(255,255,255,0.8)">
-            Good Morning!
-          </AppText>
-
-          <AppText variant="h2" color="white" style={{ marginTop: 2 }}>
-            Hi, {user?.username || "Trader"}
-          </AppText>
-        </View>
-        <View style={styles.headerIcons}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("Search")}
-            style={styles.iconButton}
-          >
-            <Ionicons name="search-outline" size={22} color="white" />
-          </TouchableOpacity>
-          <TouchableOpacity
-            name="logout"
-            onPress={confirmLogout}
-            style={styles.iconButton}
-          >
-            <MaterialCommunityIcons name="logout" size={22} color="white" />
-          </TouchableOpacity>
-        </View>
-      </View>
-
-      {/* ── Connection Status ───────────────────────────────────────────────
-      <View style={styles.wsDot}>
-        <View
-          style={[
-            styles.dot,
-            { backgroundColor: isConnected ? "#34D399" : "#EF4444" },
-          ]}
-        />
-        <AppText variant="small" color="white" style={{ fontWeight: "600" }}>
-          {isConnected ? "Live Market Data" : "Disconnected"}
-        </AppText>
-      </View> */}
-
-      {/* ── Search Button (duplicate for easy access) ─────────────────────────        
+            <AppText variant="h2" color="white" style={{ marginTop: moderateScale(2) }}>
+              Hi, {user?.username || "Trader"}
+            </AppText>
+          </View>
+          <View style={styles.headerIcons}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Search")}
+              style={styles.iconButton}
             >
               <Ionicons name="search-outline" size={22} color="white" />
+            </TouchableOpacity>
+            <TouchableOpacity
+              name="logout"
+              onPress={confirmLogout}
+              style={styles.iconButton}
+            >
+              <MaterialCommunityIcons name="logout" size={22} color="white" />
             </TouchableOpacity>
           </View>
         </View>
 
-        {/* ── Main Asset Card ─────────────────────────────────────────────── */}
-      <TouchableOpacity onPress={() => navigation.navigate("Portfolio")}>
-        <Card style={styles.mainCard}>
-          <View>
-            <AppText variant="caption" color="#64748B">
-              Total Assets
-            </AppText>
-            <View style={styles.priceRow}>
-              <AppText variant="h1">
-                ₹{totals.portfolioValue?.toLocaleString("en-IN") ?? "0"}
-              </AppText>
+        {/* ── Connection Status ───────────────────────────────────────────────
+        <View style={styles.wsDot}>
+          <View
+            style={[
+              styles.dot,
+              { backgroundColor: isConnected ? Colors.gain : Colors.danger },
+            ]}
+          />
+          <AppText variant="small" color="white" style={{ fontWeight: "600" }}>
+            {isConnected ? "Live Market Data" : "Disconnected"}
+          </AppText>
+        </View> */}
 
-              <View style={styles.changeChip}>
-                <AppText
-                  variant="caption"
-                  color="#10B981"
-                  style={{ fontWeight: "700" }}
-                >
-                  ▲ 3.87% (24h)
+        {/* ── Main Asset Card ─────────────────────────────────────────────── */}
+        <TouchableOpacity onPress={() => navigation.navigate("Portfolio")}>
+          <Card style={styles.mainCard}>
+            <View>
+              <AppText variant="caption" color={Colors.textSecondary}>
+                Total Assets
+              </AppText>
+              <View style={styles.priceRow}>
+                <AppText variant="h1">
+                  ₹{totals.portfolioValue?.toLocaleString("en-IN") ?? "0"}
                 </AppText>
+
+                <View style={styles.changeChip}>
+                  <AppText
+                    variant="caption"
+                    color={Colors.success}
+                    style={{ fontWeight: "700" }}
+                  >
+                    ▲ 3.87% (24h)
+                  </AppText>
+                </View>
+              </View>
+              <View style={styles.miniCardsRow}>
+                {positions?.length > 0 ? (
+                  positions
+                    .slice(0, 2)
+                    .map((position) => (
+                      <MiniHoldingCard
+                        key={`${position.instrument_key}:${position.product_type}`}
+                        ticker={position.symbol}
+                        name={`₹${position.ltp?.toLocaleString("en-IN")}`}
+                        change={`${position.unrealisedPct?.toFixed(2)}%`}
+                        isPositive={position.unrealisedPnl >= 0}
+                        logoUrl={`https://img.logo.dev/${
+                          COMPANY_DOMAINS[position.symbol]
+                        }?token=pk_Bym4BAakTJudMK4MGnfpnw`}
+                      />
+                    ))
+                ) : (
+                  <AppText
+                    variant="caption"
+                    color={Colors.textSecondary}
+                    style={styles.noHoldingsText}
+                  >
+                    No Holdings Yet
+                  </AppText>
+                )}
               </View>
             </View>
-            <View style={styles.miniCardsRow}>
-              {positions?.length > 0 ? (
-                positions
-                  .slice(0, 2)
-                  .map((position) => (
-                    <MiniHoldingCard
-                      key={`${position.instrument_key}:${position.product_type}`}
-                      ticker={position.symbol}
-                      name={`₹${position.ltp?.toLocaleString("en-IN")}`}
-                      change={`${position.unrealisedPct?.toFixed(2)}%`}
-                      isPositive={position.unrealisedPnl >= 0}
-                      logoUrl={`https://img.logo.dev/${
-                        COMPANY_DOMAINS[position.symbol]
-                      }?token=pk_Bym4BAakTJudMK4MGnfpnw`}
-                    />
-                  ))
-              ) : (
-                <AppText variant="caption" color="#64748B">
-                  No Holdings Yet
-                </AppText>
-              )}
-            </View>
-          </View>
-        </Card>
-      </TouchableOpacity>
+          </Card>
+        </TouchableOpacity>
+      </View>
 
       {/* ── Index Section — LIVE DATA ────────────────────────────────────── */}
       <SectionHeader title="Index" />
@@ -452,31 +456,31 @@ const DashboardPage = ({ navigation }) => {
 const styles = StyleSheet.create({
 
 
-  headerBackground: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    height: 300, // instead of 240
-    backgroundColor: "#3B82F6",
+  heroSection: {
+    marginHorizontal: -moderateScale(20),
+    marginTop: -moderateScale(20),
+    paddingHorizontal: moderateScale(20),
+    paddingTop: moderateScale(20),
+    paddingBottom: moderateScale(20),
+    backgroundColor: Colors.primary,
     borderBottomLeftRadius: 32,
     borderBottomRightRadius: 32,
   },
   scroll: {
-    paddingHorizontal: 20,
-    paddingTop: 20,
-    paddingBottom: 110,
-    backgroundColor: "#F8FAFC",
+    paddingHorizontal: moderateScale(20),
+    paddingTop: moderateScale(20),
+    paddingBottom: moderateScale(110),
+    backgroundColor: Colors.background,
   },
 
   headerRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 22,
+    marginBottom: moderateScale(22),
   },
 
-  headerIcons: { flexDirection: "row", gap: 12, alignItems: "center" },
+  headerIcons: { flexDirection: "row", gap: moderateScale(12), alignItems: "center" },
   iconButton: {
     width: 40,
     height: 40,
@@ -492,19 +496,19 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: "#EF4444",
+    backgroundColor: Colors.danger,
     borderWidth: 1.5,
-    borderColor: "#3B82F6",
+    borderColor: Colors.primary,
   },
 
   // ── Live indicator ──────────────────────────────────────────────────────────
   wsDot: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 4,
+    gap: moderateScale(4),
     backgroundColor: "rgba(255,255,255,0.15)",
-    paddingHorizontal: 10,
-    paddingVertical: 6,
+    paddingHorizontal: moderateScale(10),
+    paddingVertical: moderateScale(6),
     borderRadius: 20,
   },
   dot: { width: 7, height: 7, borderRadius: 4 },
@@ -512,38 +516,39 @@ const styles = StyleSheet.create({
   mainCard: {
     backgroundColor: "white",
     borderRadius: 24,
-    padding: 20,
-    shadowColor: "#000",
+    padding: moderateScale(20),
+    shadowColor: Colors.black,
     shadowOpacity: 0.08,
     shadowRadius: 12,
     shadowOffset: { width: 0, height: 4 },
     elevation: 5,
-    marginBottom: 28,
+    marginBottom: moderateScale(28),
   },
   priceRow: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 18,
+    marginBottom: moderateScale(18),
   },
   changeChip: {
     marginLeft: "auto",
-    backgroundColor: "#ECFDF5",
-    paddingHorizontal: 10,
-    paddingVertical: 4,
+    backgroundColor: Colors.successBg,
+    paddingHorizontal: moderateScale(10),
+    paddingVertical: moderateScale(4),
     borderRadius: 20,
   },
 
-  miniCardsRow: { flexDirection: "row", gap: 10, marginBottom: 18 },
+  miniCardsRow: { flexDirection: "row", gap: moderateScale(10), marginBottom: moderateScale(18), minHeight: 58, alignItems: "center" },
+  noHoldingsText: { paddingVertical: moderateScale(18) },
 
   sectionHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 14,
-    marginTop: 24,
+    marginBottom: moderateScale(14),
+    marginTop: moderateScale(24),
   },
 
-  horizontalScroll: { gap: 14, paddingRight: 4, marginBottom: 28 },
+  horizontalScroll: { gap: moderateScale(14), paddingRight: moderateScale(4), marginBottom: moderateScale(28) },
 });
 
 export default DashboardPage;

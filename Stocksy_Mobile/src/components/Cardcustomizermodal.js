@@ -14,6 +14,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import DemoCard, { CARD_SKINS } from "./DemoCard";
 
+import { Colors, Typography, fontScale, moderateScale } from "../theme";
+
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 const CARD_SPACING = 20;
 const CARD_WIDTH = SCREEN_WIDTH - 80;
@@ -58,7 +60,7 @@ const CardCustomizerModal = ({
     <Modal visible={visible} animationType="slide" statusBarTranslucent>
       <StatusBar barStyle="light-content" />
       <LinearGradient
-        colors={["#0A0A0F", "#0D1117", "#111827"]}
+        colors={[Colors.chartBg, "#0D1117", Colors.text]}
         style={styles.container}
       >
         {/* Header */}
@@ -73,7 +75,7 @@ const CardCustomizerModal = ({
               colors={[activeSkin.accentColor, activeSkin.accentColor + "CC"]}
               style={styles.confirmGradient}
             >
-              <Ionicons name="checkmark" size={20} color="#FFF" />
+              <Ionicons name="checkmark" size={20} color={Colors.white} />
             </LinearGradient>
           </TouchableOpacity>
         </View>
@@ -196,7 +198,7 @@ const CardCustomizerModal = ({
             end={{ x: 1, y: 0 }}
             style={styles.applyGradient}
           >
-            <Ionicons name="checkmark-circle-outline" size={20} color="#FFF" style={{ marginRight: 8 }} />
+            <Ionicons name="checkmark-circle-outline" size={20} color={Colors.white} style={{ marginRight: moderateScale(8) }} />
             <Text style={styles.applyText}>Apply "{activeSkin.label}"</Text>
           </LinearGradient>
         </TouchableOpacity>
@@ -208,14 +210,14 @@ const CardCustomizerModal = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 60,
+    paddingTop: moderateScale(60),
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 24,
-    marginBottom: 6,
+    paddingHorizontal: moderateScale(24),
+    marginBottom: moderateScale(6),
   },
   closeBtn: {
     width: 38,
@@ -226,8 +228,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   headerTitle: {
-    color: "#FFFFFF",
-    fontSize: 17,
+    color: Colors.white,
+    fontSize: fontScale(17),
     fontWeight: "700",
     letterSpacing: 0.3,
   },
@@ -244,16 +246,16 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     color: "rgba(255,255,255,0.35)",
-    fontSize: 12,
+    fontSize: fontScale(Typography.small),
     textAlign: "center",
     letterSpacing: 0.5,
-    marginBottom: 32,
+    marginBottom: moderateScale(32),
   },
   cardScroll: {
     flexGrow: 0,
   },
   scrollContent: {
-    paddingHorizontal: 20,
+    paddingHorizontal: moderateScale(20),
   },
   cardWrapper: {
     borderRadius: 24,
@@ -263,8 +265,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 24,
-    gap: 6,
+    marginTop: moderateScale(24),
+    gap: moderateScale(6),
   },
   dot: {
     width: 6,
@@ -274,19 +276,19 @@ const styles = StyleSheet.create({
   },
   skinName: {
     textAlign: "center",
-    fontSize: 20,
+    fontSize: fontScale(Typography.h3),
     fontWeight: "800",
     letterSpacing: 0.5,
-    marginTop: 16,
-    marginBottom: 24,
+    marginTop: moderateScale(16),
+    marginBottom: moderateScale(24),
   },
   swatchRow: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    gap: 12,
-    marginHorizontal: 24,
-    marginBottom: 32,
+    gap: moderateScale(12),
+    marginHorizontal: moderateScale(24),
+    marginBottom: moderateScale(32),
   },
   swatchWrapper: {
     alignItems: "center",
@@ -303,11 +305,11 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: -5,
     right: -2,
-    backgroundColor: "#0A0A0F",
+    backgroundColor: Colors.chartBg,
     borderRadius: 7,
   },
   applyBtn: {
-    marginHorizontal: 24,
+    marginHorizontal: moderateScale(24),
     borderRadius: 16,
     overflow: "hidden",
   },
@@ -315,12 +317,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 16,
+    paddingVertical: moderateScale(16),
     borderRadius: 16,
   },
   applyText: {
-    color: "#FFF",
-    fontSize: 16,
+    color: Colors.white,
+    fontSize: fontScale(Typography.bodyLarge),
     fontWeight: "700",
     letterSpacing: 0.3,
   },

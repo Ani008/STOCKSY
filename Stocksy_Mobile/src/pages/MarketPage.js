@@ -24,22 +24,24 @@ import { SECTOR_COLORS } from '../hooks/usePortfolio';
 
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { Colors, Typography, fontScale, moderateScale } from "../theme";
+
 // ─── Design tokens — matches PortfolioPage / StockDetailPage, not the
 // generic theme/Card system, so Markets sits visually with the rest of
 // the live-data screens. ──────────────────────────────────────────────
 const C = {
-  blue: '#1A56DB',
-  blueDark: '#1240A8',
-  green: '#059669',
-  greenBg: '#D1FAE5',
-  red: '#DC2626',
-  redBg: '#FEE2E2',
-  bg: '#F0F4FF',
-  white: '#FFFFFF',
-  textPri: '#0F172A',
-  textSec: '#64748B',
-  textTer: '#94A3B8',
-  border: '#E2E8F0',
+  blue: Colors.primaryDark,
+  blueDark: Colors.primaryDark,
+  green: Colors.success,
+  greenBg: Colors.gainBg,
+  red: Colors.dangerDark,
+  redBg: Colors.lossBg,
+  bg: Colors.primaryLight,
+  white: Colors.white,
+  textPri: Colors.text,
+  textSec: Colors.textSecondary,
+  textTer: Colors.textMuted,
+  border: Colors.border,
 };
 
 // ─── Utility helpers — same conventions as PortfolioPage.js ──────────────────
@@ -99,7 +101,7 @@ function StockListCard({ title, icon, data, onPressItem }) {
     <View>
       <View style={styles.cardHeaderRow}>
         {icon ? (
-          <Ionicons name={icon} size={14} color={C.textSec} style={{ marginRight: 6 }} />
+          <Ionicons name={icon} size={14} color={C.textSec} style={{ marginRight: moderateScale(6) }} />
         ) : null}
         <Text style={styles.sectionLabel}>{title}</Text>
       </View>
@@ -122,7 +124,7 @@ function StockListCard({ title, icon, data, onPressItem }) {
               </View>
               <View style={{ alignItems: 'flex-end' }}>
                 <Text style={styles.listPrice}>{fmt(item.ltp, 2)}</Text>
-                <Text style={{ color: isUp ? C.green : C.red, fontWeight: '600', fontSize: 12 }}>
+                <Text style={{ color: isUp ? C.green : C.red, fontWeight: '600', fontSize: fontScale(Typography.small) }}>
                   {fmtPct(item.changePct)}
                 </Text>
               </View>
@@ -166,7 +168,7 @@ function SectorPerformanceCard({ sectors }) {
               <View style={[styles.sectorDot, { backgroundColor: s.color }]} />
               <Text style={styles.listSymbol}>{s.name}</Text>
             </View>
-            <Text style={{ color: isUp ? C.green : C.red, fontWeight: '600', fontSize: 13 }}>
+            <Text style={{ color: isUp ? C.green : C.red, fontWeight: '600', fontSize: fontScale(Typography.caption) }}>
               {fmtPct(s.changePct)}
             </Text>
           </View>
@@ -323,7 +325,7 @@ export default function MarketPage({ navigation }) {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: C.blue,
+    backgroundColor: C.bg,
   },
   container: {
     flex: 1,
@@ -331,26 +333,26 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: C.blue,
-    paddingHorizontal: 16,
-    paddingTop: 8,
-    paddingBottom: 20,
+    paddingHorizontal: moderateScale(16),
+    paddingTop: moderateScale(8),
+    paddingBottom: moderateScale(20),
     borderBottomLeftRadius: 24,
     borderBottomRightRadius: 24,
   },
   headerTopRow: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 14,
+    marginBottom: moderateScale(14),
   },
   headerTitle: {
     color: C.white,
-    fontSize: 20,
+    fontSize: fontScale(Typography.h3),
     fontWeight: '600',
   },
   moodBanner: {
     backgroundColor: 'rgba(255,255,255,0.14)',
     borderRadius: 16,
-    padding: 14,
+    padding: moderateScale(14),
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -362,56 +364,56 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(255,255,255,0.35)',
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 12,
+    marginRight: moderateScale(12),
   },
   moodPercentage: {
     color: C.white,
-    fontSize: 14,
+    fontSize: fontScale(14),
     fontWeight: '600',
   },
   moodLabel: {
     color: C.white,
-    fontSize: 14,
+    fontSize: fontScale(14),
     fontWeight: '500',
-    marginBottom: 2,
+    marginBottom: moderateScale(2),
   },
   moodSubtext: {
     color: 'rgba(255,255,255,0.75)',
-    fontSize: 12,
+    fontSize: fontScale(Typography.small),
   },
   loadingBox: {
-    paddingVertical: 60,
+    paddingVertical: moderateScale(60),
     alignItems: 'center',
     justifyContent: 'center',
   },
   loadingText: {
-    marginTop: 12,
-    fontSize: 13,
+    marginTop: moderateScale(12),
+    fontSize: fontScale(Typography.caption),
     color: C.textSec,
   },
   body: {
-    paddingHorizontal: 14,
-    paddingTop: 16,
-    paddingBottom: 24,
-    gap: 14,
+    paddingHorizontal: moderateScale(14),
+    paddingTop: moderateScale(16),
+    paddingBottom: moderateScale(24),
+    gap: moderateScale(14),
   },
   sectionLabel: {
-    fontSize: 15,
+    fontSize: fontScale(Typography.body),
     fontWeight: '600',
     color: C.textPri,
   },
   cardHeaderRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 8,
-    paddingHorizontal: 2,
+    marginBottom: moderateScale(8),
+    paddingHorizontal: moderateScale(2),
   },
   indicesGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    marginTop: 8,
-    marginBottom: 14,
+    marginTop: moderateScale(8),
+    marginBottom: moderateScale(14),
   },
   indexCard: {
     width: '48.5%',
@@ -419,22 +421,22 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: 0.5,
     borderColor: C.border,
-    padding: 12,
-    marginBottom: 10,
+    padding: moderateScale(12),
+    marginBottom: moderateScale(10),
   },
   indexSymbol: {
-    fontSize: 12,
+    fontSize: fontScale(Typography.small),
     color: C.textSec,
-    marginBottom: 4,
+    marginBottom: moderateScale(4),
   },
   indexValue: {
-    fontSize: 15,
+    fontSize: fontScale(Typography.body),
     fontWeight: '600',
     color: C.textPri,
-    marginBottom: 2,
+    marginBottom: moderateScale(2),
   },
   indexChange: {
-    fontSize: 12,
+    fontSize: fontScale(Typography.small),
     fontWeight: '600',
   },
   card: {
@@ -442,28 +444,28 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: 0.5,
     borderColor: C.border,
-    padding: 12,
+    padding: moderateScale(12),
   },
   listRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 9,
+    paddingVertical: moderateScale(9),
     borderBottomWidth: 0.5,
     borderBottomColor: C.border,
   },
   listSymbol: {
-    fontSize: 13,
+    fontSize: fontScale(Typography.caption),
     fontWeight: '600',
     color: C.textPri,
   },
   listName: {
-    fontSize: 11,
+    fontSize: fontScale(Typography.tiny),
     color: C.textTer,
-    marginTop: 1,
+    marginTop: moderateScale(1),
   },
   listPrice: {
-    fontSize: 13,
+    fontSize: fontScale(Typography.caption),
     fontWeight: '600',
     color: C.textPri,
   },
@@ -472,13 +474,13 @@ const styles = StyleSheet.create({
     height: 8,
     borderRadius: 4,
     overflow: 'hidden',
-    marginTop: 8,
-    marginBottom: 10,
+    marginTop: moderateScale(8),
+    marginBottom: moderateScale(10),
   },
   sectorDot: {
     width: 8,
     height: 8,
     borderRadius: 4,
-    marginRight: 8,
+    marginRight: moderateScale(8),
   },
 });

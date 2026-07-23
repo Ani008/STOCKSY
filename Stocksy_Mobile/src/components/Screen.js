@@ -14,12 +14,14 @@ export default function Screen({
   scroll = true,
   style,
   contentContainerStyle,
+  edges,
+  statusBarStyle = "dark-content",
 }) {
   if (scroll) {
     return (
-      <SafeAreaView style={[Layout.screen, style]}>
+      <SafeAreaView style={[Layout.screen, style]} edges={edges}>
         <StatusBar
-          barStyle="dark-content"
+          barStyle={statusBarStyle}
           backgroundColor="transparent"
           translucent
         />
@@ -38,7 +40,7 @@ export default function Screen({
   }
 
   return (
-    <SafeAreaView style={[Layout.screen, style]}>
+    <SafeAreaView style={[Layout.screen, style]} edges={edges}>
       <View
         style={[
           Layout.content,

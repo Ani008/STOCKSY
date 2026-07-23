@@ -1,4 +1,6 @@
 import React from "react";
+import { Colors, Typography, fontScale, moderateScale } from "../theme";
+
 import {
   TouchableOpacity,
   Text,
@@ -50,7 +52,7 @@ const Button = ({
     >
       {loading ? (
         <ActivityIndicator
-          color={variant === "outline" ? "#2563EB" : "#FFFFFF"}
+          color={variant === "outline" ? Colors.primaryDark : Colors.white}
           size="small"
         />
       ) : (
@@ -62,40 +64,40 @@ const Button = ({
 
 const styles = StyleSheet.create({
   base: {
-    paddingVertical: 14,
-    paddingHorizontal: 24,
+    paddingVertical: moderateScale(14),
+    paddingHorizontal: moderateScale(24),
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
     minHeight: 50,
   },
   primary: {
-    backgroundColor: "#2563EB",
+    backgroundColor: Colors.primaryDark,
   },
   secondary: {
-    backgroundColor: "#1E40AF",
+    backgroundColor: Colors.secondary,
   },
   outline: {
     backgroundColor: "transparent",
     borderWidth: 1.5,
-    borderColor: "#2563EB",
+    borderColor: Colors.primaryDark,
   },
   danger: {
-    backgroundColor: "#EF4444",
+    backgroundColor: Colors.danger,
   },
   disabled: {
     opacity: 0.5,
   },
   text: {
-    fontSize: 15,
+    fontSize: fontScale(Typography.body),
     fontWeight: "600",
     letterSpacing: 0.3,
   },
   solidText: {
-    color: "#FFFFFF",
+    color: Colors.white,
   },
   outlineText: {
-    color: "#2563EB",
+    color: Colors.primaryDark,
   },
 });
 

@@ -2,6 +2,8 @@ import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
+import { Colors, Typography, fontScale, moderateScale } from "../theme";
+
 /**
  * MiniHoldingCard — Small holding chip inside the Total Assets card.
  *
@@ -21,7 +23,7 @@ const MiniHoldingCard = ({
   isPositive = true,
   logoUrl,
   iconName = "bar-chart-outline",
-  iconColor = "#1E293B",
+  iconColor = Colors.text,
 }) => {
   return (
     <View style={styles.card}>
@@ -33,12 +35,17 @@ const MiniHoldingCard = ({
         )}
       </View>
       <View style={styles.text}>
-        <Text style={styles.ticker}>{ticker}</Text>
-        <Text style={styles.name}>{name}</Text>
+        <Text style={styles.ticker} numberOfLines={1} ellipsizeMode="tail">
+          {ticker}
+        </Text>
+        <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">
+          {name}
+        </Text>
       </View>
       {change ? (
         <Text
-          style={[styles.change, { color: isPositive ? "#10B981" : "#EF4444" }]}
+          style={[styles.change, { color: isPositive ? Colors.success : Colors.danger }]}
+          numberOfLines={1}
         >
           {change}
         </Text>
@@ -53,16 +60,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
 
-    padding: 12,
+    padding: moderateScale(12),
 
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.white,
 
     borderRadius: 14,
 
     borderWidth: 1,
-    borderColor: "#F1F5F9",
+    borderColor: Colors.divider,
 
-    shadowColor: "#0F172A",
+    shadowColor: Colors.text,
     shadowOffset: {
       width: 0,
       height: 3,
@@ -77,15 +84,15 @@ const styles = StyleSheet.create({
     height: 34,
     borderRadius: 10,
 
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.white,
 
     justifyContent: "center",
     alignItems: "center",
 
     borderWidth: 1,
-    borderColor: "#F1F5F9",
+    borderColor: Colors.divider,
 
-    shadowColor: "#000",
+    shadowColor: Colors.black,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -101,21 +108,21 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
   },
-  text: { flex: 1, marginLeft: 8 },
+  text: { flex: 1, minWidth: 0, marginLeft: moderateScale(8) },
   // Suggested Style Changes
   ticker: {
-    fontSize: 10,
+    fontSize: fontScale(10),
     fontWeight: "600", // Slightly less heavy than 'bold'
-    color: "#64748B", // Soft slate/gray color
+    color: Colors.textSecondary, // Soft slate/gray color
     textTransform: "uppercase",
     letterSpacing: 0.5,
   },
   name: {
-    fontSize: 13, // Bumped up slightly
-    color: "#000000", // True black for importance
+    fontSize: fontScale(Typography.caption), // Bumped up slightly
+    color: Colors.black, // True black for importance
     fontWeight: "700", // Heavy bold
   },
-  change: { fontSize: 10, fontWeight: "600" },
+  change: { fontSize: fontScale(10), fontWeight: "600", flexShrink: 0, marginLeft: moderateScale(4) },
 });
 
 export default MiniHoldingCard;

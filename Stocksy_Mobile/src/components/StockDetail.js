@@ -5,19 +5,21 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import Svg, { Rect, Line } from "react-native-svg";
 
-const GREEN = "#00c853";
-const RED = "#ff3d00";
-const TEXT_SEC = "#6B7280";
+import { Colors, Typography, fontScale, moderateScale } from "../theme";
+
+const GREEN = Colors.gain;
+const RED = Colors.danger;
+const TEXT_SEC = Colors.textSecondary;
 
 export default function StockDetail({ stock, onBack }) {
   // Use the Candlestick logic here...
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: Colors.white}}>
        {/* All the Chart UI code goes here */}
-       <TouchableOpacity onPress={onBack} style={{padding: 16}}>
-          <Ionicons name="arrow-back" size={24} color="#000" />
+       <TouchableOpacity onPress={onBack} style={{padding: moderateScale(16)}}>
+          <Ionicons name="arrow-back" size={24} color={Colors.black} />
        </TouchableOpacity>
-       <Text style={{fontSize: 24, padding: 16}}>{stock.name}</Text>
+       <Text style={{fontSize: fontScale(Typography.h2), padding: moderateScale(16)}}>{stock.name}</Text>
        {/* ... rest of your chart code ... */}
     </SafeAreaView>
   );

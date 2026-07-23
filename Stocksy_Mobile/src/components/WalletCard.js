@@ -2,6 +2,8 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
+import { Colors, Typography, fontScale, moderateScale } from "../theme";
+
 /**
  * WalletCard
  * Premium reusable card for a single sub-wallet.
@@ -18,7 +20,7 @@ const WalletCard = ({
   name,
   balance,
   iconName = "wallet-outline",
-  iconColor = "#00D09C",
+  iconColor = Colors.gain,
   style,
   onPressActions,
 }) => {
@@ -45,7 +47,7 @@ const WalletCard = ({
         onPress={onPressActions}
         hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
       >
-        <Ionicons name="ellipsis-vertical" size={18} color="#64748B" />
+        <Ionicons name="ellipsis-vertical" size={18} color={Colors.textSecondary} />
       </TouchableOpacity>
     </View>
   );
@@ -55,12 +57,12 @@ const styles = StyleSheet.create({
   card: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#F8FAFC",
+    backgroundColor: Colors.background,
     borderWidth: 1,
-    borderColor: "#E2E8F0",
+    borderColor: Colors.border,
     borderRadius: 14,
-    padding: 16,
-    marginBottom: 10,
+    padding: moderateScale(16),
+    marginBottom: moderateScale(10),
     justifyContent: "space-between",
   },
   iconBox: {
@@ -69,19 +71,19 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     justifyContent: "center",
     alignItems: "center",
-    marginRight: 14,
+    marginRight: moderateScale(14),
   },
   info: { flex: 1 },
   walletName: {
-    fontSize: 14,
+    fontSize: fontScale(14),
     fontWeight: "600",
-    color: "#1E293B",
-    marginBottom: 3,
+    color: Colors.text,
+    marginBottom: moderateScale(3),
     letterSpacing: 0.1,
   },
   walletBalance: {
-    fontSize: 13,
-    color: "#475569",
+    fontSize: fontScale(Typography.caption),
+    color: Colors.textSecondary,
     fontWeight: "500",
   },
   leftSection: {

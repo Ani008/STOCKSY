@@ -1,11 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 
-import {
-  Colors,
-  Radius,
-  Shadows,
-} from "../theme";
+import { Colors, Radius, Shadows, moderateScale } from "../theme";
 
 export default function Card({
   children,
@@ -17,7 +13,7 @@ export default function Card({
         {
           backgroundColor: Colors.card,
           borderRadius: Radius.xl,
-          padding: 16,
+          padding: moderateScale(16),
           ...Shadows.card,
         },
         style,

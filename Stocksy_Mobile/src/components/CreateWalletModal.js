@@ -14,6 +14,8 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
+import { Colors, Typography, fontScale, moderateScale } from "../theme";
+
 /**
  * CreateWalletModal
  * A bottom-sheet-style modal for creating a new sub-wallet.
@@ -79,13 +81,13 @@ const CreateWalletModal = ({ visible, onClose, onSubmit, availableBalance = 0, l
               <View style={styles.header}>
                 <Text style={styles.title}>Create Wallet</Text>
                 <TouchableOpacity onPress={handleClose} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
-                  <Ionicons name="close" size={22} color="#64748B" />
+                  <Ionicons name="close" size={22} color={Colors.textSecondary} />
                 </TouchableOpacity>
               </View>
 
               {/* Available balance hint */}
               <View style={styles.balanceHint}>
-                <Ionicons name="information-circle-outline" size={14} color="#64748B" />
+                <Ionicons name="information-circle-outline" size={14} color={Colors.textSecondary} />
                 <Text style={styles.balanceHintText}>
                   Available demo balance: <Text style={styles.balanceValue}>₹{formattedAvailable}</Text>
                 </Text>
@@ -96,7 +98,7 @@ const CreateWalletModal = ({ visible, onClose, onSubmit, availableBalance = 0, l
               <TextInput
                 style={styles.input}
                 placeholder="e.g. Swing Trading, Long Term"
-                placeholderTextColor="#94A3B8"
+                placeholderTextColor={Colors.textMuted}
                 value={walletName}
                 onChangeText={(t) => { setWalletName(t); setError(''); }}
                 autoCapitalize="words"
@@ -108,7 +110,7 @@ const CreateWalletModal = ({ visible, onClose, onSubmit, availableBalance = 0, l
               <TextInput
                 style={styles.input}
                 placeholder="e.g. 10000"
-                placeholderTextColor="#94A3B8"
+                placeholderTextColor={Colors.textMuted}
                 value={walletAmount}
                 onChangeText={(t) => { setWalletAmount(t); setError(''); }}
                 keyboardType="numeric"
@@ -119,7 +121,7 @@ const CreateWalletModal = ({ visible, onClose, onSubmit, availableBalance = 0, l
               {/* Inline error */}
               {error ? (
                 <View style={styles.errorRow}>
-                  <Ionicons name="alert-circle-outline" size={14} color="#EF4444" />
+                  <Ionicons name="alert-circle-outline" size={14} color={Colors.danger} />
                   <Text style={styles.errorText}>{error}</Text>
                 </View>
               ) : null}
@@ -132,7 +134,7 @@ const CreateWalletModal = ({ visible, onClose, onSubmit, availableBalance = 0, l
                 activeOpacity={0.85}
               >
                 {loading ? (
-                  <ActivityIndicator color="#FFFFFF" />
+                  <ActivityIndicator color={Colors.white} />
                 ) : (
                   <Text style={styles.submitBtnText}>Create Wallet</Text>
                 )}
@@ -155,91 +157,91 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   sheet: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.white,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
-    padding: 24,
+    padding: moderateScale(24),
     paddingBottom: Platform.OS === 'ios' ? 40 : 28,
   },
   handle: {
     width: 40,
     height: 4,
-    backgroundColor: '#CBD5E1',
+    backgroundColor: Colors.borderLight,
     borderRadius: 2,
     alignSelf: 'center',
-    marginBottom: 20,
+    marginBottom: moderateScale(20),
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: moderateScale(16),
   },
   title: {
-    fontSize: 18,
+    fontSize: fontScale(Typography.h4),
     fontWeight: '700',
-    color: '#1E293B',
+    color: Colors.text,
   },
   balanceHint: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#F1F5F9',
+    backgroundColor: Colors.divider,
     borderRadius: 8,
-    paddingHorizontal: 10,
-    paddingVertical: 8,
-    marginBottom: 20,
-    gap: 6,
+    paddingHorizontal: moderateScale(10),
+    paddingVertical: moderateScale(8),
+    marginBottom: moderateScale(20),
+    gap: moderateScale(6),
   },
   balanceHintText: {
-    fontSize: 12,
-    color: '#64748B',
+    fontSize: fontScale(Typography.small),
+    color: Colors.textSecondary,
   },
   balanceValue: {
     fontWeight: '700',
-    color: '#00D09C',
+    color: Colors.gain,
   },
   label: {
-    fontSize: 13,
+    fontSize: fontScale(Typography.caption),
     fontWeight: '600',
-    color: '#475569',
-    marginBottom: 6,
+    color: Colors.textSecondary,
+    marginBottom: moderateScale(6),
   },
   input: {
     borderWidth: 1,
-    borderColor: '#E2E8F0',
+    borderColor: Colors.border,
     borderRadius: 10,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
-    fontSize: 15,
-    color: '#1E293B',
-    marginBottom: 16,
-    backgroundColor: '#F8FAFC',
+    paddingHorizontal: moderateScale(14),
+    paddingVertical: moderateScale(12),
+    fontSize: fontScale(Typography.body),
+    color: Colors.text,
+    marginBottom: moderateScale(16),
+    backgroundColor: Colors.background,
   },
   errorRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 5,
-    marginBottom: 14,
-    marginTop: -8,
+    gap: moderateScale(5),
+    marginBottom: moderateScale(14),
+    marginTop: moderateScale(-8),
   },
   errorText: {
-    color: '#EF4444',
-    fontSize: 12,
+    color: Colors.danger,
+    fontSize: fontScale(Typography.small),
     flex: 1,
   },
   submitBtn: {
-    backgroundColor: '#00D09C',
+    backgroundColor: Colors.gain,
     borderRadius: 12,
-    paddingVertical: 15,
+    paddingVertical: moderateScale(15),
     alignItems: 'center',
-    marginTop: 4,
+    marginTop: moderateScale(4),
   },
   submitBtnDisabled: {
     opacity: 0.6,
   },
   submitBtnText: {
-    color: '#FFFFFF',
-    fontSize: 15,
+    color: Colors.white,
+    fontSize: fontScale(Typography.body),
     fontWeight: '700',
   },
 });

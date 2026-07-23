@@ -1,6 +1,8 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
+import { Colors, Typography, fontScale, moderateScale } from "../theme";
+
 /**
  * SegmentedToggle — reusable pill switch for 2 (or a few) mutually-exclusive
  * views, e.g. Holdings vs Positions on the Portfolio screen.
@@ -54,15 +56,15 @@ export default function SegmentedToggle({
 
 const LIGHT = {
   track: "rgba(255,255,255,0.18)",
-  activeBg: "#FFFFFF",
-  activeText: "#1A56DB",
+  activeBg: Colors.white,
+  activeText: Colors.primaryDark,
   inactiveText: "rgba(255,255,255,0.85)",
 };
 
 const DARK = {
   track: "#1C1F26",
   activeBg: "#2E323C",
-  activeText: "#FFFFFF",
+  activeText: Colors.white,
   inactiveText: "#8A8F98",
 };
 
@@ -70,16 +72,16 @@ const styles = StyleSheet.create({
   track: {
     flexDirection: "row",
     borderRadius: 20,
-    padding: 3,
+    padding: moderateScale(3),
     alignSelf: "flex-start",
   },
   pill: {
-    paddingHorizontal: 18,
-    paddingVertical: 7,
+    paddingHorizontal: moderateScale(18),
+    paddingVertical: moderateScale(7),
     borderRadius: 17,
   },
   label: {
-    fontSize: 13,
+    fontSize: fontScale(Typography.caption),
     fontWeight: "700",
   },
 });

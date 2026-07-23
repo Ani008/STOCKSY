@@ -1,6 +1,8 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 
+import { Colors, Typography, fontScale, moderateScale } from "../theme";
+
 /**
  * WatchlistItem — Reusable row for the Watchlist section.
  *
@@ -39,7 +41,7 @@ const WatchlistItem = ({
             </Text>
           )}
         </View>
-        <View style={{ marginLeft: 12 }}>
+        <View style={{ marginLeft: moderateScale(12) }}>
           <Text style={styles.ticker}>{name}</Text>
         </View>
       </View>
@@ -50,7 +52,7 @@ const WatchlistItem = ({
           <Text
             style={[
               styles.change,
-              { color: isPositive ? "#10B981" : "#EF4444" },
+              { color: isPositive ? Colors.success : Colors.danger },
             ]}
           >
             {change}
@@ -67,15 +69,15 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
 
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.white,
 
-    padding: 16,
+    padding: moderateScale(16),
 
     borderRadius: 18,
 
-    marginBottom: 12,
+    marginBottom: moderateScale(12),
 
-    shadowColor: "#0F172A",
+    shadowColor: Colors.text,
     shadowOffset: {
       width: 0,
       height: 4,
@@ -91,15 +93,15 @@ const styles = StyleSheet.create({
     height: 44,
     borderRadius: 14,
 
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.white,
 
     justifyContent: "center",
     alignItems: "center",
 
     borderWidth: 1,
-    borderColor: "#F1F5F9",
+    borderColor: Colors.divider,
 
-    shadowColor: "#0F172A",
+    shadowColor: Colors.text,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -117,15 +119,15 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   fallbackText: {
-    fontSize: 13,
+    fontSize: fontScale(Typography.caption),
     fontWeight: "700",
-    color: "#3B82F6",
+    color: Colors.primary,
   },
-  ticker: { fontSize: 15, fontWeight: "bold", color: "#1E293B" },
-  name: { fontSize: 12, color: "#94A3B8", marginTop: 2 },
+  ticker: { fontSize: fontScale(Typography.body), fontWeight: "bold", color: Colors.text },
+  name: { fontSize: fontScale(Typography.small), color: Colors.textMuted, marginTop: moderateScale(2) },
   right: { alignItems: "flex-end" },
-  price: { fontSize: 15, fontWeight: "bold", color: "#1E293B" },
-  change: { fontSize: 12, fontWeight: "600", marginTop: 2 },
+  price: { fontSize: fontScale(Typography.body), fontWeight: "bold", color: Colors.text },
+  change: { fontSize: fontScale(Typography.small), fontWeight: "600", marginTop: moderateScale(2) },
 });
 
 export default WatchlistItem;

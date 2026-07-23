@@ -15,15 +15,17 @@ import Button from "../components/Button";
 import Input from "../components/Input";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { Colors, Typography, fontScale, moderateScale } from "../theme";
+
 // ── Colors (matching existing app palette) ─────────────────────────────────
-const BLUE = "#2563EB";
-const DARK = "#1E293B";
-const MUTED = "#64748B";
-const BORDER = "#CBD5E1";
-const BG = "#F8FAFC";
-const ERROR = "#EF4444";
-const GREEN = "#16A34A";
-const WHITE = "#FFFFFF";
+const BLUE = Colors.primaryDark;
+const DARK = Colors.text;
+const MUTED = Colors.textSecondary;
+const BORDER = Colors.borderLight;
+const BG = Colors.background;
+const ERROR = Colors.danger;
+const GREEN = Colors.gain;
+const WHITE = Colors.white;
 
 // ── Step constants ─────────────────────────────────────────────────────────
 const STEP_EMAIL = "email";
@@ -430,44 +432,44 @@ const ForgotPasswordScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: BG },
   flex: { flex: 1 },
-  scroll: { flexGrow: 1, justifyContent: "center", padding: 24 },
+  scroll: { flexGrow: 1, justifyContent: "center", padding: moderateScale(24) },
 
   // Back button
   backBtn: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 24,
+    marginBottom: moderateScale(24),
     alignSelf: "flex-start",
   },
-  backArrow: { fontSize: 18, color: BLUE, marginRight: 4 },
-  backText: { fontSize: 14, color: BLUE, fontWeight: "600" },
+  backArrow: { fontSize: fontScale(Typography.h4), color: BLUE, marginRight: moderateScale(4) },
+  backText: { fontSize: fontScale(14), color: BLUE, fontWeight: "600" },
 
   // Header (mirrors LoginPage)
-  header: { marginBottom: 36 },
+  header: { marginBottom: moderateScale(36) },
   brand: {
-    fontSize: 28,
+    fontSize: fontScale(Typography.h1),
     fontWeight: "800",
     color: BLUE,
     letterSpacing: -0.5,
-    marginBottom: 12,
+    marginBottom: moderateScale(12),
   },
   title: {
-    fontSize: 26,
+    fontSize: fontScale(26),
     fontWeight: "700",
     color: DARK,
-    marginBottom: 6,
+    marginBottom: moderateScale(6),
   },
-  subtitle: { fontSize: 15, color: MUTED },
+  subtitle: { fontSize: fontScale(Typography.body), color: MUTED },
 
   // Form
-  form: { marginBottom: 24 },
-  btn: { marginTop: 8 },
+  form: { marginBottom: moderateScale(24) },
+  btn: { marginTop: moderateScale(8) },
 
   // OTP boxes
   otpRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 8,
+    marginBottom: moderateScale(8),
   },
   otpBox: {
     width: 64,
@@ -475,39 +477,39 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     borderColor: BORDER,
     borderRadius: 10,
-    fontSize: 24,
+    fontSize: fontScale(Typography.h2),
     fontWeight: "700",
     color: DARK,
     backgroundColor: WHITE,
   },
   otpBoxFilled: {
     borderColor: BLUE,
-    backgroundColor: "#EFF6FF",
+    backgroundColor: Colors.primaryLight,
   },
   errorText: {
-    fontSize: 12,
+    fontSize: fontScale(Typography.small),
     color: ERROR,
     fontWeight: "500",
-    marginBottom: 8,
+    marginBottom: moderateScale(8),
   },
 
   // Resend
   resendRow: {
     alignItems: "center",
-    marginBottom: 20,
-    marginTop: 8,
+    marginBottom: moderateScale(20),
+    marginTop: moderateScale(8),
   },
-  resendTimer: { fontSize: 13, color: MUTED },
+  resendTimer: { fontSize: fontScale(Typography.caption), color: MUTED },
   resendBlue: { color: BLUE, fontWeight: "600" },
-  resendLink: { fontSize: 13, color: BLUE, fontWeight: "600" },
+  resendLink: { fontSize: fontScale(Typography.caption), color: BLUE, fontWeight: "600" },
 
   // Success
   successBox: {
     alignItems: "center",
-    paddingVertical: 48,
+    paddingVertical: moderateScale(48),
   },
-  successIcon: { fontSize: 64, marginBottom: 16 },
-  successText: { fontSize: 15, color: MUTED, textAlign: "center" },
+  successIcon: { fontSize: fontScale(64), marginBottom: moderateScale(16) },
+  successText: { fontSize: fontScale(Typography.body), color: MUTED, textAlign: "center" },
 
   // Toast
   toast: {
@@ -517,10 +519,10 @@ const styles = StyleSheet.create({
     right: 24,
     backgroundColor: GREEN,
     borderRadius: 12,
-    paddingVertical: 14,
-    paddingHorizontal: 20,
+    paddingVertical: moderateScale(14),
+    paddingHorizontal: moderateScale(20),
     alignItems: "center",
-    shadowColor: "#000",
+    shadowColor: Colors.black,
     shadowOpacity: 0.15,
     shadowRadius: 10,
     shadowOffset: { width: 0, height: 4 },
@@ -528,7 +530,7 @@ const styles = StyleSheet.create({
   },
   toastText: {
     color: WHITE,
-    fontSize: 15,
+    fontSize: fontScale(Typography.body),
     fontWeight: "600",
   },
 });

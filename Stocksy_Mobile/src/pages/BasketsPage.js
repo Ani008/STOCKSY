@@ -6,14 +6,16 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import Svg, { Path } from "react-native-svg";
 
-const BLUE = "#3B82F6";
-const GREEN = "#16a34a";
-const RED = "#dc2626";
-const BG = "#F4F6FB";
-const WHITE = "#FFFFFF";
-const TEXT_PRI = "#111827";
-const TEXT_SEC = "#6B7280";
-const BORDER = "#E5E7EB";
+import { Colors, Typography, fontScale, moderateScale } from "../theme";
+
+const BLUE = Colors.primary;
+const GREEN = Colors.gain;
+const RED = Colors.dangerDark;
+const BG = Colors.surfaceAlt;
+const WHITE = Colors.white;
+const TEXT_PRI = Colors.text;
+const TEXT_SEC = Colors.textSecondary;
+const BORDER = Colors.borderLight;
 
 const renderMiniChart = (points, color) => {
   const width = 60;
@@ -181,7 +183,7 @@ export default function App() {
                 data={view === 'baskets' ? BASKETS : selectedBasket.holdings}
                 renderItem={view === 'baskets' ? renderBasketItem : renderStockItem}
                 keyExtractor={item => item.id}
-                contentContainerStyle={{ padding: 16 }}
+                contentContainerStyle={{ padding: moderateScale(16) }}
             />
         )}
       </View>
@@ -191,41 +193,41 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: BLUE },
-  topHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, height: 60, marginTop: 40 },
-  headerTitle: { fontSize: 18, fontWeight: '700', color: WHITE },
+  topHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: moderateScale(16), height: 60, marginTop: moderateScale(40) },
+  headerTitle: { fontSize: fontScale(Typography.h4), fontWeight: '700', color: WHITE },
   contentArea: { flex: 1, backgroundColor: BG, borderTopLeftRadius: 30, borderTopRightRadius: 30, overflow: 'hidden' },
   // ... (previous styles)
-  basketCard: { backgroundColor: WHITE, padding: 20, borderRadius: 20, marginBottom: 16, elevation: 2 },
-  basketHeader: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12 },
+  basketCard: { backgroundColor: WHITE, padding: moderateScale(20), borderRadius: 20, marginBottom: moderateScale(16), elevation: 2 },
+  basketHeader: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: moderateScale(12) },
   profileImg: { width: 50, height: 50, borderRadius: 25, backgroundColor: BORDER },
-  returnsBadge: { backgroundColor: GREEN + '15', paddingHorizontal: 10, borderRadius: 12, height: 26, justifyContent: 'center' },
-  returnsText: { color: GREEN, fontWeight: 'bold', fontSize: 12 },
-  cardTitle: { fontSize: 18, fontWeight: '700', color: TEXT_PRI },
-  cardDesc: { color: TEXT_SEC, fontSize: 13, marginTop: 4 },
-  stockRow: { flexDirection: 'row', alignItems: 'center', backgroundColor: WHITE, padding: 16, borderRadius: 15, marginBottom: 10 },
-  stockTicker: { fontSize: 15, fontWeight: '700' },
-  stockFull: { fontSize: 11, color: TEXT_SEC },
-  chartContainer: { marginHorizontal: 10 },
+  returnsBadge: { backgroundColor: GREEN + '15', paddingHorizontal: moderateScale(10), borderRadius: 12, height: 26, justifyContent: 'center' },
+  returnsText: { color: GREEN, fontWeight: 'bold', fontSize: fontScale(Typography.small) },
+  cardTitle: { fontSize: fontScale(Typography.h4), fontWeight: '700', color: TEXT_PRI },
+  cardDesc: { color: TEXT_SEC, fontSize: fontScale(Typography.caption), marginTop: moderateScale(4) },
+  stockRow: { flexDirection: 'row', alignItems: 'center', backgroundColor: WHITE, padding: moderateScale(16), borderRadius: 15, marginBottom: moderateScale(10) },
+  stockTicker: { fontSize: fontScale(Typography.body), fontWeight: '700' },
+  stockFull: { fontSize: fontScale(Typography.tiny), color: TEXT_SEC },
+  chartContainer: { marginHorizontal: moderateScale(10) },
   stockRight: { alignItems: 'flex-end', width: 80 },
-  stockPrice: { fontSize: 15, fontWeight: '700' },
-  stockChange: { fontSize: 12, fontWeight: '600' },
+  stockPrice: { fontSize: fontScale(Typography.body), fontWeight: '700' },
+  stockChange: { fontSize: fontScale(Typography.small), fontWeight: '600' },
 
   // Detail View Styles
-  detailHeader: { padding: 20 },
-  detailTicker: { color: TEXT_SEC, fontSize: 14, fontWeight: '600' },
-  detailName: { fontSize: 22, fontWeight: '700', color: TEXT_PRI, marginVertical: 4 },
-  detailPrice: { fontSize: 28, fontWeight: '800', color: TEXT_PRI },
-  detailChange: { fontSize: 16, fontWeight: '600', marginTop: 4 },
+  detailHeader: { padding: moderateScale(20) },
+  detailTicker: { color: TEXT_SEC, fontSize: fontScale(14), fontWeight: '600' },
+  detailName: { fontSize: fontScale(22), fontWeight: '700', color: TEXT_PRI, marginVertical: moderateScale(4) },
+  detailPrice: { fontSize: fontScale(Typography.h1), fontWeight: '800', color: TEXT_PRI },
+  detailChange: { fontSize: fontScale(Typography.bodyLarge), fontWeight: '600', marginTop: moderateScale(4) },
   mainChartPlaceholder: { height: 250, justifyContent: 'center', alignItems: 'center', borderBottomWidth: 1, borderColor: BORDER },
-  performanceCard: { padding: 20 },
-  sectionTitle: { fontSize: 18, fontWeight: '700', marginBottom: 15 },
+  performanceCard: { padding: moderateScale(20) },
+  sectionTitle: { fontSize: fontScale(Typography.h4), fontWeight: '700', marginBottom: moderateScale(15) },
   rowBetween: { flexDirection: 'row', justifyContent: 'space-between' },
-  label: { color: TEXT_SEC, fontSize: 12 },
-  value: { fontSize: 16, fontWeight: '600', marginTop: 4 },
-  buttonContainer: { flexDirection: 'row', padding: 16, borderTopWidth: 1, borderColor: BORDER, gap: 10 },
+  label: { color: TEXT_SEC, fontSize: fontScale(Typography.small) },
+  value: { fontSize: fontScale(Typography.bodyLarge), fontWeight: '600', marginTop: moderateScale(4) },
+  buttonContainer: { flexDirection: 'row', padding: moderateScale(16), borderTopWidth: 1, borderColor: BORDER, gap: moderateScale(10) },
   sipBtn: { flex: 1, height: 50, borderRadius: 10, borderWidth: 1, borderColor: BORDER, justifyContent: 'center', alignItems: 'center' },
   sellBtn: { flex: 2, height: 50, borderRadius: 10, backgroundColor: RED, justifyContent: 'center', alignItems: 'center' },
   buyBtn: { flex: 2, height: 50, borderRadius: 10, backgroundColor: GREEN, justifyContent: 'center', alignItems: 'center' },
   sipText: { fontWeight: '700', color: TEXT_SEC },
-  btnText: { color: WHITE, fontWeight: '700', fontSize: 16 }
+  btnText: { color: WHITE, fontWeight: '700', fontSize: fontScale(Typography.bodyLarge) }
 });
