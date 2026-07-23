@@ -19,6 +19,7 @@ import CreateWalletModal from "../components/CreateWalletModal";
 import { walletService } from "../../services/walletService";
 import { fetchWallets, createWallet } from "../../services/walletService";
 import { placeOrder } from "../../services/orderService";
+import { fetchLeverage } from "../../services/leverageService";
 import useMarketData from "../hooks/useMarketData";
 
 /**
@@ -56,6 +57,18 @@ export default function BuyOrderScreen({ navigation, route }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [creatingWallet, setCreatingWallet] = useState(false);
   const [placingOrder, setPlacingOrder] = useState(false);
+
+  // ─── Leverage ────────────────────────────────────────────────────────────────
+  // { cnc: 1, mis: 5 | 2.5 } — fetched once per symbol, not duplicated
+  // client-side, so it can never drift from the backend's Nifty 50 list.
+  const [leverage, setLeverage] = useState({ cnc: 1, mis: 1 });
+
+  useEffect(() => {
+    if (!symbol || symbol === "STOCK") return;
+    fetchLeverage(symbol)
+      .then(setLeverage)
+      .catch(() => setLeverage({ cnc: 1, mis: 1 })); // fail safe: no leverage, not a crash
+  }, [symbol]);
 
   // ─── Live price ──────────────────────────────────────────────────────────────
   const { prices } = useMarketData();
@@ -132,9 +145,15 @@ export default function BuyOrderScreen({ navigation, route }) {
   const qtyNum = parseInt(qty) || 0;
   const orderTotal = effectivePrice * qtyNum;
 
+  // Intraday → MIS (leveraged) | Delivery → CNC (1x, full value)
+  const productType = tradeType === "Intraday" ? "MIS" : "CNC";
+  const activeLeverage = productType === "MIS" ? leverage.mis : leverage.cnc;
+  const marginRequired = orderType === "BUY" ? orderTotal / activeLeverage : 0;
+
   const selectedWallet = wallets.find((w) => w.id === selectedWalletId);
   const walletBalance = selectedWallet?.balance || 0;
-  const canAfford = orderType === "BUY" ? walletBalance >= orderTotal : true;
+  const canAfford =
+    orderType === "BUY" ? walletBalance >= marginRequired : true;
   const canPlace = qtyNum > 0 && selectedWalletId && canAfford && !placingOrder;
 
   // ─── Place order ─────────────────────────────────────────────────────────────
@@ -152,11 +171,11 @@ export default function BuyOrderScreen({ navigation, route }) {
         order_type: orderMode.toUpperCase(),
         side: orderType,
         wallet_id: selectedWalletId,
-        trade_type: tradeType,
+        product_type: productType,
       });
       Alert.alert(
         `Order Placed! 🎉`,
-        `${orderType} ${qtyNum} × ${symbol}\n@ ₹${effectivePrice.toFixed(2)}\nTotal: ₹${orderTotal.toLocaleString("en-IN", { minimumFractionDigits: 2 })}\nWallet: ${selectedWallet?.name}`,
+        `${orderType} ${qtyNum} × ${symbol}\n@ ₹${effectivePrice.toFixed(2)}\n${productType === "MIS" ? `Margin used: ₹${marginRequired.toLocaleString("en-IN", { minimumFractionDigits: 2 })}` : `Total: ₹${orderTotal.toLocaleString("en-IN", { minimumFractionDigits: 2 })}`}\nWallet: ${selectedWallet?.name}`,
         [{ text: "OK", onPress: () => navigation.goBack() }],
       );
     } catch (e) {
@@ -291,35 +310,6 @@ export default function BuyOrderScreen({ navigation, route }) {
             </View>
           </View>
 
-          {/* ── Order mode (Market / Limit) ───────────────────────────────── */}
-          <View style={styles.section}>
-            <Text style={styles.sectionLabel}>ORDER TYPE</Text>
-            <View style={styles.pillRow}>
-              {["Market", "Limit"].map((m) => (
-                <TouchableOpacity
-                  key={m}
-                  style={[
-                    styles.pill,
-                    orderMode === m && {
-                      borderColor: BLUE_BORDER,
-                      backgroundColor: BLUE_BG,
-                    },
-                  ]}
-                  onPress={() => setOrderMode(m)}
-                >
-                  <Text
-                    style={[
-                      styles.pillTxt,
-                      orderMode === m && { color: "#ffff" },
-                    ]}
-                  >
-                    {m}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          </View>
-
           {/* ── QTY + Price inputs ────────────────────────────────────────── */}
           <View style={styles.inputRow}>
             <View style={[styles.inputGroup, { flex: 1, marginRight: 10 }]}>
@@ -351,10 +341,9 @@ export default function BuyOrderScreen({ navigation, route }) {
           </View>
 
           {/* ── Order summary ─────────────────────────────────────────────── */}
-          {qtyNum > 0 && (
-            <View
-              style={[styles.summaryCard, { borderColor: accentColor + "40" }]}
-            >
+          <View
+            style={[styles.summaryCard, { borderColor: accentColor + "40" }]}
+          >
               <View style={styles.summaryRow}>
                 <Text style={styles.summaryKey}>Price per share</Text>
                 <Text style={styles.summaryVal}>
@@ -368,14 +357,33 @@ export default function BuyOrderScreen({ navigation, route }) {
                 <Text style={styles.summaryKey}>Quantity</Text>
                 <Text style={styles.summaryVal}>{qtyNum}</Text>
               </View>
+              <View style={styles.summaryRow}>
+                <Text style={styles.summaryKey}>Order value</Text>
+                <Text style={styles.summaryVal}>
+                  ₹
+                  {orderTotal.toLocaleString("en-IN", {
+                    minimumFractionDigits: 2,
+                  })}
+                </Text>
+              </View>
+              {productType === "MIS" && orderType === "BUY" && (
+                <View style={styles.summaryRow}>
+                  <Text style={styles.summaryKey}>Leverage</Text>
+                  <View style={styles.leverageBadge}>
+                    <Text style={styles.leverageBadgeTxt}>
+                      {activeLeverage}x
+                    </Text>
+                  </View>
+                </View>
+              )}
               <View style={[styles.summaryRow, styles.summaryTotal]}>
                 <Text
                   style={[
                     styles.summaryKey,
-                    { color: "#fff", fontWeight: "700" },
+                    { color: "#1E293B", fontWeight: "700" },
                   ]}
                 >
-                  Estimated Total
+                  {orderType === "BUY" ? "Margin required" : "Estimated credit"}
                 </Text>
                 <Text
                   style={[
@@ -384,13 +392,42 @@ export default function BuyOrderScreen({ navigation, route }) {
                   ]}
                 >
                   ₹
-                  {orderTotal.toLocaleString("en-IN", {
-                    minimumFractionDigits: 2,
-                  })}
+                  {(orderType === "BUY" ? marginRequired : orderTotal).toLocaleString(
+                    "en-IN",
+                    { minimumFractionDigits: 2 },
+                  )}
                 </Text>
               </View>
+          </View>
+
+          {/* ── Order mode (Market / Limit) ───────────────────────────────── */}
+          <View style={styles.section}>
+            <Text style={styles.sectionLabel}>ORDER TYPE</Text>
+            <View style={styles.pillRow}>
+              {["Market", "Limit"].map((m) => (
+                <TouchableOpacity
+                  key={m}
+                  style={[
+                    styles.pill,
+                    orderMode === m && {
+                      borderColor: BLUE_BORDER,
+                      backgroundColor: BLUE_BG,
+                    },
+                  ]}
+                  onPress={() => setOrderMode(m)}
+                >
+                  <Text
+                    style={[
+                      styles.pillTxt,
+                      orderMode === m && { color: "#ffff" },
+                    ]}
+                  >
+                    {m}
+                  </Text>
+                </TouchableOpacity>
+              ))}
             </View>
-          )}
+          </View>
 
           {/* ── Wallet selector ───────────────────────────────────────────── */}
           <View style={styles.section}>
@@ -560,9 +597,6 @@ export default function BuyOrderScreen({ navigation, route }) {
                   ]}
                 >
                   {orderType === "BUY" ? "Place Buy Order" : "Place Sell Order"}
-                  {qtyNum > 0 && orderTotal > 0
-                    ? `  ·  ₹${orderTotal.toLocaleString("en-IN", { maximumFractionDigits: 0 })}`
-                    : ""}
                 </Text>
               </>
             )}
@@ -750,6 +784,17 @@ const styles = StyleSheet.create({
   },
   summaryKey: { fontSize: 13, color: "#777" },
   summaryVal: { fontSize: 13, color: "#1E293B", fontWeight: "600" },
+  leverageBadge: {
+    backgroundColor: "#DBEAFE",
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    borderRadius: 6,
+  },
+  leverageBadgeTxt: {
+    fontSize: 12,
+    fontWeight: "700",
+    color: "#1A56DB",
+  },
 
   // Wallet
   noWalletBox: {

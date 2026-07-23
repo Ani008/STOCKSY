@@ -3,7 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -12,6 +11,8 @@ import {
 import Button from "../components/Button";
 import Input from "../components/Input";
 import authService from "../../services/authService";
+
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const SignupPage = ({ navigation }) => {
   const [name, setName] = useState("");

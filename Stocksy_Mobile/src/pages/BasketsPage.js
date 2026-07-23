@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { 
-  StyleSheet, View, Text, FlatList, TouchableOpacity, 
-  SafeAreaView, StatusBar, Image, ScrollView 
+  StyleSheet, View, Text, FlatList, TouchableOpacity, StatusBar, Image, ScrollView 
 } from 'react-native';
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import Svg, { Path } from "react-native-svg";
 

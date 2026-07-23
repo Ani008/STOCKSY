@@ -16,12 +16,13 @@ import {
   StyleSheet,
   TouchableOpacity,
   ActivityIndicator,
-  SafeAreaView,
   StatusBar,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import useMarketData from '../hooks/useMarketData';
 import { SECTOR_COLORS } from '../hooks/usePortfolio';
+
+import { SafeAreaView } from "react-native-safe-area-context";
 
 // ─── Design tokens — matches PortfolioPage / StockDetailPage, not the
 // generic theme/Card system, so Markets sits visually with the rest of

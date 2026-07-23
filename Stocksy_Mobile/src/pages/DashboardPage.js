@@ -1,5 +1,6 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
+import { useFocusEffect } from "@react-navigation/native";
 import {View, StyleSheet, ScrollView, TouchableOpacity, Alert, Text} from "react-native";
 import { Screen, Card, AppText, SectionHeader } from "../components";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
@@ -191,8 +192,17 @@ const calcChange = (ltp, cp) => {
 const DashboardPage = ({ navigation }) => {
   // ── Live prices from WebSocket ──────────────────────────────────────────────
   const { prices, isConnected } = useMarketData();
-  const { positions, totals, loading } = usePortfolio(prices);
+  const { positions, totals, loading, refresh } = usePortfolio(prices);
   const [user, setUser] = useState(null);
+
+  // Tab screens stay mounted in the background — without this, Dashboard
+  // keeps showing whatever it fetched once at app launch, even after a
+  // sell/buy happens on another screen.
+  useFocusEffect(
+    React.useCallback(() => {
+      refresh();
+    }, [refresh])
+  );
 
   useEffect(() => {
     const loadUser = async () => {
@@ -367,7 +377,7 @@ const DashboardPage = ({ navigation }) => {
                   .slice(0, 2)
                   .map((position) => (
                     <MiniHoldingCard
-                      key={position.instrument_key}
+                      key={`${position.instrument_key}:${position.product_type}`}
                       ticker={position.symbol}
                       name={`₹${position.ltp?.toLocaleString("en-IN")}`}
                       change={`${position.unrealisedPct?.toFixed(2)}%`}

@@ -1,39 +1,10 @@
-/**
- * workers/orderWorker.js
- *
- * FINAL MERGED VERSION
- * ------------------------------------------------------------
- * MERGED FROM OLD FILE:
- * ✅ Bull queue processing
- * ✅ Concurrency support
- * ✅ Re-queue OPEN LIMIT/SL orders
- * ✅ Retry handling
- * ✅ NO_LTP retry logic
- * ✅ Production-grade logging
- * ✅ Independent worker process support
- *
- * MERGED FROM NEW FILE:
- * ✅ Cleaner architecture
- * ✅ registerExecutor abstraction idea
- * ✅ Simpler startup flow
- * ✅ Cleaner standalone execution structure
- *
- * FINAL FEATURES:
- * ✅ Production-ready Bull worker
- * ✅ Concurrent job processing
- * ✅ LIMIT/SL requeue loop
- * ✅ Retry-safe execution
- * ✅ Real-time logging
- * ✅ Standalone worker support
- * ✅ PM2 / cluster friendly
- * ✅ Centralized queue integration
- */
-
 require("dotenv").config();
 
 const { getQueue } = require("../services/queueService");
 
 const { executeOrder } = require("../services/executionEngine");
+
+const { scheduleSquareOff } = require("../services/squareOffService");
 
 const logger = require("../utils/logger");
 
@@ -149,6 +120,10 @@ function startOrderWorker() {
   });
 
   logger.info(`Order worker started | concurrency=${CONCURRENCY}`);
+
+  // MIS positions get force-closed here too — same process, since
+  // this is where all order execution already lives.
+  scheduleSquareOff();
 
   return queue;
 }

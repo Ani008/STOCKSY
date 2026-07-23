@@ -4,12 +4,12 @@ import {
   Text,
   TextInput,
   StyleSheet,
-  SafeAreaView,
   FlatList,
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 // ─── Reusing existing component — no new component needed ────────────────────
 import WatchlistItem from "../components/WatchlistItem";

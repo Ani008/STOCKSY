@@ -7,6 +7,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import {
   View, Text, ScrollView, TouchableOpacity, StyleSheet,
   Dimensions, SafeAreaView, StatusBar, ActivityIndicator,
@@ -237,6 +238,12 @@ export default function PortfolioPage({ navigation }) {
     loading, error, refresh,
   } = usePortfolio(prices);
 
+  useFocusEffect(
+    useCallback(() => {
+      refresh();
+    }, [refresh])
+  );
+
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = useCallback(async () => {
@@ -417,7 +424,7 @@ export default function PortfolioPage({ navigation }) {
           ) : (
             positions.map(pos => (
               <HoldingRow
-                key={pos.instrument_key}
+                key={`${pos.instrument_key}:${pos.product_type}`}
                 position={pos}
                 onPress={() => {}}
               />

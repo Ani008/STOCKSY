@@ -7,6 +7,8 @@ import { StatusBar } from "expo-status-bar";
 import { Ionicons } from "@expo/vector-icons";
 import "react-native-get-random-values";
 
+import { SafeAreaProvider } from "react-native-safe-area-context";
+
 // ─── Auth screens ─────────────────────────────────────────────────────────────
 import LoginPage from "./src/pages/LoginPage";
 import SignupPage from "./src/pages/SignupPage";
@@ -23,7 +25,6 @@ import DashboardPage from "./src/pages/DashboardPage";
 import PortfolioPage from "./src/pages/PortfolioPage";
 import MarketPage from "./src/pages/MarketPage";
 import ProfilePage from "./src/pages/ProfilePage";
-
 
 import { ExchangePage, MarketsPage } from "./src/pages/PlaceholderPages";
 
@@ -122,26 +123,31 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <StatusBar style="auto" />
-      <Stack.Navigator
-        initialRouteName={isAuthenticated ? "MainTabs" : "Login"}
-        screenOptions={{ headerShown: false }}
-      >
-        {/* ── Auth screens (no tab bar) ──────────────────────────────────── */}
-        <Stack.Screen name="Login" component={LoginPage} />
-        <Stack.Screen name="Signup" component={SignupPage} />
-        <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <StatusBar style="auto" />
+        <Stack.Navigator
+          initialRouteName={isAuthenticated ? "MainTabs" : "Login"}
+          screenOptions={{ headerShown: false }}
+        >
+          {/* ── Auth screens (no tab bar) ──────────────────────────────────── */}
+          <Stack.Screen name="Login" component={LoginPage} />
+          <Stack.Screen name="Signup" component={SignupPage} />
+          <Stack.Screen
+            name="ForgotPassword"
+            component={ForgotPasswordScreen}
+          />
 
-        {/* ── Authenticated shell (tab bar lives inside here) ────────────── */}
-        <Stack.Screen name="MainTabs" component={MainTabs} />
-        <Stack.Screen name="Wallet" component={WalletScreen} />
+          {/* ── Authenticated shell (tab bar lives inside here) ────────────── */}
+          <Stack.Screen name="MainTabs" component={MainTabs} />
+          <Stack.Screen name="Wallet" component={WalletScreen} />
 
-        <Stack.Screen name="Search" component={SearchPage} />
-        <Stack.Screen name="StockDetail" component={StockDetailPage} />
-        <Stack.Screen name="BuyOrder" component={BuyOrderScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+          <Stack.Screen name="Search" component={SearchPage} />
+          <Stack.Screen name="StockDetail" component={StockDetailPage} />
+          <Stack.Screen name="BuyOrder" component={BuyOrderScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 }
 

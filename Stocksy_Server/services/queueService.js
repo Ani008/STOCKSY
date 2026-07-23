@@ -147,7 +147,7 @@ async function addToQueue(queueName, jobName, payload, options = {}) {
   const queue = getQueue(queueName);
 
   const job = await queue.add(jobName, payload, options);
-  console.log("[QUEUE CREATED]", job.id, order.id);
+  console.log("[QUEUE CREATED]", job.id);
 
   logger.debug(`Added job ${job.id} to queue ${queueName}`);
 

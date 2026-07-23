@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  SafeAreaView,
   ScrollView,
   View,
   Text,
@@ -13,9 +12,13 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
+  
+import { SafeAreaView } from "react-native-safe-area-context";
+
 const ProfilePage = ({ navigation }) => {
   const [user, setUser] = useState(null);
   const [aboutExpanded, setAboutExpanded] = useState(false);
+
 
   useEffect(() => {
     loadUser();

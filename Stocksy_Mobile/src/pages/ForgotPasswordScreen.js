@@ -4,7 +4,6 @@ import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -14,6 +13,7 @@ import {
 } from "react-native";
 import Button from "../components/Button";
 import Input from "../components/Input";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 // ── Colors (matching existing app palette) ─────────────────────────────────
 const BLUE = "#2563EB";

@@ -3,7 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
   TouchableOpacity,
   ScrollView,
   ActivityIndicator,
@@ -23,6 +22,8 @@ import CreateWalletModal from "../components/CreateWalletModal";
 import DemoCard, { CARD_SKINS } from "../components/DemoCard";
 import CardCustomizerModal from "../components/Cardcustomizermodal";
 import Dashboard from "./DashboardPage";
+
+import { SafeAreaView } from "react-native-safe-area-context";
 import {
   fetchWallets,
   createWallet,

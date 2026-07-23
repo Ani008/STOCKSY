@@ -588,7 +588,18 @@ const StockDetailPage = ({ navigation, route }) => {
 
       {/* ── Action bar ──────────────────────────────────────────────────────── */}
       <View style={styles.actionBar}>
-        <TouchableOpacity style={styles.sellBtn} onPress={() => {}}>
+        <TouchableOpacity
+          style={styles.sellBtn}
+          onPress={() => {
+            navigation.navigate("BuyOrder", {
+              instrumentKey,
+              symbol,
+              name,
+              sector,
+              orderType: "SELL",
+            });
+          }}
+        >
           <Text style={styles.sellText}>Sell</Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -599,7 +610,7 @@ const StockDetailPage = ({ navigation, route }) => {
               symbol,
               name,
               sector,
-              orderType: "BUY", // or "SELL"
+              orderType: "BUY",
             });
           }}
         >

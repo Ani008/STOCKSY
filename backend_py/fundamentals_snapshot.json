@@ -1,18 +1,18 @@
 {
-  "generated_at": 1784575246,
+  "generated_at": 1784787329,
   "version": 1,
   "stocks": {
     "HDFCBANK": {
       "symbol": "HDFCBANK",
       "metrics": {
-        "market_cap": 1197597.84,
-        "pe_ratio": 17.35,
-        "pb_ratio": 1.97,
+        "market_cap": 1149624.12,
+        "pe_ratio": 16.83,
+        "pb_ratio": 1.9,
         "industry_pe": 14.2,
         "debt_to_equity": null,
         "roe": 13.84,
-        "eps": 44.83,
-        "dividend_yield": 1.59,
+        "eps": 44.36,
+        "dividend_yield": 1.71,
         "book_value": 393.81,
         "face_value": null
       },
@@ -167,19 +167,19 @@
           }
         ]
       },
-      "last_updated": 1784575248
+      "last_updated": 1784787330
     },
     "ICICIBANK": {
       "symbol": "ICICIBANK",
       "metrics": {
-        "market_cap": 1047441.86,
-        "pe_ratio": 19.52,
-        "pb_ratio": 2.75,
+        "market_cap": 1028934.91,
+        "pe_ratio": 18.82,
+        "pb_ratio": 2.7,
         "industry_pe": 14.2,
         "debt_to_equity": null,
         "roe": 16.07,
-        "eps": 74.81,
-        "dividend_yield": 83.0,
+        "eps": 76.21,
+        "dividend_yield": 82.0,
         "book_value": 530.38,
         "face_value": null
       },
@@ -355,18 +355,18 @@
           }
         ]
       },
-      "last_updated": 1784575249
+      "last_updated": 1784787331
     },
     "SBIN": {
       "symbol": "SBIN",
       "metrics": {
-        "market_cap": 978445.45,
-        "pe_ratio": 11.63,
-        "pb_ratio": 1.64,
+        "market_cap": 935984.63,
+        "pe_ratio": 11.33,
+        "pb_ratio": 1.57,
         "industry_pe": 14.2,
         "debt_to_equity": null,
         "roe": 15.48,
-        "eps": 91.17,
+        "eps": 89.48,
         "dividend_yield": 1.66,
         "book_value": 645.82,
         "face_value": null
@@ -563,20 +563,20 @@
           }
         ]
       },
-      "last_updated": 1784575250
+      "last_updated": 1784787332
     },
     "AXISBANK": {
       "symbol": "AXISBANK",
       "metrics": {
-        "market_cap": 390737.43,
-        "pe_ratio": 14.87,
-        "pb_ratio": 1.82,
+        "market_cap": 383005.46,
+        "pe_ratio": 14.08,
+        "pb_ratio": 1.72,
         "industry_pe": 14.2,
         "debt_to_equity": null,
         "roe": 13.35,
-        "eps": 84.49,
+        "eps": 87.43,
         "dividend_yield": 8.0,
-        "book_value": 691.84,
+        "book_value": 717.55,
         "face_value": null
       },
       "financials": {
@@ -771,18 +771,18 @@
           }
         ]
       },
-      "last_updated": 1784575251
+      "last_updated": 1784787333
     },
     "BAJFINANCE": {
       "symbol": "BAJFINANCE",
       "metrics": {
-        "market_cap": 661582.04,
-        "pe_ratio": 34.85,
-        "pb_ratio": 5.8,
+        "market_cap": 653934.04,
+        "pe_ratio": 34.8,
+        "pb_ratio": 5.74,
         "industry_pe": 14.2,
         "debt_to_equity": 3.15,
         "roe": 17.91,
-        "eps": 30.53,
+        "eps": 30.22,
         "dividend_yield": 51.0,
         "book_value": 183.34,
         "face_value": null
@@ -964,18 +964,18 @@
           }
         ]
       },
-      "last_updated": 1784575252
+      "last_updated": 1784787334
     },
     "KOTAKBANK": {
       "symbol": "KOTAKBANK",
       "metrics": {
-        "market_cap": 380004.7,
-        "pe_ratio": 19.71,
+        "market_cap": 381397.21,
+        "pe_ratio": 19.02,
         "pb_ratio": 2.1,
         "industry_pe": 14.2,
         "debt_to_equity": null,
         "roe": null,
-        "eps": 19.38,
+        "eps": 20.16,
         "dividend_yield": 17.0,
         "book_value": 182.2,
         "face_value": null
@@ -1172,18 +1172,18 @@
           }
         ]
       },
-      "last_updated": 1784575253
+      "last_updated": 1784787334
     },
     "HDFCLIFE": {
       "symbol": "HDFCLIFE",
       "metrics": {
-        "market_cap": 122638.33,
-        "pe_ratio": 61.85,
-        "pb_ratio": 6.23,
+        "market_cap": 119597.62,
+        "pe_ratio": 61.05,
+        "pb_ratio": 6.08,
         "industry_pe": 14.2,
         "debt_to_equity": 0.16,
         "roe": 10.8,
-        "eps": 9.13,
+        "eps": 9.02,
         "dividend_yield": 37.0,
         "book_value": 90.58,
         "face_value": null
@@ -1380,18 +1380,18 @@
           }
         ]
       },
-      "last_updated": 1784575254
+      "last_updated": 1784787335
     },
     "BAJAJFINSV": {
       "symbol": "BAJAJFINSV",
       "metrics": {
-        "market_cap": 297604.22,
-        "pe_ratio": 30.52,
-        "pb_ratio": 3.82,
+        "market_cap": 303007.92,
+        "pe_ratio": 31.07,
+        "pb_ratio": 3.89,
         "industry_pe": 14.2,
         "debt_to_equity": 2.56,
         "roe": 14.6,
-        "eps": 61.0,
+        "eps": 61.01,
         "dividend_yield": 7.0,
         "book_value": 487.35,
         "face_value": null
@@ -1588,19 +1588,19 @@
           }
         ]
       },
-      "last_updated": 1784575256
+      "last_updated": 1784787336
     },
     "TCS": {
       "symbol": "TCS",
       "metrics": {
-        "market_cap": 814467.67,
-        "pe_ratio": 16.34,
-        "pb_ratio": 7.43,
+        "market_cap": 802889.82,
+        "pe_ratio": 16.21,
+        "pb_ratio": 7.32,
         "industry_pe": 28.5,
         "debt_to_equity": 0.1,
         "roe": 47.74,
-        "eps": 137.73,
-        "dividend_yield": 2.86,
+        "eps": 136.91,
+        "dividend_yield": 2.93,
         "book_value": 303.01,
         "face_value": null
       },
@@ -1786,19 +1786,19 @@
           }
         ]
       },
-      "last_updated": 1784575257
+      "last_updated": 1784787337
     },
     "INFY": {
       "symbol": "INFY",
       "metrics": {
-        "market_cap": 440158.96,
-        "pe_ratio": 14.41,
-        "pb_ratio": 4.66,
+        "market_cap": 424489.62,
+        "pe_ratio": 14.18,
+        "pb_ratio": 4.5,
         "industry_pe": 28.5,
         "debt_to_equity": 9.83,
         "roe": 31.44,
-        "eps": 75.44,
-        "dividend_yield": 4.56,
+        "eps": 73.96,
+        "dividend_yield": 4.66,
         "book_value": 233.15,
         "face_value": null
       },
@@ -1994,20 +1994,20 @@
           }
         ]
       },
-      "last_updated": 1784575258
+      "last_updated": 1784787338
     },
     "WIPRO": {
       "symbol": "WIPRO",
       "metrics": {
-        "market_cap": 174479.22,
-        "pe_ratio": 14.03,
-        "pb_ratio": 2.09,
+        "market_cap": 172382.05,
+        "pe_ratio": 13.87,
+        "pb_ratio": 2.22,
         "industry_pe": 28.5,
         "debt_to_equity": 0.27,
         "roe": 16.13,
-        "eps": 12.57,
-        "dividend_yield": 4.55,
-        "book_value": 84.51,
+        "eps": 12.56,
+        "dividend_yield": 4.57,
+        "book_value": 78.32,
         "face_value": null
       },
       "financials": {
@@ -2202,20 +2202,20 @@
           }
         ]
       },
-      "last_updated": 1784575259
+      "last_updated": 1784787339
     },
     "HCLTECH": {
       "symbol": "HCLTECH",
       "metrics": {
-        "market_cap": 330455.29,
-        "pe_ratio": 19.0,
-        "pb_ratio": 4.42,
+        "market_cap": 336110.32,
+        "pe_ratio": 19.38,
+        "pb_ratio": 4.49,
         "industry_pe": 28.5,
         "debt_to_equity": 7.06,
         "roe": 24.07,
-        "eps": 64.29,
-        "dividend_yield": 4.98,
-        "book_value": 276.17,
+        "eps": 64.09,
+        "dividend_yield": 4.84,
+        "book_value": 276.73,
         "face_value": null
       },
       "financials": {
@@ -2410,18 +2410,18 @@
           }
         ]
       },
-      "last_updated": 1784575260
+      "last_updated": 1784787340
     },
     "TECHM": {
       "symbol": "TECHM",
       "metrics": {
-        "market_cap": 139641.04,
+        "market_cap": 138174.75,
         "pe_ratio": 27.24,
-        "pb_ratio": 4.71,
+        "pb_ratio": 4.66,
         "industry_pe": 28.5,
         "debt_to_equity": 7.27,
         "roe": null,
-        "eps": 57.88,
+        "eps": 57.27,
         "dividend_yield": 3.24,
         "book_value": 334.41,
         "face_value": null
@@ -2618,19 +2618,19 @@
           }
         ]
       },
-      "last_updated": 1784575261
+      "last_updated": 1784787341
     },
     "LTM": {
       "symbol": "LTM",
       "metrics": {
-        "market_cap": 121071.8,
-        "pe_ratio": 23.14,
-        "pb_ratio": 5.04,
+        "market_cap": 117102.18,
+        "pe_ratio": 22.39,
+        "pb_ratio": 4.87,
         "industry_pe": 28.5,
         "debt_to_equity": 9.87,
         "roe": 21.97,
-        "eps": 176.47,
-        "dividend_yield": 1.84,
+        "eps": 176.45,
+        "dividend_yield": 1.85,
         "book_value": 810.39,
         "face_value": null
       },
@@ -2826,19 +2826,19 @@
           }
         ]
       },
-      "last_updated": 1784575262
+      "last_updated": 1784787341
     },
     "RELIANCE": {
       "symbol": "RELIANCE",
       "metrics": {
-        "market_cap": 1790481.48,
-        "pe_ratio": 23.96,
-        "pb_ratio": 1.98,
+        "market_cap": 1734727.64,
+        "pe_ratio": 23.46,
+        "pb_ratio": 1.92,
         "industry_pe": 12.4,
         "debt_to_equity": 0.37,
         "roe": null,
-        "eps": 55.21,
-        "dividend_yield": 45.0,
+        "eps": 54.64,
+        "dividend_yield": 46.0,
         "book_value": 668.04,
         "face_value": null
       },
@@ -3034,19 +3034,19 @@
           }
         ]
       },
-      "last_updated": 1784575263
+      "last_updated": 1784787342
     },
     "ONGC": {
       "symbol": "ONGC",
       "metrics": {
-        "market_cap": 313978.62,
-        "pe_ratio": 7.58,
-        "pb_ratio": 0.84,
+        "market_cap": 317413.03,
+        "pe_ratio": 7.6,
+        "pb_ratio": 0.85,
         "industry_pe": 12.4,
         "debt_to_equity": 0.43,
         "roe": 12.7,
-        "eps": 32.94,
-        "dividend_yield": 7.48,
+        "eps": 33.2,
+        "dividend_yield": 7.4,
         "book_value": 295.5,
         "face_value": null
       },
@@ -3242,19 +3242,19 @@
           }
         ]
       },
-      "last_updated": 1784575264
+      "last_updated": 1784787343
     },
     "BPCL": {
       "symbol": "BPCL",
       "metrics": {
-        "market_cap": 135697.29,
-        "pe_ratio": 5.25,
-        "pb_ratio": 1.36,
+        "market_cap": 134586.42,
+        "pe_ratio": 5.3,
+        "pb_ratio": 1.34,
         "industry_pe": 12.4,
         "debt_to_equity": 0.54,
         "roe": 28.47,
-        "eps": 60.49,
-        "dividend_yield": 6.34,
+        "eps": 59.47,
+        "dividend_yield": 6.26,
         "book_value": 234.37,
         "face_value": null
       },
@@ -3322,19 +3322,19 @@
         "industry": "Oil & Gas"
       },
       "shareholding": {},
-      "last_updated": 1784575265
+      "last_updated": 1784787344
     },
     "POWERGRID": {
       "symbol": "POWERGRID",
       "metrics": {
-        "market_cap": 268508.44,
-        "pe_ratio": 14.36,
-        "pb_ratio": 2.67,
+        "market_cap": 269345.49,
+        "pe_ratio": 14.26,
+        "pb_ratio": 2.68,
         "industry_pe": null,
         "debt_to_equity": 1.51,
         "roe": 16.49,
-        "eps": 20.1,
-        "dividend_yield": 4.32,
+        "eps": 20.31,
+        "dividend_yield": 4.27,
         "book_value": 108.09,
         "face_value": null
       },
@@ -3530,19 +3530,19 @@
           }
         ]
       },
-      "last_updated": 1784575266
+      "last_updated": 1784787345
     },
     "NTPC": {
       "symbol": "NTPC",
       "metrics": {
-        "market_cap": 336716.76,
-        "pe_ratio": 11.42,
+        "market_cap": 337444.0,
+        "pe_ratio": 11.44,
         "pb_ratio": 1.66,
         "industry_pe": null,
         "debt_to_equity": 1.18,
         "roe": 13.69,
-        "eps": 30.42,
-        "dividend_yield": 3.32,
+        "eps": 30.43,
+        "dividend_yield": 3.26,
         "book_value": 209.44,
         "face_value": null
       },
@@ -3738,19 +3738,19 @@
           }
         ]
       },
-      "last_updated": 1784575267
+      "last_updated": 1784787346
     },
     "MARUTI": {
       "symbol": "MARUTI",
       "metrics": {
-        "market_cap": 424883.62,
-        "pe_ratio": 28.97,
+        "market_cap": 425355.22,
+        "pe_ratio": 29.12,
         "pb_ratio": 3.97,
         "industry_pe": 24.1,
         "debt_to_equity": 0.1,
         "roe": 14.43,
-        "eps": 466.54,
-        "dividend_yield": 1.01,
+        "eps": 464.59,
+        "dividend_yield": 1.03,
         "book_value": 3408.27,
         "face_value": null
       },
@@ -3946,19 +3946,19 @@
           }
         ]
       },
-      "last_updated": 1784575268
+      "last_updated": 1784787347
     },
     "TMCV": {
       "symbol": "TMCV",
       "metrics": {
-        "market_cap": 150751.33,
-        "pe_ratio": 49.86,
-        "pb_ratio": 11.84,
+        "market_cap": 149812.24,
+        "pe_ratio": 50.16,
+        "pb_ratio": 11.76,
         "industry_pe": 24.1,
         "debt_to_equity": 0.44,
         "roe": 26.05,
-        "eps": 8.21,
-        "dividend_yield": 96.0,
+        "eps": 8.11,
+        "dividend_yield": 97.0,
         "book_value": 34.58,
         "face_value": null
       },
@@ -4129,18 +4129,18 @@
           }
         ]
       },
-      "last_updated": 1784575269
+      "last_updated": 1784787348
     },
     "BAJAJ-AUTO": {
       "symbol": "BAJAJ-AUTO",
       "metrics": {
-        "market_cap": 293863.69,
-        "pe_ratio": 27.38,
-        "pb_ratio": 7.57,
+        "market_cap": 315591.05,
+        "pe_ratio": 25.43,
+        "pb_ratio": 8.13,
         "industry_pe": 24.1,
         "debt_to_equity": 0.56,
-        "roe": 28.05,
-        "eps": 384.3,
+        "roe": null,
+        "eps": 444.34,
         "dividend_yield": 1.44,
         "book_value": 1389.35,
         "face_value": null
@@ -4337,19 +4337,19 @@
           }
         ]
       },
-      "last_updated": 1784575270
+      "last_updated": 1784787349
     },
     "EICHERMOT": {
       "symbol": "EICHERMOT",
       "metrics": {
-        "market_cap": 207616.21,
-        "pe_ratio": 37.74,
-        "pb_ratio": 8.27,
+        "market_cap": 213202.24,
+        "pe_ratio": 38.7,
+        "pb_ratio": 8.49,
         "industry_pe": 24.1,
         "debt_to_equity": 2.05,
         "roe": 23.77,
-        "eps": 200.43,
-        "dividend_yield": 1.08,
+        "eps": 200.7,
+        "dividend_yield": 1.07,
         "book_value": 915.03,
         "face_value": null
       },
@@ -4545,19 +4545,19 @@
           }
         ]
       },
-      "last_updated": 1784575271
+      "last_updated": 1784787350
     },
     "HEROMOTOCO": {
       "symbol": "HEROMOTOCO",
       "metrics": {
-        "market_cap": 99600.27,
-        "pe_ratio": 17.36,
-        "pb_ratio": 4.61,
+        "market_cap": 103684.16,
+        "pe_ratio": 18.23,
+        "pb_ratio": 4.8,
         "industry_pe": 24.1,
         "debt_to_equity": 3.57,
         "roe": 28.03,
-        "eps": 286.74,
-        "dividend_yield": 3.77,
+        "eps": 284.26,
+        "dividend_yield": 3.67,
         "book_value": 1080.08,
         "face_value": null
       },
@@ -4753,7 +4753,7 @@
           }
         ]
       },
-      "last_updated": 1784575272
+      "last_updated": 1784787350
     },
     "HUL": {
       "symbol": "HUL",
@@ -4961,19 +4961,19 @@
           }
         ]
       },
-      "last_updated": 1784575274
+      "last_updated": 1784787352
     },
     "ITC": {
       "symbol": "ITC",
       "metrics": {
-        "market_cap": 354208.08,
-        "pe_ratio": 17.12,
-        "pb_ratio": 4.89,
+        "market_cap": 355210.44,
+        "pe_ratio": 17.17,
+        "pb_ratio": 4.9,
         "industry_pe": 48.8,
         "debt_to_equity": 3.29,
         "roe": 29.34,
         "eps": 16.51,
-        "dividend_yield": 5.7,
+        "dividend_yield": 5.69,
         "book_value": 57.87,
         "face_value": null
       },
@@ -5149,7 +5149,7 @@
           }
         ]
       },
-      "last_updated": 1784575275
+      "last_updated": 1784787353
     },
     "NESTLE": {
       "symbol": "NESTLE",
@@ -5301,19 +5301,19 @@
           }
         ]
       },
-      "last_updated": 1784575276
+      "last_updated": 1784787354
     },
     "DABUR": {
       "symbol": "DABUR",
       "metrics": {
-        "market_cap": 75659.07,
-        "pe_ratio": 39.93,
-        "pb_ratio": 6.62,
+        "market_cap": 75472.8,
+        "pe_ratio": 39.95,
+        "pb_ratio": 6.61,
         "industry_pe": 48.8,
         "debt_to_equity": 0.11,
         "roe": 16.24,
-        "eps": 10.68,
-        "dividend_yield": 1.93,
+        "eps": 10.65,
+        "dividend_yield": 1.94,
         "book_value": 64.38,
         "face_value": null
       },
@@ -5509,7 +5509,7 @@
           }
         ]
       },
-      "last_updated": 1784575277
+      "last_updated": 1784787356
     },
     "BRITANIA": {
       "symbol": "BRITANIA",
@@ -5717,19 +5717,19 @@
           }
         ]
       },
-      "last_updated": 1784575279
+      "last_updated": 1784787358
     },
     "SUNPHARMA": {
       "symbol": "SUNPHARMA",
       "metrics": {
-        "market_cap": 469405.9,
-        "pe_ratio": 40.98,
-        "pb_ratio": 5.62,
+        "market_cap": 464799.14,
+        "pe_ratio": 40.47,
+        "pb_ratio": 5.56,
         "industry_pe": 35.36,
         "debt_to_equity": 5.52,
         "roe": 14.72,
-        "eps": 47.74,
-        "dividend_yield": 83.0,
+        "eps": 47.87,
+        "dividend_yield": 82.0,
         "book_value": 348.31,
         "face_value": null
       },
@@ -5925,18 +5925,18 @@
           }
         ]
       },
-      "last_updated": 1784575280
+      "last_updated": 1784787359
     },
     "DRREDDY": {
       "symbol": "DRREDDY",
       "metrics": {
-        "market_cap": 101848.78,
-        "pe_ratio": 23.76,
-        "pb_ratio": 2.7,
+        "market_cap": 96421.36,
+        "pe_ratio": 22.98,
+        "pb_ratio": 2.56,
         "industry_pe": 35.36,
         "debt_to_equity": 0.2,
         "roe": 11.83,
-        "eps": 51.48,
+        "eps": 50.39,
         "dividend_yield": 66.0,
         "book_value": 452.82,
         "face_value": null
@@ -6133,19 +6133,19 @@
           }
         ]
       },
-      "last_updated": 1784575281
+      "last_updated": 1784787360
     },
     "CIPLA": {
       "symbol": "CIPLA",
       "metrics": {
-        "market_cap": 116458.98,
-        "pe_ratio": 30.06,
-        "pb_ratio": 3.38,
+        "market_cap": 113655.76,
+        "pe_ratio": 29.32,
+        "pb_ratio": 3.3,
         "industry_pe": 35.36,
         "debt_to_equity": 1.78,
         "roe": 11.74,
-        "eps": 47.95,
-        "dividend_yield": 92.0,
+        "eps": 47.99,
+        "dividend_yield": 91.0,
         "book_value": 426.25,
         "face_value": null
       },
@@ -6341,18 +6341,18 @@
           }
         ]
       },
-      "last_updated": 1784575283
+      "last_updated": 1784787362
     },
     "DIVISLAB": {
       "symbol": "DIVISLAB",
       "metrics": {
-        "market_cap": 194269.9,
-        "pe_ratio": 75.92,
-        "pb_ratio": 11.59,
+        "market_cap": 193845.16,
+        "pe_ratio": 75.47,
+        "pb_ratio": 11.57,
         "industry_pe": 35.36,
         "debt_to_equity": 0.04,
         "roe": 16.19,
-        "eps": 96.39,
+        "eps": 96.76,
         "dividend_yield": 41.0,
         "book_value": 631.37,
         "face_value": null
@@ -6549,19 +6549,19 @@
           }
         ]
       },
-      "last_updated": 1784575284
+      "last_updated": 1784787363
     },
     "TATASTEEL": {
       "symbol": "TATASTEEL",
       "metrics": {
-        "market_cap": 232487.73,
-        "pe_ratio": 21.58,
-        "pb_ratio": 2.28,
+        "market_cap": 230791.55,
+        "pe_ratio": 21.47,
+        "pb_ratio": 2.26,
         "industry_pe": 27.5,
         "debt_to_equity": 0.89,
         "roe": 11.16,
-        "eps": 8.64,
-        "dividend_yield": 2.15,
+        "eps": 8.62,
+        "dividend_yield": 2.14,
         "book_value": 81.84,
         "face_value": null
       },
@@ -6757,18 +6757,18 @@
           }
         ]
       },
-      "last_updated": 1784575285
+      "last_updated": 1784787365
     },
     "HINDALCO": {
       "symbol": "HINDALCO",
       "metrics": {
-        "market_cap": 210396.17,
-        "pe_ratio": 15.73,
-        "pb_ratio": 1.54,
+        "market_cap": 212771.39,
+        "pe_ratio": 15.94,
+        "pb_ratio": 1.56,
         "industry_pe": 27.5,
         "debt_to_equity": 0.73,
         "roe": 10.29,
-        "eps": 60.24,
+        "eps": 60.14,
         "dividend_yield": 53.0,
         "book_value": 615.28,
         "face_value": null
@@ -6965,19 +6965,19 @@
           }
         ]
       },
-      "last_updated": 1784575286
+      "last_updated": 1784787366
     },
     "JSWSTEEL": {
       "symbol": "JSWSTEEL",
       "metrics": {
-        "market_cap": 306811.95,
-        "pe_ratio": 12.41,
-        "pb_ratio": 3.07,
+        "market_cap": 306470.22,
+        "pe_ratio": 12.38,
+        "pb_ratio": 3.06,
         "industry_pe": 27.5,
         "debt_to_equity": 0.95,
         "roe": null,
-        "eps": 101.33,
-        "dividend_yield": 57.0,
+        "eps": 101.39,
+        "dividend_yield": 56.0,
         "book_value": 409.91,
         "face_value": null
       },
@@ -7173,19 +7173,19 @@
           }
         ]
       },
-      "last_updated": 1784575287
+      "last_updated": 1784787367
     },
     "COALINDIA": {
       "symbol": "COALINDIA",
       "metrics": {
-        "market_cap": 264627.55,
-        "pe_ratio": 8.51,
-        "pb_ratio": 2.22,
+        "market_cap": 262070.02,
+        "pe_ratio": 8.48,
+        "pb_ratio": 2.2,
         "industry_pe": null,
         "debt_to_equity": 0.12,
         "roe": 28.12,
-        "eps": 50.46,
-        "dividend_yield": 5.14,
+        "eps": 50.12,
+        "dividend_yield": 5.1,
         "book_value": 193.28,
         "face_value": null
       },
@@ -7381,19 +7381,19 @@
           }
         ]
       },
-      "last_updated": 1784575288
+      "last_updated": 1784787368
     },
     "BHARTIARTL": {
       "symbol": "BHARTIARTL",
       "metrics": {
-        "market_cap": 1210362.05,
-        "pe_ratio": 43.81,
-        "pb_ratio": 7.61,
+        "market_cap": 1207367.53,
+        "pe_ratio": 43.55,
+        "pb_ratio": 7.59,
         "industry_pe": null,
         "debt_to_equity": 1.0,
         "roe": 19.36,
-        "eps": 44.28,
-        "dividend_yield": 1.26,
+        "eps": 44.44,
+        "dividend_yield": 1.23,
         "book_value": 254.97,
         "face_value": null
       },
@@ -7589,18 +7589,18 @@
           }
         ]
       },
-      "last_updated": 1784575289
+      "last_updated": 1784787370
     },
     "ADANIPORTS": {
       "symbol": "ADANIPORTS",
       "metrics": {
-        "market_cap": 424850.04,
-        "pe_ratio": 31.66,
-        "pb_ratio": 4.43,
+        "market_cap": 416901.39,
+        "pe_ratio": 31.57,
+        "pb_ratio": 4.34,
         "industry_pe": null,
         "debt_to_equity": 0.64,
         "roe": 15.59,
-        "eps": 58.25,
+        "eps": 57.31,
         "dividend_yield": 41.0,
         "book_value": 416.5,
         "face_value": null
@@ -7797,18 +7797,18 @@
           }
         ]
       },
-      "last_updated": 1784575292
+      "last_updated": 1784787371
     },
     "ADANIGREEN": {
       "symbol": "ADANIGREEN",
       "metrics": {
-        "market_cap": 252017.95,
-        "pe_ratio": 157.89,
-        "pb_ratio": 13.06,
+        "market_cap": 233075.43,
+        "pe_ratio": 152.48,
+        "pb_ratio": 12.08,
         "industry_pe": null,
         "debt_to_equity": 3.47,
         "roe": 7.58,
-        "eps": 9.69,
+        "eps": 9.28,
         "dividend_yield": null,
         "book_value": 117.11,
         "face_value": null
@@ -8005,19 +8005,19 @@
           }
         ]
       },
-      "last_updated": 1784575295
+      "last_updated": 1784787372
     },
     "ULTRACEMCO": {
       "symbol": "ULTRACEMCO",
       "metrics": {
-        "market_cap": 350150.12,
-        "pe_ratio": 42.83,
+        "market_cap": 349914.77,
+        "pe_ratio": 40.98,
         "pb_ratio": 4.86,
         "industry_pe": null,
         "debt_to_equity": 0.29,
-        "roe": 10.59,
-        "eps": 277.93,
-        "dividend_yield": 66.0,
+        "roe": null,
+        "eps": 290.26,
+        "dividend_yield": 1.98,
         "book_value": 2448.89,
         "face_value": null
       },
@@ -8213,19 +8213,19 @@
           }
         ]
       },
-      "last_updated": 1784575298
+      "last_updated": 1784787374
     },
     "LT": {
       "symbol": "LT",
       "metrics": {
-        "market_cap": 528114.94,
-        "pe_ratio": 32.89,
-        "pb_ratio": 4.83,
+        "market_cap": 525280.9,
+        "pe_ratio": 32.9,
+        "pb_ratio": 4.81,
         "industry_pe": null,
         "debt_to_equity": 0.98,
         "roe": 16.95,
-        "eps": 116.72,
-        "dividend_yield": 1.0,
+        "eps": 116.05,
+        "dividend_yield": 99.0,
         "book_value": 794.47,
         "face_value": null
       },
@@ -8401,20 +8401,20 @@
           }
         ]
       },
-      "last_updated": 1784575302
+      "last_updated": 1784787375
     },
     "GRASIM": {
       "symbol": "GRASIM",
       "metrics": {
-        "market_cap": 213229.1,
-        "pe_ratio": 43.02,
+        "market_cap": 213649.61,
+        "pe_ratio": 43.26,
         "pb_ratio": 2.06,
         "industry_pe": null,
         "debt_to_equity": 1.35,
         "roe": 6.29,
-        "eps": 73.08,
-        "dividend_yield": 32.0,
-        "book_value": 1525.83,
+        "eps": 72.82,
+        "dividend_yield": 31.0,
+        "book_value": 1525.54,
         "face_value": null
       },
       "financials": {
@@ -8609,19 +8609,19 @@
           }
         ]
       },
-      "last_updated": 1784575303
+      "last_updated": 1784787377
     },
     "VEDL": {
       "symbol": "VEDL",
       "metrics": {
-        "market_cap": 102247.24,
-        "pe_ratio": 14.6,
-        "pb_ratio": 2.06,
+        "market_cap": 103770.11,
+        "pe_ratio": 14.96,
+        "pb_ratio": 2.09,
         "industry_pe": null,
         "debt_to_equity": 0.48,
         "roe": 20.4,
-        "eps": 17.94,
-        "dividend_yield": 13.44,
+        "eps": 17.76,
+        "dividend_yield": 12.84,
         "book_value": 127.16,
         "face_value": null
       },
@@ -8817,18 +8817,18 @@
           }
         ]
       },
-      "last_updated": 1784575304
+      "last_updated": 1784787378
     },
     "BEL": {
       "symbol": "BEL",
       "metrics": {
-        "market_cap": 298348.63,
-        "pe_ratio": 49.35,
-        "pb_ratio": 12.44,
+        "market_cap": 295826.75,
+        "pe_ratio": 49.23,
+        "pb_ratio": 12.33,
         "industry_pe": null,
         "debt_to_equity": 0.27,
         "roe": 27.56,
-        "eps": 8.27,
+        "eps": 8.22,
         "dividend_yield": 1.06,
         "book_value": 32.82,
         "face_value": null
@@ -9025,18 +9025,18 @@
           }
         ]
       },
-      "last_updated": 1784575305
+      "last_updated": 1784787379
     },
     "IRFC": {
       "symbol": "IRFC",
       "metrics": {
-        "market_cap": 115943.79,
-        "pe_ratio": 16.55,
-        "pb_ratio": 2.04,
+        "market_cap": 114480.11,
+        "pe_ratio": 16.53,
+        "pb_ratio": 2.02,
         "industry_pe": null,
         "debt_to_equity": 7.73,
         "roe": 12.81,
-        "eps": 5.36,
+        "eps": 5.3,
         "dividend_yield": 3.28,
         "book_value": 43.46,
         "face_value": null
@@ -9233,18 +9233,18 @@
           }
         ]
       },
-      "last_updated": 1784575306
+      "last_updated": 1784787381
     },
     "SUZLON": {
       "symbol": "SUZLON",
       "metrics": {
-        "market_cap": 72966.67,
-        "pe_ratio": 22.98,
-        "pb_ratio": 7.72,
+        "market_cap": 72911.7,
+        "pe_ratio": 23.07,
+        "pb_ratio": 7.71,
         "industry_pe": null,
         "debt_to_equity": 5.87,
         "roe": 40.64,
-        "eps": 2.31,
+        "eps": 2.3,
         "dividend_yield": null,
         "book_value": 6.88,
         "face_value": null
@@ -9412,7 +9412,7 @@
           }
         ]
       },
-      "last_updated": 1784575307
+      "last_updated": 1784787382
     }
   }
 }

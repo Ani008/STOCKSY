@@ -9,6 +9,7 @@
 const { pool } = require('../config/postgres');
 const redisClient = require('./redisService');
 const { getQueue } = require('./queueService');
+const { getLeverage } = require('../config/leverage');
 
 const {
   ValidationError,
@@ -25,6 +26,7 @@ const logger = require('../utils/logger');
 
 const VALID_TYPES = ['MARKET', 'LIMIT', 'SL', 'SL_M'];
 const VALID_SIDES = ['BUY', 'SELL'];
+const VALID_PRODUCT_TYPES = ['CNC', 'MIS'];
 
 const SLIPPAGE_BPS = 5; // 0.05%
 
@@ -100,7 +102,8 @@ function validateOrderInput({
   side,
   quantity,
   price,
-  trigger_price
+  trigger_price,
+  product_type
 }) {
   if (!instrument_key) {
     throw new ValidationError('instrument_key is required');
@@ -118,6 +121,10 @@ function validateOrderInput({
 
   if (!VALID_SIDES.includes(side)) {
     throw new ValidationError('side must be BUY or SELL');
+  }
+
+  if (!VALID_PRODUCT_TYPES.includes(product_type)) {
+    throw new ValidationError('product_type must be CNC or MIS');
   }
 
   if (!quantity || quantity <= 0) {
@@ -156,7 +163,9 @@ async function placeOrder(userId, walletId, payload) {
     side,
     quantity,
     price = null,
-    trigger_price = null
+    trigger_price = null,
+    product_type = 'CNC',
+    metadata = {}
   } = payload;
 
   // 1. Validate input
@@ -167,7 +176,8 @@ async function placeOrder(userId, walletId, payload) {
     side,
     quantity,
     price,
-    trigger_price
+    trigger_price,
+    product_type
   });
 
   // 2. Market hours check
@@ -199,9 +209,12 @@ async function placeOrder(userId, walletId, payload) {
 
   const brokerage = calcBrokerage(estimatedValue);
 
+  // CNC = 1x always. MIS = 5x for Nifty 50, 2.5x for everything else.
+  const leverage = getLeverage(symbol, product_type);
+
   const marginRequired =
     side === 'BUY'
-      ? estimatedValue + brokerage
+      ? (estimatedValue / leverage) + brokerage
       : 0;
 
   const client = await pool.connect();
@@ -247,14 +260,15 @@ async function placeOrder(userId, walletId, payload) {
         FROM positions
         WHERE wallet_id = $1
         AND instrument_key = $2
-        AND quantity >= $3
+        AND product_type = $3
+        AND quantity >= $4
         `,
-        [walletId, instrument_key, quantity]
+        [walletId, instrument_key, product_type, quantity]
       );
 
       if (!positionRes.rows.length) {
         throw new ValidationError(
-          `Insufficient holdings for ${symbol}`
+          `Insufficient ${product_type} holdings for ${symbol}`
         );
       }
     }
@@ -318,13 +332,15 @@ async function placeOrder(userId, walletId, payload) {
         trigger_price,
         status,
         margin_used,
+        product_type,
+        leverage_applied,
         metadata
       )
       VALUES
       (
         $1,$2,$3,$4,$5,
         $6,$7,$8,$9,$10,
-        'PENDING',$11,'{}'
+        'PENDING',$11,$12,$13,$14
       )
       RETURNING *
       `,
@@ -339,7 +355,10 @@ async function placeOrder(userId, walletId, payload) {
         quantity,
         price,
         trigger_price,
-        marginRequired
+        marginRequired,
+        product_type,
+        leverage,
+        JSON.stringify(metadata)
       ]
     );
 
@@ -391,7 +410,9 @@ async function placeOrder(userId, walletId, payload) {
         quantity,
         price,
         triggerPrice: trigger_price,
-        marginUsed: marginRequired
+        marginUsed: marginRequired,
+        productType: product_type,
+        leverageApplied: leverage
       },
       {
         attempts: 3,

@@ -23,6 +23,7 @@ const {
 } = require("./orderService");
 
 const { notifyClient } = require("./websocketService");
+const { getLeverage } = require("../config/leverage");
 
 const logger = require("../utils/logger");
 
@@ -43,6 +44,8 @@ async function executeOrder(jobData) {
     price,
     triggerPrice,
     marginUsed,
+    productType = "CNC",
+    leverageApplied = 1,
   } = jobData;
 
   // ───────────────────────────────────────────────────────────
@@ -232,15 +235,16 @@ async function executeOrder(jobData) {
             symbol,
             name,
             quantity,
-            avg_cost
+            avg_cost,
+            product_type
           )
           VALUES
           (
-            $1,$2,$3,$4,$5,$6,$7
+            $1,$2,$3,$4,$5,$6,$7,$8
           )
 
           ON CONFLICT
-          (wallet_id, instrument_key)
+          (wallet_id, instrument_key, product_type)
 
           DO UPDATE SET
 
@@ -276,13 +280,23 @@ async function executeOrder(jobData) {
           order.name || symbol,
           qty,
           fillPrice,
+          productType,
         ],
       );
 
       positionId = pos.id;
 
-      // Margin adjustment
-      const refund = parseFloat(marginUsed) - totalCost;
+      // Margin adjustment — recompute what the margin SHOULD be at the
+      // actual fill price (using the same leverage the order was placed
+      // with), and refund/charge only the difference from what was
+      // reserved at placement time. This is leverage-aware: for CNC
+      // (leverage=1) this reduces to the original `marginUsed - totalCost`
+      // behavior exactly. For MIS it correctly keeps only the margin
+      // portion reserved instead of settling the full trade value.
+      const actualMarginRequired =
+        (tradeValue / leverageApplied) + brokerage;
+
+      const refund = parseFloat(marginUsed) - actualMarginRequired;
 
       if (refund !== 0) {
         await client.query(
@@ -312,16 +326,17 @@ async function executeOrder(jobData) {
           FROM positions
           WHERE wallet_id = $1
           AND instrument_key = $2
+          AND product_type = $3
           FOR UPDATE
           `,
-        [walletId, instrumentKey],
+        [walletId, instrumentKey, productType],
       );
 
       if (!pos) {
         await rejectOrderClient(
           client,
           order,
-          `No position available for ${symbol}`,
+          `No ${productType} position available for ${symbol}`,
         );
 
         await client.query("COMMIT");
@@ -342,6 +357,17 @@ async function executeOrder(jobData) {
       }
 
       realisedPnl = (fillPrice - avgCost) * qty - brokerage;
+
+      // Credit = margin portion being released + realised P&L —
+      // NOT the full sale value. For CNC (leverage=1) this collapses
+      // to exactly the old `totalCost` behavior (full value back).
+      // For MIS, only the margin actually reserved at buy time gets
+      // released, plus/minus whatever was won or lost — crediting
+      // full sale value here would hand back money that was never
+      // taken from the wallet in the first place.
+      const positionLeverage = getLeverage(symbol, productType);
+      const marginToRelease = (avgCost * qty) / positionLeverage;
+      const walletCredit = marginToRelease + realisedPnl;
 
       const newQty = oldQty - qty;
 
@@ -385,7 +411,7 @@ async function executeOrder(jobData) {
           updated_at = NOW()
         WHERE id = $2
         `,
-        [totalCost, walletId],
+        [walletCredit, walletId],
       );
     }
 
