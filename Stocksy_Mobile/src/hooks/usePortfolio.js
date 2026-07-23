@@ -90,6 +90,65 @@ export function getSector(k) {
   return INSTRUMENT_SECTOR[k] ?? "Other";
 }
 
+// ── Pure derivation helpers ───────────────────────────────────────────────────
+// Extracted out of the hook body so the same math can be run twice — once for
+// the combined book (back-compat for Dashboard etc.) and once each for the
+// CNC-only ("Holdings") and MIS-only ("Positions"/intraday) slices that the
+// Portfolio screen's Holdings/Positions toggle needs.
+
+function summarizeTotals(positions, wallets = []) {
+  const totalInvested = positions.reduce((a, p) => a + p.invested, 0);
+  const totalCurrent = positions.reduce((a, p) => a + p.currentValue, 0);
+  const totalUnrealised = positions.reduce((a, p) => a + p.unrealisedPnl, 0);
+  const totalRealised = positions.reduce((a, p) => a + p.realisedPnl, 0);
+  const totalToday = positions.reduce((a, p) => a + p.todayPnl, 0);
+  const cashBalance = wallets.reduce((a, w) => a + parseFloat(w.balance), 0);
+  const totalLifetime = totalUnrealised + totalRealised;
+  return {
+    totalInvested,
+    totalCurrent,
+    totalUnrealised,
+    totalRealised,
+    totalLifetime,
+    totalToday,
+    cashBalance,
+    portfolioValue: totalCurrent,
+    todayPct: totalInvested > 0 ? (totalToday / totalInvested) * 100 : 0,
+    lifetimePct: totalInvested > 0 ? (totalLifetime / totalInvested) * 100 : 0,
+    unrealisedPct: totalInvested > 0 ? (totalUnrealised / totalInvested) * 100 : 0,
+    positionCount: positions.length,
+  };
+}
+
+function summarizeSectorAllocation(positions) {
+  const total = positions.reduce((a, p) => a + p.currentValue, 0);
+  if (total === 0) return [];
+  const map = {};
+  for (const p of positions) {
+    const s = p.sector ?? "Other";
+    map[s] = (map[s] ?? 0) + p.currentValue;
+  }
+  return Object.entries(map)
+    .map(([sector, value]) => ({
+      sector,
+      value,
+      pct: parseFloat(((value / total) * 100).toFixed(1)),
+      color: SECTOR_COLORS[sector] ?? SECTOR_COLORS.Other,
+    }))
+    .sort((a, b) => b.value - a.value);
+}
+
+function summarizeBestWorst(positions) {
+  if (positions.length === 0) return {};
+  const sorted = [...positions].sort(
+    (a, b) => b.unrealisedPct - a.unrealisedPct,
+  );
+  return {
+    bestPerformer: sorted[0],
+    worstPerformer: sorted[sorted.length - 1],
+  };
+}
+
 // ── Hook ──────────────────────────────────────────────────────────────────────
 export function usePortfolio(prices = {}) {
   const [rawPositions, setRawPositions] = useState([]);
@@ -174,71 +233,82 @@ export function usePortfolio(prices = {}) {
       });
   }, [rawPositions, prices]);
 
-  // ── Aggregate totals ──────────────────────────────────────────────────────
-  const totals = useMemo(() => {
-    const totalInvested = positions.reduce((a, p) => a + p.invested, 0);
-    const totalCurrent = positions.reduce((a, p) => a + p.currentValue, 0);
-    const totalUnrealised = positions.reduce((a, p) => a + p.unrealisedPnl, 0);
-    const totalRealised = positions.reduce((a, p) => a + p.realisedPnl, 0);
-    const totalToday = positions.reduce((a, p) => a + p.todayPnl, 0);
-    const cashBalance = wallets.reduce((a, w) => a + parseFloat(w.balance), 0);
-    const totalLifetime = totalUnrealised + totalRealised;
-    return {
-      totalInvested,
-      totalCurrent,
-      totalUnrealised,
-      totalRealised,
-      totalLifetime,
-      totalToday,
-      cashBalance,
-      portfolioValue: totalCurrent,
-      todayPct: totalInvested > 0 ? (totalToday / totalInvested) * 100 : 0,
-      lifetimePct:
-        totalInvested > 0 ? (totalLifetime / totalInvested) * 100 : 0,
-      unrealisedPct:
-        totalInvested > 0 ? (totalUnrealised / totalInvested) * 100 : 0,
-      positionCount: positions.length,
-    };
-  }, [positions, wallets]);
+  // ── Aggregate totals (combined — CNC + MIS together) ──────────────────────
+  // Kept as-is for existing consumers (DashboardPage's home summary shows the
+  // whole book, delivery + intraday combined, same as Groww's home screen).
+  const totals = useMemo(
+    () => summarizeTotals(positions, wallets),
+    [positions, wallets],
+  );
 
-  // ── Sector allocation ─────────────────────────────────────────────────────
-  const sectorAllocation = useMemo(() => {
-    const total = positions.reduce((a, p) => a + p.currentValue, 0);
-    if (total === 0) return [];
-    const map = {};
-    for (const p of positions) {
-      const s = p.sector ?? "Other";
-      map[s] = (map[s] ?? 0) + p.currentValue;
-    }
-    return Object.entries(map)
-      .map(([sector, value]) => ({
-        sector,
-        value,
-        pct: parseFloat(((value / total) * 100).toFixed(1)),
-        color: SECTOR_COLORS[sector] ?? SECTOR_COLORS.Other,
-      }))
-      .sort((a, b) => b.value - a.value);
-  }, [positions]);
+  // ── Sector allocation (combined) ──────────────────────────────────────────
+  const sectorAllocation = useMemo(
+    () => summarizeSectorAllocation(positions),
+    [positions],
+  );
 
-  // ── Best / Worst ──────────────────────────────────────────────────────────
-  const { bestPerformer, worstPerformer } = useMemo(() => {
-    if (positions.length === 0) return {};
-    const sorted = [...positions].sort(
-      (a, b) => b.unrealisedPct - a.unrealisedPct,
-    );
-    return {
-      bestPerformer: sorted[0],
-      worstPerformer: sorted[sorted.length - 1],
-    };
-  }, [positions]);
+  // ── Best / Worst (combined) ────────────────────────────────────────────────
+  const { bestPerformer, worstPerformer } = useMemo(
+    () => summarizeBestWorst(positions),
+    [positions],
+  );
+
+  // ── Holdings (CNC/delivery) vs Positions (MIS/intraday) split ─────────────
+  // This is what backs the Portfolio screen's Holdings/Positions toggle.
+  // product_type comes straight from the `positions` Postgres table via
+  // GET /api/positions, so no extra API call is needed — just partition
+  // the already-fetched + already-live-priced list.
+  const holdingsPositions = useMemo(
+    () => positions.filter((p) => p.product_type === "CNC"),
+    [positions],
+  );
+
+  const intradayPositions = useMemo(
+    () => positions.filter((p) => p.product_type === "MIS"),
+    [positions],
+  );
+
+  // Cash balance is wallet-level, not position-level, so it's shared across
+  // both tabs — only the position-derived numbers (invested/current/P&L)
+  // actually differ between Holdings and Positions.
+  const holdingsTotals = useMemo(
+    () => summarizeTotals(holdingsPositions, wallets),
+    [holdingsPositions, wallets],
+  );
+
+  const intradayTotals = useMemo(
+    () => summarizeTotals(intradayPositions, wallets),
+    [intradayPositions, wallets],
+  );
+
+  const holdingsSectorAllocation = useMemo(
+    () => summarizeSectorAllocation(holdingsPositions),
+    [holdingsPositions],
+  );
+
+  const { bestPerformer: holdingsBestPerformer, worstPerformer: holdingsWorstPerformer } =
+    useMemo(() => summarizeBestWorst(holdingsPositions), [holdingsPositions]);
 
   return {
+    // Combined (back-compat — Dashboard etc.)
     positions,
     totals,
     sectorAllocation,
     wallets,
     bestPerformer,
     worstPerformer,
+
+    // Holdings (CNC / delivery) — Portfolio screen "Holdings" tab
+    holdingsPositions,
+    holdingsTotals,
+    holdingsSectorAllocation,
+    holdingsBestPerformer,
+    holdingsWorstPerformer,
+
+    // Positions (MIS / intraday) — Portfolio screen "Positions" tab
+    intradayPositions,
+    intradayTotals,
+
     loading,
     error,
     refresh,

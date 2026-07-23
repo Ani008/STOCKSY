@@ -16,6 +16,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import useMarketData from '../hooks/useMarketData';
 import { usePortfolio, SECTOR_COLORS } from '../hooks/usePortfolio';
+import { SegmentedToggle, IntradayPositionsView } from '../components';
 
 const { width: SCREEN_W } = Dimensions.get('window');
 
@@ -233,10 +234,25 @@ function PnlBreakdownRow({ label, value, pct, dimmed }) {
 export default function PortfolioPage({ navigation }) {
   const { prices } = useMarketData();          // live WS prices
   const {
-    positions, totals, sectorAllocation,
-    wallets, bestPerformer, worstPerformer,
+    // Holdings (CNC/delivery) — what this screen calls the "Holdings" tab
+    holdingsPositions: positions,
+    holdingsTotals: totals,
+    holdingsSectorAllocation: sectorAllocation,
+    holdingsBestPerformer: bestPerformer,
+    holdingsWorstPerformer: worstPerformer,
+
+    // Positions (MIS/intraday) — the "Positions" tab
+    intradayPositions,
+    intradayTotals,
+
+    wallets,
     loading, error, refresh,
   } = usePortfolio(prices);
+
+  // Holdings vs Positions toggle — delivery (CNC) and intraday (MIS) positions
+  // are economically different things (different lifecycle, different risk),
+  // so they get their own tabs instead of being shown mixed together.
+  const [tab, setTab] = useState('holdings');
 
   useFocusEffect(
     useCallback(() => {
@@ -308,6 +324,41 @@ export default function PortfolioPage({ navigation }) {
         </TouchableOpacity>
       </View>
 
+      {/* ── Holdings / Positions toggle ── */}
+      <View style={styles.toggleRow}>
+        <SegmentedToggle
+          theme="light"
+          value={tab}
+          onChange={setTab}
+          options={[
+            { key: 'holdings', label: 'Holdings' },
+            { key: 'positions', label: `Positions${intradayPositions.length ? ` (${intradayPositions.length})` : ''}` },
+          ]}
+        />
+      </View>
+
+      {/* ── Positions (MIS/intraday) tab — dark Groww-style view ── */}
+      {tab === 'positions' && (
+        <IntradayPositionsView
+          positions={intradayPositions}
+          totals={intradayTotals}
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          onExited={refresh}
+          onPressPosition={(pos) =>
+            navigation.navigate('StockDetail', {
+              instrumentKey: pos.instrument_key,
+              symbol: pos.symbol,
+              name: pos.name,
+              sector: pos.sector,
+            })
+          }
+        />
+      )}
+
+      {/* ── Holdings (CNC/delivery) tab — everything below is unchanged ── */}
+      {tab === 'holdings' && (
+      <>
       {/* ── Hero: Portfolio Value ── */}
       <View style={styles.heroZone}>
         <Text style={styles.heroLabel}>Portfolio Value</Text>
@@ -472,6 +523,8 @@ export default function PortfolioPage({ navigation }) {
 
         <View style={{ height: 32 }} />
       </ScrollView>
+      </>
+      )}
     </SafeAreaView>
   );
 }
@@ -500,6 +553,13 @@ const styles = StyleSheet.create({
     width: 36, height: 36, borderRadius: 18,
     backgroundColor: 'rgba(255,255,255,0.2)',
     alignItems: 'center', justifyContent: 'center',
+  },
+
+  // Holdings / Positions toggle
+  toggleRow: {
+    paddingHorizontal: 16,
+    paddingTop: 4,
+    paddingBottom: 8,
   },
 
   // Hero
