@@ -27,7 +27,11 @@ const signupUser = async (req, res) => {
     );
     return res
       .status(400)
-      .json({ message: "fullName, email and password are all required" });
+      .json({
+        message: "fullName, email and password are all required",
+        code: "VALIDATION_ERROR",
+        severity: "error",
+      });
   }
 
   const username = fullName.trim().split(" ")[0];
@@ -45,7 +49,9 @@ WHERE email=$1
     );
     if (existing.rows.length > 0) {
       return res.status(400).json({
-        message: "User already exists",
+        message: "An account with this email already exists.",
+        code: "EMAIL_ALREADY_EXISTS",
+        severity: "error",
       });
     }
 
@@ -86,7 +92,11 @@ RETURNING *
   } catch (error) {
     console.log("[SIGNUP] ❌ Error:", error.message);
     console.log("[SIGNUP] Full error:", error);
-    res.status(500).json({ message: error.message });
+    res.status(500).json({
+      message: "Something went wrong. Please try again.",
+      code: "UNKNOWN_ERROR",
+      severity: "error",
+    });
   }
 };
 
@@ -104,7 +114,11 @@ const loginUser = async (req, res) => {
       "| password:",
       !!password,
     );
-    return res.status(400).json({ message: "email and password are required" });
+    return res.status(400).json({
+      message: "email and password are required",
+      code: "VALIDATION_ERROR",
+      severity: "error",
+    });
   }
 
   try {
@@ -122,6 +136,8 @@ WHERE email=$1
     if (result.rows.length === 0) {
       return res.status(401).json({
         message: "Invalid credentials",
+        code: "INVALID_CREDENTIALS",
+        severity: "error",
       });
     }
 
@@ -150,12 +166,20 @@ WHERE email=$1
       });
     } else {
       console.log("[LOGIN] ❌ Password did not match");
-      res.status(401).json({ message: "Invalid credentials" });
+      res.status(401).json({
+        message: "Invalid credentials",
+        code: "INVALID_CREDENTIALS",
+        severity: "error",
+      });
     }
   } catch (error) {
     console.log("[LOGIN] ❌ Error:", error.message);
     console.log("[LOGIN] Full error:", error);
-    res.status(500).json({ message: error.message });
+    res.status(500).json({
+      message: "Something went wrong. Please try again.",
+      code: "UNKNOWN_ERROR",
+      severity: "error",
+    });
   }
 };
 

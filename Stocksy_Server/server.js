@@ -45,10 +45,27 @@ app.use('/api', require('./routes/orders'));
 // ─── Services ─────────────────────────────────────────────────────────────────
 initWebSocket(server);
 
+// ─── 404 — unmatched routes ────────────────────────────────────────────────────
+// Without this, an unmatched route falls through to Express's default HTML
+// 404 page, which breaks JSON parsing on the frontend entirely.
+app.use((req, res) => {
+  res.status(404).json({
+    message: 'Not found',
+    code: 'NOT_FOUND',
+    severity: 'error',
+  });
+});
+
 // ─── Global Error Handler ─────────────────────────────────────────────────────
+// Last line of defense — anything that slipped past a controller's own
+// try/catch lands here. Uses the same contract as everywhere else so the
+// frontend never has to special-case "the one response shape that's different."
+const { mapErrorToResponse } = require('./utils/errors');
+
 app.use((err, req, res, next) => {
   console.error('[ERROR HANDLER]', err.stack);
-  res.status(500).send({ message: 'Something went wrong!' });
+  const { status, body } = mapErrorToResponse(err);
+  res.status(status).json(body);
 });
 
 // ─── Start ────────────────────────────────────────────────────────────────────

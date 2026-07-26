@@ -1,6 +1,6 @@
 const { placeOrder, cancelOrder, getOrders } = require('../services/orderService');
 const { getPositions, getPortfolioSummary, getTrades } = require('../services/positionService');
-const { ValidationError, InsufficientFundsError, MarketClosedError } = require('../utils/errors');
+const { sendError } = require('../utils/errors');
 const logger = require('../utils/logger');
 
 // ── POST /api/orders ──────────────────────────────────────────────────────────
@@ -9,7 +9,7 @@ async function createOrder(req, res) {
     const userId = req.user.id; // set by protect() middleware
     const { wallet_id, ...orderPayload } = req.body;
 
-    if (!wallet_id) return res.status(400).json({ message: 'wallet_id is required' });
+    if (!wallet_id) return res.status(400).json({ message: 'wallet_id is required', code: 'VALIDATION_ERROR', severity: 'error' });
 
     const order = await placeOrder(userId, wallet_id, orderPayload);
     return res.status(201).json({
@@ -17,7 +17,7 @@ async function createOrder(req, res) {
       order: sanitiseOrder(order),
     });
   } catch (err) {
-    return handleOrderError(res, err);
+    return sendError(res, err, logger);
   }
 }
 
@@ -29,8 +29,7 @@ async function listOrders(req, res) {
     const orders = await getOrders(userId, { walletId: wallet_id, status, limit: +limit, offset: +offset });
     return res.json({ orders });
   } catch (err) {
-    logger.error(`listOrders error: ${err.message}`);
-    return res.status(500).json({ message: 'Something went wrong' });
+    return sendError(res, err, logger);
   }
 }
 
@@ -40,7 +39,7 @@ async function cancelOrderHandler(req, res) {
     const result = await cancelOrder(req.user.id, req.params.id);
     return res.json(result);
   } catch (err) {
-    return handleOrderError(res, err);
+    return sendError(res, err, logger);
   }
 }
 
@@ -50,8 +49,7 @@ async function getPortfolio(req, res) {
     const summary = await getPortfolioSummary(req.user.id);
     return res.json(summary);
   } catch (err) {
-    logger.error(`getPortfolio error: ${err.message}`);
-    return res.status(500).json({ message: 'Something went wrong' });
+    return sendError(res, err, logger);
   }
 }
 
@@ -62,8 +60,7 @@ async function getPositionsHandler(req, res) {
     const positions = await getPositions(req.user.id, wallet_id);
     return res.json({ positions });
   } catch (err) {
-    logger.error(`getPositions error: ${err.message}`);
-    return res.status(500).json({ message: 'Something went wrong' });
+    return sendError(res, err, logger);
   }
 }
 
@@ -77,8 +74,7 @@ async function getTradesHandler(req, res) {
     });
     return res.json({ trades });
   } catch (err) {
-    logger.error(`getTrades error: ${err.message}`);
-    return res.status(500).json({ message: 'Something went wrong' });
+    return sendError(res, err, logger);
   }
 }
 
@@ -87,17 +83,6 @@ function sanitiseOrder(order) {
   // Strip internal fields from API response
   const { metadata, ...rest } = order;
   return rest;
-}
-
-function handleOrderError(res, err) {
-  if (err instanceof ValidationError)
-    return res.status(400).json({ message: err.message });
-  if (err instanceof InsufficientFundsError)
-    return res.status(422).json({ message: err.message, code: 'INSUFFICIENT_FUNDS' });
-  if (err instanceof MarketClosedError)
-    return res.status(422).json({ message: 'Market is closed', code: 'MARKET_CLOSED' });
-  logger.error(`Unhandled order error: ${err.message}`);
-  return res.status(500).json({ message: 'Something went wrong' });
 }
 
 module.exports = {

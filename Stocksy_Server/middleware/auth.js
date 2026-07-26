@@ -1,69 +1,67 @@
 const jwt = require("jsonwebtoken");
 const { pool } = require("../config/postgres");
+const logger = require("../utils/logger");
+
+// NOTE: this still hits Postgres on every authenticated request — that's
+// the separately-scoped "stateless JWT" redesign we planned earlier and
+// haven't built yet. Deliberately not doing that rewrite here; this pass
+// only fixes the error contract and the crash bug below.
 
 const protect = async (req, res, next) => {
-  let token;
+  const authHeader = req.headers.authorization;
 
-  console.log(
-    "[AUTH MIDDLEWARE] Authorization header:",
-    req.headers.authorization,
-  );
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res.status(401).json({
+      message: "Please log in to continue.",
+      code: "UNAUTHORIZED",
+      severity: "error",
+    });
+  }
 
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer ")
-  ) {
-    try {
-      token = req.headers.authorization.split(" ")[1];
-      console.log("[AUTH MIDDLEWARE] Token found, verifying...");
+  const token = authHeader.split(" ")[1];
 
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      console.log("[AUTH MIDDLEWARE] Token valid — user id:", decoded.id);
+  let decoded;
+  try {
+    decoded = jwt.verify(token, process.env.JWT_SECRET);
+  } catch (err) {
+    // Token missing, malformed, or expired — this is the SESSION_EXPIRED
+    // case the frontend needs to detect and route to the full-screen
+    // re-auth flow, not a toast.
+    logger.error(`[AUTH] Token verification failed: ${err.message}`);
+    return res.status(401).json({
+      message: "Your session has expired. Please log in again.",
+      code: "SESSION_EXPIRED",
+      severity: "error",
+    });
+  }
 
-      const result = await pool.query(
-        `
-SELECT
-id,
-full_name,
-username,
-email,
-provider,
-google_id,
-avatar,
-demo_balance
-FROM users
-WHERE id = $1
-`,
-        [decoded.id],
-      );
+  try {
+    const result = await pool.query(
+      `SELECT id, full_name, username, email, provider, google_id, avatar, demo_balance
+       FROM users
+       WHERE id = $1`,
+      [decoded.id],
+    );
 
-      if (result.rows.length === 0) {
-        console.log("[AUTH] User not found");
-        return res.status(401).json({
-          message: "Not authorized, user not found",
-        });
-      }
-
-      req.user = result.rows[0];
-
-      if (!req.user) {
-        console.log(
-          "[AUTH MIDDLEWARE] ❌ No user found for decoded id:",
-          decoded.id,
-        );
-        return res
-          .status(401)
-          .json({ message: "Not authorized, user not found" });
-      }
-
-      next();
-    } catch (error) {
-      console.log("[AUTH MIDDLEWARE] User attached:", req.user.username);
-      return res.status(401).json({ message: "Not authorized, token invalid" });
+    if (result.rows.length === 0) {
+      // Valid token, but the user it points to no longer exists —
+      // also treated as session-expired from the client's perspective.
+      return res.status(401).json({
+        message: "Your session has expired. Please log in again.",
+        code: "SESSION_EXPIRED",
+        severity: "error",
+      });
     }
-  } else {
-    console.log("[AUTH MIDDLEWARE] ❌ No Bearer token in Authorization header");
-    return res.status(401).json({ message: "Not authorized, no token" });
+
+    req.user = result.rows[0];
+    next();
+  } catch (err) {
+    logger.error(`[AUTH] DB lookup failed: ${err.message}`);
+    return res.status(500).json({
+      message: "Something went wrong. Please try again.",
+      code: "UNKNOWN_ERROR",
+      severity: "error",
+    });
   }
 };
 

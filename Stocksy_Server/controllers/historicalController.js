@@ -1,4 +1,5 @@
 const redisClient = require('../services/redisService');
+const logger = require('../utils/logger');
 
 /**
  * GET /api/historical/:instrumentKey/:range
@@ -19,7 +20,11 @@ const getHistoricalData = async (req, res) => {
 
         const validRanges = ['1D', '1W', '1M', '3M', '1Y'];
         if (!validRanges.includes(range)) {
-            return res.status(400).json({ error: 'Invalid range. Use 1D, 1W, 1M, 3M or 1Y' });
+            return res.status(400).json({
+                message: 'Invalid range. Use 1D, 1W, 1M, 3M or 1Y',
+                code: 'VALIDATION_ERROR',
+                severity: 'error',
+            });
         }
 
         const redisKey = `hist:${decodedKey}:${range}`;
@@ -27,8 +32,9 @@ const getHistoricalData = async (req, res) => {
 
         if (!cached) {
             return res.status(404).json({
-                error: 'No historical data yet',
-                message: 'Python historical_fetcher.py may still be running its first cycle'
+                message: 'Historical data isn\'t available yet for this stock',
+                code: 'HISTORICAL_DATA_UNAVAILABLE',
+                severity: 'warning',
             });
         }
 
@@ -42,8 +48,12 @@ const getHistoricalData = async (req, res) => {
         });
 
     } catch (err) {
-        console.error('Historical data error:', err);
-        return res.status(500).json({ error: 'Server error' });
+        logger.error(`[HISTORICAL DATA] ${err.message}`);
+        return res.status(500).json({
+            message: 'Something went wrong. Please try again.',
+            code: 'UNKNOWN_ERROR',
+            severity: 'error',
+        });
     }
 };
 

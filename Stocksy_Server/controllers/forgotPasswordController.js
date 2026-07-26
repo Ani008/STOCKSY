@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const { pool } = require("../config/postgres");
 const sendForgotPasswordEmail = require("../utils/sendForgotPasswordEmail");
+const logger = require("../utils/logger");
 
 // ===============================
 // Send OTP
@@ -13,6 +14,8 @@ const sendOtp = async (req, res) => {
       return res.status(400).json({
         success: false,
         message: "Email is required",
+        code: "VALIDATION_ERROR",
+        severity: "error",
       });
     }
 
@@ -27,6 +30,8 @@ const sendOtp = async (req, res) => {
       return res.status(404).json({
         success: false,
         message: "No account found with this email.",
+        code: "USER_NOT_FOUND",
+        severity: "error",
       });
     }
 
@@ -55,11 +60,12 @@ const sendOtp = async (req, res) => {
       message: "OTP sent successfully.",
     });
   } catch (err) {
-    console.error("Send OTP Error:", err);
-
+    logger.error(`[SEND OTP] ${err.message}`);
     return res.status(500).json({
       success: false,
-      message: "Something went wrong.",
+      message: "Something went wrong. Please try again.",
+      code: "UNKNOWN_ERROR",
+      severity: "error",
     });
   }
 };
@@ -75,6 +81,8 @@ const verifyOtp = async (req, res) => {
       return res.status(400).json({
         success: false,
         message: "Email and OTP are required.",
+        code: "VALIDATION_ERROR",
+        severity: "error",
       });
     }
 
@@ -89,6 +97,8 @@ const verifyOtp = async (req, res) => {
       return res.status(404).json({
         success: false,
         message: "User not found.",
+        code: "USER_NOT_FOUND",
+        severity: "error",
       });
     }
 
@@ -97,7 +107,9 @@ const verifyOtp = async (req, res) => {
     if (!user.otp) {
       return res.status(400).json({
         success: false,
-        message: "OTP not generated.",
+        message: "Please request a new OTP.",
+        code: "OTP_NOT_REQUESTED",
+        severity: "error",
       });
     }
 
@@ -105,6 +117,8 @@ const verifyOtp = async (req, res) => {
       return res.status(400).json({
         success: false,
         message: "Invalid OTP.",
+        code: "OTP_INVALID",
+        severity: "error",
       });
     }
 
@@ -112,6 +126,8 @@ const verifyOtp = async (req, res) => {
       return res.status(400).json({
         success: false,
         message: "OTP has expired.",
+        code: "OTP_EXPIRED",
+        severity: "error",
       });
     }
 
@@ -121,11 +137,12 @@ const verifyOtp = async (req, res) => {
     });
 
   } catch (err) {
-    console.error(err);
-
+    logger.error(`[VERIFY OTP] ${err.message}`);
     return res.status(500).json({
       success: false,
-      message: "Internal Server Error",
+      message: "Something went wrong. Please try again.",
+      code: "UNKNOWN_ERROR",
+      severity: "error",
     });
   }
 };
@@ -142,6 +159,8 @@ const resetPassword = async (req, res) => {
       return res.status(400).json({
         success: false,
         message: "All fields are required.",
+        code: "VALIDATION_ERROR",
+        severity: "error",
       });
     }
 
@@ -156,6 +175,8 @@ const resetPassword = async (req, res) => {
       return res.status(404).json({
         success: false,
         message: "User not found.",
+        code: "USER_NOT_FOUND",
+        severity: "error",
       });
     }
 
@@ -165,6 +186,8 @@ const resetPassword = async (req, res) => {
       return res.status(400).json({
         success: false,
         message: "Invalid OTP.",
+        code: "OTP_INVALID",
+        severity: "error",
       });
     }
 
@@ -172,6 +195,8 @@ const resetPassword = async (req, res) => {
       return res.status(400).json({
         success: false,
         message: "OTP expired.",
+        code: "OTP_EXPIRED",
+        severity: "error",
       });
     }
 
@@ -193,14 +218,13 @@ const resetPassword = async (req, res) => {
     });
 
   } catch (err) {
-
-    console.error(err);
-
+    logger.error(`[RESET PASSWORD] ${err.message}`);
     return res.status(500).json({
       success: false,
-      message: "Internal Server Error",
+      message: "Something went wrong. Please try again.",
+      code: "UNKNOWN_ERROR",
+      severity: "error",
     });
-
   }
 };
 

@@ -1,17 +1,16 @@
-
-
 const {getWalletsByUserId, createWallet: createWalletRepo, updateWalletName, deleteWallet: deleteWalletRepo,} = require('../repositories/walletRepository');
+const { sendError } = require('../utils/errors');
+const logger = require('../utils/logger');
 
 const getWallets = async (req, res) => {
   try {
-    // Mongo user id from JWT auth middleware
-    const userId = req.user.id;
-
     const financialUser = req.user;
 
     if (!financialUser) {
       return res.status(404).json({
-        message: 'Financial user not found',
+        message: 'User not found',
+        code: 'USER_NOT_FOUND',
+        severity: 'error',
       });
     }
 
@@ -23,11 +22,8 @@ const getWallets = async (req, res) => {
       wallets,
     });
   } catch (error) {
-    console.error('[GET WALLETS ERROR]', error);
-
-    res.status(500).json({
-      message: error.message,
-    });
+    logger.error(`[GET WALLETS] ${error.message}`);
+    return sendError(res, error, logger);
   }
 };
 
@@ -37,6 +33,8 @@ const createWallet = async (req, res) => {
   if (!name || typeof name !== 'string' || name.trim() === '') {
     return res.status(400).json({
       message: 'Wallet name is required',
+      code: 'VALIDATION_ERROR',
+      severity: 'error',
     });
   }
 
@@ -44,26 +42,29 @@ const createWallet = async (req, res) => {
 
   if (!amount || isNaN(parsedAmount) || parsedAmount <= 0) {
     return res.status(400).json({
-      message: 'Valid wallet amount required',
+      message: 'A valid wallet amount is required',
+      code: 'VALIDATION_ERROR',
+      severity: 'error',
     });
   }
 
   try {
-    // Mongo user id from JWT
-    const userId = req.user.id;
-
     const financialUser = req.user;
 
     if (!financialUser) {
       return res.status(404).json({
-        message: 'Financial user not found',
+        message: 'User not found',
+        code: 'USER_NOT_FOUND',
+        severity: 'error',
       });
     }
 
     // Balance validation
     if (parsedAmount > financialUser.demo_balance) {
       return res.status(400).json({
-        message: 'Insufficient demo balance',
+        message: 'Insufficient demo balance to create this wallet',
+        code: 'INSUFFICIENT_FUNDS',
+        severity: 'error',
       });
     }
 
@@ -84,11 +85,8 @@ const createWallet = async (req, res) => {
       wallets: updatedWallets,
     });
   } catch (error) {
-    console.error('[CREATE WALLET ERROR]', error);
-
-    res.status(500).json({
-      message: error.message,
-    });
+    logger.error(`[CREATE WALLET] ${error.message}`);
+    return sendError(res, error, logger);
   }
 };
 
@@ -99,17 +97,19 @@ const updateWallet = async (req, res) => {
   if (!name || typeof name !== 'string' || name.trim() === '') {
     return res.status(400).json({
       message: 'Wallet name is required',
+      code: 'VALIDATION_ERROR',
+      severity: 'error',
     });
   }
 
   try {
-    const userId = req.user.id;
-
-   const financialUser = req.user;
+    const financialUser = req.user;
 
     if (!financialUser) {
       return res.status(404).json({
-        message: 'Financial user not found',
+        message: 'User not found',
+        code: 'USER_NOT_FOUND',
+        severity: 'error',
       });
     }
 
@@ -123,6 +123,8 @@ const updateWallet = async (req, res) => {
     if (!updatedWallet) {
       return res.status(404).json({
         message: 'Wallet not found',
+        code: 'WALLET_NOT_FOUND',
+        severity: 'error',
       });
     }
 
@@ -131,11 +133,8 @@ const updateWallet = async (req, res) => {
       wallet: updatedWallet,
     });
   } catch (error) {
-    console.error('[UPDATE WALLET ERROR]', error);
-
-    res.status(500).json({
-      message: error.message,
-    });
+    logger.error(`[UPDATE WALLET] ${error.message}`);
+    return sendError(res, error, logger);
   }
 };
 
@@ -143,13 +142,13 @@ const deleteWallet = async (req, res) => {
   const { walletId } = req.params;
 
   try {
-    const userId = req.user.id;
     const financialUser = req.user;
-
 
     if (!financialUser) {
       return res.status(404).json({
-        message: 'Financial user not found',
+        message: 'User not found',
+        code: 'USER_NOT_FOUND',
+        severity: 'error',
       });
     }
 
@@ -166,11 +165,8 @@ const deleteWallet = async (req, res) => {
       wallets: updatedWallets,
     });
   } catch (error) {
-    console.error('[DELETE WALLET ERROR]', error);
-
-    res.status(500).json({
-      message: error.message,
-    });
+    logger.error(`[DELETE WALLET] ${error.message}`);
+    return sendError(res, error, logger);
   }
 };
 

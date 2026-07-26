@@ -1,4 +1,5 @@
 const { client: redis } = require("../config/redis");
+const logger = require("../utils/logger");
 
 const ingestFundamentals = async (req, res) => {
   try {
@@ -12,10 +13,11 @@ const ingestFundamentals = async (req, res) => {
       stocks: Object.keys(snapshot.stocks).length,
     });
   } catch (error) {
-    console.error("[FUNDAMENTALS ERROR]", error);
-
+    logger.error(`[INGEST FUNDAMENTALS] ${error.message}`);
     res.status(500).json({
-      message: error.message,
+      message: "Something went wrong. Please try again.",
+      code: "UNKNOWN_ERROR",
+      severity: "error",
     });
   }
 };
@@ -31,7 +33,9 @@ const getFundamentals = async (req, res) => {
 
         if (!snapshot) {
             return res.status(404).json({
-                message: "Fundamentals cache not loaded"
+                message: "Fundamentals data isn't available right now",
+                code: "FUNDAMENTALS_UNAVAILABLE",
+                severity: "warning",
             });
         }
 
@@ -42,20 +46,21 @@ const getFundamentals = async (req, res) => {
 
         if (!stock) {
             return res.status(404).json({
-                message: "Stock not found"
+                message: "Stock not found",
+                code: "NOT_FOUND",
+                severity: "error",
             });
         }
 
         return res.json(stock);
 
     } catch (err) {
-
-        console.error(err);
-
+        logger.error(`[GET FUNDAMENTALS] ${err.message}`);
         res.status(500).json({
-            message: err.message
+            message: "Something went wrong. Please try again.",
+            code: "UNKNOWN_ERROR",
+            severity: "error",
         });
-
     }
 };
 

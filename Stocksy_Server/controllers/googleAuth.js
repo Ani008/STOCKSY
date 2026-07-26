@@ -1,6 +1,7 @@
 const { OAuth2Client } = require("google-auth-library");
 const jwt = require("jsonwebtoken");
 const { pool } = require("../config/postgres");
+const logger = require("../utils/logger");
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
@@ -17,6 +18,8 @@ const googleLogin = async (req, res) => {
     if (!idToken) {
       return res.status(400).json({
         message: "Google ID Token is required",
+        code: "VALIDATION_ERROR",
+        severity: "error",
       });
     }
 
@@ -36,7 +39,9 @@ const googleLogin = async (req, res) => {
 
     if (!emailVerified) {
       return res.status(401).json({
-        message: "Google email is not verified",
+        message: "Your Google email is not verified",
+        code: "GOOGLE_AUTH_FAILED",
+        severity: "error",
       });
     }
 
@@ -119,10 +124,12 @@ WHERE id = $5
       token: generateToken(user.id),
     });
   } catch (err) {
-    console.log(err);
+    logger.error(`[GOOGLE AUTH] ${err.message}`);
 
     res.status(500).json({
-      message: "Google Authentication Failed",
+      message: "Google authentication failed. Please try again.",
+      code: "GOOGLE_AUTH_FAILED",
+      severity: "error",
     });
   }
 };
