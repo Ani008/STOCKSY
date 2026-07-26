@@ -17,6 +17,7 @@ import LoginPage from "./src/pages/LoginPage";
 import SignupPage from "./src/pages/SignupPage";
 
 import WalletScreen from "./src/pages/WalletScreen";
+import AllTransactionsPage from "./src/pages/AllTransactionsPage";
 import ForgotPasswordScreen from "./src/pages/ForgotPasswordScreen";
 import SearchPage from "./src/pages/SearchPage";
 import BuyOrderScreen from "./src/pages/Buyorderscreen";
@@ -171,6 +172,7 @@ export default function App() {
           {/* ── Authenticated shell (tab bar lives inside here) ────────────── */}
           <Stack.Screen name="MainTabs" component={MainTabs} />
           <Stack.Screen name="Wallet" component={WalletScreen} />
+          <Stack.Screen name="AllTransactions" component={AllTransactionsPage} />
 
           <Stack.Screen name="Search" component={SearchPage} />
           <Stack.Screen name="StockDetail" component={StockDetailPage} />

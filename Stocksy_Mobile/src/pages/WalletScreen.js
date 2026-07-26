@@ -21,6 +21,7 @@ import WalletCard from "../components/WalletCard";
 import CreateWalletModal from "../components/CreateWalletModal";
 import DemoCard, { CARD_SKINS } from "../components/DemoCard";
 import CardCustomizerModal from "../components/Cardcustomizermodal";
+import TransactionRow from "../components/TransactionRow";
 import Dashboard from "./DashboardPage";
 
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -30,6 +31,7 @@ import {
   updateWallet,
   deleteWallet,
 } from "../../services/walletService";
+import { fetchTransactions } from "../../services/transactionService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { Colors, Typography, fontScale, moderateScale } from "../theme";
@@ -58,6 +60,7 @@ const SKIN_STORAGE_KEY = "@stocksy_card_skin";
 const WalletScreen = ({ navigation }) => {
   const [demoBalance, setDemoBalance] = useState(0);
   const [wallets, setWallets] = useState([]);
+  const [recentTransactions, setRecentTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -119,9 +122,13 @@ const WalletScreen = ({ navigation }) => {
     else setLoading(true);
 
     try {
-      const data = await fetchWallets();
+      const [data, transactions] = await Promise.all([
+        fetchWallets(),
+        fetchTransactions(5).catch(() => []), // don't block wallet load if this fails
+      ]);
       setDemoBalance(data.demoBalance);
       setWallets(data.wallets);
+      setRecentTransactions(transactions || []);
     } catch (err) {
       // Global toast already covers this.
     } finally {
@@ -142,6 +149,7 @@ const WalletScreen = ({ navigation }) => {
       setDemoBalance(data.demoBalance);
       setWallets(data.wallets);
       setModalVisible(false);
+      fetchTransactions(5).then(setRecentTransactions).catch(() => {});
     } catch (err) {
       // Global toast already covers this.
     } finally {
@@ -285,13 +293,16 @@ const WalletScreen = ({ navigation }) => {
             <Text style={styles.actionLabel}>Create</Text>
 
 
-            <TouchableOpacity style={styles.actionButton} onPress={() => navigation.navigate("Dashboard")}>
+            <TouchableOpacity style={styles.actionButton} onPress={() => navigation.navigate("Home")}>
               <Ionicons name="arrow-up-outline" size={20} color={Colors.text} />
             </TouchableOpacity>
             <Text style={styles.actionLabel}>Invest</Text>
 
 
-            <TouchableOpacity style={styles.actionButton}>
+            <TouchableOpacity
+              style={styles.actionButton}
+              onPress={() => navigation.navigate("AllTransactions")}
+            >
               <Ionicons name="receipt-outline" size={20} color={Colors.text} />
             </TouchableOpacity>
             <Text style={styles.actionLabel}>Transactions</Text>
@@ -402,17 +413,29 @@ const WalletScreen = ({ navigation }) => {
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>Recent Transactions</Text>
 
+            {recentTransactions.length > 0 && (
+              <TouchableOpacity
+                onPress={() => navigation.navigate("AllTransactions")}
+                hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+              >
+                <Text style={styles.seeAllText}>View all</Text>
+              </TouchableOpacity>
+            )}
           </View>
 
-          <View style={styles.emptyTransactions}>
-            <View style={styles.emptyIconRing}>
-              <Ionicons name="receipt-outline" size={28} color={Colors.textMuted} />
+          {recentTransactions.length === 0 ? (
+            <View style={styles.emptyTransactions}>
+              <View style={styles.emptyIconRing}>
+                <Ionicons name="receipt-outline" size={28} color={Colors.textMuted} />
+              </View>
+              <Text style={styles.emptyTitle}>No transactions yet</Text>
+              <Text style={styles.emptySubtitle}>
+                Your transfers and payments will appear here.
+              </Text>
             </View>
-            <Text style={styles.emptyTitle}>No transactions yet</Text>
-            <Text style={styles.emptySubtitle}>
-              Your transfers and payments will appear here.
-            </Text>
-          </View>
+          ) : (
+            recentTransactions.map((tx) => <TransactionRow key={tx.id} tx={tx} />)
+          )}
         </Animated.View>
 
         <View style={{ height: 120 }} />

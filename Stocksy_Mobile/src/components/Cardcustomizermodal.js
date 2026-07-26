@@ -80,11 +80,6 @@ const CardCustomizerModal = ({
           </TouchableOpacity>
         </View>
 
-        {/* Subtitle */}
-        <Text style={styles.subtitle}>
-          Swipe to preview · Tap ✓ to apply
-        </Text>
-
         {/* Card Scroll Preview */}
         <ScrollView
           ref={scrollRef}

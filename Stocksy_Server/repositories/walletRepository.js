@@ -1,4 +1,5 @@
 const { pool } = require("../config/postgres");
+const { invalidateTransactionsCache } = require("../utils/transactionsCache");
 
 const getWalletsByUserId = async (userId) => {
   const result = await pool.query(
@@ -69,7 +70,34 @@ VALUES ($1, $2, $3, $3)
       [userId, name, amount],
     );
 
+    // Ledger entry — money moved out of demo balance into this wallet
+    await client.query(
+      `
+      INSERT INTO account_transactions
+      (
+        user_id,
+        type,
+        amount,
+        balance_after,
+        wallet_name,
+        note
+      )
+      VALUES ($1, 'wallet_created', $2, $3, $4, $5)
+      `,
+      [
+        userId,
+        amount,
+        updatedBalance,
+        name,
+        `Created wallet "${name}"`,
+      ],
+    );
+
     await client.query("COMMIT");
+
+    // Cache was populated before this write happened — drop it so the
+    // next read reflects the wallet_created transaction we just added.
+    await invalidateTransactionsCache(userId);
 
     return {
       wallet: walletResult.rows[0],
@@ -123,13 +151,38 @@ const deleteWallet = async ({ walletId, userId }) => {
     }
 
     // Refund wallet balance back to demo balance
-    await client.query(
+    const refundResult = await client.query(
       `
       UPDATE users
       SET demo_balance = demo_balance + $1
       WHERE id = $2
+      RETURNING demo_balance
       `,
       [wallet.balance, userId],
+    );
+
+    // Ledger entry — money refunded back into demo balance.
+    // Stored against user_id (not wallet_id) so it survives the delete below.
+    await client.query(
+      `
+      INSERT INTO account_transactions
+      (
+        user_id,
+        type,
+        amount,
+        balance_after,
+        wallet_name,
+        note
+      )
+      VALUES ($1, 'wallet_deleted', $2, $3, $4, $5)
+      `,
+      [
+        userId,
+        wallet.balance,
+        refundResult.rows[0].demo_balance,
+        wallet.name,
+        `Deleted wallet "${wallet.name}" — refunded`,
+      ],
     );
 
     // Delete wallet
@@ -142,6 +195,10 @@ const deleteWallet = async ({ walletId, userId }) => {
     );
 
     await client.query("COMMIT");
+
+    // Same reasoning as create — the wallet_deleted transaction we just
+    // wrote won't show up in a stale cached list otherwise.
+    await invalidateTransactionsCache(userId);
 
     return wallet;
   } catch (error) {

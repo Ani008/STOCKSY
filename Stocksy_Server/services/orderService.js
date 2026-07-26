@@ -10,6 +10,7 @@ const { pool } = require('../config/postgres');
 const redisClient = require('./redisService');
 const { getQueue } = require('./queueService');
 const { getLeverage } = require('../config/leverage');
+const marketCalendar = require('./marketCalendarService');
 
 const {
   ValidationError,
@@ -61,35 +62,12 @@ async function getLivePrice(instrumentKey) {
   }
 }
 
-function isMarketOpen() {
-  if (process.env.ENFORCE_MARKET_HOURS !== 'true') {
-    return true;
-  }
-
-  const now = new Date();
-
-  const day = now.toLocaleString('en-US', {
-    timeZone: 'Asia/Kolkata',
-    weekday: 'short'
-  });
-
-  if (['Sat', 'Sun'].includes(day)) {
-    return false;
-  }
-
-  const hhmm = parseInt(
-    now
-      .toLocaleString('en-US', {
-        timeZone: 'Asia/Kolkata',
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false
-      })
-      .replace(':', '')
-  );
-
-  return hhmm >= 915 && hhmm <= 1530;
-}
+// Market-hours check now lives in marketCalendarService — it's weekend
+// AND NSE/BSE-holiday aware (config/marketHolidays.js), and also computes
+// the next-open date/time so MarketClosedError can tell the user exactly
+// when their order would actually go through. Kept out of this file so
+// both orderService and the /api/market/status endpoint share one
+// source of truth instead of drifting out of sync.
 
 // ─────────────────────────────────────────────────────────────
 // Validation
@@ -180,9 +158,11 @@ async function placeOrder(userId, walletId, payload) {
     product_type
   });
 
-  // 2. Market hours check
-  if (!isMarketOpen()) {
-    throw new MarketClosedError();
+  // 2. Market hours check — weekend + NSE/BSE holiday aware
+  if (!marketCalendar.isMarketOpen()) {
+    const reason = marketCalendar.getClosedReason();
+    const nextOpen = marketCalendar.getNextMarketOpen();
+    throw new MarketClosedError(null, nextOpen, reason);
   }
 
   // 3. Get live market price

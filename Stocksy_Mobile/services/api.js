@@ -54,6 +54,12 @@ api.interceptors.response.use(
         AsyncStorage.removeItem('token');
         AsyncStorage.removeItem('user');
         triggerSessionExpired();
+      } else if (code === 'MARKET_CLOSED') {
+        // Intentionally no toast here. This has a rich payload
+        // ({ reason, nextOpen }) that the calling screen (e.g.
+        // BuyOrderScreen) uses to render a proper message box with
+        // the exact next-open date/time — a one-line toast would
+        // throw that detail away.
       } else {
         showToast(
           message || 'Something went wrong. Please try again.',

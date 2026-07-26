@@ -16,10 +16,12 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CreateWalletModal from "../components/CreateWalletModal";
+import MarketClosedModal from "../components/MarketClosedModal";
 import { walletService } from "../../services/walletService";
 import { fetchWallets, createWallet } from "../../services/walletService";
 import { placeOrder } from "../../services/orderService";
 import { fetchLeverage } from "../../services/leverageService";
+import { fetchMarketStatus } from "../../services/marketService";
 import useMarketData from "../hooks/useMarketData";
 
 import { Colors, Typography, fontScale, moderateScale } from "../theme";
@@ -59,6 +61,28 @@ export default function BuyOrderScreen({ navigation, route }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [creatingWallet, setCreatingWallet] = useState(false);
   const [placingOrder, setPlacingOrder] = useState(false);
+
+  // ─── Market status ───────────────────────────────────────────────────────────
+  // Optimistic isOpen:true until the first fetch resolves, so the screen
+  // doesn't flash a false "closed" state while the request is in flight.
+  const [marketStatus, setMarketStatus] = useState({ isOpen: true, reason: null, nextOpen: null });
+  const [marketModalVisible, setMarketModalVisible] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetchMarketStatus()
+      .then((status) => {
+        if (cancelled) return;
+        setMarketStatus(status);
+        if (!status.isOpen) setMarketModalVisible(true);
+      })
+      .catch(() => {
+        // Fail safe: if the status check itself fails, don't block the
+        // screen on it — the server-side check in placeOrder() is still
+        // the real gate; this is just the proactive heads-up.
+      });
+    return () => { cancelled = true; };
+  }, []);
 
   // ─── Leverage ────────────────────────────────────────────────────────────────
   // { cnc: 1, mis: 5 | 2.5 } — fetched once per symbol, not duplicated
@@ -156,10 +180,18 @@ export default function BuyOrderScreen({ navigation, route }) {
   const walletBalance = selectedWallet?.balance || 0;
   const canAfford =
     orderType === "BUY" ? walletBalance >= marginRequired : true;
-  const canPlace = qtyNum > 0 && selectedWalletId && canAfford && !placingOrder;
+  const canPlace =
+    qtyNum > 0 && selectedWalletId && canAfford && marketStatus.isOpen && !placingOrder;
 
   // ─── Place order ─────────────────────────────────────────────────────────────
   async function handlePlaceOrder() {
+    if (!marketStatus.isOpen) {
+      // Market flipped closed after the screen loaded (or the user is
+      // tapping a disabled-looking button) — re-show the message box
+      // instead of letting the request go out at all.
+      setMarketModalVisible(true);
+      return;
+    }
     if (!canPlace) return;
     setPlacingOrder(true);
     try {
@@ -181,8 +213,17 @@ export default function BuyOrderScreen({ navigation, route }) {
         [{ text: "OK", onPress: () => navigation.goBack() }],
       );
     } catch (e) {
-      // Global toast already covers this (INSUFFICIENT_FUNDS, MARKET_CLOSED,
-      // holdings errors, etc.) via the api.js interceptor.
+      const data = e?.response?.data;
+      if (data?.code === "MARKET_CLOSED") {
+        // Server is the source of truth — sync local state from its
+        // { reason, nextOpen } payload (handles the case where the
+        // market closed in the gap between our status fetch and this
+        // submit) and surface the same message box.
+        setMarketStatus({ isOpen: false, reason: data.reason, nextOpen: data.nextOpen });
+        setMarketModalVisible(true);
+      }
+      // Other errors (INSUFFICIENT_FUNDS, holdings, etc.) already covered
+      // by the global toast via the api.js interceptor.
     } finally {
       setPlacingOrder(false);
     }
@@ -272,6 +313,21 @@ export default function BuyOrderScreen({ navigation, route }) {
           </Animated.Text>
         </View>
       </View>
+
+      {/* ── Market closed banner ────────────────────────────────────────────── */}
+      {!marketStatus.isOpen && (
+        <TouchableOpacity
+          style={styles.marketClosedBanner}
+          onPress={() => setMarketModalVisible(true)}
+          activeOpacity={0.8}
+        >
+          <Ionicons name="time-outline" size={16} color={Colors.warning} />
+          <Text style={styles.marketClosedBannerTxt} numberOfLines={1}>
+            Market closed — opens {marketStatus.nextOpen?.dateLabel || "next trading day"} at{" "}
+            {marketStatus.nextOpen?.timeLabel || "9:15 AM"}
+          </Text>
+        </TouchableOpacity>
+      )}
 
       <KeyboardAvoidingView
         style={{ flex: 1 }}
@@ -578,14 +634,27 @@ export default function BuyOrderScreen({ navigation, route }) {
           <TouchableOpacity
             style={[
               styles.ctaBtn,
-              { backgroundColor: canPlace ? accentColor : Colors.primary },
+              {
+                backgroundColor: !marketStatus.isOpen
+                  ? Colors.warning
+                  : canPlace
+                    ? accentColor
+                    : Colors.primary,
+              },
             ]}
             onPress={handlePlaceOrder}
-            disabled={!canPlace}
+            disabled={marketStatus.isOpen && !canPlace}
             activeOpacity={0.85}
           >
             {placingOrder ? (
               <ActivityIndicator color={Colors.white} />
+            ) : !marketStatus.isOpen ? (
+              <>
+                <Ionicons name="time-outline" size={18} color={Colors.white} />
+                <Text style={[styles.ctaBtnTxt, { color: Colors.white }]}>
+                  Market Closed
+                </Text>
+              </>
             ) : (
               <>
                 <Ionicons
@@ -614,6 +683,14 @@ export default function BuyOrderScreen({ navigation, route }) {
         onSubmit={handleCreateWallet}
         availableBalance={demoBalance}
         loading={creatingWallet}
+      />
+
+      {/* ── Market closed message box ───────────────────────────────────────── */}
+      <MarketClosedModal
+        visible={marketModalVisible}
+        onClose={() => setMarketModalVisible(false)}
+        reason={marketStatus.reason}
+        nextOpen={marketStatus.nextOpen}
       />
     </SafeAreaView>
   );
@@ -711,6 +788,24 @@ const styles = StyleSheet.create({
   priceChangeTxt: {
     fontSize: fontScale(Typography.caption),
     fontWeight: "600",
+  },
+
+  // Market closed banner
+  marketClosedBanner: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: moderateScale(8),
+    paddingHorizontal: moderateScale(16),
+    paddingVertical: moderateScale(10),
+    backgroundColor: Colors.warningBg,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.border,
+  },
+  marketClosedBannerTxt: {
+    flex: 1,
+    fontSize: fontScale(Typography.small),
+    fontWeight: "600",
+    color: Colors.text,
   },
 
   // Scroll

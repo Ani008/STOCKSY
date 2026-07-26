@@ -35,6 +35,7 @@ app.use('/api/wallet', require('./routes/wallet'));
 app.use('/api/historical', require('./routes/historical'));
 app.use('/api/fundamentals', require('./routes/fundamentals'));
 app.use('/api/leverage', require('./routes/leverage'));
+app.use('/api/market', require('./routes/market'));
 app.use('/api/debug', require('./routes/debug'));
 app.use('/api', require('./routes/orders'));
 

@@ -15,6 +15,7 @@
 const { pool } = require("../config/postgres");
 
 const redisClient = require("./redisService");
+const { invalidateTransactionsCache } = require("../utils/transactionsCache");
 
 const {
   applySlippage,
@@ -539,6 +540,10 @@ async function executeOrder(jobData) {
     );
 
     await client.query("COMMIT");
+
+    // Transaction is durably committed now — safe to drop the stale
+    // cached feed so the next read picks up this new stock_buy/stock_sell row.
+    await invalidateTransactionsCache(userId);
 
     // ─────────────────────────────────────────────────────────
     // 10. Redis Cache

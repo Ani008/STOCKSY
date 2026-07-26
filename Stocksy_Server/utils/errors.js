@@ -6,7 +6,22 @@ class InsufficientFundsError extends Error {
   constructor(message) { super(message); this.name = 'InsufficientFundsError'; }
 }
 class MarketClosedError extends Error {
-  constructor() { super('Market is currently closed'); this.name = 'MarketClosedError'; }
+  /**
+   * @param {string} [message] defaults to a message built from nextOpen if provided
+   * @param {{isoDate:string,time:string,iso:string,dateLabel:string,timeLabel:string}} [nextOpen]
+   * @param {{type:string,label:string}} [reason]
+   */
+  constructor(message, nextOpen = null, reason = null) {
+    super(
+      message ||
+        (nextOpen
+          ? `Market is closed. Orders will be executed when market opens on ${nextOpen.dateLabel} at ${nextOpen.timeLabel}.`
+          : 'Market is currently closed')
+    );
+    this.name = 'MarketClosedError';
+    this.nextOpen = nextOpen;
+    this.reason = reason;
+  }
 }
 class NotFoundError extends Error {
   constructor(message) { super(message); this.name = 'NotFoundError'; }
@@ -40,7 +55,16 @@ function mapErrorToResponse(err) {
     return { status: 422, body: { message: err.message, code: 'INSUFFICIENT_FUNDS', severity: 'error' } };
 
   if (err instanceof MarketClosedError)
-    return { status: 422, body: { message: err.message, code: 'MARKET_CLOSED', severity: 'warning' } };
+    return {
+      status: 422,
+      body: {
+        message: err.message,
+        code: 'MARKET_CLOSED',
+        severity: 'warning',
+        reason: err.reason || null,
+        nextOpen: err.nextOpen || null, // { isoDate, time, iso, dateLabel, timeLabel }
+      },
+    };
 
   if (err instanceof NotFoundError)
     return { status: 404, body: { message: err.message, code: 'NOT_FOUND', severity: 'error' } };
