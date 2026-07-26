@@ -123,10 +123,7 @@ const WalletScreen = ({ navigation }) => {
       setDemoBalance(data.demoBalance);
       setWallets(data.wallets);
     } catch (err) {
-      Alert.alert(
-        "Error",
-        err?.response?.data?.message || "Failed to load wallet data.",
-      );
+      // Global toast already covers this.
     } finally {
       setLoading(false);
       setRefreshing(false);
@@ -146,10 +143,7 @@ const WalletScreen = ({ navigation }) => {
       setWallets(data.wallets);
       setModalVisible(false);
     } catch (err) {
-      Alert.alert(
-        "Error",
-        err?.response?.data?.message || "Could not create wallet.",
-      );
+      // Global toast already covers this.
     } finally {
       setCreating(false);
     }
@@ -167,10 +161,7 @@ const WalletScreen = ({ navigation }) => {
       setSelectedWallet(null);
       loadWallets();
     } catch (err) {
-      Alert.alert(
-        "Error",
-        err?.response?.data?.message || "Could not rename wallet.",
-      );
+      // Global toast already covers this.
     }
   };
 
@@ -190,10 +181,7 @@ const WalletScreen = ({ navigation }) => {
               setWallets(data.wallets);
               loadWallets();
             } catch (err) {
-              Alert.alert(
-                "Error",
-                err?.response?.data?.message || "Could not delete wallet.",
-              );
+              // Global toast already covers this.
             }
           },
         },

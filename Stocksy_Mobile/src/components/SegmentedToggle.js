@@ -11,9 +11,9 @@ import { Colors, Typography, fontScale, moderateScale } from "../theme";
  *   options       Array<{ key: string, label: string }>  (required)
  *   value         string — currently selected option's `key`
  *   onChange      (key: string) => void
- *   theme         "light" | "dark"  — controls track/thumb colours so the
- *                 same component works on both the blue Holdings background
- *                 and the dark Positions/intraday background.
+ *   theme         "light" | "dark" | "neutral" — controls track/thumb
+ *                 colours: "light" for colored (blue) backgrounds, "dark"
+ *                 for near-black surfaces, "neutral" for plain white cards.
  *   style         extra container style overrides
  */
 export default function SegmentedToggle({
@@ -23,7 +23,7 @@ export default function SegmentedToggle({
   theme = "light",
   style,
 }) {
-  const palette = theme === "dark" ? DARK : LIGHT;
+  const palette = theme === "dark" ? DARK : theme === "neutral" ? NEUTRAL : LIGHT;
 
   return (
     <View style={[styles.track, { backgroundColor: palette.track }, style]}>
@@ -66,6 +66,16 @@ const DARK = {
   activeBg: "#2E323C",
   activeText: Colors.white,
   inactiveText: "#8A8F98",
+};
+
+// For plain white/card surfaces (e.g. DashboardPage's Total Assets card) —
+// LIGHT and DARK above assume a colored (blue/black) backdrop and would be
+// invisible or too heavy sitting directly on white.
+const NEUTRAL = {
+  track: Colors.divider,
+  activeBg: Colors.white,
+  activeText: Colors.primaryDark,
+  inactiveText: Colors.textSecondary,
 };
 
 const styles = StyleSheet.create({

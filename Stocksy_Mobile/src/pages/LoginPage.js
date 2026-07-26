@@ -83,10 +83,9 @@ const LoginPage = ({ navigation }) => {
 
       navigation.replace("MainTabs");
     } catch (err) {
-      Alert.alert(
-        "Login Failed",
-        err.response?.data?.message || err.message || "Something went wrong",
-      );
+      // No Alert here — the global toast (wired via api.js's interceptor)
+      // already shows this. Keeping the catch so the rejection doesn't
+      // bubble up unhandled.
     } finally {
       setLoading(false);
     }

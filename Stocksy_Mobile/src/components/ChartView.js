@@ -199,7 +199,6 @@ const ChartView = ({
         allowsInlineMediaPlayback
         onError={(e) => console.warn("ChartView error:", e.nativeEvent)}
       />
-      <Text style={styles.credit}>Charts by TradingView</Text>
     </View>
   );
 };

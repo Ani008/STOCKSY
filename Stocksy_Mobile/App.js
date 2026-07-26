@@ -8,6 +8,9 @@ import { Ionicons } from "@expo/vector-icons";
 import "react-native-get-random-values";
 
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { ToastProvider } from "./src/context/ToastProvider";
+import SessionExpiredScreen from "./src/components/SessionExpiredScreen";
+import { registerSessionExpiredHandler } from "./services/uiBridge";
 
 // ─── Auth screens ─────────────────────────────────────────────────────────────
 import LoginPage from "./src/pages/LoginPage";
@@ -102,6 +105,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   // null = still checking, true = has token, false = no token
   const [isAuthenticated, setIsAuthenticated] = useState(null);
+  const [sessionExpired, setSessionExpired] = useState(false);
 
   useEffect(() => {
     const checkToken = async () => {
@@ -110,6 +114,23 @@ export default function App() {
     };
     checkToken();
   }, []);
+
+  // Registered once — api.js's interceptor calls triggerSessionExpired()
+  // from outside the React tree whenever any request comes back 401
+  // SESSION_EXPIRED. This is the only place that reacts to it.
+  useEffect(() => {
+    registerSessionExpiredHandler(() => setSessionExpired(true));
+  }, []);
+
+  const handleReLogin = () => {
+    // Token's already cleared by the interceptor at the point of
+    // failure. Flipping both flags here forces a full remount of the
+    // NavigationContainer below with initialRouteName freshly
+    // evaluated as "Login" — same mechanism the app already uses for
+    // the normal logged-out state.
+    setSessionExpired(false);
+    setIsAuthenticated(false);
+  };
 
   // ── Splash / loading state ──────────────────────────────────────────────────
   // Shown for the fraction of a second while SecureStore is read.
@@ -122,9 +143,18 @@ export default function App() {
     );
   }
 
+  if (sessionExpired) {
+    return (
+      <SafeAreaProvider>
+        <SessionExpiredScreen onLoginPress={handleReLogin} />
+      </SafeAreaProvider>
+    );
+  }
+
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
+      <ToastProvider>
+        <NavigationContainer>
         <StatusBar style="auto" />
         <Stack.Navigator
           initialRouteName={isAuthenticated ? "MainTabs" : "Login"}
@@ -146,7 +176,8 @@ export default function App() {
           <Stack.Screen name="StockDetail" component={StockDetailPage} />
           <Stack.Screen name="BuyOrder" component={BuyOrderScreen} />
         </Stack.Navigator>
-      </NavigationContainer>
+        </NavigationContainer>
+      </ToastProvider>
     </SafeAreaProvider>
   );
 }

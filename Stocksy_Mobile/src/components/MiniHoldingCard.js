@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import { Colors, Typography, fontScale, moderateScale } from "../theme";
@@ -15,6 +15,9 @@ import { Colors, Typography, fontScale, moderateScale } from "../theme";
  *   logoUrl     string             — Image URL for logo (takes priority over iconName).
  *   iconName    string             — Ionicons icon name (fallback if no logoUrl).
  *   iconColor   string             — Icon color (only used when falling back to Ionicons).
+ *   onPress     function           — Optional. If provided, the card becomes tappable
+ *                                    (e.g. navigate to StockDetail). Omit for
+ *                                    display-only usages like the index tiles.
  */
 const MiniHoldingCard = ({
   ticker,
@@ -24,9 +27,14 @@ const MiniHoldingCard = ({
   logoUrl,
   iconName = "bar-chart-outline",
   iconColor = Colors.text,
+  onPress,
 }) => {
+  const Wrapper = onPress ? TouchableOpacity : View;
   return (
-    <View style={styles.card}>
+    <Wrapper
+      style={styles.card}
+      {...(onPress ? { onPress, activeOpacity: 0.8 } : {})}
+    >
       <View style={styles.iconBox}>
         {logoUrl ? (
           <Image source={{ uri: logoUrl }} style={styles.logo} />
@@ -50,7 +58,7 @@ const MiniHoldingCard = ({
           {change}
         </Text>
       ) : null}
-    </View>
+    </Wrapper>
   );
 };
 

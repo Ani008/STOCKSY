@@ -118,7 +118,7 @@ export default function BuyOrderScreen({ navigation, route }) {
         setSelectedWalletId(data.wallets[0].id);
       }
     } catch (e) {
-      Alert.alert("Error", "Could not load wallets. Please try again.");
+      // Global toast already covers this via the api.js interceptor.
     } finally {
       setWalletsLoading(false);
     }
@@ -135,7 +135,7 @@ export default function BuyOrderScreen({ navigation, route }) {
       if (newest) setSelectedWalletId(newest.id);
       setModalVisible(false);
     } catch (e) {
-      Alert.alert("Error", "Could not create wallet.");
+      // Global toast already covers this (e.g. INSUFFICIENT_FUNDS, VALIDATION_ERROR).
     } finally {
       setCreatingWallet(false);
     }
@@ -181,7 +181,8 @@ export default function BuyOrderScreen({ navigation, route }) {
         [{ text: "OK", onPress: () => navigation.goBack() }],
       );
     } catch (e) {
-      Alert.alert("Order Failed", "Could not place order. Try again.");
+      // Global toast already covers this (INSUFFICIENT_FUNDS, MARKET_CLOSED,
+      // holdings errors, etc.) via the api.js interceptor.
     } finally {
       setPlacingOrder(false);
     }

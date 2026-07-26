@@ -45,7 +45,7 @@ const SignupPage = ({ navigation }) => {
       });
       navigation.replace("MainTabs");
     } catch (err) {
-      Alert.alert("Signup Failed", err.message);
+      // No Alert here — the global toast already covers this.
     } finally {
       setLoading(false);
     }

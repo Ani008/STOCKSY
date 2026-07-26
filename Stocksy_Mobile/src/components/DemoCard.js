@@ -155,7 +155,7 @@ const DemoCard = ({
         </Text>
         {/* Logo circles */}
         <Image
-          source={require("C:\\Users\\hP\\Documents\\Aniket\\PROJECTS\\Agency\\Stocksy\\STOCKSY\\Stocksy_Mobile\\assets\\StocksyLogo.png")}
+          source={require("../../assets/StocksyLogo.png")}
           style={styles.companyLogo}
           resizeMode="contain"
         />

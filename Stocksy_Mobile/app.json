@@ -4,13 +4,8 @@
     "slug": "stocksy-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/StocksyLogoBlue.jpeg",
     "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
     "ios": {
       "bundleIdentifier": "com.stocksy.mobile",
       "supportsTablet": true
@@ -18,12 +13,12 @@
     "android": {
       "package": "com.stocksy.mobile",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/StocksyLogoBlue.jpeg",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/StocksyLogoBlue.jpeg"
     },
     "plugins": [
       "expo-asset",
