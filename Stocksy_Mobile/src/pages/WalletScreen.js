@@ -11,7 +11,6 @@ import {
   Modal,
   TextInput,
   Animated,
-  Dimensions,
   StatusBar,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -34,7 +33,34 @@ import {
 import { fetchTransactions } from "../../services/transactionService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { Colors, Typography, fontScale, moderateScale } from "../theme";
+import { Colors, Typography, fontScale, moderateScale, SCREEN_WIDTH } from "../theme";
+
+// ─── Card stack sizing ──────────────────────────────────────────────────────
+// The demo card + its two fanned "peeking" shadow cards sit beside the
+// action column (Create/Invest/Transactions). The original layout used
+// fixed 300/280/265px widths tuned for a 390px-wide phone — that overflows
+// the screen on EVERY phone size, including its own 390px baseline (by
+// ~28px), because the action column + paddings + card together always add
+// up to more than 390px. This computes the largest card width that actually
+// fits beside the action column, capped at the original 300px so it doesn't
+// look oversized on large phones, and scales the two shadow cards + stack
+// area proportionally so the fanned-card effect still looks right at any
+// screen size.
+const CARD_SECTION_PADDING = moderateScale(20);
+const ACTION_COLUMN_SPACE = moderateScale(68) + moderateScale(4); // column width + marginRight
+const STACK_MARGIN_LEFT = moderateScale(16);
+const CARD_MAX_WIDTH = 300;
+
+const availableForStack =
+  SCREEN_WIDTH - CARD_SECTION_PADDING * 2 - ACTION_COLUMN_SPACE - STACK_MARGIN_LEFT;
+const STACK_AREA_WIDTH = Math.min(availableForStack, CARD_MAX_WIDTH * (310 / 300));
+const CARD_WIDTH = STACK_AREA_WIDTH * (300 / 310);
+const CARD_HEIGHT = CARD_WIDTH * (180 / 300);
+const STACK_AREA_HEIGHT = CARD_HEIGHT * (210 / 180);
+const SHADOW1_WIDTH = CARD_WIDTH * (280 / 300);
+const SHADOW1_HEIGHT = CARD_HEIGHT * (170 / 180);
+const SHADOW2_WIDTH = CARD_WIDTH * (265 / 300);
+const SHADOW2_HEIGHT = CARD_HEIGHT * (165 / 180);
 
 // Palette for sub-wallet icon colours
 const WALLET_COLORS = [
@@ -318,7 +344,11 @@ const WalletScreen = ({ navigation }) => {
                 activeOpacity={0.92}
                 onPress={() => setSkinModalVisible(true)}
               >
-                <DemoCard balance={demoBalance} skin={activeSkin} />
+                <DemoCard
+                  balance={demoBalance}
+                  skin={activeSkin}
+                  style={{ width: CARD_WIDTH, height: CARD_HEIGHT }}
+                />
                 {/* Edit hint */}
                 <View style={styles.editHint}>
                   <Ionicons
@@ -571,6 +601,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     paddingLeft: moderateScale(20),
+    paddingRight: moderateScale(20),
     paddingVertical: moderateScale(16),
     marginBottom: moderateScale(8),
   },
@@ -602,29 +633,29 @@ const styles = StyleSheet.create({
   },
   cardStackArea: {
     position: "relative",
-    width: 310,
-    height: 210,
-    marginLeft: moderateScale(16),
+    width: STACK_AREA_WIDTH,
+    height: STACK_AREA_HEIGHT,
+    marginLeft: STACK_MARGIN_LEFT,
   },
   stackShadow1: {
     position: "absolute",
-    width: 280,
-    height: 170,
-    borderRadius: 22,
+    width: SHADOW1_WIDTH,
+    height: SHADOW1_HEIGHT,
+    borderRadius: moderateScale(22),
     backgroundColor: Colors.borderLight,
-    top: 12,
-    left: 18,
+    top: moderateScale(12),
+    left: moderateScale(18),
     transform: [{ rotate: "-9deg" }],
     opacity: 0.7,
   },
   stackShadow2: {
     position: "absolute",
-    width: 265,
-    height: 165,
-    borderRadius: 22,
+    width: SHADOW2_WIDTH,
+    height: SHADOW2_HEIGHT,
+    borderRadius: moderateScale(22),
     backgroundColor: Colors.border,
-    top: 18,
-    left: 22,
+    top: moderateScale(18),
+    left: moderateScale(22),
     transform: [{ rotate: "-18deg" }],
     opacity: 0.5,
   },

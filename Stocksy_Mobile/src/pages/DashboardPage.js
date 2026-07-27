@@ -554,7 +554,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: moderateScale(20),
     paddingTop: moderateScale(20),
     paddingBottom: moderateScale(20),
-    backgroundColor: Colors.primary,
+    backgroundColor: Colors.primaryDark,
     borderBottomLeftRadius: 32,
     borderBottomRightRadius: 32,
   },

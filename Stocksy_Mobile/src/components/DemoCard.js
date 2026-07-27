@@ -125,7 +125,11 @@ const DemoCard = ({
           <Text style={[styles.cardLabel, { color: activeSkin.subTextColor }]}>
             AVAILABLE BALANCE
           </Text>
-          <Text style={[styles.cardAmount, { color: activeSkin.textColor }]}>
+          <Text
+            style={[styles.cardAmount, { color: activeSkin.textColor }]}
+            numberOfLines={1}
+            adjustsFontSizeToFit
+          >
             ₹{formattedBalance}
           </Text>
         </View>
@@ -166,9 +170,9 @@ const DemoCard = ({
 
 const styles = StyleSheet.create({
   card: {
-    width: 300,
-    height: 180,
-    borderRadius: 24,
+    width: moderateScale(300),
+    height: moderateScale(180),
+    borderRadius: moderateScale(24),
     padding: moderateScale(22),
     justifyContent: "space-between",
     overflow: "hidden",
@@ -180,21 +184,21 @@ const styles = StyleSheet.create({
   },
   decorCircle1: {
     position: "absolute",
-    width: 200,
-    height: 200,
-    borderRadius: 100,
+    width: moderateScale(200),
+    height: moderateScale(200),
+    borderRadius: moderateScale(100),
     borderWidth: 1,
-    top: -80,
-    right: -60,
+    top: moderateScale(-80),
+    right: moderateScale(-60),
   },
   decorCircle2: {
     position: "absolute",
-    width: 140,
-    height: 140,
-    borderRadius: 70,
+    width: moderateScale(140),
+    height: moderateScale(140),
+    borderRadius: moderateScale(70),
     borderWidth: 1,
-    bottom: -50,
-    left: -30,
+    bottom: moderateScale(-50),
+    left: moderateScale(-30),
   },
   topRow: {
     flexDirection: "row",
@@ -213,18 +217,18 @@ const styles = StyleSheet.create({
     letterSpacing: -0.5,
   },
   chip: {
-    width: 36,
-    height: 28,
-    borderRadius: 6,
+    width: moderateScale(36),
+    height: moderateScale(28),
+    borderRadius: moderateScale(6),
     borderWidth: 1,
     justifyContent: "center",
     alignItems: "center",
     marginTop: moderateScale(4),
   },
   chipInner: {
-    width: 22,
-    height: 16,
-    borderRadius: 3,
+    width: moderateScale(22),
+    height: moderateScale(16),
+    borderRadius: moderateScale(3),
   },
   cardNumber: {
     fontSize: fontScale(Typography.caption),
@@ -245,22 +249,22 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   logoCircleLeft: {
-    width: 22,
-    height: 22,
-    borderRadius: 11,
+    width: moderateScale(22),
+    height: moderateScale(22),
+    borderRadius: moderateScale(11),
     opacity: 0.9,
   },
   logoCircleRight: {
-    width: 22,
-    height: 22,
-    borderRadius: 11,
+    width: moderateScale(22),
+    height: moderateScale(22),
+    borderRadius: moderateScale(11),
     marginLeft: moderateScale(-8),
     opacity: 0.9,
   },
 
   companyLogo: {
-    width: 45,
-    height: 45,
+    width: moderateScale(45),
+    height: moderateScale(45),
   },
 });
 

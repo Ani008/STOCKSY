@@ -38,7 +38,7 @@ const StockCard = ({
             </Text>
           )}
         </View>
-        <Text style={styles.ticker}>{name}</Text>
+        <Text style={styles.ticker} numberOfLines={1}>{name}</Text>
 
         <View style={styles.priceRow}>
           <Text style={styles.price}>{price}</Text>
@@ -60,9 +60,9 @@ const StockCard = ({
 
 const styles = StyleSheet.create({
   card: {
-    width: 155,
-    backgroundColor: "white",
-    borderRadius: 20,
+    width: moderateScale(155),
+    backgroundColor: Colors.white,
+    borderRadius: moderateScale(20),
     padding: moderateScale(16),
     borderWidth: 1,
     borderColor: Colors.divider,
@@ -72,9 +72,9 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   iconWrapper: {
-    width: 38,
-    height: 38,
-    borderRadius: 12,
+    width: moderateScale(38),
+    height: moderateScale(38),
+    borderRadius: moderateScale(12),
     backgroundColor: Colors.background,
     justifyContent: "center",
     alignItems: "center",
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     paddingHorizontal: moderateScale(6),
     paddingVertical: moderateScale(2),
-    borderRadius: 4,
+    borderRadius: moderateScale(4),
     marginBottom: moderateScale(6),
   },
   priceRow: {
@@ -102,9 +102,9 @@ const styles = StyleSheet.create({
   change: { fontSize: fontScale(Typography.tiny), fontWeight: "600" },
 
   logo: {
-    width: 30,
-    height: 30,
-    borderRadius: 8,
+    width: moderateScale(30),
+    height: moderateScale(30),
+    borderRadius: moderateScale(8),
   },
 
   fallbackText: {

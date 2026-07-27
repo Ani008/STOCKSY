@@ -10,34 +10,17 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import {
   View, Text, ScrollView, TouchableOpacity, StyleSheet,
-  Dimensions, SafeAreaView, StatusBar, ActivityIndicator,
+  SafeAreaView, StatusBar, ActivityIndicator,
   Animated, RefreshControl,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import useMarketData from '../hooks/useMarketData';
 import { usePortfolio, SECTOR_COLORS } from '../hooks/usePortfolio';
 import { SegmentedToggle, IntradayPositionsView } from '../components';
-
-const { width: SCREEN_W } = Dimensions.get('window');
-
-// ─── Design tokens ────────────────────────────────────────────────────────────
-const C = {
-  blue:        '#1A56DB',
-  blueDark:    '#1240A8',
-  blueLight:   '#3B82F6',
-  green:       '#059669',
-  greenBg:     '#D1FAE5',
-  red:         '#DC2626',
-  redBg:       '#FEE2E2',
-  amber:       '#D97706',
-  bg:          '#F0F4FF',
-  white:       '#FFFFFF',
-  textPri:     '#0F172A',
-  textSec:     '#64748B',
-  textTer:     '#94A3B8',
-  border:      '#E2E8F0',
-  cardShadow:  'rgba(15,23,42,0.06)',
-};
+import {
+  Colors, Typography, Shadows,
+  SCREEN_WIDTH, moderateScale, fontScale,
+} from '../theme';
 
 // ─── Utility helpers ──────────────────────────────────────────────────────────
 
@@ -59,11 +42,11 @@ function sign(n) {
 }
 
 // ─── Reusable: PnlText — colour + optional prefix arrow ──────────────────────
-function PnlText({ value, pct, style, size = 13 }) {
+function PnlText({ value, pct, style, size }) {
   const isPos = value >= 0;
-  const color = isPos ? C.green : C.red;
+  const color = isPos ? Colors.gain : Colors.loss;
   return (
-    <Text style={[{ fontSize: size, fontWeight: '600', color }, style]}>
+    <Text style={[{ fontSize: size ?? fontScale(Typography.caption), fontWeight: '600', color }, style]}>
       {isPos ? '+' : '-'}{fmt(value)}
       {pct != null ? `  (${fmtPct(pct)})` : ''}
     </Text>
@@ -75,14 +58,14 @@ function StatTile({ label, value, sub, subColor, icon, iconColor }) {
   return (
     <View style={styles.tile}>
       {icon && (
-        <View style={[styles.tileIconWrap, { backgroundColor: (iconColor ?? C.blue) + '18' }]}>
-          <Ionicons name={icon} size={16} color={iconColor ?? C.blue} />
+        <View style={[styles.tileIconWrap, { backgroundColor: (iconColor ?? Colors.primary) + '18' }]}>
+          <Ionicons name={icon} size={moderateScale(16)} color={iconColor ?? Colors.primary} />
         </View>
       )}
       <Text style={styles.tileLabel}>{label}</Text>
-      <Text style={styles.tileValue}>{value}</Text>
+      <Text style={styles.tileValue} numberOfLines={1} adjustsFontSizeToFit>{value}</Text>
       {sub != null && (
-        <Text style={[styles.tileSub, { color: subColor ?? C.textSec }]}>{sub}</Text>
+        <Text style={[styles.tileSub, { color: subColor ?? Colors.textSecondary }]} numberOfLines={1}>{sub}</Text>
       )}
     </View>
   );
@@ -96,7 +79,7 @@ function SectionCard({ title, action, onAction, children }) {
         <View style={styles.cardHeader}>
           {title && <Text style={styles.cardTitle}>{title}</Text>}
           {action && (
-            <TouchableOpacity onPress={onAction}>
+            <TouchableOpacity onPress={onAction} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
               <Text style={styles.cardAction}>{action}</Text>
             </TouchableOpacity>
           )}
@@ -126,7 +109,7 @@ function HoldingRow({ position, onPress }) {
     inputRange:  [0, 1],
     outputRange: [
       'rgba(0,0,0,0)',
-      position.unrealisedPnl >= 0 ? 'rgba(5,150,105,0.08)' : 'rgba(220,38,38,0.08)',
+      position.unrealisedPnl >= 0 ? 'rgba(0,208,156,0.10)' : 'rgba(239,68,68,0.10)',
     ],
   });
 
@@ -141,20 +124,20 @@ function HoldingRow({ position, onPress }) {
         <View style={[styles.sectorDot, { backgroundColor: dotColor }]} />
 
         <View style={styles.holdingInfo}>
-          <Text style={styles.holdingSymbol}>{position.symbol ?? position.instrument_key}</Text>
+          <Text style={styles.holdingSymbol} numberOfLines={1}>{position.symbol ?? position.instrument_key}</Text>
           <Text style={styles.holdingMeta} numberOfLines={1}>{position.name}</Text>
         </View>
 
         <View style={styles.holdingQty}>
-          <Text style={styles.holdingQtyText}>{position.qty} shares</Text>
-          <Text style={styles.holdingAvg}>Avg {fmt(position.avgCost)}</Text>
+          <Text style={styles.holdingQtyText} numberOfLines={1}>{position.qty} shares</Text>
+          <Text style={styles.holdingAvg} numberOfLines={1}>Avg {fmt(position.avgCost)}</Text>
         </View>
 
         <View style={styles.holdingRight}>
-          <Text style={styles.holdingLtp}>
+          <Text style={styles.holdingLtp} numberOfLines={1}>
             {position.ltp != null ? fmt(position.ltp) : '—'}
           </Text>
-          <Text style={[styles.holdingPnl, { color: isPos ? C.green : C.red }]}>
+          <Text style={[styles.holdingPnl, { color: isPos ? Colors.gain : Colors.loss }]} numberOfLines={1}>
             {fmtPct(position.unrealisedPct)}
           </Text>
         </View>
@@ -176,8 +159,8 @@ function SectorBar({ allocation }) {
             style={[
               styles.allocSegment,
               { flex: item.pct, backgroundColor: item.color },
-              i === 0 && { borderTopLeftRadius: 6, borderBottomLeftRadius: 6 },
-              i === allocation.length - 1 && { borderTopRightRadius: 6, borderBottomRightRadius: 6 },
+              i === 0 && { borderTopLeftRadius: moderateScale(6), borderBottomLeftRadius: moderateScale(6) },
+              i === allocation.length - 1 && { borderTopRightRadius: moderateScale(6), borderBottomRightRadius: moderateScale(6) },
             ]}
           />
         ))}
@@ -187,7 +170,7 @@ function SectorBar({ allocation }) {
         {allocation.map(item => (
           <View key={item.sector} style={styles.allocLegendItem}>
             <View style={[styles.allocDot, { backgroundColor: item.color }]} />
-            <Text style={styles.allocLegendText}>{item.sector} {item.pct}%</Text>
+            <Text style={styles.allocLegendText} numberOfLines={1}>{item.sector} {item.pct}%</Text>
           </View>
         ))}
       </View>
@@ -200,11 +183,11 @@ function PerformerCard({ label, position, labelColor }) {
   if (!position) return null;
   const isPos = position.unrealisedPnl >= 0;
   return (
-    <View style={[styles.performerCard, { borderLeftColor: labelColor, borderLeftWidth: 3 }]}>
-      <Text style={[styles.performerLabel, { color: labelColor }]}>{label}</Text>
-      <Text style={styles.performerSymbol}>{position.symbol}</Text>
+    <View style={[styles.performerCard, { borderLeftColor: labelColor, borderLeftWidth: moderateScale(3) }]}>
+      <Text style={[styles.performerLabel, { color: labelColor }]} numberOfLines={1}>{label}</Text>
+      <Text style={styles.performerSymbol} numberOfLines={1}>{position.symbol}</Text>
       <Text style={styles.performerName} numberOfLines={1}>{position.name}</Text>
-      <PnlText value={position.unrealisedPnl} pct={position.unrealisedPct} size={12} />
+      <PnlText value={position.unrealisedPnl} pct={position.unrealisedPct} size={fontScale(Typography.small)} />
     </View>
   );
 }
@@ -214,13 +197,13 @@ function PnlBreakdownRow({ label, value, pct, dimmed }) {
   const isPos = value >= 0;
   return (
     <View style={styles.breakdownRow}>
-      <Text style={[styles.breakdownLabel, dimmed && { color: C.textTer }]}>{label}</Text>
+      <Text style={[styles.breakdownLabel, dimmed && { color: Colors.textMuted }]}>{label}</Text>
       <View style={styles.breakdownRight}>
-        <Text style={[styles.breakdownValue, { color: isPos ? C.green : C.red }]}>
+        <Text style={[styles.breakdownValue, { color: isPos ? Colors.gain : Colors.loss }]} numberOfLines={1}>
           {isPos ? '+' : '-'}{fmt(value)}
         </Text>
         {pct != null && (
-          <Text style={[styles.breakdownPct, { color: isPos ? C.green : C.red }]}>
+          <Text style={[styles.breakdownPct, { color: isPos ? Colors.gain : Colors.loss }]} numberOfLines={1}>
             {fmtPct(pct)}
           </Text>
         )}
@@ -272,13 +255,13 @@ export default function PortfolioPage({ navigation }) {
   if (loading) {
     return (
       <SafeAreaView style={styles.safe}>
-        <StatusBar barStyle="light-content" backgroundColor={C.blueLight} />
+        <StatusBar barStyle="light-content" backgroundColor={Colors.primaryDark} />
         <View style={styles.header}>
           <Text style={styles.headerTitle}>Portfolio</Text>
-          <View style={{ width: 40 }} />
+          <View style={{ width: moderateScale(36) }} />
         </View>
         <View style={styles.loaderWrap}>
-          <ActivityIndicator size="large" color={C.blue} />
+          <ActivityIndicator size="large" color={Colors.primary} />
           <Text style={styles.loaderText}>Loading portfolio…</Text>
         </View>
       </SafeAreaView>
@@ -289,13 +272,13 @@ export default function PortfolioPage({ navigation }) {
   if (error) {
     return (
       <SafeAreaView style={styles.safe}>
-        <StatusBar barStyle="light-content" backgroundColor={C.blueLight} />
+        <StatusBar barStyle="light-content" backgroundColor={Colors.primaryDark} />
         <View style={styles.header}>
           <Text style={styles.headerTitle}>Portfolio</Text>
-          <View style={{ width: 40 }} />
+          <View style={{ width: moderateScale(36) }} />
         </View>
         <View style={styles.loaderWrap}>
-          <Ionicons name="cloud-offline-outline" size={40} color={C.textTer} />
+          <Ionicons name="cloud-offline-outline" size={moderateScale(40)} color={Colors.textMuted} />
           <Text style={styles.errorText}>Couldn't load portfolio</Text>
           <Text style={styles.errorSub}>{error}</Text>
           <TouchableOpacity style={styles.retryBtn} onPress={refresh}>
@@ -310,17 +293,17 @@ export default function PortfolioPage({ navigation }) {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <StatusBar barStyle="light-content" backgroundColor={C.blueLight} />
+      <StatusBar barStyle="light-content" backgroundColor={Colors.primaryDark} />
 
       {/* ── Header ── */}
       <View style={styles.header}>
-        <View style={{ width: 40 }} />
+        <View style={{ width: moderateScale(36) }} />
         <Text style={styles.headerTitle}>Portfolio</Text>
         <TouchableOpacity
           style={styles.addBtn}
           onPress={() => navigation.navigate('Wallet')}
         >
-          <Ionicons name="add" size={22} color={C.white} />
+          <Ionicons name="add" size={moderateScale(22)} color={Colors.white} />
         </TouchableOpacity>
       </View>
 
@@ -362,16 +345,16 @@ export default function PortfolioPage({ navigation }) {
       {/* ── Hero: Portfolio Value ── */}
       <View style={styles.heroZone}>
         <Text style={styles.heroLabel}>Portfolio Value</Text>
-        <Text style={styles.heroValue}>{fmt(totals.portfolioValue)}</Text>
+        <Text style={styles.heroValue} numberOfLines={1} adjustsFontSizeToFit>{fmt(totals.portfolioValue)}</Text>
         <View style={styles.heroRow}>
           {/* Today badge */}
           <View style={[
             styles.badge,
-            { backgroundColor: totals.totalToday >= 0 ? 'rgba(5,150,105,0.25)' : 'rgba(220,38,38,0.25)' }
+            { backgroundColor: totals.totalToday >= 0 ? 'rgba(0,208,156,0.25)' : 'rgba(239,68,68,0.25)' }
           ]}>
             <Ionicons
               name={totals.totalToday >= 0 ? 'caret-up' : 'caret-down'}
-              size={11}
+              size={moderateScale(11)}
               color={totals.totalToday >= 0 ? '#6EE7B7' : '#FCA5A5'}
             />
             <Text style={[styles.badgeText, {
@@ -381,7 +364,7 @@ export default function PortfolioPage({ navigation }) {
             </Text>
           </View>
           {/* Invested */}
-          <Text style={styles.heroSub}>
+          <Text style={styles.heroSub} numberOfLines={1}>
             Invested {fmt(totals.totalInvested)}
           </Text>
         </View>
@@ -395,8 +378,8 @@ export default function PortfolioPage({ navigation }) {
           <RefreshControl
             refreshing={refreshing}
             onRefresh={onRefresh}
-            tintColor={C.blue}
-            colors={[C.blue]}
+            tintColor={Colors.primary}
+            colors={[Colors.primary]}
           />
         }
       >
@@ -406,32 +389,32 @@ export default function PortfolioPage({ navigation }) {
             label="Today's Return"
             value={(totals.totalToday >= 0 ? '+' : '') + fmt(totals.totalToday)}
             sub={fmtPct(totals.todayPct)}
-            subColor={totals.totalToday >= 0 ? C.green : C.red}
+            subColor={totals.totalToday >= 0 ? Colors.gain : Colors.loss}
             icon="today-outline"
-            iconColor={totals.totalToday >= 0 ? C.green : C.red}
+            iconColor={totals.totalToday >= 0 ? Colors.gain : Colors.loss}
           />
           <StatTile
             label="Lifetime Return"
             value={(totals.totalLifetime >= 0 ? '+' : '') + fmt(totals.totalLifetime)}
             sub={fmtPct(totals.lifetimePct)}
-            subColor={totals.totalLifetime >= 0 ? C.green : C.red}
+            subColor={totals.totalLifetime >= 0 ? Colors.gain : Colors.loss}
             icon="trending-up-outline"
-            iconColor={totals.totalLifetime >= 0 ? C.green : C.red}
+            iconColor={totals.totalLifetime >= 0 ? Colors.gain : Colors.loss}
           />
           <StatTile
             label="Unrealised"
             value={(totals.totalUnrealised >= 0 ? '+' : '') + fmt(totals.totalUnrealised)}
             sub={fmtPct(totals.unrealisedPct)}
-            subColor={totals.totalUnrealised >= 0 ? C.green : C.red}
+            subColor={totals.totalUnrealised >= 0 ? Colors.gain : Colors.loss}
             icon="stats-chart-outline"
-            iconColor={C.blue}
+            iconColor={Colors.primary}
           />
           <StatTile
             label="Cash Balance"
             value={fmt(totals.cashBalance)}
             sub={`${totals.positionCount} position${totals.positionCount !== 1 ? 's' : ''}`}
             icon="wallet-outline"
-            iconColor={C.amber}
+            iconColor={Colors.warning}
           />
         </View>
 
@@ -457,8 +440,8 @@ export default function PortfolioPage({ navigation }) {
         {/* ── Best / Worst performer ── */}
         {(bestPerformer || worstPerformer) && (
           <View style={styles.performerRow}>
-            <PerformerCard label="Best" position={bestPerformer} labelColor={C.green} />
-            <PerformerCard label="Worst" position={worstPerformer} labelColor={C.red} />
+            <PerformerCard label="Best" position={bestPerformer} labelColor={Colors.gain} />
+            <PerformerCard label="Worst" position={worstPerformer} labelColor={Colors.loss} />
           </View>
         )}
 
@@ -469,7 +452,7 @@ export default function PortfolioPage({ navigation }) {
         >
           {noPositions ? (
             <View style={styles.emptyWrap}>
-              <Ionicons name="briefcase-outline" size={36} color={C.textTer} />
+              <Ionicons name="briefcase-outline" size={moderateScale(36)} color={Colors.textMuted} />
               <Text style={styles.emptyText}>No open positions</Text>
             </View>
           ) : (
@@ -488,14 +471,14 @@ export default function PortfolioPage({ navigation }) {
           <SectionCard title="Sector Allocation">
             <SectorBar allocation={sectorAllocation} />
             {/* Value breakdown */}
-            <View style={{ marginTop: 14, gap: 8 }}>
+            <View style={{ marginTop: moderateScale(14), gap: moderateScale(8) }}>
               {sectorAllocation.map(item => (
                 <View key={item.sector} style={styles.sectorRow}>
                   <View style={styles.sectorRowLeft}>
                     <View style={[styles.allocDot, { backgroundColor: item.color }]} />
-                    <Text style={styles.sectorName}>{item.sector}</Text>
+                    <Text style={styles.sectorName} numberOfLines={1}>{item.sector}</Text>
                   </View>
-                  <Text style={styles.sectorValue}>{fmt(item.value)}</Text>
+                  <Text style={styles.sectorValue} numberOfLines={1}>{fmt(item.value)}</Text>
                   <Text style={styles.sectorPct}>{item.pct}%</Text>
                 </View>
               ))}
@@ -509,19 +492,19 @@ export default function PortfolioPage({ navigation }) {
             {wallets.map((w, i) => (
               <View key={i} style={styles.walletRow}>
                 <View style={styles.walletIconWrap}>
-                  <Ionicons name="wallet-outline" size={18} color={C.blue} />
+                  <Ionicons name="wallet-outline" size={moderateScale(18)} color={Colors.primary} />
                 </View>
                 <View style={{ flex: 1 }}>
-                  <Text style={styles.walletType}>{w.wallet_type ?? `Wallet ${i + 1}`}</Text>
-                  {w.currency && <Text style={styles.walletCurrency}>{w.currency}</Text>}
+                  <Text style={styles.walletType} numberOfLines={1}>{w.wallet_type ?? `Wallet ${i + 1}`}</Text>
+                  {w.currency && <Text style={styles.walletCurrency} numberOfLines={1}>{w.currency}</Text>}
                 </View>
-                <Text style={styles.walletBalance}>{fmt(parseFloat(w.balance))}</Text>
+                <Text style={styles.walletBalance} numberOfLines={1}>{fmt(parseFloat(w.balance))}</Text>
               </View>
             ))}
           </SectionCard>
         )}
 
-        <View style={{ height: 32 }} />
+        <View style={{ height: moderateScale(32) }} />
       </ScrollView>
       </>
       )}
@@ -532,238 +515,242 @@ export default function PortfolioPage({ navigation }) {
 // ─── Styles ───────────────────────────────────────────────────────────────────
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: C.blueLight },
+  safe: { flex: 1, backgroundColor: Colors.primaryDark },
 
   // Header
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingTop: 8,
-    paddingBottom: 4,
+    paddingHorizontal: moderateScale(16),
+    paddingTop: moderateScale(8),
+    paddingBottom: moderateScale(4),
   },
   headerTitle: {
-    fontSize: 17,
+    fontSize: fontScale(Typography.h4),
     fontWeight: '700',
-    color: C.white,
+    color: Colors.white,
     letterSpacing: 0.2,
   },
   addBtn: {
-    width: 36, height: 36, borderRadius: 18,
+    width: moderateScale(36), height: moderateScale(36), borderRadius: moderateScale(18),
     backgroundColor: 'rgba(255,255,255,0.2)',
     alignItems: 'center', justifyContent: 'center',
   },
 
   // Holdings / Positions toggle
   toggleRow: {
-    paddingHorizontal: 16,
-    paddingTop: 4,
-    paddingBottom: 8,
+    paddingHorizontal: moderateScale(16),
+    paddingTop: moderateScale(4),
+    paddingBottom: moderateScale(8),
   },
 
   // Hero
   heroZone: {
-    paddingHorizontal: 20,
-    paddingBottom: 28,
-    paddingTop: 12,
+    paddingHorizontal: moderateScale(20),
+    paddingBottom: moderateScale(28),
+    paddingTop: moderateScale(12),
   },
   heroLabel: {
-    fontSize: 13,
+    fontSize: fontScale(Typography.caption),
     color: 'rgba(255,255,255,0.72)',
     fontWeight: '500',
-    marginBottom: 4,
+    marginBottom: moderateScale(4),
   },
   heroValue: {
-    fontSize: 32,
+    fontSize: fontScale(Typography.display),
     fontWeight: '800',
-    color: C.white,
+    color: Colors.white,
     letterSpacing: -0.5,
   },
   heroRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
-    marginTop: 8,
+    gap: moderateScale(10),
+    marginTop: moderateScale(8),
+    flexWrap: 'wrap',
   },
   heroSub: {
-    fontSize: 12,
+    fontSize: fontScale(Typography.small),
     color: 'rgba(255,255,255,0.6)',
   },
   badge: {
-    flexDirection: 'row', alignItems: 'center', gap: 3,
-    borderRadius: 20, paddingHorizontal: 9, paddingVertical: 3,
+    flexDirection: 'row', alignItems: 'center', gap: moderateScale(3),
+    borderRadius: moderateScale(20), paddingHorizontal: moderateScale(9), paddingVertical: moderateScale(3),
   },
   badgeText: {
-    fontSize: 11, fontWeight: '600',
+    fontSize: fontScale(Typography.tiny), fontWeight: '600',
   },
 
   // Scroll
   scroll: {
     flex: 1,
-    backgroundColor: C.bg,
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
+    backgroundColor: Colors.background,
+    borderTopLeftRadius: moderateScale(24),
+    borderTopRightRadius: moderateScale(24),
   },
   scrollContent: {
-    padding: 16,
-    gap: 12,
+    padding: moderateScale(16),
+    gap: moderateScale(12),
   },
 
   // Tile grid
   tileGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 10,
+    gap: moderateScale(10),
   },
   tile: {
-    width: (SCREEN_W - 42) / 2,
-    backgroundColor: C.white,
-    borderRadius: 14,
-    padding: 14,
+    width: (SCREEN_WIDTH - moderateScale(42)) / 2,
+    backgroundColor: Colors.white,
+    borderRadius: moderateScale(14),
+    padding: moderateScale(14),
     borderWidth: 0.5,
-    borderColor: C.border,
+    borderColor: Colors.border,
+    ...Shadows.card,
   },
   tileIconWrap: {
-    width: 30, height: 30, borderRadius: 15,
+    width: moderateScale(30), height: moderateScale(30), borderRadius: moderateScale(15),
     alignItems: 'center', justifyContent: 'center',
-    marginBottom: 8,
+    marginBottom: moderateScale(8),
   },
-  tileLabel: { fontSize: 11, color: C.textSec, fontWeight: '500', marginBottom: 3 },
-  tileValue: { fontSize: 15, fontWeight: '700', color: C.textPri },
-  tileSub:   { fontSize: 11, fontWeight: '600', marginTop: 2 },
+  tileLabel: { fontSize: fontScale(Typography.tiny), color: Colors.textSecondary, fontWeight: '500', marginBottom: moderateScale(3) },
+  tileValue: { fontSize: fontScale(Typography.bodyLarge), fontWeight: '700', color: Colors.text },
+  tileSub:   { fontSize: fontScale(Typography.tiny), fontWeight: '600', marginTop: moderateScale(2) },
 
   // Card
   card: {
-    backgroundColor: C.white,
-    borderRadius: 16,
-    padding: 16,
+    backgroundColor: Colors.white,
+    borderRadius: moderateScale(16),
+    padding: moderateScale(16),
     borderWidth: 0.5,
-    borderColor: C.border,
+    borderColor: Colors.border,
+    ...Shadows.card,
   },
   cardHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 12,
+    marginBottom: moderateScale(12),
   },
-  cardTitle:  { fontSize: 14, fontWeight: '700', color: C.textPri },
-  cardAction: { fontSize: 13, color: C.blue, fontWeight: '500' },
+  cardTitle:  { fontSize: fontScale(Typography.bodyLarge), fontWeight: '700', color: Colors.text },
+  cardAction: { fontSize: fontScale(Typography.caption), color: Colors.primary, fontWeight: '600' },
 
   // Holding row
   holdingRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 11,
+    paddingVertical: moderateScale(11),
     borderBottomWidth: 0.5,
-    borderBottomColor: C.border,
-    gap: 10,
-    borderRadius: 6,
-    paddingHorizontal: 2,
+    borderBottomColor: Colors.border,
+    gap: moderateScale(10),
+    borderRadius: moderateScale(6),
+    paddingHorizontal: moderateScale(2),
   },
-  sectorDot:      { width: 8, height: 8, borderRadius: 4 },
+  sectorDot:      { width: moderateScale(8), height: moderateScale(8), borderRadius: moderateScale(4) },
   holdingInfo:    { flex: 2 },
-  holdingSymbol:  { fontSize: 13, fontWeight: '700', color: C.textPri },
-  holdingMeta:    { fontSize: 10, color: C.textSec, marginTop: 1 },
+  holdingSymbol:  { fontSize: fontScale(Typography.caption), fontWeight: '700', color: Colors.text },
+  holdingMeta:    { fontSize: fontScale(Typography.tiny), color: Colors.textSecondary, marginTop: moderateScale(1) },
   holdingQty:     { flex: 2, alignItems: 'flex-start' },
-  holdingQtyText: { fontSize: 11, color: C.textSec },
-  holdingAvg:     { fontSize: 10, color: C.textTer, marginTop: 1 },
+  holdingQtyText: { fontSize: fontScale(Typography.tiny), color: Colors.textSecondary },
+  holdingAvg:     { fontSize: fontScale(Typography.tiny), color: Colors.textMuted, marginTop: moderateScale(1) },
   holdingRight:   { alignItems: 'flex-end' },
-  holdingLtp:     { fontSize: 13, fontWeight: '700', color: C.textPri },
-  holdingPnl:     { fontSize: 11, fontWeight: '600', marginTop: 1 },
+  holdingLtp:     { fontSize: fontScale(Typography.caption), fontWeight: '700', color: Colors.text },
+  holdingPnl:     { fontSize: fontScale(Typography.tiny), fontWeight: '600', marginTop: moderateScale(1) },
 
   // P&L breakdown
   breakdownRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 8,
+    paddingVertical: moderateScale(8),
   },
-  breakdownLabel: { fontSize: 13, color: C.textSec },
+  breakdownLabel: { fontSize: fontScale(Typography.caption), color: Colors.textSecondary },
   breakdownRight: { alignItems: 'flex-end' },
-  breakdownValue: { fontSize: 13, fontWeight: '700' },
-  breakdownPct:   { fontSize: 11, fontWeight: '500', marginTop: 1 },
+  breakdownValue: { fontSize: fontScale(Typography.caption), fontWeight: '700' },
+  breakdownPct:   { fontSize: fontScale(Typography.tiny), fontWeight: '500', marginTop: moderateScale(1) },
   breakdownDivider: {
-    height: 0.5, backgroundColor: C.border, marginVertical: 4,
+    height: 0.5, backgroundColor: Colors.border, marginVertical: moderateScale(4),
   },
 
   // Best/Worst
   performerRow: {
     flexDirection: 'row',
-    gap: 10,
+    gap: moderateScale(10),
   },
   performerCard: {
     flex: 1,
-    backgroundColor: C.white,
-    borderRadius: 14,
-    padding: 14,
+    backgroundColor: Colors.white,
+    borderRadius: moderateScale(14),
+    padding: moderateScale(14),
     borderWidth: 0.5,
-    borderColor: C.border,
-    gap: 3,
+    borderColor: Colors.border,
+    gap: moderateScale(3),
+    ...Shadows.card,
   },
-  performerLabel:  { fontSize: 10, fontWeight: '700', textTransform: 'uppercase', letterSpacing: 0.5 },
-  performerSymbol: { fontSize: 14, fontWeight: '800', color: C.textPri, marginTop: 2 },
-  performerName:   { fontSize: 10, color: C.textSec, marginBottom: 4 },
+  performerLabel:  { fontSize: fontScale(Typography.tiny), fontWeight: '700', textTransform: 'uppercase', letterSpacing: 0.5 },
+  performerSymbol: { fontSize: fontScale(Typography.bodyLarge), fontWeight: '800', color: Colors.text, marginTop: moderateScale(2) },
+  performerName:   { fontSize: fontScale(Typography.tiny), color: Colors.textSecondary, marginBottom: moderateScale(4) },
 
   // Sector bar
   allocBarWrap: {
     flexDirection: 'row',
-    height: 10,
-    borderRadius: 6,
+    height: moderateScale(10),
+    borderRadius: moderateScale(6),
     overflow: 'hidden',
-    gap: 2,
+    gap: moderateScale(2),
   },
   allocSegment: { height: '100%' },
   allocLegend: {
-    flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 10,
+    flexDirection: 'row', flexWrap: 'wrap', gap: moderateScale(8), marginTop: moderateScale(10),
   },
-  allocLegendItem: { flexDirection: 'row', alignItems: 'center', gap: 4 },
-  allocLegendText: { fontSize: 11, color: C.textSec },
-  allocDot: { width: 8, height: 8, borderRadius: 4 },
+  allocLegendItem: { flexDirection: 'row', alignItems: 'center', gap: moderateScale(4) },
+  allocLegendText: { fontSize: fontScale(Typography.tiny), color: Colors.textSecondary },
+  allocDot: { width: moderateScale(8), height: moderateScale(8), borderRadius: moderateScale(4) },
 
   // Sector value list
   sectorRow: {
-    flexDirection: 'row', alignItems: 'center', gap: 8,
+    flexDirection: 'row', alignItems: 'center', gap: moderateScale(8),
   },
-  sectorRowLeft: { flexDirection: 'row', alignItems: 'center', gap: 6, flex: 1 },
-  sectorName:    { fontSize: 12, color: C.textPri, fontWeight: '500' },
-  sectorValue:   { fontSize: 12, fontWeight: '600', color: C.textPri },
-  sectorPct:     { fontSize: 11, color: C.textSec, width: 36, textAlign: 'right' },
+  sectorRowLeft: { flexDirection: 'row', alignItems: 'center', gap: moderateScale(6), flex: 1 },
+  sectorName:    { fontSize: fontScale(Typography.small), color: Colors.text, fontWeight: '500' },
+  sectorValue:   { fontSize: fontScale(Typography.small), fontWeight: '600', color: Colors.text },
+  sectorPct:     { fontSize: fontScale(Typography.tiny), color: Colors.textSecondary, width: moderateScale(36), textAlign: 'right' },
 
   // Wallets
   walletRow: {
-    flexDirection: 'row', alignItems: 'center', gap: 12,
-    paddingVertical: 10, borderBottomWidth: 0.5, borderBottomColor: C.border,
+    flexDirection: 'row', alignItems: 'center', gap: moderateScale(12),
+    paddingVertical: moderateScale(10), borderBottomWidth: 0.5, borderBottomColor: Colors.border,
   },
   walletIconWrap: {
-    width: 36, height: 36, borderRadius: 18,
-    backgroundColor: C.blue + '14',
+    width: moderateScale(36), height: moderateScale(36), borderRadius: moderateScale(18),
+    backgroundColor: Colors.primary + '14',
     alignItems: 'center', justifyContent: 'center',
   },
-  walletType:     { fontSize: 13, fontWeight: '600', color: C.textPri },
-  walletCurrency: { fontSize: 11, color: C.textSec, marginTop: 1 },
-  walletBalance:  { fontSize: 14, fontWeight: '700', color: C.textPri },
+  walletType:     { fontSize: fontScale(Typography.caption), fontWeight: '600', color: Colors.text },
+  walletCurrency: { fontSize: fontScale(Typography.tiny), color: Colors.textSecondary, marginTop: moderateScale(1) },
+  walletBalance:  { fontSize: fontScale(Typography.caption), fontWeight: '700', color: Colors.text },
 
   // Loading / error
   loaderWrap: {
     flex: 1,
-    backgroundColor: C.bg,
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
+    backgroundColor: Colors.background,
+    borderTopLeftRadius: moderateScale(24),
+    borderTopRightRadius: moderateScale(24),
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 10,
+    gap: moderateScale(10),
   },
-  loaderText:  { fontSize: 14, color: C.textSec },
-  errorText:   { fontSize: 15, fontWeight: '600', color: C.textPri },
-  errorSub:    { fontSize: 12, color: C.textSec, textAlign: 'center', paddingHorizontal: 40 },
+  loaderText:  { fontSize: fontScale(Typography.caption), color: Colors.textSecondary },
+  errorText:   { fontSize: fontScale(Typography.body), fontWeight: '600', color: Colors.text },
+  errorSub:    { fontSize: fontScale(Typography.small), color: Colors.textSecondary, textAlign: 'center', paddingHorizontal: moderateScale(40) },
   retryBtn: {
-    marginTop: 8, paddingHorizontal: 24, paddingVertical: 10,
-    backgroundColor: C.blue, borderRadius: 20,
+    marginTop: moderateScale(8), paddingHorizontal: moderateScale(24), paddingVertical: moderateScale(10),
+    backgroundColor: Colors.primary, borderRadius: moderateScale(20),
   },
-  retryText: { color: C.white, fontWeight: '600', fontSize: 14 },
+  retryText: { color: Colors.white, fontWeight: '600', fontSize: fontScale(Typography.caption) },
 
   // Empty
-  emptyWrap: { alignItems: 'center', paddingVertical: 24, gap: 8 },
-  emptyText: { fontSize: 13, color: C.textTer },
+  emptyWrap: { alignItems: 'center', paddingVertical: moderateScale(24), gap: moderateScale(8) },
+  emptyText: { fontSize: fontScale(Typography.caption), color: Colors.textMuted },
 });

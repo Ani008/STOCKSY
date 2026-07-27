@@ -1,6 +1,9 @@
 import React, { useRef, useEffect } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Animated, SafeAreaView } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { Colors, Typography, Shadows, moderateScale, fontScale } from "../theme";
+
+const CHECK_SIZE = moderateScale(84);
 
 export default function OrderSuccessScreen({ route, navigation }) {
   const {
@@ -49,7 +52,7 @@ export default function OrderSuccessScreen({ route, navigation }) {
       <View style={styles.container}>
         <Animated.View style={{ transform: [{ scale }] }}>
           <View style={styles.checkCircle}>
-            <Ionicons name="checkmark" size={44} color="#fff" />
+            <Ionicons name="checkmark" size={moderateScale(44)} color={Colors.white} />
           </View>
         </Animated.View>
 
@@ -57,43 +60,43 @@ export default function OrderSuccessScreen({ route, navigation }) {
           <Text style={styles.title}>
             {isBuy ? "Order placed" : "Order sold"}
           </Text>
-          <Text style={styles.subtitle}>
+          <Text style={styles.subtitle} numberOfLines={1} adjustsFontSizeToFit>
             {isBuy ? "Bought" : "Sold"} {quantity} × {symbol}
           </Text>
 
           <View style={styles.detailsCard}>
             <View style={styles.row}>
               <Text style={styles.rowKey}>Price per share</Text>
-              <Text style={styles.rowVal}>
+              <Text style={styles.rowVal} numberOfLines={1}>
                 ₹{price.toLocaleString("en-IN", { minimumFractionDigits: 2 })}
               </Text>
             </View>
             <View style={styles.row}>
               <Text style={styles.rowKey}>Quantity</Text>
-              <Text style={styles.rowVal}>{quantity}</Text>
+              <Text style={styles.rowVal} numberOfLines={1}>{quantity}</Text>
             </View>
             <View style={styles.row}>
               <Text style={styles.rowKey}>Product</Text>
-              <Text style={styles.rowVal}>
+              <Text style={styles.rowVal} numberOfLines={1}>
                 {productType === "MIS" ? "Intraday" : "Delivery"}
               </Text>
             </View>
             <View style={styles.row}>
               <Text style={styles.rowKey}>Wallet</Text>
-              <Text style={styles.rowVal}>{walletName}</Text>
+              <Text style={styles.rowVal} numberOfLines={1}>{walletName}</Text>
             </View>
             <View style={[styles.row, styles.rowTotal]}>
-              <Text style={[styles.rowKey, { color: "#0F172A", fontWeight: "700" }]}>
+              <Text style={[styles.rowKey, styles.rowTotalKey]}>
                 {isBuy ? "Margin used" : "Credited"}
               </Text>
-              <Text style={styles.rowTotalVal}>
+              <Text style={styles.rowTotalVal} numberOfLines={1} adjustsFontSizeToFit>
                 ₹{amount.toLocaleString("en-IN", { minimumFractionDigits: 2 })}
               </Text>
             </View>
           </View>
         </Animated.View>
 
-        <TouchableOpacity style={styles.doneBtn} onPress={handleDone}>
+        <TouchableOpacity style={styles.doneBtn} onPress={handleDone} activeOpacity={0.88}>
           <Text style={styles.doneBtnText}>Done</Text>
         </TouchableOpacity>
       </View>
@@ -104,82 +107,101 @@ export default function OrderSuccessScreen({ route, navigation }) {
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
-    backgroundColor: "#F0F4FF",
+    backgroundColor: Colors.background,
   },
   container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    paddingHorizontal: 28,
+    paddingHorizontal: moderateScale(28),
   },
   checkCircle: {
-    width: 84,
-    height: 84,
-    borderRadius: 42,
-    backgroundColor: "#059669",
+    width: CHECK_SIZE,
+    height: CHECK_SIZE,
+    borderRadius: CHECK_SIZE / 2,
+    backgroundColor: Colors.success,
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 20,
+    marginBottom: moderateScale(20),
+    shadowColor: Colors.success,
+    shadowOpacity: 0.35,
+    shadowRadius: 16,
+    shadowOffset: { width: 0, height: 8 },
+    elevation: 8,
   },
   title: {
-    fontSize: 20,
+    fontSize: fontScale(Typography.h3),
     fontWeight: "700",
-    color: "#0F172A",
-    marginBottom: 6,
+    color: Colors.text,
+    marginBottom: moderateScale(6),
   },
   subtitle: {
-    fontSize: 14,
-    color: "#64748B",
-    marginBottom: 28,
+    fontSize: fontScale(Typography.body),
+    color: Colors.textSecondary,
+    marginBottom: moderateScale(28),
+    maxWidth: "100%",
   },
   detailsCard: {
     width: "100%",
-    backgroundColor: "#fff",
-    borderRadius: 14,
+    backgroundColor: Colors.white,
+    borderRadius: moderateScale(14),
     borderWidth: 0.5,
-    borderColor: "#E2E8F0",
-    padding: 16,
-    marginBottom: 32,
+    borderColor: Colors.border,
+    padding: moderateScale(16),
+    marginBottom: moderateScale(32),
+    ...Shadows.card,
   },
   row: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingVertical: 8,
+    alignItems: "center",
+    paddingVertical: moderateScale(8),
     borderBottomWidth: 0.5,
-    borderBottomColor: "#EEF1F6",
+    borderBottomColor: Colors.divider,
+    gap: moderateScale(12),
   },
   rowTotal: {
     borderBottomWidth: 0,
-    paddingTop: 12,
+    paddingTop: moderateScale(12),
   },
   rowKey: {
-    fontSize: 13,
-    color: "#64748B",
+    fontSize: fontScale(Typography.caption),
+    color: Colors.textSecondary,
+  },
+  rowTotalKey: {
+    color: Colors.text,
+    fontWeight: "700",
   },
   rowVal: {
-    fontSize: 13,
+    fontSize: fontScale(Typography.caption),
     fontWeight: "600",
-    color: "#0F172A",
+    color: Colors.text,
+    flexShrink: 1,
+    textAlign: "right",
   },
   rowTotalVal: {
-    fontSize: 17,
+    fontSize: fontScale(Typography.h4),
     fontWeight: "700",
-    color: "#1A56DB",
+    color: Colors.primaryDark,
+    flexShrink: 1,
+    textAlign: "right",
   },
   doneBtn: {
     width: "100%",
-    backgroundColor: "#1A56DB",
-    borderRadius: 14,
-    paddingVertical: 15,
+    backgroundColor: Colors.primaryDark,
+    borderRadius: moderateScale(14),
+    paddingVertical: moderateScale(15),
     alignItems: "center",
     position: "absolute",
-    bottom: 32,
-    left: 28,
-    right: 28,
+    bottom: moderateScale(32),
+    left: moderateScale(28),
+    right: moderateScale(28),
+    ...Shadows.floating,
+    shadowColor: Colors.primaryDark,
   },
   doneBtnText: {
-    color: "#fff",
-    fontSize: 15,
+    color: Colors.white,
+    fontSize: fontScale(Typography.body),
     fontWeight: "600",
   },
 });
