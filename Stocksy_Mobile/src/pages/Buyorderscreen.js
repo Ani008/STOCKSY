@@ -207,11 +207,15 @@ export default function BuyOrderScreen({ navigation, route }) {
         wallet_id: selectedWalletId,
         product_type: productType,
       });
-      Alert.alert(
-        `Order Placed! 🎉`,
-        `${orderType} ${qtyNum} × ${symbol}\n@ ₹${effectivePrice.toFixed(2)}\n${productType === "MIS" ? `Margin used: ₹${marginRequired.toLocaleString("en-IN", { minimumFractionDigits: 2 })}` : `Total: ₹${orderTotal.toLocaleString("en-IN", { minimumFractionDigits: 2 })}`}\nWallet: ${selectedWallet?.name}`,
-        [{ text: "OK", onPress: () => navigation.goBack() }],
-      );
+      navigation.replace("OrderSuccess", {
+        symbol,
+        orderType,
+        quantity: qtyNum,
+        price: effectivePrice,
+        productType,
+        amount: productType === "MIS" && orderType === "BUY" ? marginRequired : orderTotal,
+        walletName: selectedWallet?.name,
+      });
     } catch (e) {
       const data = e?.response?.data;
       if (data?.code === "MARKET_CLOSED") {

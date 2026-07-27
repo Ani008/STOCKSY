@@ -13,7 +13,7 @@ const server = http.createServer(app);
 
 // ─── Middleware ────────────────────────────────────────────────────────────────
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '5mb' }));
 
 // 🔍 DEBUG: Log every incoming request so you can see if the server is even
 //    receiving calls from the app. If you hit signup and see nothing here,

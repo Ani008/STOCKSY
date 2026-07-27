@@ -21,6 +21,7 @@ import AllTransactionsPage from "./src/pages/AllTransactionsPage";
 import ForgotPasswordScreen from "./src/pages/ForgotPasswordScreen";
 import SearchPage from "./src/pages/SearchPage";
 import BuyOrderScreen from "./src/pages/Buyorderscreen";
+import OrderSuccessScreen from "./src/pages/OrderSuccessScreen";
 
 import StockDetailPage from "./src/pages/StockDetailPage";
 
@@ -177,6 +178,7 @@ export default function App() {
           <Stack.Screen name="Search" component={SearchPage} />
           <Stack.Screen name="StockDetail" component={StockDetailPage} />
           <Stack.Screen name="BuyOrder" component={BuyOrderScreen} />
+          <Stack.Screen name="OrderSuccess" component={OrderSuccessScreen} />
         </Stack.Navigator>
         </NavigationContainer>
       </ToastProvider>
