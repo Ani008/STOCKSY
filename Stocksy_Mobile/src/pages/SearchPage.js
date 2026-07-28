@@ -17,7 +17,7 @@ import WatchlistItem from "../components/WatchlistItem";
 // ─── Live prices hook — same one Dashboard uses ──────────────────────────────
 import useMarketData from "../hooks/useMarketData";
 
-import { Colors, Typography, fontScale, moderateScale } from "../theme";
+import { Colors, Typography, Shadows, fontScale, moderateScale } from "../theme";
 
 // ─── Static instrument metadata ──────────────────────────────────────────────
 // This is the client-side mirror of config/instruments.js on the backend.
@@ -504,7 +504,7 @@ const SearchPage = ({ navigation }) => {
     if (!query.trim()) {
       return (
         <View style={styles.emptyState}>
-          <Ionicons name="search-outline" size={48} color={Colors.borderLight} />
+          <Ionicons name="search-outline" size={moderateScale(48)} color={Colors.borderLight} />
           <Text style={styles.emptyTitle}>Search stocks & indices</Text>
           <Text style={styles.emptySubtitle}>
             Try "Reliance", "IT", "INFY" or "Banking"
@@ -515,7 +515,7 @@ const SearchPage = ({ navigation }) => {
     if (!isSearching && results.length === 0) {
       return (
         <View style={styles.emptyState}>
-          <Ionicons name="alert-circle-outline" size={48} color={Colors.borderLight} />
+          <Ionicons name="alert-circle-outline" size={moderateScale(48)} color={Colors.borderLight} />
           <Text style={styles.emptyTitle}>No results for "{query}"</Text>
           <Text style={styles.emptySubtitle}>
             Try a ticker symbol, company name, or sector
@@ -534,7 +534,7 @@ const SearchPage = ({ navigation }) => {
           onPress={() => navigation.goBack()}
           style={styles.backButton}
         >
-          <Ionicons name="arrow-back" size={22} color={Colors.text} />
+          <Ionicons name="arrow-back" size={moderateScale(22)} color={Colors.text} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Search</Text>
       </View>
@@ -544,7 +544,7 @@ const SearchPage = ({ navigation }) => {
         <View style={styles.searchBar}>
           <Ionicons
             name="search-outline"
-            size={18}
+            size={moderateScale(18)}
             color={Colors.textMuted}
             style={styles.searchIcon}
           />
@@ -575,7 +575,7 @@ const SearchPage = ({ navigation }) => {
                 setResults([]);
               }}
             >
-              <Ionicons name="close-circle" size={18} color={Colors.textMuted} />
+              <Ionicons name="close-circle" size={moderateScale(18)} color={Colors.textMuted} />
             </TouchableOpacity>
           )}
         </View>
@@ -618,9 +618,9 @@ const styles = StyleSheet.create({
     gap: moderateScale(12),
   },
   backButton: {
-    width: 38,
-    height: 38,
-    borderRadius: 12,
+    width: moderateScale(38),
+    height: moderateScale(38),
+    borderRadius: moderateScale(12),
     backgroundColor: Colors.divider,
     justifyContent: "center",
     alignItems: "center",
@@ -639,16 +639,13 @@ const styles = StyleSheet.create({
   searchBar: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "white",
-    borderRadius: 14,
+    backgroundColor: Colors.white,
+    borderRadius: moderateScale(14),
     paddingHorizontal: moderateScale(14),
     paddingVertical: moderateScale(12),
     borderWidth: 1,
     borderColor: Colors.border,
-    shadowColor: Colors.black,
-    shadowOpacity: 0.04,
-    shadowRadius: 6,
-    elevation: 2,
+    ...Shadows.card,
   },
   searchIcon: { marginRight: moderateScale(8) },
   input: {

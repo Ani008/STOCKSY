@@ -9,6 +9,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import React, { useMemo } from 'react';
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import {
   View,
   Text,
@@ -21,8 +22,6 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import useMarketData from '../hooks/useMarketData';
 import { SECTOR_COLORS } from '../hooks/usePortfolio';
-
-import { SafeAreaView } from "react-native-safe-area-context";
 
 import { Colors, Typography, fontScale, moderateScale } from "../theme";
 
@@ -183,6 +182,7 @@ function SectorPerformanceCard({ sectors }) {
 // ─────────────────────────────────────────────────────────
 
 export default function MarketPage({ navigation }) {
+  const insets = useSafeAreaInsets();
   const { prices, isConnected } = useMarketData();
 
   const goToStock = (item) => {
@@ -264,10 +264,10 @@ export default function MarketPage({ navigation }) {
   const isLoading = !isConnected && stockList.length === 0;
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={styles.safeArea} edges={["left", "right"]}>
       <StatusBar barStyle="light-content" backgroundColor={C.blue} />
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        <View style={styles.header}>
+        <View style={[styles.header, { paddingTop: insets.top + moderateScale(8) }]}>
           <View style={styles.headerTopRow}>
             <Text style={styles.headerTitle}>Markets</Text>
           </View>
@@ -325,7 +325,7 @@ export default function MarketPage({ navigation }) {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: Colors.primaryDark,
+    backgroundColor: Colors.background,
   },
   container: {
     flex: 1,

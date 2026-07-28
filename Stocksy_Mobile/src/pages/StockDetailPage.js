@@ -6,7 +6,6 @@ import {
   SafeAreaView,
   ScrollView,
   TouchableOpacity,
-  Dimensions,
   Image,
   Modal,
   StatusBar,
@@ -21,8 +20,6 @@ import ChartView from "../components/ChartView";
 import useFundamentals from "../hooks/useFundamentals";
 
 import { Colors, Typography, fontScale, moderateScale } from "../theme";
-
-const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
 const RANGES = ["1D", "1W", "1M", "3M", "1Y"];
 
@@ -144,10 +141,18 @@ const StockDetailPage = ({ navigation, route }) => {
           onPress={() => navigation.goBack()}
           style={styles.backBtn}
         >
-          <Ionicons name="arrow-back" size={20} color={Colors.text} />
+          <Ionicons name="arrow-back" size={moderateScale(20)} color={Colors.text} />
         </TouchableOpacity>
 
-        <Text style={styles.headerTitle}>{symbol}</Text>
+        <Text
+          style={styles.headerTitle}
+          numberOfLines={1}
+          ellipsizeMode="tail"
+          adjustsFontSizeToFit
+          minimumFontScale={0.75}
+        >
+          {symbol}
+        </Text>
       </View>
 
       <ScrollView
@@ -171,8 +176,8 @@ const StockDetailPage = ({ navigation, route }) => {
             )}
           </View>
           <View style={{ flex: 1 }}>
-            <Text style={styles.companyName}>{name}</Text>
-            <Text style={styles.sectorLabel}>{sector} · NSE</Text>
+            <Text style={styles.companyName} numberOfLines={1}>{name}</Text>
+            <Text style={styles.sectorLabel} numberOfLines={1}>{sector} · NSE</Text>
           </View>
         </View>
 
@@ -230,7 +235,7 @@ const StockDetailPage = ({ navigation, route }) => {
               onPress={() => setChartExpanded(true)}
               activeOpacity={0.8}
             >
-              <Ionicons name="expand-outline" size={15} color={Colors.textSecondary} />
+              <Ionicons name="expand-outline" size={moderateScale(15)} color={Colors.textSecondary} />
             </TouchableOpacity>
           </View>
         </View>
@@ -257,7 +262,7 @@ const StockDetailPage = ({ navigation, route }) => {
             <View style={styles.sectionTitleRow}>
               <Ionicons
                 name="information-circle-outline"
-                size={18}
+                size={moderateScale(18)}
                 color="black"
               />
 
@@ -266,7 +271,7 @@ const StockDetailPage = ({ navigation, route }) => {
 
             <Ionicons
               name={showDetails ? "chevron-up" : "chevron-down"}
-              size={18}
+              size={moderateScale(18)}
               color={Colors.textSecondary}
             />
           </TouchableOpacity>
@@ -313,7 +318,7 @@ const StockDetailPage = ({ navigation, route }) => {
             <View style={styles.sectionTitleRow}>
               <Ionicons
                 name="information-circle-outline"
-                size={18}
+                size={moderateScale(18)}
                 color="black"
               />
 
@@ -322,7 +327,7 @@ const StockDetailPage = ({ navigation, route }) => {
 
             <Ionicons
               name={showFundamentals ? "chevron-up" : "chevron-down"}
-              size={18}
+              size={moderateScale(18)}
               color={Colors.textSecondary}
             />
           </TouchableOpacity>
@@ -397,7 +402,7 @@ const StockDetailPage = ({ navigation, route }) => {
           <View style={styles.sectionTitleRow}>
             <Ionicons
               name="information-circle-outline"
-              size={18}
+              size={moderateScale(18)}
               color="black"
             />
 
@@ -500,7 +505,7 @@ const StockDetailPage = ({ navigation, route }) => {
           <View style={styles.sectionTitleRow}>
             <Ionicons
               name="information-circle-outline"
-              size={18}
+              size={moderateScale(18)}
               color="black"
             />
 
@@ -528,7 +533,7 @@ const StockDetailPage = ({ navigation, route }) => {
           <View style={styles.sectionTitleRow}>
             <Ionicons
               name="information-circle-outline"
-              size={18}
+              size={moderateScale(18)}
               color="black"
             />
 
@@ -654,13 +659,14 @@ const styles = StyleSheet.create({
     paddingBottom: moderateScale(10),
   },
   backBtn: {
-    width: 36,
-    height: 36,
-    borderRadius: 10,
+    width: moderateScale(36),
+    height: moderateScale(36),
+    borderRadius: moderateScale(10),
     backgroundColor: Colors.divider,
     justifyContent: "center",
     alignItems: "center",
     marginRight: moderateScale(12),
+    flexShrink: 0,
   },
   headerTitle: {
     flex: 1,
@@ -675,7 +681,7 @@ const styles = StyleSheet.create({
     gap: moderateScale(5),
     paddingHorizontal: moderateScale(10),
     paddingVertical: moderateScale(5),
-    borderRadius: 20,
+    borderRadius: moderateScale(20),
   },
   liveDot: { width: 6, height: 6, borderRadius: 3 },
   liveText: { fontSize: fontScale(Typography.small), fontWeight: "600" },
@@ -692,9 +698,9 @@ const styles = StyleSheet.create({
     gap: moderateScale(12),
   },
   logoBox: {
-    width: 44,
-    height: 44,
-    borderRadius: 12,
+    width: moderateScale(44),
+    height: moderateScale(44),
+    borderRadius: moderateScale(12),
     backgroundColor: Colors.divider,
     justifyContent: "center",
     alignItems: "center",
@@ -718,12 +724,12 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     color: Colors.text,
     letterSpacing: -0.4,
-    lineHeight: 38,
+    lineHeight: moderateScale(38),
   },
   changeBadge: {
     paddingHorizontal: moderateScale(10),
     paddingVertical: moderateScale(5),
-    borderRadius: 20,
+    borderRadius: moderateScale(20),
   },
   changeBadgeText: {
     fontSize: fontScale(Typography.caption),
@@ -733,7 +739,7 @@ const styles = StyleSheet.create({
   // Chart card — white card like the reference image
   chartCard: {
     marginHorizontal: moderateScale(16),
-    borderRadius: 20,
+    borderRadius: moderateScale(20),
     paddingTop: moderateScale(16),
     paddingBottom: moderateScale(12),
     marginBottom: moderateScale(16),
@@ -747,9 +753,9 @@ const styles = StyleSheet.create({
 
   // Expand button — floats at bottom-right inside chartCard above range tabs
   expandBtn: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
+    width: moderateScale(30),
+    height: moderateScale(30),
+    borderRadius: moderateScale(15),
     backgroundColor: Colors.divider,
     justifyContent: "center",
     alignItems: "center",
@@ -771,7 +777,7 @@ const styles = StyleSheet.create({
   rangeTab: {
     paddingHorizontal: moderateScale(14),
     paddingVertical: moderateScale(7),
-    borderRadius: 20,
+    borderRadius: moderateScale(20),
     backgroundColor: Colors.divider,
   },
   rangeLabel: {
@@ -799,7 +805,7 @@ const styles = StyleSheet.create({
   statPill: {
     flex: 1,
     backgroundColor: Colors.white,
-    borderRadius: 14,
+    borderRadius: moderateScale(14),
     paddingVertical: moderateScale(12),
     paddingHorizontal: moderateScale(8),
     alignItems: "center",
@@ -826,7 +832,7 @@ const styles = StyleSheet.create({
   card: {
     marginHorizontal: moderateScale(16),
     backgroundColor: Colors.white,
-    borderRadius: 20,
+    borderRadius: moderateScale(20),
     padding: moderateScale(16),
     shadowColor: Colors.black,
     shadowOpacity: 0.04,
@@ -875,7 +881,7 @@ const styles = StyleSheet.create({
   sellBtn: {
     flex: 1,
     paddingVertical: moderateScale(15),
-    borderRadius: 14,
+    borderRadius: moderateScale(14),
     backgroundColor: Colors.lossBg,
     alignItems: "center",
   },
@@ -887,7 +893,7 @@ const styles = StyleSheet.create({
   buyBtn: {
     flex: 1,
     paddingVertical: moderateScale(15),
-    borderRadius: 14,
+    borderRadius: moderateScale(14),
     backgroundColor: Colors.primary,
     alignItems: "center",
   },
@@ -927,7 +933,7 @@ const styles = StyleSheet.create({
   financialToggleRow: {
     flexDirection: "row",
     backgroundColor: Colors.divider,
-    borderRadius: 12,
+    borderRadius: moderateScale(12),
     padding: moderateScale(4),
     marginBottom: moderateScale(20),
   },
@@ -935,7 +941,7 @@ const styles = StyleSheet.create({
   financialToggleBtn: {
     flex: 1,
     paddingVertical: moderateScale(10),
-    borderRadius: 10,
+    borderRadius: moderateScale(10),
     alignItems: "center",
   },
 
@@ -991,9 +997,9 @@ const styles = StyleSheet.create({
   },
 
   legendDot: {
-    width: 10,
-    height: 10,
-    borderRadius: 3,
+    width: moderateScale(10),
+    height: moderateScale(10),
+    borderRadius: moderateScale(3),
     marginRight: moderateScale(8),
   },
 
@@ -1033,7 +1039,7 @@ const styles = StyleSheet.create({
   periodChip: {
     paddingHorizontal: moderateScale(14),
     paddingVertical: moderateScale(8),
-    borderRadius: 20,
+    borderRadius: moderateScale(20),
     backgroundColor: Colors.divider,
   },
 
@@ -1045,7 +1051,7 @@ const styles = StyleSheet.create({
 
   companyDescription: {
     fontSize: fontScale(14),
-    lineHeight: 24,
+    lineHeight: moderateScale(24),
     color: Colors.textSecondary,
     marginBottom: moderateScale(18),
   },
@@ -1067,7 +1073,7 @@ const styles = StyleSheet.create({
   holdingQuarterChip: {
     paddingHorizontal: moderateScale(14),
     paddingVertical: moderateScale(8),
-    borderRadius: 20,
+    borderRadius: moderateScale(20),
     backgroundColor: Colors.divider,
   },
 
@@ -1109,16 +1115,16 @@ const styles = StyleSheet.create({
   },
 
   shareholdingTrack: {
-    height: 10,
+    height: moderateScale(10),
     backgroundColor: Colors.border,
-    borderRadius: 10,
+    borderRadius: moderateScale(10),
     overflow: "hidden",
   },
 
   shareholdingBar: {
     height: "100%",
     backgroundColor: Colors.primary,
-    borderRadius: 10,
+    borderRadius: moderateScale(10),
   },
 });
 
@@ -1229,7 +1235,7 @@ const TradingViewModal = ({
             onPress={onClose}
             activeOpacity={0.75}
           >
-            <Ionicons name="close" size={18} color={Colors.textMuted} />
+            <Ionicons name="close" size={moderateScale(18)} color={Colors.textMuted} />
           </TouchableOpacity>
         </View>
 
@@ -1293,7 +1299,7 @@ const tvStyles = StyleSheet.create({
   badge: {
     paddingHorizontal: moderateScale(8),
     paddingVertical: moderateScale(3),
-    borderRadius: 20,
+    borderRadius: moderateScale(20),
     marginTop: moderateScale(4),
   },
   badgeText: {
@@ -1301,9 +1307,9 @@ const tvStyles = StyleSheet.create({
     fontWeight: "700",
   },
   closeBtn: {
-    width: 34,
-    height: 34,
-    borderRadius: 17,
+    width: moderateScale(34),
+    height: moderateScale(34),
+    borderRadius: moderateScale(17),
     backgroundColor: Colors.chartSurface,
     justifyContent: "center",
     alignItems: "center",

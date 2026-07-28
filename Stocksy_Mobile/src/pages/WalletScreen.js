@@ -832,7 +832,7 @@ const styles = StyleSheet.create({
   addMoneyBtn: {
     borderRadius: 16,
     overflow: "hidden",
-    shadowColor: Colors.primary,
+    shadowColor: Colors.primaryDark,
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.3,
     shadowRadius: 12,

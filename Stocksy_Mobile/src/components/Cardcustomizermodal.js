@@ -7,18 +7,17 @@ import {
   TouchableOpacity,
   ScrollView,
   Animated,
-  Dimensions,
   StatusBar,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import DemoCard, { CARD_SKINS } from "./DemoCard";
 
-import { Colors, Typography, fontScale, moderateScale } from "../theme";
+import { Colors, Typography, fontScale, moderateScale, SCREEN_WIDTH } from "../theme";
 
-const { width: SCREEN_WIDTH } = Dimensions.get("window");
-const CARD_SPACING = 20;
-const CARD_WIDTH = SCREEN_WIDTH - 80;
+const CARD_SPACING = moderateScale(20);
+const CARD_WIDTH = SCREEN_WIDTH - moderateScale(80);
+const CARD_PREVIEW_HEIGHT = moderateScale(210);
 
 /**
  * CardCustomizerModal
@@ -66,7 +65,7 @@ const CardCustomizerModal = ({
         {/* Header */}
         <View style={styles.header}>
           <TouchableOpacity onPress={onClose} style={styles.closeBtn}>
-            <Ionicons name="close" size={22} color="rgba(255,255,255,0.7)" />
+            <Ionicons name="close" size={moderateScale(22)} color="rgba(255,255,255,0.7)" />
           </TouchableOpacity>
           <Text style={styles.headerTitle}>Choose Card Style</Text>
           {/* Confirm tick */}
@@ -75,7 +74,7 @@ const CardCustomizerModal = ({
               colors={[activeSkin.accentColor, activeSkin.accentColor + "CC"]}
               style={styles.confirmGradient}
             >
-              <Ionicons name="checkmark" size={20} color={Colors.white} />
+              <Ionicons name="checkmark" size={moderateScale(20)} color={Colors.white} />
             </LinearGradient>
           </TouchableOpacity>
         </View>
@@ -118,7 +117,7 @@ const CardCustomizerModal = ({
                 <DemoCard
                   balance={balance}
                   skin={skin}
-                  style={{ width: "100%", height: 210 }}
+                  style={{ width: "100%", height: CARD_PREVIEW_HEIGHT }}
                 />
               </TouchableOpacity>
             );
@@ -134,7 +133,7 @@ const CardCustomizerModal = ({
                 styles.dot,
                 i === activeIndex && {
                   backgroundColor: activeSkin.accentColor,
-                  width: 20,
+                  width: moderateScale(20),
                 },
               ]}
             />
@@ -176,7 +175,7 @@ const CardCustomizerModal = ({
               {index === activeIndex && (
                 <Ionicons
                   name="checkmark-circle"
-                  size={14}
+                  size={moderateScale(14)}
                   color={skin.accentColor}
                   style={styles.swatchCheck}
                 />
@@ -193,7 +192,7 @@ const CardCustomizerModal = ({
             end={{ x: 1, y: 0 }}
             style={styles.applyGradient}
           >
-            <Ionicons name="checkmark-circle-outline" size={20} color={Colors.white} style={{ marginRight: moderateScale(8) }} />
+            <Ionicons name="checkmark-circle-outline" size={moderateScale(20)} color={Colors.white} style={{ marginRight: moderateScale(8) }} />
             <Text style={styles.applyText}>Apply "{activeSkin.label}"</Text>
           </LinearGradient>
         </TouchableOpacity>
@@ -215,27 +214,27 @@ const styles = StyleSheet.create({
     marginBottom: moderateScale(6),
   },
   closeBtn: {
-    width: 38,
-    height: 38,
-    borderRadius: 19,
+    width: moderateScale(38),
+    height: moderateScale(38),
+    borderRadius: moderateScale(19),
     backgroundColor: "rgba(255,255,255,0.08)",
     justifyContent: "center",
     alignItems: "center",
   },
   headerTitle: {
     color: Colors.white,
-    fontSize: fontScale(17),
+    fontSize: fontScale(Typography.h4),
     fontWeight: "700",
     letterSpacing: 0.3,
   },
   confirmBtn: {
-    borderRadius: 19,
+    borderRadius: moderateScale(19),
     overflow: "hidden",
   },
   confirmGradient: {
-    width: 38,
-    height: 38,
-    borderRadius: 19,
+    width: moderateScale(38),
+    height: moderateScale(38),
+    borderRadius: moderateScale(19),
     justifyContent: "center",
     alignItems: "center",
   },
@@ -253,7 +252,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: moderateScale(20),
   },
   cardWrapper: {
-    borderRadius: 24,
+    borderRadius: moderateScale(24),
     overflow: "visible",
   },
   dots: {
@@ -264,9 +263,9 @@ const styles = StyleSheet.create({
     gap: moderateScale(6),
   },
   dot: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
+    width: moderateScale(6),
+    height: moderateScale(6),
+    borderRadius: moderateScale(3),
     backgroundColor: "rgba(255,255,255,0.2)",
   },
   skinName: {
@@ -290,22 +289,22 @@ const styles = StyleSheet.create({
     position: "relative",
   },
   swatch: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+    width: moderateScale(36),
+    height: moderateScale(36),
+    borderRadius: moderateScale(18),
     borderWidth: 2,
     borderColor: "transparent",
   },
   swatchCheck: {
     position: "absolute",
-    bottom: -5,
-    right: -2,
+    bottom: moderateScale(-5),
+    right: moderateScale(-2),
     backgroundColor: Colors.chartBg,
-    borderRadius: 7,
+    borderRadius: moderateScale(7),
   },
   applyBtn: {
     marginHorizontal: moderateScale(24),
-    borderRadius: 16,
+    borderRadius: moderateScale(16),
     overflow: "hidden",
   },
   applyGradient: {
@@ -313,7 +312,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: moderateScale(16),
-    borderRadius: 16,
+    borderRadius: moderateScale(16),
   },
   applyText: {
     color: Colors.white,

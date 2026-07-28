@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { View, ActivityIndicator, StyleSheet } from "react-native";
+import { View, ActivityIndicator, StyleSheet, Text, TextInput } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StatusBar } from "expo-status-bar";
 import { Ionicons } from "@expo/vector-icons";
 import "react-native-get-random-values";
+
+if (Text.defaultProps == null) Text.defaultProps = {};
+Text.defaultProps.maxFontSizeMultiplier = 1.2;
+if (TextInput.defaultProps == null) TextInput.defaultProps = {};
+TextInput.defaultProps.maxFontSizeMultiplier = 1.2;
 
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { ToastProvider } from "./src/context/ToastProvider";

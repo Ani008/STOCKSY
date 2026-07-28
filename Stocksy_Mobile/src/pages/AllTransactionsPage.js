@@ -59,7 +59,7 @@ const AllTransactionsPage = ({ navigation }) => {
           style={styles.headerBtn}
           hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
         >
-          <Ionicons name="arrow-back" size={20} color={Colors.text} />
+          <Ionicons name="arrow-back" size={moderateScale(20)} color={Colors.text} />
         </TouchableOpacity>
 
         <Text style={styles.headerTitle}>All Transactions</Text>
@@ -85,7 +85,7 @@ const AllTransactionsPage = ({ navigation }) => {
             <View style={styles.emptyIconRing}>
               <Ionicons
                 name="receipt-outline"
-                size={28}
+                size={moderateScale(28)}
                 color={Colors.textMuted}
               />
             </View>
@@ -121,9 +121,9 @@ const styles = StyleSheet.create({
     paddingVertical: moderateScale(14),
   },
   headerBtn: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+    width: moderateScale(36),
+    height: moderateScale(36),
+    borderRadius: moderateScale(18),
     justifyContent: "center",
     alignItems: "center",
   },
@@ -143,9 +143,9 @@ const styles = StyleSheet.create({
     gap: moderateScale(8),
   },
   emptyIconRing: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    width: moderateScale(60),
+    height: moderateScale(60),
+    borderRadius: moderateScale(30),
     backgroundColor: Colors.background,
     borderWidth: 1.5,
     borderColor: Colors.border,
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     fontSize: fontScale(Typography.caption),
     color: Colors.textMuted,
     textAlign: "center",
-    lineHeight: 20,
+    lineHeight: moderateScale(20),
     paddingHorizontal: moderateScale(24),
   },
 });

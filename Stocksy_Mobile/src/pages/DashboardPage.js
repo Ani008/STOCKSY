@@ -319,7 +319,7 @@ const DashboardPage = ({ navigation }) => {
     <Screen
       style={{ backgroundColor: Colors.background }}
       contentContainerStyle={styles.scroll}
-      edges={["left", "right", "bottom"]}
+      edges={["left", "right"]}
       statusBarStyle="light-content"
     >
       <View style={[styles.heroSection, { paddingTop: insets.top + moderateScale(20) }]}>
