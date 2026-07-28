@@ -387,7 +387,7 @@ export default function PortfolioPage({ navigation }) {
         <View style={styles.tileGrid}>
           <StatTile
             label="Today's Return"
-            value={(totals.totalToday >= 0 ? '+' : '') + fmt(totals.totalToday)}
+            value={(totals.totalToday >= 0 ? '+' : '-') + fmt(totals.totalToday)}
             sub={fmtPct(totals.todayPct)}
             subColor={totals.totalToday >= 0 ? Colors.gain : Colors.loss}
             icon="today-outline"
@@ -395,7 +395,7 @@ export default function PortfolioPage({ navigation }) {
           />
           <StatTile
             label="Lifetime Return"
-            value={(totals.totalLifetime >= 0 ? '+' : '') + fmt(totals.totalLifetime)}
+            value={(totals.totalLifetime >= 0 ? '+' : '-') + fmt(totals.totalLifetime)}
             sub={fmtPct(totals.lifetimePct)}
             subColor={totals.totalLifetime >= 0 ? Colors.gain : Colors.loss}
             icon="trending-up-outline"
@@ -403,7 +403,7 @@ export default function PortfolioPage({ navigation }) {
           />
           <StatTile
             label="Unrealised"
-            value={(totals.totalUnrealised >= 0 ? '+' : '') + fmt(totals.totalUnrealised)}
+            value={(totals.totalUnrealised >= 0 ? '+' : '-') + fmt(totals.totalUnrealised)}
             sub={fmtPct(totals.unrealisedPct)}
             subColor={totals.totalUnrealised >= 0 ? Colors.gain : Colors.loss}
             icon="stats-chart-outline"

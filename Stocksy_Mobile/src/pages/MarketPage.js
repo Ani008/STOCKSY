@@ -325,14 +325,14 @@ export default function MarketPage({ navigation }) {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: Colors.background,
+    backgroundColor: Colors.primaryDark,
   },
   container: {
     flex: 1,
-    backgroundColor: C.background,
+    backgroundColor: Colors.background,
   },
   header: {
-    backgroundColor: Colors.primary,
+    backgroundColor: Colors.primaryDark,
     paddingHorizontal: moderateScale(16),
     paddingTop: moderateScale(8),
     paddingBottom: moderateScale(20),

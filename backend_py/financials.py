@@ -719,7 +719,7 @@ FINANCIALS_DATA = {
         ]
     },
     
-    "LTM": {
+    "LTIM": {
         "quarterly": [
             {
                 "period": "Jun '25",
@@ -1518,7 +1518,7 @@ FINANCIALS_DATA = {
         ]
     },
     
-    "HUL": {
+    "HINDUNILVR": {
         "quarterly": [
             {
                 "period": "Mar '25",
@@ -1633,7 +1633,7 @@ FINANCIALS_DATA = {
         ]
     },
 
-    "NSETLE": {
+    "NESTLEIND": {
         "quarterly": [
             {
                 "period": "Mar '25",
@@ -1737,7 +1737,7 @@ FINANCIALS_DATA = {
         ]
     },
     
-    "BRITANIA": {
+    "BRITANNIA": {
         "quarterly": [
             {
                 "period": "Mar '25",

@@ -219,6 +219,13 @@ async function executeOrder(jobData) {
 
     let positionId = null;
 
+    // Real wallet impact of this fill — margin debited (BUY) or margin +
+    // P&L credited (SELL). For CNC (leverage=1) this equals the full
+    // trade value, same as before. For MIS/leveraged trades it's the
+    // actual cash that moved, which is what the transaction ledger and
+    // the transactions screen should show — not the full stock value.
+    let walletDelta = 0;
+
     // ─────────────────────────────────────────────────────────
     // BUY
     // ─────────────────────────────────────────────────────────
@@ -297,6 +304,8 @@ async function executeOrder(jobData) {
       const actualMarginRequired =
         (tradeValue / leverageApplied) + brokerage;
 
+      walletDelta = actualMarginRequired;
+
       const refund = parseFloat(marginUsed) - actualMarginRequired;
 
       if (refund !== 0) {
@@ -369,6 +378,8 @@ async function executeOrder(jobData) {
       const positionLeverage = getLeverage(symbol, productType);
       const marginToRelease = (avgCost * qty) / positionLeverage;
       const walletCredit = marginToRelease + realisedPnl;
+
+      walletDelta = walletCredit;
 
       const newQty = oldQty - qty;
 
@@ -499,7 +510,7 @@ async function executeOrder(jobData) {
       `,
       [
         walletId,
-        tradeValue,
+        Math.abs(walletDelta),
         walletAfter.balance,
         orderId,
         `${side} ${qty} ${symbol} @ ₹${fillPrice.toFixed(2)}`,

@@ -1698,7 +1698,7 @@ SHAREHOLDING_DATA = {
         ]
     },
     
-    "LTM": {
+    "LTIM": {
         "quarters": [
             {
                 "period": "Mar '25",
@@ -3417,7 +3417,7 @@ SHAREHOLDING_DATA = {
 
 
 #FMCG SHAREHOLDING PATTERN
-    "HUL": {
+    "HINDUNILVR": {
         "quarters": [
             {
                 "period": "Mar '25",
@@ -3667,7 +3667,7 @@ SHAREHOLDING_DATA = {
         ]
     },
 
-    "NESTLE": {
+    "NESTLEIND": {
         "quarters": [
             {
                 "period": "Jun '25",
@@ -3933,7 +3933,7 @@ SHAREHOLDING_DATA = {
         ]
     },
     
-    "BRITANIA": {
+    "BRITANNIA": {
         "quarters": [
             {
                 "period": "Mar '25",
