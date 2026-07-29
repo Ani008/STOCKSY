@@ -10,9 +10,10 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import {
   View, Text, ScrollView, TouchableOpacity, StyleSheet,
-  SafeAreaView, StatusBar, ActivityIndicator,
+  StatusBar, ActivityIndicator,
   Animated, RefreshControl,
 } from 'react-native';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import useMarketData from '../hooks/useMarketData';
 import { usePortfolio, SECTOR_COLORS } from '../hooks/usePortfolio';
@@ -215,6 +216,7 @@ function PnlBreakdownRow({ label, value, pct, dimmed }) {
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
 export default function PortfolioPage({ navigation }) {
+  const insets = useSafeAreaInsets();
   const { prices } = useMarketData();          // live WS prices
   const {
     // Holdings (CNC/delivery) — what this screen calls the "Holdings" tab
@@ -254,9 +256,9 @@ export default function PortfolioPage({ navigation }) {
   // ── Loading state ──────────────────────────────────────────────────────────
   if (loading) {
     return (
-      <SafeAreaView style={styles.safe}>
+      <SafeAreaView style={styles.safe} edges={["left", "right"]}>
         <StatusBar barStyle="light-content" backgroundColor={Colors.primaryDark} />
-        <View style={styles.header}>
+        <View style={[styles.header, { paddingTop: insets.top + moderateScale(8) }]}>
           <Text style={styles.headerTitle}>Portfolio</Text>
           <View style={{ width: moderateScale(36) }} />
         </View>
@@ -271,9 +273,9 @@ export default function PortfolioPage({ navigation }) {
   // ── Error state ────────────────────────────────────────────────────────────
   if (error) {
     return (
-      <SafeAreaView style={styles.safe}>
+      <SafeAreaView style={styles.safe} edges={["left", "right"]}>
         <StatusBar barStyle="light-content" backgroundColor={Colors.primaryDark} />
-        <View style={styles.header}>
+        <View style={[styles.header, { paddingTop: insets.top + moderateScale(8) }]}>
           <Text style={styles.headerTitle}>Portfolio</Text>
           <View style={{ width: moderateScale(36) }} />
         </View>
@@ -292,11 +294,11 @@ export default function PortfolioPage({ navigation }) {
   const noPositions = positions.length === 0;
 
   return (
-    <SafeAreaView style={styles.safe}>
+    <SafeAreaView style={styles.safe} edges={["left", "right"]}>
       <StatusBar barStyle="light-content" backgroundColor={Colors.primaryDark} />
 
       {/* ── Header ── */}
-      <View style={styles.header}>
+      <View style={[styles.header, { paddingTop: insets.top + moderateScale(8) }]}>
         <View style={{ width: moderateScale(36) }} />
         <Text style={styles.headerTitle}>Portfolio</Text>
         <TouchableOpacity
@@ -515,15 +517,15 @@ export default function PortfolioPage({ navigation }) {
 // ─── Styles ───────────────────────────────────────────────────────────────────
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: Colors.primaryDark },
+  safe: { flex: 1, backgroundColor: Colors.background },
 
   // Header
   header: {
+    backgroundColor: Colors.primaryDark,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: moderateScale(16),
-    paddingTop: moderateScale(8),
     paddingBottom: moderateScale(4),
   },
   headerTitle: {
@@ -540,6 +542,7 @@ const styles = StyleSheet.create({
 
   // Holdings / Positions toggle
   toggleRow: {
+    backgroundColor: Colors.primaryDark,
     paddingHorizontal: moderateScale(16),
     paddingTop: moderateScale(4),
     paddingBottom: moderateScale(8),
@@ -547,6 +550,9 @@ const styles = StyleSheet.create({
 
   // Hero
   heroZone: {
+    backgroundColor: Colors.primaryDark,
+    borderBottomLeftRadius: 24,
+    borderBottomRightRadius: 24,
     paddingHorizontal: moderateScale(20),
     paddingBottom: moderateScale(28),
     paddingTop: moderateScale(12),

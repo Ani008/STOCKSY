@@ -193,6 +193,13 @@ const calcChange = (ltp, cp) => {
 };
 
 const DashboardPage = ({ navigation }) => {
+  function getGreeting() {
+    const hour = new Date().getHours();
+    if (hour < 12) return "Good Morning!";
+    if (hour < 17) return "Good Afternoon!";
+    return "Good Evening!";
+  }
+
   const insets = useSafeAreaInsets();
 
   // ── Live prices from WebSocket ──────────────────────────────────────────────
@@ -327,7 +334,7 @@ const DashboardPage = ({ navigation }) => {
         <View style={styles.headerRow}>
           <View>
             <AppText variant="caption" color="rgba(255,255,255,0.8)">
-              Good Morning!
+              {getGreeting()}
             </AppText>
 
             <AppText variant="h2" color="white" style={{ marginTop: moderateScale(2) }}>

@@ -12,7 +12,7 @@ Text.defaultProps.maxFontSizeMultiplier = 1.2;
 if (TextInput.defaultProps == null) TextInput.defaultProps = {};
 TextInput.defaultProps.maxFontSizeMultiplier = 1.2;
 
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { SafeAreaProvider, useSafeAreaInsets } from "react-native-safe-area-context";
 import { ToastProvider } from "./src/context/ToastProvider";
 import SessionExpiredScreen from "./src/components/SessionExpiredScreen";
 import { registerSessionExpiredHandler } from "./services/uiBridge";
@@ -58,6 +58,8 @@ const TAB_ICONS = {
 const Tab = createBottomTabNavigator();
 
 function MainTabs() {
+  const insets = useSafeAreaInsets();
+
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -69,15 +71,21 @@ function MainTabs() {
         tabBarLabelStyle: {
           fontSize: 11,
           fontWeight: "600",
-          marginBottom: 4,
+          marginBottom: 2,
         },
         tabBarStyle: {
           backgroundColor: "white",
           borderTopColor: "#F1F5F9",
           borderTopWidth: 1,
-          height: 72,
-          paddingTop: 8,
-          paddingBottom: 12,
+          // Custom height + explicit padding turns off React Navigation's
+          // automatic safe-area handling for this tab bar — so it has to
+          // be done manually here. insets.bottom is 0 on gesture-nav
+          // devices, and the real 3-button nav bar height on devices
+          // like the Redmi Note 11/7 — this adapts per device instead
+          // of a fixed value that only happened to work on iOS.
+          height: 60 + insets.bottom,
+          paddingTop: 6,
+          paddingBottom: 12 + insets.bottom,
           // Shadow for iOS
           shadowColor: "#000",
           shadowOpacity: 0.06,
