@@ -5,3 +5,4 @@ export { default as SectionHeader } from "./SectionHeader";
 export { default as SegmentedToggle } from "./SegmentedToggle";
 export { default as IntradayPositionsView } from "./IntradayPositionsView";
 export { default as TransactionRow } from "./TransactionRow";
+export { default as OrderRow } from "./OrderRow";

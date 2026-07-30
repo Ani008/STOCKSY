@@ -83,6 +83,8 @@ RETURNING *
 
       username: user.username,
 
+      fullName: user.full_name,
+
       email: user.email,
 
       demoBalance: user.demo_balance,
@@ -157,6 +159,8 @@ WHERE email=$1
         id: user.id,
 
         username: user.username,
+
+        fullName: user.full_name,
 
         email: user.email,
 

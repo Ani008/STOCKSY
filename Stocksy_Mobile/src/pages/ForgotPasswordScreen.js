@@ -2,16 +2,16 @@ import React, { useState, useEffect, useRef } from "react";
 import api from "../../services/api"; // Adjust the import path based on your project structure
 import {
   View,
-  Text,
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
   TouchableOpacity,
-  TextInput,
   Animated,
   ActivityIndicator,
 } from "react-native";
+import Text from "../components/AppText";
+import TextInput from "../components/AppTextInput";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -304,13 +304,13 @@ const ForgotPasswordScreen = ({ navigation }) => {
           {step === STEP_EMAIL && (
             <View style={styles.form}>
               <Input
-                label="Email or Mobile Number"
+                label="Enter Email Id"
                 value={contact}
                 onChangeText={(t) => {
                   setContact(t);
                   setContactError("");
                 }}
-                placeholder="you@example.com or 9876543210"
+                placeholder="you@example.com"
                 keyboardType="email-address"
                 error={contactError}
               />

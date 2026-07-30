@@ -30,6 +30,21 @@ const signup = async ({ fullName, email, password }) => {
     password,
   });
 
+  // Mirror login()'s persistence — SignupPage navigates straight into
+  // MainTabs after this resolves, so without storing the token/user here
+  // the very first screens the person sees would have no auth session.
+  await storeToken(response.data.token);
+
+  await AsyncStorage.setItem(
+    "user",
+    JSON.stringify({
+      id: response.data.id,
+      username: response.data.username,
+      fullName: response.data.fullName,
+      email: response.data.email,
+    }),
+  );
+
   return response.data;
 };
 
@@ -42,8 +57,9 @@ export const login = async (email, password) => {
   await AsyncStorage.setItem(
     "user",
     JSON.stringify({
-      id: response.data._id,
+      id: response.data.id,
       username: response.data.username,
+      fullName: response.data.fullName,
       email: response.data.email,
     }),
   );
