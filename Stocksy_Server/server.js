@@ -5,6 +5,7 @@ const cors = require('cors');
 const http = require('http');
 require('./config/postgres');
 const { initWebSocket } = require('./services/websocketService');
+const { generalLimiter } = require('./middleware/rateLimiter');
 
 connectRedis();
 const app = express();
@@ -14,6 +15,12 @@ const server = http.createServer(app);
 // ─── Middleware ────────────────────────────────────────────────────────────────
 app.use(cors());
 app.use(express.json({ limit: '5mb' }));
+
+// Global rate-limit safety net — applied before routing so it protects
+// every endpoint, including ones added later without remembering to
+// rate-limit them individually. Sensitive routes (auth, OTP, orders) add
+// their own tighter limiter on top of this one.
+app.use(generalLimiter);
 
 // 🔍 DEBUG: Log every incoming request so you can see if the server is even
 //    receiving calls from the app. If you hit signup and see nothing here,

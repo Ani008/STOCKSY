@@ -7,6 +7,7 @@
 const express = require('express');
 const router  = express.Router();
 const { protect } = require('../middleware/auth');
+const { orderLimiter } = require('../middleware/rateLimiter');
 const {
   createOrder,
   listOrders,
@@ -22,9 +23,9 @@ const {
 // POST   /api/orders          — place a new order
 // GET    /api/orders          — list orders (with filters)
 // DELETE /api/orders/:id      — cancel an open/pending order
-router.post  ('/orders',     protect, createOrder);
+router.post  ('/orders',     protect, orderLimiter, createOrder);
 router.get   ('/orders',     protect, listOrders);
-router.delete('/orders/:id', protect, cancelOrderHandler);
+router.delete('/orders/:id', protect, orderLimiter, cancelOrderHandler);
 
 // ── Portfolio ─────────────────────────────────────────────────────────────────
 // GET /api/portfolio           — full portfolio summary (all wallets)
