@@ -19,13 +19,20 @@ const { rateLimit } = require('express-rate-limit');
 const { RedisStore } = require('rate-limit-redis');
 const { client: redisClient } = require('../config/redis');
 
-function redisStoreOrDefault() {
+// IMPORTANT: express-rate-limit requires a SEPARATE store instance per
+// limiter (sharing one instance across limiters was a bug in an earlier
+// version of this file — it throws ERR_ERL_STORE_REUSE). Each limiter below
+// gets its own RedisStore, namespaced with a unique `prefix` so their
+// counters can never collide with each other inside Redis, even though
+// they all use the same Redis connection.
+function makeRedisStore(prefix) {
   try {
     return new RedisStore({
+      prefix,
       sendCommand: (...args) => redisClient.sendCommand(args),
     });
   } catch (err) {
-    console.error('[rateLimiter] Falling back to in-memory store:', err.message);
+    console.error(`[rateLimiter:${prefix}] Falling back to in-memory store:`, err.message);
     return undefined; // express-rate-limit uses its built-in MemoryStore
   }
 }
@@ -45,7 +52,6 @@ const baseOptions = {
   standardHeaders: true, // RateLimit-* headers so well-behaved clients can back off
   legacyHeaders: false,
   handler: limitHandler,
-  store: redisStoreOrDefault(),
 };
 
 // ── General API limiter ─────────────────────────────────────────────────────
@@ -56,6 +62,7 @@ const generalLimiter = rateLimit({
   ...baseOptions,
   windowMs: 15 * 60 * 1000, // 15 min
   max: 300,                 // ~20 req/min average per IP
+  store: makeRedisStore('rl:general:'),
 });
 
 // ── Auth limiter (login / signup / google login) ────────────────────────────
@@ -67,6 +74,7 @@ const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 10,
   skipSuccessfulRequests: true, // don't penalize a user for their one good login
+  store: makeRedisStore('rl:auth:'),
 });
 
 // ── OTP limiter (forgot-password send/verify) ───────────────────────────────
@@ -77,6 +85,7 @@ const otpLimiter = rateLimit({
   ...baseOptions,
   windowMs: 15 * 60 * 1000,
   max: 5,
+  store: makeRedisStore('rl:otp:'),
 });
 
 // ── Order limiter (place / cancel orders) ───────────────────────────────────
@@ -86,6 +95,7 @@ const orderLimiter = rateLimit({
   ...baseOptions,
   windowMs: 60 * 1000, // 1 min
   max: 60,
+  store: makeRedisStore('rl:order:'),
 });
 
 module.exports = { generalLimiter, authLimiter, otpLimiter, orderLimiter };

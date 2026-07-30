@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   TextInput,
   Animated,
+  ActivityIndicator,
 } from "react-native";
 import Button from "../components/Button";
 import Input from "../components/Input";
@@ -51,6 +52,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
   const [otpError, setOtpError] = useState("");
   const [countdown, setCountdown] = useState(OTP_RESEND_SECONDS);
   const [canResend, setCanResend] = useState(false);
+  const [resendLoading, setResendLoading] = useState(false);
   const otpRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
 
   // Step 3 — reset
@@ -181,17 +183,21 @@ const ForgotPasswordScreen = ({ navigation }) => {
   };
 
   const handleResend = async () => {
-    if (!canResend) return;
+    if (!canResend || resendLoading) return;
 
     try {
+      setResendLoading(true);
+
       await api.post("/auth/forgot-password/send-otp", {
         email: contact.trim().toLowerCase(),
       });
 
+      setResendLoading(false);
       setOtp(["", "", "", ""]);
       setOtpError("");
       setStep(STEP_OTP);
     } catch (err) {
+      setResendLoading(false);
       setOtpError(err.response?.data?.message || "Unable to resend OTP.");
     }
   };
@@ -311,6 +317,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
               <Button
                 title="Send OTP"
                 onPress={handleSendOtp}
+                loading={loading}
                 style={styles.btn}
               />
             </View>
@@ -342,9 +349,13 @@ const ForgotPasswordScreen = ({ navigation }) => {
               {/* Resend row */}
               <View style={styles.resendRow}>
                 {canResend ? (
-                  <TouchableOpacity onPress={handleResend}>
-                    <Text style={styles.resendLink}>Resend OTP</Text>
-                  </TouchableOpacity>
+                  resendLoading ? (
+                    <ActivityIndicator size="small" color={BLUE} />
+                  ) : (
+                    <TouchableOpacity onPress={handleResend}>
+                      <Text style={styles.resendLink}>Resend OTP</Text>
+                    </TouchableOpacity>
+                  )
                 ) : (
                   <Text style={styles.resendTimer}>
                     Resend in{" "}
@@ -356,6 +367,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
               <Button
                 title="Verify OTP"
                 onPress={handleVerifyOtp}
+                loading={loading}
                 style={styles.btn}
               />
             </View>

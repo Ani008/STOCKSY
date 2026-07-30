@@ -1,0 +1,685 @@
+diff --git a/Stocksy_Mobile/App.js b/Stocksy_Mobile/App.js
+index a625182..736e204 100644
+--- a/Stocksy_Mobile/App.js
++++ b/Stocksy_Mobile/App.js
+@@ -1,5 +1,5 @@
+ import React, { useEffect, useState } from "react";
+-import { View, ActivityIndicator, StyleSheet, Text, TextInput } from "react-native";
++import { View, ActivityIndicator, StyleSheet } from "react-native";
+ import { NavigationContainer } from "@react-navigation/native";
+ import { createNativeStackNavigator } from "@react-navigation/native-stack";
+ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+@@ -7,10 +7,21 @@ import { StatusBar } from "expo-status-bar";
+ import { Ionicons } from "@expo/vector-icons";
+ import "react-native-get-random-values";
+ 
+-if (Text.defaultProps == null) Text.defaultProps = {};
+-Text.defaultProps.maxFontSizeMultiplier = 1.2;
+-if (TextInput.defaultProps == null) TextInput.defaultProps = {};
+-TextInput.defaultProps.maxFontSizeMultiplier = 1.2;
++// Financial data (prices, index values, quantities) must never get cropped
++// or misread — a truncated number here isn't cosmetic, it's a trust/safety
++// issue for a trading app. So text scaling from the device's OS-level
++// accessibility font size setting is fully locked off, app-wide, rather
++// than just capped. A 1.2x cap still leaves enough slack to crop tightly
++// packed numeric rows (e.g. index tickers) on larger OS accessibility text
++// sizes. This matches how other trading apps (e.g. Groww) handle this.
++// NOTE on font scaling: `Text.defaultProps` / `TextInput.defaultProps`
++// mutation does NOT work in this React Native (0.81) + React (19) version —
++// RN's own Text/TextInput read `allowFontScaling` straight from their own
++// props and never consult `.defaultProps`, and React 19 dropped
++// `defaultProps` support for function components entirely. The real fix is
++// per-instance: see AppText.js / AppTextInput.js, which set
++// `allowFontScaling={false}` explicitly. Screens should import Text /
++// TextInput from those wrappers instead of directly from 'react-native'.
+ 
+ import { SafeAreaProvider, useSafeAreaInsets } from "react-native-safe-area-context";
+ import { ToastProvider } from "./src/context/ToastProvider";
+diff --git a/Stocksy_Mobile/src/components/AppText.js b/Stocksy_Mobile/src/components/AppText.js
+index 753680e..dbe2eca 100644
+--- a/Stocksy_Mobile/src/components/AppText.js
++++ b/Stocksy_Mobile/src/components/AppText.js
+@@ -65,10 +65,20 @@ export default function AppText({
+   align = "left",
+   numberOfLines,
+   style,
++  ...rest
+ }) {
+   return (
+     <Text
+       numberOfLines={numberOfLines}
++      // Financial numbers must never reflow/crop based on the device's OS
++      // text-size setting. `Text.defaultProps` mutation (previously tried
++      // in App.js) does NOT work in this React Native / React version —
++      // RN's own Text component reads `allowFontScaling` straight from its
++      // props and never consults `Text.defaultProps`, and React 19 dropped
++      // defaultProps support for function components entirely. Setting it
++      // per-instance, here, is the only mechanism that actually works.
++      allowFontScaling={false}
++      {...rest}
+       style={[
+         variants[variant],
+         {
+diff --git a/Stocksy_Mobile/src/components/AppTextInput.js b/Stocksy_Mobile/src/components/AppTextInput.js
+new file mode 100644
+index 0000000..623d3c3
+--- /dev/null
++++ b/Stocksy_Mobile/src/components/AppTextInput.js
+@@ -0,0 +1,18 @@
++import React, { forwardRef } from "react";
++import { TextInput } from "react-native";
++
++// Thin passthrough wrapper — same fix as AppText.js, applied to TextInput.
++// `TextInput.defaultProps` mutation does not work in this RN/React version
++// (see the note in App.js), so this sets `allowFontScaling={false}` per
++// instance instead. Import TextInput from here instead of directly from
++// 'react-native' anywhere user-entered or displayed numeric text (OTP
++// digits, amounts, prices) must not reflow with the OS text-size setting.
++//
++// Wrapped in forwardRef so existing `ref={...}` usage (e.g. focus-jumping
++// between OTP boxes, focusing an amount field) keeps working exactly as
++// before — a plain function component would silently break those refs.
++const AppTextInput = forwardRef(function AppTextInput({ style, ...rest }, ref) {
++  return <TextInput ref={ref} allowFontScaling={false} style={style} {...rest} />;
++});
++
++export default AppTextInput;
+diff --git a/Stocksy_Mobile/src/components/Cardcustomizermodal.js b/Stocksy_Mobile/src/components/Cardcustomizermodal.js
+index cf03c35..1c18d53 100644
+--- a/Stocksy_Mobile/src/components/Cardcustomizermodal.js
++++ b/Stocksy_Mobile/src/components/Cardcustomizermodal.js
+@@ -1,7 +1,6 @@
+ import React, { useState, useRef } from "react";
+ import {
+   View,
+-  Text,
+   StyleSheet,
+   Modal,
+   TouchableOpacity,
+@@ -9,6 +8,7 @@ import {
+   Animated,
+   StatusBar,
+ } from "react-native";
++import Text from "./AppText";
+ import { Ionicons } from "@expo/vector-icons";
+ import { LinearGradient } from "expo-linear-gradient";
+ import DemoCard, { CARD_SKINS } from "./DemoCard";
+diff --git a/Stocksy_Mobile/src/components/ChartView.js b/Stocksy_Mobile/src/components/ChartView.js
+index a363294..12df505 100644
+--- a/Stocksy_Mobile/src/components/ChartView.js
++++ b/Stocksy_Mobile/src/components/ChartView.js
+@@ -1,5 +1,6 @@
+ import React, { useMemo } from "react";
+-import { View, StyleSheet, ActivityIndicator, Text } from "react-native";
++import { View, StyleSheet, ActivityIndicator } from "react-native";
++import Text from "./AppText";
+ import { WebView } from "react-native-webview";
+ 
+ import { Colors, fontScale, moderateScale } from "../theme";
+diff --git a/Stocksy_Mobile/src/components/CreateWalletModal.js b/Stocksy_Mobile/src/components/CreateWalletModal.js
+index 0791d34..26ac0ca 100644
+--- a/Stocksy_Mobile/src/components/CreateWalletModal.js
++++ b/Stocksy_Mobile/src/components/CreateWalletModal.js
+@@ -1,17 +1,17 @@
+ import React, { useState } from 'react';
+ import {
+   View,
+-  Text,
+   StyleSheet,
+   Modal,
+   TouchableOpacity,
+-  TextInput,
+   ActivityIndicator,
+   KeyboardAvoidingView,
+   Platform,
+   TouchableWithoutFeedback,
+   Keyboard,
+ } from 'react-native';
++import Text from './AppText';
++import TextInput from './AppTextInput';
+ import { Ionicons } from '@expo/vector-icons';
+ 
+ import { Colors, Typography, fontScale, moderateScale } from "../theme";
+diff --git a/Stocksy_Mobile/src/components/DemoCard.js b/Stocksy_Mobile/src/components/DemoCard.js
+index b1d7c94..56c5c3c 100644
+--- a/Stocksy_Mobile/src/components/DemoCard.js
++++ b/Stocksy_Mobile/src/components/DemoCard.js
+@@ -1,5 +1,6 @@
+ import React from "react";
+-import { View, Text, StyleSheet } from "react-native";
++import { View, StyleSheet } from "react-native";
++import Text from "./AppText";
+ import { LinearGradient } from "expo-linear-gradient";
+ import { Image } from "react-native";
+ 
+diff --git a/Stocksy_Mobile/src/components/Input.js b/Stocksy_Mobile/src/components/Input.js
+index 5faa5da..0cf7182 100644
+--- a/Stocksy_Mobile/src/components/Input.js
++++ b/Stocksy_Mobile/src/components/Input.js
+@@ -1,11 +1,11 @@
+ import React, { useState } from "react";
+ import {
+   View,
+-  TextInput,
+-  Text,
+   TouchableOpacity,
+   StyleSheet,
+ } from "react-native";
++import Text from "./AppText";
++import TextInput from "./AppTextInput";
+ import { Ionicons } from "@expo/vector-icons";
+ 
+ import { Colors, Typography, fontScale, moderateScale } from "../theme";
+diff --git a/Stocksy_Mobile/src/components/IntradayPositionsView.js b/Stocksy_Mobile/src/components/IntradayPositionsView.js
+index 397ed21..fdf8e12 100644
+--- a/Stocksy_Mobile/src/components/IntradayPositionsView.js
++++ b/Stocksy_Mobile/src/components/IntradayPositionsView.js
+@@ -1,7 +1,6 @@
+ import React, { useState } from "react";
+ import {
+   View,
+-  Text,
+   StyleSheet,
+   TouchableOpacity,
+   ScrollView,
+@@ -9,6 +8,7 @@ import {
+   Alert,
+   ActivityIndicator,
+ } from "react-native";
++import Text from "./AppText";
+ import { Ionicons } from "@expo/vector-icons";
+ import { placeOrder } from "../../services/orderService";
+ 
+diff --git a/Stocksy_Mobile/src/components/MarketClosedModal.js b/Stocksy_Mobile/src/components/MarketClosedModal.js
+index d056167..90cd890 100644
+--- a/Stocksy_Mobile/src/components/MarketClosedModal.js
++++ b/Stocksy_Mobile/src/components/MarketClosedModal.js
+@@ -1,5 +1,6 @@
+ import React from "react";
+-import { View, Text, StyleSheet, Modal, TouchableOpacity } from "react-native";
++import { View, StyleSheet, Modal, TouchableOpacity } from "react-native";
++import Text from "./AppText";
+ import { Ionicons } from "@expo/vector-icons";
+ 
+ import { Colors, Typography, fontScale, moderateScale } from "../theme";
+diff --git a/Stocksy_Mobile/src/components/MiniHoldingCard.js b/Stocksy_Mobile/src/components/MiniHoldingCard.js
+index 9032c5d..4d6193f 100644
+--- a/Stocksy_Mobile/src/components/MiniHoldingCard.js
++++ b/Stocksy_Mobile/src/components/MiniHoldingCard.js
+@@ -1,5 +1,6 @@
+ import React from "react";
+-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
++import { View, StyleSheet, Image, TouchableOpacity } from "react-native";
++import Text from "./AppText";
+ import { Ionicons } from "@expo/vector-icons";
+ 
+ import { Colors, Typography, fontScale, moderateScale } from "../theme";
+diff --git a/Stocksy_Mobile/src/components/SectionHeader.js b/Stocksy_Mobile/src/components/SectionHeader.js
+index a53d5e7..0f7ee47 100644
+--- a/Stocksy_Mobile/src/components/SectionHeader.js
++++ b/Stocksy_Mobile/src/components/SectionHeader.js
+@@ -1,8 +1,8 @@
+ import React from "react";
+ import {
+   View,
+-  Text,
+ } from "react-native";
++import Text from "./AppText";
+ 
+ import {
+   Typography,
+diff --git a/Stocksy_Mobile/src/components/SegmentedToggle.js b/Stocksy_Mobile/src/components/SegmentedToggle.js
+index f2889fd..7f4a159 100644
+--- a/Stocksy_Mobile/src/components/SegmentedToggle.js
++++ b/Stocksy_Mobile/src/components/SegmentedToggle.js
+@@ -1,5 +1,6 @@
+ import React from "react";
+-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
++import { View, TouchableOpacity, StyleSheet } from "react-native";
++import Text from "./AppText";
+ 
+ import { Colors, Typography, fontScale, moderateScale } from "../theme";
+ 
+diff --git a/Stocksy_Mobile/src/components/SessionExpiredScreen.js b/Stocksy_Mobile/src/components/SessionExpiredScreen.js
+index 3492473..0682222 100644
+--- a/Stocksy_Mobile/src/components/SessionExpiredScreen.js
++++ b/Stocksy_Mobile/src/components/SessionExpiredScreen.js
+@@ -1,5 +1,6 @@
+ import React from "react";
+-import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView } from "react-native";
++import { View, TouchableOpacity, StyleSheet, SafeAreaView } from "react-native";
++import Text from "./AppText";
+ import { Ionicons } from "@expo/vector-icons";
+ 
+ export default function SessionExpiredScreen({ onLoginPress }) {
+diff --git a/Stocksy_Mobile/src/components/StockCard.js b/Stocksy_Mobile/src/components/StockCard.js
+index 95c85da..8fc87ee 100644
+--- a/Stocksy_Mobile/src/components/StockCard.js
++++ b/Stocksy_Mobile/src/components/StockCard.js
+@@ -1,5 +1,6 @@
+ import React from "react";
+-import { View, Text, StyleSheet, Image } from "react-native";
++import { View, StyleSheet, Image } from "react-native";
++import Text from "./AppText";
+ import { Ionicons } from "@expo/vector-icons";
+ import { TouchableOpacity } from "react-native";
+ 
+diff --git a/Stocksy_Mobile/src/components/StockDetail.js b/Stocksy_Mobile/src/components/StockDetail.js
+index 3dd15d6..ce3f3fd 100644
+--- a/Stocksy_Mobile/src/components/StockDetail.js
++++ b/Stocksy_Mobile/src/components/StockDetail.js
+@@ -1,6 +1,7 @@
+ // src/screens/StockDetail.js
+ import React, { useState } from 'react';
+-import { StyleSheet, View, Text, ScrollView, TouchableOpacity} from 'react-native';
++import { StyleSheet, View, ScrollView, TouchableOpacity} from 'react-native';
++import Text from './AppText';
+ import { SafeAreaView } from "react-native-safe-area-context";
+ import { Ionicons } from "@expo/vector-icons";
+ import Svg, { Rect, Line } from "react-native-svg";
+diff --git a/Stocksy_Mobile/src/components/TransactionRow.js b/Stocksy_Mobile/src/components/TransactionRow.js
+index 4a89e0f..dccbe81 100644
+--- a/Stocksy_Mobile/src/components/TransactionRow.js
++++ b/Stocksy_Mobile/src/components/TransactionRow.js
+@@ -1,5 +1,6 @@
+ import React from "react";
+-import { View, Text, StyleSheet } from "react-native";
++import { View, StyleSheet } from "react-native";
++import Text from "./AppText";
+ import { Ionicons } from "@expo/vector-icons";
+ 
+ import { Colors, Typography, fontScale, moderateScale } from "../theme";
+diff --git a/Stocksy_Mobile/src/components/WalletCard.js b/Stocksy_Mobile/src/components/WalletCard.js
+index 33368f6..914b33c 100644
+--- a/Stocksy_Mobile/src/components/WalletCard.js
++++ b/Stocksy_Mobile/src/components/WalletCard.js
+@@ -1,5 +1,6 @@
+ import React from "react";
+-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
++import { View, StyleSheet, TouchableOpacity } from "react-native";
++import Text from "./AppText";
+ import { Ionicons } from "@expo/vector-icons";
+ 
+ import { Colors, Typography, fontScale, moderateScale } from "../theme";
+diff --git a/Stocksy_Mobile/src/components/WatchlistItem.js b/Stocksy_Mobile/src/components/WatchlistItem.js
+index 8d62aa8..c81b92e 100644
+--- a/Stocksy_Mobile/src/components/WatchlistItem.js
++++ b/Stocksy_Mobile/src/components/WatchlistItem.js
+@@ -1,5 +1,6 @@
+ import React from "react";
+-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
++import { View, StyleSheet, TouchableOpacity, Image } from "react-native";
++import Text from "./AppText";
+ 
+ import { Colors, Typography, fontScale, moderateScale } from "../theme";
+ 
+diff --git a/Stocksy_Mobile/src/components/index.js b/Stocksy_Mobile/src/components/index.js
+index 68acec2..fcf4326 100644
+--- a/Stocksy_Mobile/src/components/index.js
++++ b/Stocksy_Mobile/src/components/index.js
+@@ -1,6 +1,7 @@
+ export { default as Screen } from "./Screen";
+ export { default as Card } from "./Card";
+ export { default as AppText } from "./AppText";
++export { default as AppTextInput } from "./AppTextInput";
+ export { default as SectionHeader } from "./SectionHeader";
+ export { default as SegmentedToggle } from "./SegmentedToggle";
+ export { default as IntradayPositionsView } from "./IntradayPositionsView";
+diff --git a/Stocksy_Mobile/src/context/ToastProvider.js b/Stocksy_Mobile/src/context/ToastProvider.js
+index babf25b..f818e21 100644
+--- a/Stocksy_Mobile/src/context/ToastProvider.js
++++ b/Stocksy_Mobile/src/context/ToastProvider.js
+@@ -1,5 +1,6 @@
+ import React, { useState, useCallback, useEffect, useRef } from "react";
+-import { View, Text, TouchableOpacity, StyleSheet, Animated } from "react-native";
++import { View, TouchableOpacity, StyleSheet, Animated } from "react-native";
++import Text from "../components/AppText";
+ import { useSafeAreaInsets } from "react-native-safe-area-context";
+ import { Ionicons } from "@expo/vector-icons";
+ import { registerToastHandler } from "../../services/uiBridge";
+diff --git a/Stocksy_Mobile/src/pages/AllTransactionsPage.js b/Stocksy_Mobile/src/pages/AllTransactionsPage.js
+index e1a76d9..85c3b80 100644
+--- a/Stocksy_Mobile/src/pages/AllTransactionsPage.js
++++ b/Stocksy_Mobile/src/pages/AllTransactionsPage.js
+@@ -1,7 +1,6 @@
+ import React, { useState, useEffect, useCallback } from "react";
+ import {
+   View,
+-  Text,
+   StyleSheet,
+   TouchableOpacity,
+   FlatList,
+@@ -9,6 +8,7 @@ import {
+   RefreshControl,
+   StatusBar,
+ } from "react-native";
++import Text from "../components/AppText";
+ import { Ionicons } from "@expo/vector-icons";
+ import { SafeAreaView } from "react-native-safe-area-context";
+ 
+diff --git a/Stocksy_Mobile/src/pages/BasketsPage.js b/Stocksy_Mobile/src/pages/BasketsPage.js
+index bbfd10d..92d52ae 100644
+--- a/Stocksy_Mobile/src/pages/BasketsPage.js
++++ b/Stocksy_Mobile/src/pages/BasketsPage.js
+@@ -1,7 +1,8 @@
+ import React, { useState } from 'react';
+ import { 
+-  StyleSheet, View, Text, FlatList, TouchableOpacity, StatusBar, Image, ScrollView 
++  StyleSheet, View, FlatList, TouchableOpacity, StatusBar, Image, ScrollView 
+ } from 'react-native';
++import Text from '../components/AppText';
+ import { SafeAreaView } from "react-native-safe-area-context";
+ import { Ionicons } from "@expo/vector-icons";
+ import Svg, { Path } from "react-native-svg";
+diff --git a/Stocksy_Mobile/src/pages/Buyorderscreen.js b/Stocksy_Mobile/src/pages/Buyorderscreen.js
+index 41aed82..1a2c5ba 100644
+--- a/Stocksy_Mobile/src/pages/Buyorderscreen.js
++++ b/Stocksy_Mobile/src/pages/Buyorderscreen.js
+@@ -1,10 +1,8 @@
+ import React, { useState, useEffect, useRef } from "react";
+ import {
+   View,
+-  Text,
+   StyleSheet,
+   TouchableOpacity,
+-  TextInput,
+   ScrollView,
+   ActivityIndicator,
+   Alert,
+@@ -13,6 +11,8 @@ import {
+   Platform,
+   StatusBar,
+ } from "react-native";
++import Text from "../components/AppText";
++import TextInput from "../components/AppTextInput";
+ import { Ionicons } from "@expo/vector-icons";
+ import { SafeAreaView } from "react-native-safe-area-context";
+ import CreateWalletModal from "../components/CreateWalletModal";
+diff --git a/Stocksy_Mobile/src/pages/DashboardPage.js b/Stocksy_Mobile/src/pages/DashboardPage.js
+index 6f0e202..b49e03a 100644
+--- a/Stocksy_Mobile/src/pages/DashboardPage.js
++++ b/Stocksy_Mobile/src/pages/DashboardPage.js
+@@ -1,7 +1,7 @@
+ import React from "react";
+ import { StatusBar } from "expo-status-bar";
+ import { useFocusEffect } from "@react-navigation/native";
+-import {View, StyleSheet, ScrollView, TouchableOpacity, Alert, Text} from "react-native";
++import {View, StyleSheet, ScrollView, TouchableOpacity, Alert} from "react-native";
+ import { Screen, Card, AppText, SectionHeader, SegmentedToggle } from "../components";
+ import { useSafeAreaInsets } from "react-native-safe-area-context";
+ import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+diff --git a/Stocksy_Mobile/src/pages/ForgotPasswordScreen.js b/Stocksy_Mobile/src/pages/ForgotPasswordScreen.js
+index 02f0119..b952ec2 100644
+--- a/Stocksy_Mobile/src/pages/ForgotPasswordScreen.js
++++ b/Stocksy_Mobile/src/pages/ForgotPasswordScreen.js
+@@ -2,15 +2,16 @@ import React, { useState, useEffect, useRef } from "react";
+ import api from "../../services/api"; // Adjust the import path based on your project structure
+ import {
+   View,
+-  Text,
+   StyleSheet,
+   KeyboardAvoidingView,
+   Platform,
+   ScrollView,
+   TouchableOpacity,
+-  TextInput,
+   Animated,
++  ActivityIndicator,
+ } from "react-native";
++import Text from "../components/AppText";
++import TextInput from "../components/AppTextInput";
+ import Button from "../components/Button";
+ import Input from "../components/Input";
+ import { SafeAreaView } from "react-native-safe-area-context";
+@@ -51,6 +52,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
+   const [otpError, setOtpError] = useState("");
+   const [countdown, setCountdown] = useState(OTP_RESEND_SECONDS);
+   const [canResend, setCanResend] = useState(false);
++  const [resendLoading, setResendLoading] = useState(false);
+   const otpRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
+ 
+   // Step 3 — reset
+@@ -181,17 +183,21 @@ const ForgotPasswordScreen = ({ navigation }) => {
+   };
+ 
+   const handleResend = async () => {
+-    if (!canResend) return;
++    if (!canResend || resendLoading) return;
+ 
+     try {
++      setResendLoading(true);
++
+       await api.post("/auth/forgot-password/send-otp", {
+         email: contact.trim().toLowerCase(),
+       });
+ 
++      setResendLoading(false);
+       setOtp(["", "", "", ""]);
+       setOtpError("");
+       setStep(STEP_OTP);
+     } catch (err) {
++      setResendLoading(false);
+       setOtpError(err.response?.data?.message || "Unable to resend OTP.");
+     }
+   };
+@@ -311,6 +317,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
+               <Button
+                 title="Send OTP"
+                 onPress={handleSendOtp}
++                loading={loading}
+                 style={styles.btn}
+               />
+             </View>
+@@ -342,9 +349,13 @@ const ForgotPasswordScreen = ({ navigation }) => {
+               {/* Resend row */}
+               <View style={styles.resendRow}>
+                 {canResend ? (
+-                  <TouchableOpacity onPress={handleResend}>
+-                    <Text style={styles.resendLink}>Resend OTP</Text>
+-                  </TouchableOpacity>
++                  resendLoading ? (
++                    <ActivityIndicator size="small" color={BLUE} />
++                  ) : (
++                    <TouchableOpacity onPress={handleResend}>
++                      <Text style={styles.resendLink}>Resend OTP</Text>
++                    </TouchableOpacity>
++                  )
+                 ) : (
+                   <Text style={styles.resendTimer}>
+                     Resend in{" "}
+@@ -356,6 +367,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
+               <Button
+                 title="Verify OTP"
+                 onPress={handleVerifyOtp}
++                loading={loading}
+                 style={styles.btn}
+               />
+             </View>
+diff --git a/Stocksy_Mobile/src/pages/LoginPage.js b/Stocksy_Mobile/src/pages/LoginPage.js
+index f0c985e..dec5c22 100644
+--- a/Stocksy_Mobile/src/pages/LoginPage.js
++++ b/Stocksy_Mobile/src/pages/LoginPage.js
+@@ -3,7 +3,6 @@ import { Ionicons } from "@expo/vector-icons";
+ import Constants from "expo-constants";
+ import {
+   View,
+-  Text,
+   StyleSheet,
+   KeyboardAvoidingView,
+   Platform,
+@@ -11,6 +10,7 @@ import {
+   Alert,
+   TouchableOpacity,
+ } from "react-native";
++import Text from "../components/AppText";
+ import Svg, { G, Path } from "react-native-svg";
+ import Button from "../components/Button";
+ import Input from "../components/Input";
+diff --git a/Stocksy_Mobile/src/pages/MarketPage.js b/Stocksy_Mobile/src/pages/MarketPage.js
+index b1b2024..58d436d 100644
+--- a/Stocksy_Mobile/src/pages/MarketPage.js
++++ b/Stocksy_Mobile/src/pages/MarketPage.js
+@@ -12,13 +12,17 @@ import React, { useMemo } from 'react';
+ import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
+ import {
+   View,
+-  Text,
+   ScrollView,
+   StyleSheet,
+   TouchableOpacity,
+   ActivityIndicator,
+   StatusBar,
+ } from 'react-native';
++// Financial numbers (indices, prices) must not reflow/crop with the OS
++// text-size setting — AppText forwards every prop to RN's Text but forces
++// allowFontScaling={false}. See AppText.js for why Text.defaultProps
++// doesn't work in this RN/React version.
++import Text from '../components/AppText';
+ import { Ionicons } from '@expo/vector-icons';
+ import useMarketData from '../hooks/useMarketData';
+ import { SECTOR_COLORS } from '../hooks/usePortfolio';
+diff --git a/Stocksy_Mobile/src/pages/OrderSuccessScreen.js b/Stocksy_Mobile/src/pages/OrderSuccessScreen.js
+index 2a32740..df4aa7b 100644
+--- a/Stocksy_Mobile/src/pages/OrderSuccessScreen.js
++++ b/Stocksy_Mobile/src/pages/OrderSuccessScreen.js
+@@ -1,5 +1,6 @@
+ import React, { useRef, useEffect } from "react";
+-import { View, Text, TouchableOpacity, StyleSheet, Animated, SafeAreaView } from "react-native";
++import { View, TouchableOpacity, StyleSheet, Animated, SafeAreaView } from "react-native";
++import Text from "../components/AppText";
+ import { Ionicons } from "@expo/vector-icons";
+ import { Colors, Typography, Shadows, moderateScale, fontScale } from "../theme";
+ 
+diff --git a/Stocksy_Mobile/src/pages/PlaceholderPages.js b/Stocksy_Mobile/src/pages/PlaceholderPages.js
+index 547625f..f68137a 100644
+--- a/Stocksy_Mobile/src/pages/PlaceholderPages.js
++++ b/Stocksy_Mobile/src/pages/PlaceholderPages.js
+@@ -5,7 +5,8 @@
+ // ─────────────────────────────────────────────────────────────────────────────
+ 
+ import React from "react";
+-import { View, Text, StyleSheet } from "react-native";
++import { View, StyleSheet } from "react-native";
++import Text from "../components/AppText";
+ 
+ import { SafeAreaView } from "react-native-safe-area-context";
+ 
+diff --git a/Stocksy_Mobile/src/pages/PortfolioPage.js b/Stocksy_Mobile/src/pages/PortfolioPage.js
+index 597cea7..194d552 100644
+--- a/Stocksy_Mobile/src/pages/PortfolioPage.js
++++ b/Stocksy_Mobile/src/pages/PortfolioPage.js
+@@ -9,10 +9,11 @@
+ import React, { useState, useEffect, useRef, useCallback } from 'react';
+ import { useFocusEffect } from '@react-navigation/native';
+ import {
+-  View, Text, ScrollView, TouchableOpacity, StyleSheet,
++  View, ScrollView, TouchableOpacity, StyleSheet,
+   StatusBar, ActivityIndicator,
+   Animated, RefreshControl,
+ } from 'react-native';
++import Text from '../components/AppText';
+ import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+ import { Ionicons } from '@expo/vector-icons';
+ import useMarketData from '../hooks/useMarketData';
+diff --git a/Stocksy_Mobile/src/pages/ProfilePage.js b/Stocksy_Mobile/src/pages/ProfilePage.js
+index e4493dd..8554725 100644
+--- a/Stocksy_Mobile/src/pages/ProfilePage.js
++++ b/Stocksy_Mobile/src/pages/ProfilePage.js
+@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
+ import {
+   ScrollView,
+   View,
+-  Text,
+   TouchableOpacity,
+   StyleSheet,
+   Alert,
+   Image,
+ } from "react-native";
++import Text from "../components/AppText";
+ 
+ import AsyncStorage from "@react-native-async-storage/async-storage";
+ import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+diff --git a/Stocksy_Mobile/src/pages/SearchPage.js b/Stocksy_Mobile/src/pages/SearchPage.js
+index ab0a424..d1ee147 100644
+--- a/Stocksy_Mobile/src/pages/SearchPage.js
++++ b/Stocksy_Mobile/src/pages/SearchPage.js
+@@ -1,13 +1,13 @@
+ import React, { useState, useEffect, useRef, useCallback } from "react";
+ import {
+   View,
+-  Text,
+-  TextInput,
+   StyleSheet,
+   FlatList,
+   TouchableOpacity,
+   ActivityIndicator,
+ } from "react-native";
++import Text from "../components/AppText";
++import TextInput from "../components/AppTextInput";
+ import { Ionicons } from "@expo/vector-icons";
+ import { SafeAreaView } from "react-native-safe-area-context";
+ 
+diff --git a/Stocksy_Mobile/src/pages/SignupPage.js b/Stocksy_Mobile/src/pages/SignupPage.js
+index 0d92c3b..6b496ac 100644
+--- a/Stocksy_Mobile/src/pages/SignupPage.js
++++ b/Stocksy_Mobile/src/pages/SignupPage.js
+@@ -1,13 +1,13 @@
+ import React, { useState } from "react";
+ import {
+   View,
+-  Text,
+   StyleSheet,
+   KeyboardAvoidingView,
+   Platform,
+   ScrollView,
+   Alert,
+ } from "react-native";
++import Text from "../components/AppText";
+ import Button from "../components/Button";
+ import Input from "../components/Input";
+ import authService from "../../services/authService";
+diff --git a/Stocksy_Mobile/src/pages/StockDetailPage.js b/Stocksy_Mobile/src/pages/StockDetailPage.js
+index 40e00e0..812ab71 100644
+--- a/Stocksy_Mobile/src/pages/StockDetailPage.js
++++ b/Stocksy_Mobile/src/pages/StockDetailPage.js
+@@ -1,7 +1,6 @@
+ import React, { useState, useEffect } from "react";
+ import {
+   View,
+-  Text,
+   StyleSheet,
+   ScrollView,
+   TouchableOpacity,
+@@ -9,6 +8,7 @@ import {
+   Modal,
+   StatusBar,
+ } from "react-native";
++import Text from "../components/AppText";
+ import { SafeAreaView } from "react-native-safe-area-context";
+ import { Ionicons } from "@expo/vector-icons";
+ import { BarChart } from "react-native-gifted-charts";
+diff --git a/Stocksy_Mobile/src/pages/WalletScreen.js b/Stocksy_Mobile/src/pages/WalletScreen.js
+index 30d5454..7b57a8d 100644
+--- a/Stocksy_Mobile/src/pages/WalletScreen.js
++++ b/Stocksy_Mobile/src/pages/WalletScreen.js
+@@ -1,7 +1,6 @@
+ import React, { useState, useEffect, useCallback, useRef } from "react";
+ import {
+   View,
+-  Text,
+   StyleSheet,
+   TouchableOpacity,
+   ScrollView,
+@@ -9,10 +8,11 @@ import {
+   Alert,
+   RefreshControl,
+   Modal,
+-  TextInput,
+   Animated,
+   StatusBar,
+ } from "react-native";
++import Text from "../components/AppText";
++import TextInput from "../components/AppTextInput";
+ import { Ionicons } from "@expo/vector-icons";
+ import { LinearGradient } from "expo-linear-gradient";
+ import Button from "../components/Button";

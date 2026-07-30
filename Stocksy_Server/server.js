@@ -1,5 +1,7 @@
 require('dotenv').config();
 const { connectRedis } = require('./config/redis');
+connectRedis(); // start connecting BEFORE anything (like rateLimiter) tries to use the Redis client
+
 const express = require('express');
 const cors = require('cors');
 const http = require('http');
@@ -7,7 +9,6 @@ require('./config/postgres');
 const { initWebSocket } = require('./services/websocketService');
 const { generalLimiter } = require('./middleware/rateLimiter');
 
-connectRedis();
 const app = express();
 
 const server = http.createServer(app);

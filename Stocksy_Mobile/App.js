@@ -7,10 +7,17 @@ import { StatusBar } from "expo-status-bar";
 import { Ionicons } from "@expo/vector-icons";
 import "react-native-get-random-values";
 
+// Financial data (prices, index values, quantities) must never get cropped
+// or misread — a truncated number here isn't cosmetic, it's a trust/safety
+// issue for a trading app. So text scaling from the device's OS-level
+// accessibility font size setting is fully locked off, app-wide, rather
+// than just capped. A 1.2x cap still leaves enough slack to crop tightly
+// packed numeric rows (e.g. index tickers) on larger OS accessibility text
+// sizes. This matches how other trading apps (e.g. Groww) handle this.
 if (Text.defaultProps == null) Text.defaultProps = {};
-Text.defaultProps.maxFontSizeMultiplier = 1.2;
+Text.defaultProps.allowFontScaling = false;
 if (TextInput.defaultProps == null) TextInput.defaultProps = {};
-TextInput.defaultProps.maxFontSizeMultiplier = 1.2;
+TextInput.defaultProps.allowFontScaling = false;
 
 import { SafeAreaProvider, useSafeAreaInsets } from "react-native-safe-area-context";
 import { ToastProvider } from "./src/context/ToastProvider";
